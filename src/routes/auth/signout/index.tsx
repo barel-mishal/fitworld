@@ -10,7 +10,6 @@ export default component$(() => {
   const signIn = useAuthSignin();
   return (
     <div>
-      New route works.
       <Form action={signIn} class="self-center">
         <input type="hidden" name="providerId" value="google" />
         <input type="hidden" name="options.callbackUrl" value="/dashboard" />

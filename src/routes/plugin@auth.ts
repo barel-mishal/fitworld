@@ -1,9 +1,15 @@
 import { serverAuth$ } from "@builder.io/qwik-auth";
 import Google from "@auth/core/providers/google";
 import type { Provider } from "@auth/core/providers";
+import { Surreal } from "surrealdb.js";
 
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
-  serverAuth$(({ env }) => ({
+  serverAuth$(({ env }) => {
+    const db = new Surreal();
+    db.connect("http://0.0.0.0:8000/rpc", { database: "database", namespace: "namespace", auth: { username: "root", password: "root" } });
+    db.use({ namespace: "namespace", database: "database" });
+
+    return {
     secret: env.get("AUTH_SECRET"),
     trustHost: true,
     debug: true,
@@ -13,6 +19,24 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
         clientSecret: env.get("GITHUB_SECRET")!,
       }),
     ] as Provider[],
+    callbacks: {
+      jwt: async (connection) => {
+        if (connection.account) {
+          connection.token.providerId = connection.account.providerAccountId;
+        }
+        return connection.token;
+      },
+      session: async (connection) => {
+        const a = connection;
+        // const user = await db
+        
+        console.log(
+          JSON.stringify({a}, null, 2), 
+          await db.select("account")
+        )
+        return connection.session;
+      },
+    },
     pages: {
       signIn: '/auth/signin',
       signOut: '/auth/signout',
@@ -20,7 +44,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
       // verifyRequest: '/auth/verify-request', // (used for check email message)
       // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
     }
-  }));
+  }});
 
 export type ReturnTypeSignout = ReturnType<typeof useAuthSignout>;
 

@@ -19,6 +19,11 @@ export const serverLoader = server$(async function() {
       namespace: "namespace",
     });
     await db.use({ namespace: "namespace", database: "database" });
+    await db.create("account", { name: "something" })
+    const data = await db.query_raw<[{name: string, id: string}]>(`select * from account;`);
+    await db.close();
+    if (data[0].status === "OK") 
+    return data[0].result
 
   
   } catch (error: any) {
@@ -35,7 +40,6 @@ export default component$(() => {
   const sc = useAuthSession();
   return (
     <div>
-      New route works.
       {sc.value?.user?.name}
       <Button onClick$={async () => {
         const data = await serverLoader();
