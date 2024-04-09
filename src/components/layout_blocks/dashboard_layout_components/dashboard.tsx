@@ -1,9 +1,10 @@
 import { $, type Signal, Slot, component$, createContextId, useContextProvider, useOnWindow, useSignal } from "@builder.io/qwik";
 import { Button } from "../../ui/button/button";
 import { Input } from "../../ui/input/input";
-import { Link } from "@builder.io/qwik-city";
+import { useLocation } from "@builder.io/qwik-city";
 import { type ReturnTypeSignout } from "~/routes/plugin@auth";
 import { MyModal } from "./dashboardModal";
+import { NavLink } from "~/components/HookComponent/NavLink";
 
 
 export interface DashboardProps {
@@ -42,7 +43,8 @@ export const useContextDashboard = () => {
 
 export const Dashboard = component$<DashboardProps>((props) => {
     const refMain = useContextDashboard();
-
+    const location = useLocation();
+    console.log(location)
     
     return (
         <div class={"font-oldstyle text-sky-950 flex h-screen max-h-screen "}>
@@ -50,15 +52,15 @@ export const Dashboard = component$<DashboardProps>((props) => {
                 <div class={"p-4 grid gap-8"}>
                     <h1 class={"text-3xl font-bold"}>FitWorld</h1>
                     <ul class={"grid gap-2"}>
-                        <li class="bg-sky-100 rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-100"]} href="/dashboard">Dashboard</Link></li>
+                        <li class="bg-sky-100 rounded-md text-sky-900 overflow-hidden"><NavLink class={["grid p-4 hover:bg-sky-100 transition-all duration-200"]} activeClass="bg-sky-100" disabledClass="bg-sky-none" href="/dashboard">Dashboard</NavLink></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-none"]} href="/dashboard/notes">Notes</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><NavLink class={["grid p-4 hover:bg-sky-100 transition-all duration-200"]} activeClass="bg-sky-100" disabledClass="bg-sky-none" href="/dashboard/notes">Notes</NavLink></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-none"]} href="/dashboard/feed">Feed</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><NavLink class={["grid p-4 hover:bg-sky-100 transition-all duration-200"]} activeClass="bg-sky-100" disabledClass="bg-sky-none" href="/dashboard/feed">Feed</NavLink></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-none"]} href="/dashboard/profile">Profile</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><NavLink class={["grid p-4 hover:bg-sky-100 transition-all duration-200"]} activeClass="bg-sky-100" disabledClass="bg-sky-none" href="/dashboard/profile">Profile</NavLink></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-none"]} href="/dashboard/settings">Settings</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><NavLink class={["grid p-4 hover:bg-sky-100 transition-all duration-200"]} activeClass="bg-sky-100" disabledClass="bg-sky-none" href="/dashboard/settings">Settings</NavLink></li>
                     </ul>
                 </div>
             </div>
@@ -82,4 +84,6 @@ export const Dashboard = component$<DashboardProps>((props) => {
         </div>
     );
 });
+
+
 
