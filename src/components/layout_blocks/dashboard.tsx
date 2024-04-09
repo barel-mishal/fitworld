@@ -19,15 +19,15 @@ export const Dashboard = component$<DashboardProps>((props) => {
                 <div class={"p-4 grid gap-8"}>
                     <h1 class={"text-3xl font-bold"}>FitWorld</h1>
                     <ul class={"grid gap-2"}>
-                        <li class="bg-sky-100 rounded-md p-4 text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid"} href="/dashboard">Dashboard</Link></li>
+                        <li class="bg-sky-100 rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard">Dashboard</Link></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md p-4 text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid"} href="/dashboard/notes">Notes</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard/notes">Notes</Link></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md p-4 text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid"} href="/dashboard/feed">Feed</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard/feed">Feed</Link></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md p-4 text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid"} href="/dashboard/profile">Profile</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard/profile">Profile</Link></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md p-4 text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid"} href="/dashboard/settings">Settings</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard/settings">Settings</Link></li>
                     </ul>
                 </div>
             </div>
@@ -39,7 +39,7 @@ export const Dashboard = component$<DashboardProps>((props) => {
                     </div>
                     <MyModal name={props.name} signout={props.signout} />
                 </div>
-                <div class={"main flex flex-grow flex-col overflow-y-auto"}>
+                <div class={"main flex flex-grow flex-col overflow-y-auto bg-sky-100"}>
                     <Slot />
                 </div>
                 <div class={"footer bg-sky-950"}>
