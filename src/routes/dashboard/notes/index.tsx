@@ -4,8 +4,6 @@ import DOMPurify from "isomorphic-dompurify";
 import { marked } from "marked";
 import { contextDashboard } from '~/components/layout_blocks/dashboard_layout_components/dashboard';
 
-
-
 export const useFetchMarkdownFile = routeLoader$(async () => {
   const res = String.raw`
   # Markdown Example
@@ -259,8 +257,6 @@ export const useFetchMarkdownFile = routeLoader$(async () => {
   const sanitisedMarkdown = DOMPurify.sanitize(parsedMarkdown);
   return sanitisedMarkdown;
 });
-
-
 
 export default component$(() => {
   const markdown = useFetchMarkdownFile();
