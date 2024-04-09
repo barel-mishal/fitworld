@@ -1,8 +1,9 @@
-import { component$, useContext, useStore } from '@builder.io/qwik';
+import { $, component$, useContext, useStore } from '@builder.io/qwik';
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import DOMPurify from "isomorphic-dompurify";
 import { marked } from "marked";
 import { contextDashboard } from '~/components/layout_blocks/dashboard_layout_components/dashboard';
+import { Button } from '~/components/ui/button/button';
 import { Textarea } from '~/components/ui/textarea/textarea';
 
 export const useFetchMarkdownFile = routeLoader$(async () => {
@@ -260,7 +261,16 @@ export const useFetchMarkdownFile = routeLoader$(async () => {
 });
 
 export default component$(() => {
-  const store = useStore({content: ""});
+  const store = useStore({
+    content: "", 
+    edit: true, 
+    textEdit: $(function (this: {edit: boolean}) {
+      return this.edit ? "Save" : "Edit";
+    }),
+    toggleEdit: $(function (this: {edit: boolean}) {
+      this.edit = !this.edit;
+    })
+  });
   
   const dashboardContext = useContext(contextDashboard);
 
@@ -291,11 +301,12 @@ export default component$(() => {
       </aside>
       <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${dashboardContext.value.height}px`}}>
         <div class="">
-          <Textarea onInput$={(e, el) => store.content = el.value}></Textarea>
+          {store.edit ? <Textarea onInput$={(e, el) => store.content = el.value}></Textarea> : 
           <div 
           contentEditable='inherit' class="prose max-w-[600px] px-14 py-12 border" 
-          dangerouslySetInnerHTML={parsedMarkdown()} 
-          ></div>
+          dangerouslySetInnerHTML={parsedMarkdown()} ></div>}
+
+          <Button onClick$={() => store.toggleEdit()}>{store.textEdit()}</Button>
         </div>
       </section>
     </div>
