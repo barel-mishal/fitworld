@@ -269,8 +269,8 @@ export default component$(() => {
 
   return (
     <div class="flex gap-2  ">
-      <aside class="">
-        <h1 class="font-bold">Notes</h1>
+      <aside class="w-[200px] border-r p-4 gap-6 flex flex-col">
+        <h1 class="font-bold text-3xl">Notes</h1>
         <ul class="grid gap-1">
           <li>1</li>
           <li>2</li>
