@@ -278,8 +278,10 @@ export default component$(() => {
           <li>4</li>
         </ul>
       </aside>
-      <section class={"flex overflow-y-auto flex-grow"} style={{height: `${dashboardContext.value.height}px`}}>
-        <div class="prose" dangerouslySetInnerHTML={markdown.value}></div>;
+      <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${dashboardContext.value.height}px`}}>
+        <div class="">
+          <div class="prose max-w-[600px] px-14 py-12 border" dangerouslySetInnerHTML={markdown.value}></div>;
+        </div>
       </section>
     </div>
   );
