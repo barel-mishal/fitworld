@@ -42,15 +42,15 @@ export const Dashboard = component$<DashboardProps>((props) => {
                 <div class={"p-4 grid gap-8"}>
                     <h1 class={"text-3xl font-bold"}>FitWorld</h1>
                     <ul class={"grid gap-2"}>
-                        <li class="bg-sky-100 rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard">Dashboard</Link></li>
+                        <li class="bg-sky-100 rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-100"]} href="/dashboard">Dashboard</Link></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard/notes">Notes</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-none"]} href="/dashboard/notes">Notes</Link></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard/feed">Feed</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-none"]} href="/dashboard/feed">Feed</Link></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard/profile">Profile</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-none"]} href="/dashboard/profile">Profile</Link></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
-                        <li class="bg-sky-none rounded-md text-sky-900 hover:bg-sky-100 transition-all duration-200"><Link class={"grid p-4"} href="/dashboard/settings">Settings</Link></li>
+                        <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200", "bg-sky-none"]} href="/dashboard/settings">Settings</Link></li>
                     </ul>
                 </div>
             </div>
