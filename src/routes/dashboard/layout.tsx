@@ -7,7 +7,6 @@ import { type Session } from '@auth/core/types';
 export const onRequest: RequestHandler = (event) => {
   const session: Session | null = event.sharedMap.get('session');
   const isSignedIn = session && new Date(session.expires) > new Date();
-  console.log({isSignedIn});
   if (!isSignedIn) {
     console.log("redirecting")
     throw event.redirect(302, `/`);

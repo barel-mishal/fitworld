@@ -6,7 +6,7 @@ import { contextDashboard } from '~/components/layout_blocks/dashboard_layout_co
 
 
 
-export const fetchMarkdownFile = routeLoader$(async () => {
+export const useFetchMarkdownFile = routeLoader$(async () => {
   const res = String.raw`
   # Markdown Example
   __Advertisement :)__
@@ -263,7 +263,7 @@ export const fetchMarkdownFile = routeLoader$(async () => {
 
 
 export default component$(() => {
-  const markdown = fetchMarkdownFile();
+  const markdown = useFetchMarkdownFile();
   
   const dashboardContext = useContext(contextDashboard);
 

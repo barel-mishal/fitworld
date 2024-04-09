@@ -30,10 +30,6 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
         const a = connection;
         // const user = await db
         
-        console.log(
-          JSON.stringify({a}, null, 2), 
-          await db.select("account")
-        )
         return connection.session;
       },
     },

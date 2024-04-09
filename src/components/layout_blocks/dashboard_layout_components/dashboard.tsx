@@ -1,7 +1,6 @@
 import { $, type Signal, Slot, component$, createContextId, useContextProvider, useOnWindow, useSignal } from "@builder.io/qwik";
 import { Button } from "../../ui/button/button";
 import { Input } from "../../ui/input/input";
-import { useLocation } from "@builder.io/qwik-city";
 import { type ReturnTypeSignout } from "~/routes/plugin@auth";
 import { MyModal } from "./dashboardModal";
 import { NavLink } from "~/components/HookComponent/NavLink";
@@ -23,7 +22,6 @@ export const useContextDashboard = () => {
 
     useOnWindow("load", $(() => {
         if (!refMain.value) return;
-        console.log(refMain.value.clientHeight)
         signalTopBottom.value = {
             height: refMain.value.clientHeight-0.5
         };
@@ -43,16 +41,13 @@ export const useContextDashboard = () => {
 
 export const Dashboard = component$<DashboardProps>((props) => {
     const refMain = useContextDashboard();
-    const location = useLocation();
-    console.log(location)
-    
     return (
         <div class={"font-oldstyle text-sky-950 flex h-screen max-h-screen "}>
             <div class={"side-bar border-r border-slate-300 min-w-[250px]"}>
                 <div class={"p-4 grid gap-8"}>
                     <h1 class={"text-3xl font-bold"}>FitWorld</h1>
                     <ul class={"grid gap-2"}>
-                        <li class="bg-sky-100 rounded-md text-sky-900 overflow-hidden"><NavLink class={["grid p-4 hover:bg-sky-100 transition-all duration-200"]} activeClass="bg-sky-100" disabledClass="bg-sky-none" href="/dashboard">Dashboard</NavLink></li>
+                        <li class="rounded-md text-sky-900 overflow-hidden"><NavLink class={["grid p-4 hover:bg-sky-100 transition-all duration-200"]} activeClass="bg-sky-100" disabledClass="bg-sky-none" href="/dashboard">Dashboard</NavLink></li>
                         <li class={"h-px w-full bg-slate-200"}></li>
                         <li class="bg-sky-none rounded-md text-sky-900 overflow-hidden"><NavLink class={["grid p-4 hover:bg-sky-100 transition-all duration-200"]} activeClass="bg-sky-100" disabledClass="bg-sky-none" href="/dashboard/notes">Notes</NavLink></li>
                         <li class={"h-px w-full bg-slate-200"}></li>

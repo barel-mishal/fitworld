@@ -9,19 +9,7 @@ export const NavLink = component$(
     const toPathname = props.href ?? '';
     const locationPathname = location.url.pathname;
  
-    const startSlashPosition =
-      toPathname !== '/' && toPathname.startsWith('/')
-        ? toPathname.length - 1
-        : toPathname.length;
-    const endSlashPosition =
-      toPathname !== '/' && toPathname.endsWith('/')
-        ? toPathname.length - 1
-        : toPathname.length;
-    const isActive =
-      locationPathname === toPathname ||
-      (locationPathname.endsWith(toPathname) &&
-        (locationPathname.charAt(endSlashPosition) === '/' ||
-          locationPathname.charAt(startSlashPosition) === '/'));
+    const isActive = locationPathname === toPathname || locationPathname === toPathname + '/';
  
     return (
       <Link
