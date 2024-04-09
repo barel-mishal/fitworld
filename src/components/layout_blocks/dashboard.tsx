@@ -13,8 +13,9 @@ export interface DashboardProps {
 
 export const contextDashboard = createContextId<Signal<{height: 0}>>("contextDashboard");
 
-export const Dashboard = component$<DashboardProps>((props) => {
+export const useContextDashboard = () => {
     const refMain = useSignal<HTMLDivElement>();
+
     const signalTopBottom = useSignal<{
         height: number;
     }>({ height: 0 });
@@ -35,6 +36,14 @@ export const Dashboard = component$<DashboardProps>((props) => {
     }));
 
     useContextProvider(contextDashboard, signalTopBottom);
+
+    return refMain
+};
+
+
+export const Dashboard = component$<DashboardProps>((props) => {
+    const refMain = useContextDashboard();
+
     
     return (
         <div class={"font-oldstyle text-sky-950 flex h-screen max-h-screen "}>
