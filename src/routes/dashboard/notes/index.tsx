@@ -1,5 +1,5 @@
 import { component$, useContext } from '@builder.io/qwik';
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import DOMPurify from "isomorphic-dompurify";
 import { marked } from "marked";
 import { contextDashboard } from '~/components/layout_blocks/dashboard_layout_components/dashboard';
@@ -272,10 +272,18 @@ export default component$(() => {
       <aside class="w-[200px] border-r p-4 gap-6 flex flex-col">
         <h1 class="font-bold text-3xl">Notes</h1>
         <ul class="grid gap-1">
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
+          <li><Link class={[
+            "grid p-2 hover:bg-sky-100 bg-sky-100 transition-all duration-200 rounded-md border border-sky-100"
+          ]} href="/dashboard">Dashboard</Link></li>
+          <li><Link class={[
+            "grid p-2 hover:bg-sky-100 transition-all duration-200 rounded-md border border-sky-100"
+          ]} href="/dashboard">Dashboard</Link></li>
+          <li><Link class={[
+            "grid p-2 hover:bg-sky-100 transition-all duration-200 rounded-md border border-sky-100"
+          ]} href="/dashboard">Dashboard</Link></li>
+          <li><Link class={[
+            "grid p-2 hover:bg-sky-100 transition-all duration-200 rounded-md border border-sky-100"
+          ]} href="/dashboard">Dashboard</Link></li>
         </ul>
       </aside>
       <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${dashboardContext.value.height}px`}}>
