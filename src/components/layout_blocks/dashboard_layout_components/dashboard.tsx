@@ -3,7 +3,7 @@ import { Button } from "../../ui/button/button";
 import { Input } from "../../ui/input/input";
 import { Link } from "@builder.io/qwik-city";
 import { type ReturnTypeSignout } from "~/routes/plugin@auth";
-import { MyModal } from "./dashboard copy";
+import { MyModal } from "./dashboardModal";
 
 
 export interface DashboardProps {
@@ -39,7 +39,6 @@ export const useContextDashboard = () => {
 
     return refMain
 };
-
 
 export const Dashboard = component$<DashboardProps>((props) => {
     const refMain = useContextDashboard();
