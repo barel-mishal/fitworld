@@ -18,6 +18,15 @@
         "hash": "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="
       }
     },
+    "npm:@auth/core": {
+      "type": "npm",
+      "name": "npm:@auth/core",
+      "data": {
+        "version": "0.13.0",
+        "packageName": "@auth/core",
+        "hash": "sha512-StjrzUenaKfMr68kmvhiqfY0xvxRvg8wllmem9JAULpPAAAt3uwRUDXICWOP/PfWB4OZ2wQT7rgfm0n42b+Mjg=="
+      }
+    },
     "npm:@builder.io/qwik": {
       "type": "npm",
       "name": "npm:@builder.io/qwik",
@@ -25,6 +34,15 @@
         "version": "1.5.1",
         "packageName": "@builder.io/qwik",
         "hash": "sha512-xjGVH6xx/ADN+ACSfvoZQWIlN6B4bTcL1gpoijVKyx/Wed7U7QPgVq2VIJ92Vhr6Y+uKiUaoNlsuY5s4PhVQkQ=="
+      }
+    },
+    "npm:@builder.io/qwik-auth": {
+      "type": "npm",
+      "name": "npm:@builder.io/qwik-auth",
+      "data": {
+        "version": "0.1.1",
+        "packageName": "@builder.io/qwik-auth",
+        "hash": "sha512-PM5gJwqKM3KKYqYZhwxlMe/XvaCB2Jczv+MMh8z82Z7tK9uWJ7qG3OEdVF6tNeCOolzmL7tWHypBT2+Was5/4Q=="
       }
     },
     "npm:@builder.io/qwik-city": {
@@ -837,6 +855,15 @@
         "hash": "sha512-BgzPjF/wqi7zIFcspcKzN37BX1wgGo0OTLncK2PN5nyzSQ+XeNbR5laDswxzOGdB4CRLPqak2+YMhYnoiXeRCg=="
       }
     },
+    "npm:@panva/hkdf": {
+      "type": "npm",
+      "name": "npm:@panva/hkdf",
+      "data": {
+        "version": "1.1.1",
+        "packageName": "@panva/hkdf",
+        "hash": "sha512-dhPeilub1NuIG0X5Kvhh9lH4iW3ZsHlnzwgwbOlgwQ2wG1IqFzsgHqmKPk3WzsdWAeaxKJxgM0+W433RmN45GA=="
+      }
+    },
     "npm:@pkgjs/parseargs": {
       "type": "npm",
       "name": "npm:@pkgjs/parseargs",
@@ -871,6 +898,15 @@
         "version": "0.2.1",
         "packageName": "@qwik-ui/utils",
         "hash": "sha512-NZkHmN6jZP6DMB6JL4iBc4vrXP+GbFSxCoTDTWrlB2bGL6D7+/IXkHzruLVH9GaLqo7yMgc/SBTZCZCPfVU3FA=="
+      }
+    },
+    "npm:@qwikest/icons": {
+      "type": "npm",
+      "name": "npm:@qwikest/icons",
+      "data": {
+        "version": "0.0.13",
+        "packageName": "@qwikest/icons",
+        "hash": "sha512-e0wY8vmx0nDSUiuCATlk+ojTvdBV4txIGHHWjZW5SRkv4XB8H9+3WSDcLPz0ItUdRyzcrohE9k2jtQI/98aRPA=="
       }
     },
     "npm:@rollup/pluginutils": {
@@ -1044,6 +1080,33 @@
         "hash": "sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA=="
       }
     },
+    "npm:@tailwindcss/typography": {
+      "type": "npm",
+      "name": "npm:@tailwindcss/typography",
+      "data": {
+        "version": "0.5.12",
+        "packageName": "@tailwindcss/typography",
+        "hash": "sha512-CNwpBpconcP7ppxmuq3qvaCxiRWnbhANpY/ruH4L5qs2GCiVDJXde/pjj2HWPV1+Q4G9+V/etrwUYopdcjAlyg=="
+      }
+    },
+    "npm:postcss-selector-parser@6.0.10": {
+      "type": "npm",
+      "name": "npm:postcss-selector-parser@6.0.10",
+      "data": {
+        "version": "6.0.10",
+        "packageName": "postcss-selector-parser",
+        "hash": "sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w=="
+      }
+    },
+    "npm:postcss-selector-parser": {
+      "type": "npm",
+      "name": "npm:postcss-selector-parser",
+      "data": {
+        "version": "6.0.16",
+        "packageName": "postcss-selector-parser",
+        "hash": "sha512-A0RVJrX+IUkVZbW3ClroRWurercFhieevHB38sr2+l9eUClMqome3LmEmnhlNy+5Mr2EYN6B2Kaw9wYdd+VHiw=="
+      }
+    },
     "npm:@trysound/sax": {
       "type": "npm",
       "name": "npm:@trysound/sax",
@@ -1069,6 +1132,15 @@
         "version": "4.1.12",
         "packageName": "@types/debug",
         "hash": "sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ=="
+      }
+    },
+    "npm:@types/dompurify": {
+      "type": "npm",
+      "name": "npm:@types/dompurify",
+      "data": {
+        "version": "3.0.5",
+        "packageName": "@types/dompurify",
+        "hash": "sha512-1Wg0g3BtQF7sSb27fJQAKck1HECM6zV1EB66j8JH9i3LCjYabJa0FSdiSgsD5K/RbrsR0SiraKacLB+T8ZVYAg=="
       }
     },
     "npm:@types/eslint": {
@@ -1159,6 +1231,15 @@
         "version": "7.5.8",
         "packageName": "@types/semver",
         "hash": "sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ=="
+      }
+    },
+    "npm:@types/trusted-types": {
+      "type": "npm",
+      "name": "npm:@types/trusted-types",
+      "data": {
+        "version": "2.0.7",
+        "packageName": "@types/trusted-types",
+        "hash": "sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw=="
       }
     },
     "npm:@types/unist": {
@@ -1339,6 +1420,15 @@
         "version": "5.3.2",
         "packageName": "acorn-jsx",
         "hash": "sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ=="
+      }
+    },
+    "npm:agent-base": {
+      "type": "npm",
+      "name": "npm:agent-base",
+      "data": {
+        "version": "7.1.1",
+        "packageName": "agent-base",
+        "hash": "sha512-H0TSyFNDMomMNJQBn8wFV5YC/2eJ+VXECwOadZJT554xP6cODZHPX3H9QMQECxvrgiSOP1pHjy1sMWQVYJOUOA=="
       }
     },
     "npm:ajv": {
@@ -1719,6 +1809,15 @@
         "hash": "sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A=="
       }
     },
+    "npm:class-variance-authority": {
+      "type": "npm",
+      "name": "npm:class-variance-authority",
+      "data": {
+        "version": "0.7.0",
+        "packageName": "class-variance-authority",
+        "hash": "sha512-jFI8IQw4hczaL4ALINxqLEXQbWcNjoSkloa4IaufXCJr6QawJyw7tuRysRsrE8w2p/4gGaxKIt/hX3qz/IbD1A=="
+      }
+    },
     "npm:cli-cursor": {
       "type": "npm",
       "name": "npm:cli-cursor",
@@ -1807,6 +1906,15 @@
         "version": "1.0.4",
         "packageName": "clone",
         "hash": "sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg=="
+      }
+    },
+    "npm:clsx": {
+      "type": "npm",
+      "name": "npm:clsx",
+      "data": {
+        "version": "2.0.0",
+        "packageName": "clsx",
+        "hash": "sha512-rQ1+kcj+ttHG0MKVGBUXwayCCF1oh39BF5COIpRzuCEv8Mwjv0XucrI2ExNTOn9IlLifGClWQcU9BrZORvtw6Q=="
       }
     },
     "npm:collapse-white-space": {
@@ -1899,6 +2007,15 @@
         "hash": "sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg=="
       }
     },
+    "npm:cookie": {
+      "type": "npm",
+      "name": "npm:cookie",
+      "data": {
+        "version": "0.5.0",
+        "packageName": "cookie",
+        "hash": "sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw=="
+      }
+    },
     "npm:cross-spawn": {
       "type": "npm",
       "name": "npm:cross-spawn",
@@ -1980,6 +2097,15 @@
         "hash": "sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA=="
       }
     },
+    "npm:cssstyle": {
+      "type": "npm",
+      "name": "npm:cssstyle",
+      "data": {
+        "version": "4.0.1",
+        "packageName": "cssstyle",
+        "hash": "sha512-8ZYiJ3A/3OkDd093CBT/0UKDWry7ak4BdPTFP2+QEP7cmhouyq/Up709ASSj2cK02BbZiMgk7kYjZNS4QP5qrQ=="
+      }
+    },
     "npm:csstype": {
       "type": "npm",
       "name": "npm:csstype",
@@ -1987,6 +2113,15 @@
         "version": "3.1.3",
         "packageName": "csstype",
         "hash": "sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw=="
+      }
+    },
+    "npm:data-urls": {
+      "type": "npm",
+      "name": "npm:data-urls",
+      "data": {
+        "version": "5.0.0",
+        "packageName": "data-urls",
+        "hash": "sha512-ZYP5VBHshaDAiVZxjbRVcFJpc+4xGgT0bK3vzy1HLN8jTO975HEbuYzZJcHoQEY5K1a0z8YayJkyVETa08eNTg=="
       }
     },
     "npm:data-view-buffer": {
@@ -2023,6 +2158,15 @@
         "version": "4.3.4",
         "packageName": "debug",
         "hash": "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
+      }
+    },
+    "npm:decimal.js": {
+      "type": "npm",
+      "name": "npm:decimal.js",
+      "data": {
+        "version": "10.4.3",
+        "packageName": "decimal.js",
+        "hash": "sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA=="
       }
     },
     "npm:decode-named-character-reference": {
@@ -2185,6 +2329,15 @@
         "version": "5.0.3",
         "packageName": "domhandler",
         "hash": "sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w=="
+      }
+    },
+    "npm:dompurify": {
+      "type": "npm",
+      "name": "npm:dompurify",
+      "data": {
+        "version": "3.1.0",
+        "packageName": "dompurify",
+        "hash": "sha512-yoU4rhgPKCo+p5UrWWWNKiIq+ToGqmVVhk0PmMYBK4kRsR3/qhemNFL8f6CFmBd4gMwm3F4T7HBoydP5uY07fA=="
       }
     },
     "npm:domutils": {
@@ -2979,6 +3132,42 @@
         "hash": "sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw=="
       }
     },
+    "npm:html-encoding-sniffer": {
+      "type": "npm",
+      "name": "npm:html-encoding-sniffer",
+      "data": {
+        "version": "4.0.0",
+        "packageName": "html-encoding-sniffer",
+        "hash": "sha512-Y22oTqIU4uuPgEemfz7NDJz6OeKf12Lsu+QC+s3BVpda64lTiMYCyGwg5ki4vFxkMwQdeZDl2adZoqUgdFuTgQ=="
+      }
+    },
+    "npm:http-proxy-agent": {
+      "type": "npm",
+      "name": "npm:http-proxy-agent",
+      "data": {
+        "version": "7.0.2",
+        "packageName": "http-proxy-agent",
+        "hash": "sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig=="
+      }
+    },
+    "npm:https-proxy-agent": {
+      "type": "npm",
+      "name": "npm:https-proxy-agent",
+      "data": {
+        "version": "7.0.4",
+        "packageName": "https-proxy-agent",
+        "hash": "sha512-wlwpilI7YdjSkWaQ/7omYBMTliDcmCN8OLihO6I9B86g06lMyAoqgoDpV0XqoaPOKj+0DIdAvnsWfyAAhmimcg=="
+      }
+    },
+    "npm:iconv-lite": {
+      "type": "npm",
+      "name": "npm:iconv-lite",
+      "data": {
+        "version": "0.6.3",
+        "packageName": "iconv-lite",
+        "hash": "sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw=="
+      }
+    },
     "npm:ieee754": {
       "type": "npm",
       "name": "npm:ieee754",
@@ -3258,6 +3447,15 @@
         "hash": "sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg=="
       }
     },
+    "npm:is-potential-custom-element-name": {
+      "type": "npm",
+      "name": "npm:is-potential-custom-element-name",
+      "data": {
+        "version": "1.0.1",
+        "packageName": "is-potential-custom-element-name",
+        "hash": "sha512-bCYeRA2rVibKZd+s2625gGnGF/t7DSqDs4dP7CrLA1m7jKWz6pps0LpYLJN8Q64HtmPKJ1hrN3nzPNKFEKOUiQ=="
+      }
+    },
     "npm:is-reference": {
       "type": "npm",
       "name": "npm:is-reference",
@@ -3348,6 +3546,15 @@
         "hash": "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw=="
       }
     },
+    "npm:isomorphic-dompurify": {
+      "type": "npm",
+      "name": "npm:isomorphic-dompurify",
+      "data": {
+        "version": "2.7.0",
+        "packageName": "isomorphic-dompurify",
+        "hash": "sha512-0FTlXP/gEEWW+O/sXaO9yZ4bgegrHnOqzbdCNAMeO2KYIOVMAcqVIo+uTcWYd1+DmI+nV58vUmNW03nauoKn2w=="
+      }
+    },
     "npm:jackspeak": {
       "type": "npm",
       "name": "npm:jackspeak",
@@ -3391,6 +3598,24 @@
         "version": "1.21.0",
         "packageName": "jiti",
         "hash": "sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q=="
+      }
+    },
+    "npm:jose": {
+      "type": "npm",
+      "name": "npm:jose",
+      "data": {
+        "version": "4.15.5",
+        "packageName": "jose",
+        "hash": "sha512-jc7BFxgKPKi94uOvEmzlSWFFe2+vASyXaKUpdQKatWAESU2MWjDfFf0fdfc83CDKcA5QecabZeNLyfhe3yKNkg=="
+      }
+    },
+    "npm:jsdom": {
+      "type": "npm",
+      "name": "npm:jsdom",
+      "data": {
+        "version": "24.0.0",
+        "packageName": "jsdom",
+        "hash": "sha512-UDS2NayCvmXSXVP6mpTj+73JnNQadZlr9N68189xib2tx5Mls7swlTNao26IoHv46BZJFvXygyRtyXd1feAk1A=="
       }
     },
     "npm:json-buffer": {
@@ -3519,6 +3744,24 @@
         "hash": "sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw=="
       }
     },
+    "npm:lodash.castarray": {
+      "type": "npm",
+      "name": "npm:lodash.castarray",
+      "data": {
+        "version": "4.4.0",
+        "packageName": "lodash.castarray",
+        "hash": "sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q=="
+      }
+    },
+    "npm:lodash.isplainobject": {
+      "type": "npm",
+      "name": "npm:lodash.isplainobject",
+      "data": {
+        "version": "4.0.6",
+        "packageName": "lodash.isplainobject",
+        "hash": "sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA=="
+      }
+    },
     "npm:lodash.merge": {
       "type": "npm",
       "name": "npm:lodash.merge",
@@ -3571,6 +3814,15 @@
         "version": "2.0.0",
         "packageName": "markdown-extensions",
         "hash": "sha512-o5vL7aDWatOTX8LzaS1WMoaoxIiLRQJuIKKe2wAw6IeULDHaqbiqiggmx+pKvZDb1Sj+pE46Sn1T7lCqfFtg1Q=="
+      }
+    },
+    "npm:marked": {
+      "type": "npm",
+      "name": "npm:marked",
+      "data": {
+        "version": "12.0.1",
+        "packageName": "marked",
+        "hash": "sha512-Y1/V2yafOcOdWQCX0XpAKXzDakPOpn6U0YLxTJs3cww6VxOzZV1BTOOYWLvH3gX38cq+iLwljHHTnMtlDfg01Q=="
       }
     },
     "npm:mdast-util-from-markdown": {
@@ -4059,6 +4311,15 @@
         "hash": "sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w=="
       }
     },
+    "npm:nwsapi": {
+      "type": "npm",
+      "name": "npm:nwsapi",
+      "data": {
+        "version": "2.2.7",
+        "packageName": "nwsapi",
+        "hash": "sha512-ub5E4+FBPKwAZx0UwIQOjYWGHTEq5sPqHQNRN8Z9e4A7u3Tj1weLJsL59yH9vmvqEtBHaOmT6cYQKIZOxp35FQ=="
+      }
+    },
     "npm:nx": {
       "type": "npm",
       "name": "npm:nx",
@@ -4066,6 +4327,15 @@
         "version": "18.2.3",
         "packageName": "nx",
         "hash": "sha512-4XGvvIzXeeeSj1hObiBL7E7aXX6rbiB1F856AqUdGoysYfkhcxOFyeAv5XsXeukl9gYwh/LH84paXjEOkGaJlA=="
+      }
+    },
+    "npm:oauth4webapi": {
+      "type": "npm",
+      "name": "npm:oauth4webapi",
+      "data": {
+        "version": "2.10.4",
+        "packageName": "oauth4webapi",
+        "hash": "sha512-DSoj8QoChzOCQlJkRmYxAJCIpnXFW32R0Uq7avyghIeB6iJq0XAblOD7pcq3mx4WEBDwMuKr0Y1qveCBleG2Xw=="
       }
     },
     "npm:object-assign": {
@@ -4201,6 +4471,15 @@
         "version": "4.0.1",
         "packageName": "parse-entities",
         "hash": "sha512-SWzvYcSJh4d/SGLIOQfZ/CoNv6BTlI6YEQ7Nj82oDVnRpwe/Z/F1EMx42x3JAOwGBlCjeCH0BRJQbQ/opHL17w=="
+      }
+    },
+    "npm:parse5": {
+      "type": "npm",
+      "name": "npm:parse5",
+      "data": {
+        "version": "7.1.2",
+        "packageName": "parse5",
+        "hash": "sha512-Czj1WaSVpaoj0wbhMzLmWD69anp2WH7FXMB9n1Sy8/ZFF9jolSQVMu1Ij5WIyGmcBmhk7EOndpO4mIpihVqAXw=="
       }
     },
     "npm:path-exists": {
@@ -4356,15 +4635,6 @@
         "hash": "sha512-mEp4xPMi5bSWiMbsgoPfcP74lsWLHkQbZc3sY+jWYd65CUwXrUaTp0fmNpa01ZcETKlIgUdFN/MpS2xZtqL9dQ=="
       }
     },
-    "npm:postcss-selector-parser": {
-      "type": "npm",
-      "name": "npm:postcss-selector-parser",
-      "data": {
-        "version": "6.0.16",
-        "packageName": "postcss-selector-parser",
-        "hash": "sha512-A0RVJrX+IUkVZbW3ClroRWurercFhieevHB38sr2+l9eUClMqome3LmEmnhlNy+5Mr2EYN6B2Kaw9wYdd+VHiw=="
-      }
-    },
     "npm:postcss-value-parser": {
       "type": "npm",
       "name": "npm:postcss-value-parser",
@@ -4372,6 +4642,42 @@
         "version": "4.2.0",
         "packageName": "postcss-value-parser",
         "hash": "sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ=="
+      }
+    },
+    "npm:preact": {
+      "type": "npm",
+      "name": "npm:preact",
+      "data": {
+        "version": "10.11.3",
+        "packageName": "preact",
+        "hash": "sha512-eY93IVpod/zG3uMF22Unl8h9KkrcKIRs2EGar8hwLZZDU1lkjph303V9HZBwufh2s736U6VXuhD109LYqPoffg=="
+      }
+    },
+    "npm:preact-render-to-string": {
+      "type": "npm",
+      "name": "npm:preact-render-to-string",
+      "data": {
+        "version": "5.2.3",
+        "packageName": "preact-render-to-string",
+        "hash": "sha512-aPDxUn5o3GhWdtJtW0svRC2SS/l8D9MAgo2+AWml+BhDImb27ALf04Q2d+AHqUUOc6RdSXFIBVa2gxzgMKgtZA=="
+      }
+    },
+    "npm:pretty-format@3.8.0": {
+      "type": "npm",
+      "name": "npm:pretty-format@3.8.0",
+      "data": {
+        "version": "3.8.0",
+        "packageName": "pretty-format",
+        "hash": "sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew=="
+      }
+    },
+    "npm:pretty-format": {
+      "type": "npm",
+      "name": "npm:pretty-format",
+      "data": {
+        "version": "29.7.0",
+        "packageName": "pretty-format",
+        "hash": "sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ=="
       }
     },
     "npm:prelude-ls": {
@@ -4401,15 +4707,6 @@
         "hash": "sha512-2tPWHCFNC+WRjAC4SIWQNSOdcL1NNkydXim8w7TDqlZi+/ulZYz2OouAI6qMtkggnPt7lGamboj6LcTMwcCvoQ=="
       }
     },
-    "npm:pretty-format": {
-      "type": "npm",
-      "name": "npm:pretty-format",
-      "data": {
-        "version": "29.7.0",
-        "packageName": "pretty-format",
-        "hash": "sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ=="
-      }
-    },
     "npm:property-information": {
       "type": "npm",
       "name": "npm:property-information",
@@ -4428,6 +4725,15 @@
         "hash": "sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg=="
       }
     },
+    "npm:psl": {
+      "type": "npm",
+      "name": "npm:psl",
+      "data": {
+        "version": "1.9.0",
+        "packageName": "psl",
+        "hash": "sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag=="
+      }
+    },
     "npm:punycode": {
       "type": "npm",
       "name": "npm:punycode",
@@ -4435,6 +4741,15 @@
         "version": "2.3.1",
         "packageName": "punycode",
         "hash": "sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg=="
+      }
+    },
+    "npm:querystringify": {
+      "type": "npm",
+      "name": "npm:querystringify",
+      "data": {
+        "version": "2.2.0",
+        "packageName": "querystringify",
+        "hash": "sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ=="
       }
     },
     "npm:queue-microtask": {
@@ -4536,6 +4851,15 @@
         "hash": "sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q=="
       }
     },
+    "npm:requires-port": {
+      "type": "npm",
+      "name": "npm:requires-port",
+      "data": {
+        "version": "1.0.0",
+        "packageName": "requires-port",
+        "hash": "sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ=="
+      }
+    },
     "npm:resolve": {
       "type": "npm",
       "name": "npm:resolve",
@@ -4608,6 +4932,15 @@
         "hash": "sha512-4LnHSdd3QK2pa1J6dFbfm1HN0D7vSK/ZuZTsdyUAlA6Rr1yTouUTL13HaDOGJVgby461AhrNGBS7sCGXXtT+SA=="
       }
     },
+    "npm:rrweb-cssom": {
+      "type": "npm",
+      "name": "npm:rrweb-cssom",
+      "data": {
+        "version": "0.6.0",
+        "packageName": "rrweb-cssom",
+        "hash": "sha512-APM0Gt1KoXBz0iIkkdB/kfvGOwC4UuJFeG/c+yV7wSc7q96cG/kJ0HiYCnzivD9SB53cLV1MlHFNfOuPaadYSw=="
+      }
+    },
     "npm:run-parallel": {
       "type": "npm",
       "name": "npm:run-parallel",
@@ -4642,6 +4975,24 @@
         "version": "1.0.3",
         "packageName": "safe-regex-test",
         "hash": "sha512-CdASjNJPvRa7roO6Ra/gLYBTzYzzPyyBXxIMdGW3USQLyjWEls2RgW5UBTXaQVp+OrpeCK3bLem8smtmheoRuw=="
+      }
+    },
+    "npm:safer-buffer": {
+      "type": "npm",
+      "name": "npm:safer-buffer",
+      "data": {
+        "version": "2.1.2",
+        "packageName": "safer-buffer",
+        "hash": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg=="
+      }
+    },
+    "npm:saxes": {
+      "type": "npm",
+      "name": "npm:saxes",
+      "data": {
+        "version": "6.0.0",
+        "packageName": "saxes",
+        "hash": "sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA=="
       }
     },
     "npm:set-function-length": {
@@ -4878,6 +5229,15 @@
         "hash": "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="
       }
     },
+    "npm:surrealdb.js": {
+      "type": "npm",
+      "name": "npm:surrealdb.js",
+      "data": {
+        "version": "0.11.0",
+        "packageName": "surrealdb.js",
+        "hash": "sha512-x/Qd0UYyNilwY27JZlWgP8NsCdBzDtextRzP9oIm7xO27qsZvE5Rh4wnYN0xD68zgRAE4W8Jsufbm+hKbaGsTg=="
+      }
+    },
     "npm:svgo": {
       "type": "npm",
       "name": "npm:svgo",
@@ -4885,6 +5245,15 @@
         "version": "3.2.0",
         "packageName": "svgo",
         "hash": "sha512-4PP6CMW/V7l/GmKRKzsLR8xxjdHTV4IMvhTnpuHwwBazSIlw5W/5SmPjN8Dwyt7lKbSJrRDgp4t9ph0HgChFBQ=="
+      }
+    },
+    "npm:symbol-tree": {
+      "type": "npm",
+      "name": "npm:symbol-tree",
+      "data": {
+        "version": "3.2.4",
+        "packageName": "symbol-tree",
+        "hash": "sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw=="
       }
     },
     "npm:tailwindcss": {
@@ -4957,6 +5326,42 @@
         "version": "5.0.1",
         "packageName": "to-regex-range",
         "hash": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ=="
+      }
+    },
+    "npm:tough-cookie": {
+      "type": "npm",
+      "name": "npm:tough-cookie",
+      "data": {
+        "version": "4.1.3",
+        "packageName": "tough-cookie",
+        "hash": "sha512-aX/y5pVRkfRnfmuX+OdbSdXvPe6ieKX/G2s7e98f4poJHnqH3281gDPm/metm6E/WRamfx7WC4HUqkWHfQHprw=="
+      }
+    },
+    "npm:universalify@0.2.0": {
+      "type": "npm",
+      "name": "npm:universalify@0.2.0",
+      "data": {
+        "version": "0.2.0",
+        "packageName": "universalify",
+        "hash": "sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg=="
+      }
+    },
+    "npm:universalify": {
+      "type": "npm",
+      "name": "npm:universalify",
+      "data": {
+        "version": "2.0.1",
+        "packageName": "universalify",
+        "hash": "sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw=="
+      }
+    },
+    "npm:tr46": {
+      "type": "npm",
+      "name": "npm:tr46",
+      "data": {
+        "version": "5.0.0",
+        "packageName": "tr46",
+        "hash": "sha512-tk2G5R2KRwBd+ZN0zaEXpmzdKyOYksXwywulIX95MBODjSzMIuQnQ3m8JxgbhnL1LeVo7lqQKsYa1O3Htl7K5g=="
       }
     },
     "npm:trim-lines": {
@@ -5184,13 +5589,13 @@
         "hash": "sha512-L/PqWzfTP9lzzEa6CKs0k2nARxTdZduw3zyh8d2NVBnsyvHjSX4TWse388YrrQKbvI8w20fGjGlhgT96WwKykw=="
       }
     },
-    "npm:universalify": {
+    "npm:unws": {
       "type": "npm",
-      "name": "npm:universalify",
+      "name": "npm:unws",
       "data": {
-        "version": "2.0.1",
-        "packageName": "universalify",
-        "hash": "sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw=="
+        "version": "0.2.4",
+        "packageName": "unws",
+        "hash": "sha512-/N1ajiqrSp0A/26/LBg7r10fOcPtGXCqJRJ61sijUFoGZMr6ESWGYn7i0cwr7fR7eEECY5HsitqtjGHDZLAu2w=="
       }
     },
     "npm:update-browserslist-db": {
@@ -5209,6 +5614,15 @@
         "version": "4.4.1",
         "packageName": "uri-js",
         "hash": "sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg=="
+      }
+    },
+    "npm:url-parse": {
+      "type": "npm",
+      "name": "npm:url-parse",
+      "data": {
+        "version": "1.5.10",
+        "packageName": "url-parse",
+        "hash": "sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ=="
       }
     },
     "npm:util-deprecate": {
@@ -5265,6 +5679,15 @@
         "hash": "sha512-0Vd/a6po6Q+86rPlntHye7F31zA2URZMbH8M3saAZ/xR9QoGN/L21bxEGfXdWmFdNkqPpRdxFT7nmNe12e9/uA=="
       }
     },
+    "npm:w3c-xmlserializer": {
+      "type": "npm",
+      "name": "npm:w3c-xmlserializer",
+      "data": {
+        "version": "5.0.0",
+        "packageName": "w3c-xmlserializer",
+        "hash": "sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA=="
+      }
+    },
     "npm:wcwidth": {
       "type": "npm",
       "name": "npm:wcwidth",
@@ -5272,6 +5695,42 @@
         "version": "1.0.1",
         "packageName": "wcwidth",
         "hash": "sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg=="
+      }
+    },
+    "npm:webidl-conversions": {
+      "type": "npm",
+      "name": "npm:webidl-conversions",
+      "data": {
+        "version": "7.0.0",
+        "packageName": "webidl-conversions",
+        "hash": "sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g=="
+      }
+    },
+    "npm:whatwg-encoding": {
+      "type": "npm",
+      "name": "npm:whatwg-encoding",
+      "data": {
+        "version": "3.1.1",
+        "packageName": "whatwg-encoding",
+        "hash": "sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ=="
+      }
+    },
+    "npm:whatwg-mimetype": {
+      "type": "npm",
+      "name": "npm:whatwg-mimetype",
+      "data": {
+        "version": "4.0.0",
+        "packageName": "whatwg-mimetype",
+        "hash": "sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg=="
+      }
+    },
+    "npm:whatwg-url": {
+      "type": "npm",
+      "name": "npm:whatwg-url",
+      "data": {
+        "version": "14.0.0",
+        "packageName": "whatwg-url",
+        "hash": "sha512-1lfMEm2IEr7RIV+f4lUNPOqfFL+pO+Xw3fJSqmjX9AbXcXcYOkCe1P6+9VBZB6n94af16NfZf+sSk0JCBZC9aw=="
       }
     },
     "npm:which": {
@@ -5317,6 +5776,33 @@
         "version": "1.0.2",
         "packageName": "wrappy",
         "hash": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ=="
+      }
+    },
+    "npm:ws": {
+      "type": "npm",
+      "name": "npm:ws",
+      "data": {
+        "version": "8.16.0",
+        "packageName": "ws",
+        "hash": "sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ=="
+      }
+    },
+    "npm:xml-name-validator": {
+      "type": "npm",
+      "name": "npm:xml-name-validator",
+      "data": {
+        "version": "5.0.0",
+        "packageName": "xml-name-validator",
+        "hash": "sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg=="
+      }
+    },
+    "npm:xmlchars": {
+      "type": "npm",
+      "name": "npm:xmlchars",
+      "data": {
+        "version": "2.2.0",
+        "packageName": "xmlchars",
+        "hash": "sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw=="
       }
     },
     "npm:y18n": {
@@ -5394,6 +5880,36 @@
   },
   "dependencies": [
     {
+      "source": "npm:@auth/core",
+      "target": "npm:@panva/hkdf",
+      "type": "static"
+    },
+    {
+      "source": "npm:@auth/core",
+      "target": "npm:cookie",
+      "type": "static"
+    },
+    {
+      "source": "npm:@auth/core",
+      "target": "npm:jose",
+      "type": "static"
+    },
+    {
+      "source": "npm:@auth/core",
+      "target": "npm:oauth4webapi",
+      "type": "static"
+    },
+    {
+      "source": "npm:@auth/core",
+      "target": "npm:preact",
+      "type": "static"
+    },
+    {
+      "source": "npm:@auth/core",
+      "target": "npm:preact-render-to-string",
+      "type": "static"
+    },
+    {
       "source": "npm:@builder.io/qwik",
       "target": "npm:undici",
       "type": "static"
@@ -5406,6 +5922,11 @@
     {
       "source": "npm:@builder.io/qwik",
       "target": "npm:vite",
+      "type": "static"
+    },
+    {
+      "source": "npm:@builder.io/qwik-auth",
+      "target": "npm:@auth/core",
       "type": "static"
     },
     {
@@ -5889,6 +6410,11 @@
       "type": "static"
     },
     {
+      "source": "npm:@qwikest/icons",
+      "target": "npm:@builder.io/qwik",
+      "type": "static"
+    },
+    {
       "source": "npm:@rollup/pluginutils",
       "target": "npm:rollup",
       "type": "static"
@@ -5909,6 +6435,36 @@
       "type": "static"
     },
     {
+      "source": "npm:@tailwindcss/typography",
+      "target": "npm:lodash.castarray",
+      "type": "static"
+    },
+    {
+      "source": "npm:@tailwindcss/typography",
+      "target": "npm:lodash.isplainobject",
+      "type": "static"
+    },
+    {
+      "source": "npm:@tailwindcss/typography",
+      "target": "npm:lodash.merge",
+      "type": "static"
+    },
+    {
+      "source": "npm:@tailwindcss/typography",
+      "target": "npm:postcss-selector-parser@6.0.10",
+      "type": "static"
+    },
+    {
+      "source": "npm:postcss-selector-parser@6.0.10",
+      "target": "npm:cssesc",
+      "type": "static"
+    },
+    {
+      "source": "npm:postcss-selector-parser@6.0.10",
+      "target": "npm:util-deprecate",
+      "type": "static"
+    },
+    {
       "source": "npm:@types/acorn",
       "target": "npm:@types/estree",
       "type": "static"
@@ -5916,6 +6472,11 @@
     {
       "source": "npm:@types/debug",
       "target": "npm:@types/ms",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/dompurify",
+      "target": "npm:@types/trusted-types",
       "type": "static"
     },
     {
@@ -6201,6 +6762,11 @@
     {
       "source": "npm:acorn-jsx",
       "target": "npm:acorn",
+      "type": "static"
+    },
+    {
+      "source": "npm:agent-base",
+      "target": "npm:debug",
       "type": "static"
     },
     {
@@ -6529,6 +7095,11 @@
       "type": "static"
     },
     {
+      "source": "npm:class-variance-authority",
+      "target": "npm:clsx",
+      "type": "static"
+    },
+    {
       "source": "npm:cli-cursor",
       "target": "npm:restore-cursor",
       "type": "static"
@@ -6671,6 +7242,21 @@
     {
       "source": "npm:css-tree@2.2.1",
       "target": "npm:source-map-js",
+      "type": "static"
+    },
+    {
+      "source": "npm:cssstyle",
+      "target": "npm:rrweb-cssom",
+      "type": "static"
+    },
+    {
+      "source": "npm:data-urls",
+      "target": "npm:whatwg-mimetype",
+      "type": "static"
+    },
+    {
+      "source": "npm:data-urls",
+      "target": "npm:whatwg-url",
       "type": "static"
     },
     {
@@ -7989,6 +8575,36 @@
       "type": "static"
     },
     {
+      "source": "npm:html-encoding-sniffer",
+      "target": "npm:whatwg-encoding",
+      "type": "static"
+    },
+    {
+      "source": "npm:http-proxy-agent",
+      "target": "npm:agent-base",
+      "type": "static"
+    },
+    {
+      "source": "npm:http-proxy-agent",
+      "target": "npm:debug",
+      "type": "static"
+    },
+    {
+      "source": "npm:https-proxy-agent",
+      "target": "npm:agent-base",
+      "type": "static"
+    },
+    {
+      "source": "npm:https-proxy-agent",
+      "target": "npm:debug",
+      "type": "static"
+    },
+    {
+      "source": "npm:iconv-lite",
+      "target": "npm:safer-buffer",
+      "type": "static"
+    },
+    {
       "source": "npm:imagetools-core",
       "target": "npm:sharp",
       "type": "static"
@@ -8139,6 +8755,21 @@
       "type": "static"
     },
     {
+      "source": "npm:isomorphic-dompurify",
+      "target": "npm:@types/dompurify",
+      "type": "static"
+    },
+    {
+      "source": "npm:isomorphic-dompurify",
+      "target": "npm:dompurify",
+      "type": "static"
+    },
+    {
+      "source": "npm:isomorphic-dompurify",
+      "target": "npm:jsdom",
+      "type": "static"
+    },
+    {
       "source": "npm:jackspeak",
       "target": "npm:@isaacs/cliui",
       "type": "static"
@@ -8206,6 +8837,111 @@
     {
       "source": "npm:js-yaml",
       "target": "npm:argparse",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:cssstyle",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:data-urls",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:decimal.js",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:form-data",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:html-encoding-sniffer",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:http-proxy-agent",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:https-proxy-agent",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:is-potential-custom-element-name",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:nwsapi",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:parse5",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:rrweb-cssom",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:saxes",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:symbol-tree",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:tough-cookie",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:w3c-xmlserializer",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:webidl-conversions",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:whatwg-encoding",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:whatwg-mimetype",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:whatwg-url",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:ws",
+      "type": "static"
+    },
+    {
+      "source": "npm:jsdom",
+      "target": "npm:xml-name-validator",
       "type": "static"
     },
     {
@@ -9669,6 +10405,11 @@
       "type": "static"
     },
     {
+      "source": "npm:parse5",
+      "target": "npm:entities",
+      "type": "static"
+    },
+    {
       "source": "npm:path-scurry",
       "target": "npm:lru-cache@10.2.0",
       "type": "static"
@@ -9771,6 +10512,16 @@
     {
       "source": "npm:postcss-selector-parser",
       "target": "npm:util-deprecate",
+      "type": "static"
+    },
+    {
+      "source": "npm:preact-render-to-string",
+      "target": "npm:preact",
+      "type": "static"
+    },
+    {
+      "source": "npm:preact-render-to-string",
+      "target": "npm:pretty-format@3.8.0",
       "type": "static"
     },
     {
@@ -10076,6 +10827,11 @@
     {
       "source": "npm:safe-regex-test",
       "target": "npm:is-regex",
+      "type": "static"
+    },
+    {
+      "source": "npm:saxes",
+      "target": "npm:xmlchars",
       "type": "static"
     },
     {
@@ -10469,6 +11225,21 @@
       "type": "static"
     },
     {
+      "source": "npm:surrealdb.js",
+      "target": "npm:unws",
+      "type": "static"
+    },
+    {
+      "source": "npm:surrealdb.js",
+      "target": "npm:ws",
+      "type": "static"
+    },
+    {
+      "source": "npm:surrealdb.js",
+      "target": "npm:zod",
+      "type": "static"
+    },
+    {
       "source": "npm:svgo",
       "target": "npm:@trysound/sax",
       "type": "static"
@@ -10651,6 +11422,31 @@
     {
       "source": "npm:to-regex-range",
       "target": "npm:is-number",
+      "type": "static"
+    },
+    {
+      "source": "npm:tough-cookie",
+      "target": "npm:psl",
+      "type": "static"
+    },
+    {
+      "source": "npm:tough-cookie",
+      "target": "npm:punycode",
+      "type": "static"
+    },
+    {
+      "source": "npm:tough-cookie",
+      "target": "npm:universalify@0.2.0",
+      "type": "static"
+    },
+    {
+      "source": "npm:tough-cookie",
+      "target": "npm:url-parse",
+      "type": "static"
+    },
+    {
+      "source": "npm:tr46",
+      "target": "npm:punycode",
       "type": "static"
     },
     {
@@ -10894,6 +11690,11 @@
       "type": "static"
     },
     {
+      "source": "npm:unws",
+      "target": "npm:ws",
+      "type": "static"
+    },
+    {
       "source": "npm:update-browserslist-db",
       "target": "npm:browserslist",
       "type": "static"
@@ -10911,6 +11712,16 @@
     {
       "source": "npm:uri-js",
       "target": "npm:punycode",
+      "type": "static"
+    },
+    {
+      "source": "npm:url-parse",
+      "target": "npm:querystringify",
+      "type": "static"
+    },
+    {
+      "source": "npm:url-parse",
+      "target": "npm:requires-port",
       "type": "static"
     },
     {
@@ -10994,8 +11805,28 @@
       "type": "static"
     },
     {
+      "source": "npm:w3c-xmlserializer",
+      "target": "npm:xml-name-validator",
+      "type": "static"
+    },
+    {
       "source": "npm:wcwidth",
       "target": "npm:defaults",
+      "type": "static"
+    },
+    {
+      "source": "npm:whatwg-encoding",
+      "target": "npm:iconv-lite",
+      "type": "static"
+    },
+    {
+      "source": "npm:whatwg-url",
+      "target": "npm:tr46",
+      "type": "static"
+    },
+    {
+      "source": "npm:whatwg-url",
+      "target": "npm:webidl-conversions",
       "type": "static"
     },
     {

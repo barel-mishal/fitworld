@@ -2,7 +2,15 @@
   "version": "6.0",
   "nxVersion": "18.2.3",
   "deps": {
+    "@qwikest/icons": "^0.0.13",
+    "@tailwindcss/typography": "^0.5.12",
+    "class-variance-authority": "^0.7.0",
+    "isomorphic-dompurify": "^2.7.0",
+    "marked": "^12.0.1",
+    "surrealdb.js": "^0.11.0",
+    "@auth/core": "^0.13.0",
     "@builder.io/qwik": "^1.5.1",
+    "@builder.io/qwik-auth": "0.1.1",
     "@builder.io/qwik-city": "^1.5.1",
     "@qwik-ui/headless": "^0.3.5",
     "@qwik-ui/styled": "^0.0.5",
@@ -48,7 +56,7 @@
         },
         {
           "file": ".gitignore",
-          "hash": "2886366316958850132"
+          "hash": "2051699296591713973"
         },
         {
           "file": ".prettierignore",
@@ -76,13 +84,21 @@
         },
         {
           "file": "package-lock.json",
-          "hash": "9028077005991107681"
+          "hash": "12978283796509643875"
         },
         {
           "file": "package.json",
-          "hash": "13040144459232297999",
+          "hash": "581787944474664591",
           "deps": [
+            "npm:@qwikest/icons",
+            "npm:@tailwindcss/typography",
+            "npm:class-variance-authority",
+            "npm:isomorphic-dompurify",
+            "npm:marked",
+            "npm:surrealdb.js",
+            "npm:@auth/core",
             "npm:@builder.io/qwik",
+            "npm:@builder.io/qwik-auth",
             "npm:@builder.io/qwik-city",
             "npm:@qwik-ui/headless",
             "npm:@qwik-ui/styled",
@@ -127,8 +143,20 @@
           "hash": "17189465645030050949"
         },
         {
-          "file": "src/components/layout_blocks/dashboard.tsx",
-          "hash": "18227441309495945070"
+          "file": "schema.srqlnb",
+          "hash": "10416806155929584384"
+        },
+        {
+          "file": "src/components/HookComponent/NavLink.tsx",
+          "hash": "8980389299613920095"
+        },
+        {
+          "file": "src/components/layout_blocks/dashboard_layout_components/dashboard.tsx",
+          "hash": "10158250461908118647"
+        },
+        {
+          "file": "src/components/layout_blocks/dashboard_layout_components/dashboardModal.tsx",
+          "hash": "7709184560477161255"
         },
         {
           "file": "src/components/router-head/router-head.tsx",
@@ -136,7 +164,11 @@
         },
         {
           "file": "src/components/ui/button/button.tsx",
-          "hash": "16760589817676992481"
+          "hash": "11691798485975722613"
+        },
+        {
+          "file": "src/components/ui/input/input.tsx",
+          "hash": "12019728794061049812"
         },
         {
           "file": "src/components/ui/label/label.tsx",
@@ -144,7 +176,7 @@
         },
         {
           "file": "src/components/ui/modal/modal.tsx",
-          "hash": "3644554777259523555"
+          "hash": "7199405005343027892"
         },
         {
           "file": "src/entry.dev.tsx",
@@ -164,15 +196,59 @@
         },
         {
           "file": "src/root.tsx",
-          "hash": "5678246186758234605"
+          "hash": "9687959275163285543"
+        },
+        {
+          "file": "src/routes/auth/new-user/index.tsx",
+          "hash": "6807563380828099913"
+        },
+        {
+          "file": "src/routes/auth/signin/index.tsx",
+          "hash": "14748185150084664256"
+        },
+        {
+          "file": "src/routes/auth/signout/index.tsx",
+          "hash": "17962003148789612286"
+        },
+        {
+          "file": "src/routes/auth/verify-request/index.tsx",
+          "hash": "6807563380828099913"
+        },
+        {
+          "file": "src/routes/dashboard/feed/index.tsx",
+          "hash": "6807563380828099913"
+        },
+        {
+          "file": "src/routes/dashboard/index.tsx",
+          "hash": "13435407745187793891"
+        },
+        {
+          "file": "src/routes/dashboard/layout.tsx",
+          "hash": "10235792060041586535"
+        },
+        {
+          "file": "src/routes/dashboard/notes/index.tsx",
+          "hash": "14864985413561126024"
+        },
+        {
+          "file": "src/routes/dashboard/profile/index.tsx",
+          "hash": "6807563380828099913"
+        },
+        {
+          "file": "src/routes/dashboard/settings/index.tsx",
+          "hash": "6807563380828099913"
         },
         {
           "file": "src/routes/index.tsx",
-          "hash": "14943740133445080926"
+          "hash": "6005286210379959363"
         },
         {
           "file": "src/routes/layout.tsx",
           "hash": "17418011656502051241"
+        },
+        {
+          "file": "src/routes/plugin@auth.ts",
+          "hash": "141961183797957436"
         },
         {
           "file": "src/routes/service-worker.ts",
@@ -180,7 +256,7 @@
         },
         {
           "file": "tailwind.config.js",
-          "hash": "16271645276300778272"
+          "hash": "5502234627996134087"
         },
         {
           "file": "tsconfig.json",
@@ -188,7 +264,7 @@
         },
         {
           "file": "vite.config.ts",
-          "hash": "17450248892903770844"
+          "hash": "12724279953266859692"
         }
       ]
     },

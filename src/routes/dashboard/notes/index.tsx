@@ -1,8 +1,9 @@
-import { component$, useContext } from '@builder.io/qwik';
+import { component$, useContext, useStore } from '@builder.io/qwik';
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import DOMPurify from "isomorphic-dompurify";
 import { marked } from "marked";
 import { contextDashboard } from '~/components/layout_blocks/dashboard_layout_components/dashboard';
+import { Textarea } from '~/components/ui/textarea/textarea';
 
 export const useFetchMarkdownFile = routeLoader$(async () => {
   const res = String.raw`
@@ -259,10 +260,16 @@ export const useFetchMarkdownFile = routeLoader$(async () => {
 });
 
 export default component$(() => {
-  const markdown = useFetchMarkdownFile();
+  const store = useStore({content: ""});
   
   const dashboardContext = useContext(contextDashboard);
 
+  const parsedMarkdown = () => {
+    const parsedMarkdown = marked.parse(store.content) as string;
+    const sanitisedMarkdown = DOMPurify.sanitize(parsedMarkdown);
+    console.log(sanitisedMarkdown);
+    return sanitisedMarkdown;
+  }
   return (
     <div class="flex gap-2  ">
       <aside class="w-[200px] border-r p-4 gap-6 flex flex-col">
@@ -284,7 +291,11 @@ export default component$(() => {
       </aside>
       <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${dashboardContext.value.height}px`}}>
         <div class="">
-          <div class="prose max-w-[600px] px-14 py-12 border" dangerouslySetInnerHTML={markdown.value}></div>;
+          <Textarea onInput$={(e, el) => store.content = el.value}></Textarea>
+          <div 
+          contentEditable='inherit' class="prose max-w-[600px] px-14 py-12 border" 
+          dangerouslySetInnerHTML={parsedMarkdown()} 
+          ></div>
         </div>
       </section>
     </div>
