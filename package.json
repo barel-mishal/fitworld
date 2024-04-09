@@ -55,7 +55,10 @@
   "nx": {},
   "dependencies": {
     "@qwikest/icons": "^0.0.13",
+    "@tailwindcss/typography": "^0.5.12",
     "class-variance-authority": "^0.7.0",
+    "isomorphic-dompurify": "^2.7.0",
+    "marked": "^12.0.1",
     "surrealdb.js": "^0.11.0"
   }
 }

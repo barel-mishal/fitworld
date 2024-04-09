@@ -93,6 +93,7 @@ export default {
     },
   },
   plugins: [
+    require('@tailwindcss/typography'),
     plugin(function ({ addUtilities }) {
       addUtilities({
         ".press": {
