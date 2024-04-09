@@ -1,7 +1,8 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useContext } from '@builder.io/qwik';
 import { routeLoader$ } from "@builder.io/qwik-city";
 import DOMPurify from "isomorphic-dompurify";
 import { marked } from "marked";
+import { contextDashboard } from '~/components/layout_blocks/dashboard';
 
 
 
@@ -259,13 +260,16 @@ export const fetchMarkdownFile = routeLoader$(async () => {
 });
 
 
+
 export default component$(() => {
   const markdown = fetchMarkdownFile();
+  
+  const dashboardContext = useContext(contextDashboard);
 
   return (
-    <div class="flex gap-2 bg-sky-200">
+    <div class="flex gap-2  ">
       <aside class="">
-        <h1 class="font-bold text-sky-800">Notes</h1>
+        <h1 class="font-bold">Notes</h1>
         <ul class="grid gap-1">
           <li>1</li>
           <li>2</li>
@@ -273,11 +277,13 @@ export default component$(() => {
           <li>4</li>
         </ul>
       </aside>
-      <section class="bg-sky-500 flex overflow-y-auto justify-center justify-items-center justify-self-center">
+      <section class={"bg-sky-500 flex overflow-y-auto flex-grow"} style={{height:  `${dashboardContext.value.height}px`}}>
         <div class="prose" dangerouslySetInnerHTML={markdown.value}></div>;
       </section>
     </div>
   );
 });
+
+
 
 

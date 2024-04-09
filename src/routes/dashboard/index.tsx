@@ -38,8 +38,9 @@ export const serverLoader = server$(async function() {
 
 export default component$(() => {
   const sc = useAuthSession();
+  
   return (
-    <div>
+    <div class="">
       {sc.value?.user?.name}
       <Button onClick$={async () => {
         const data = await serverLoader();

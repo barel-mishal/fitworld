@@ -1,4 +1,4 @@
-import { Slot, component$ } from "@builder.io/qwik";
+import { $, type Signal, Slot, component$, createContextId, useContextProvider, useOnWindow, useSignal } from "@builder.io/qwik";
 import { Modal, ModalContent, ModalFooter, ModalHeader, ModalTrigger, ModalWrapper } from "../ui/modal/modal";
 import { Button } from "../ui/button/button";
 import { Input } from "../ui/input/input";
@@ -11,10 +11,33 @@ export interface DashboardProps {
     signout: ReturnTypeSignout
 }
 
-export const Dashboard = component$<DashboardProps>((props) => {
+export const contextDashboard = createContextId<Signal<{height: 0}>>("contextDashboard");
 
+export const Dashboard = component$<DashboardProps>((props) => {
+    const refMain = useSignal<HTMLDivElement>();
+    const signalTopBottom = useSignal<{
+        height: number;
+    }>({ height: 0 });
+
+    useOnWindow("load", $(() => {
+        if (!refMain.value) return;
+        console.log(refMain.value.clientHeight)
+        signalTopBottom.value = {
+            height: refMain.value.clientHeight-0.5
+        };
+    }));
+
+    useOnWindow("resize", $(() => {
+        if (!refMain.value) return;
+        signalTopBottom.value = {
+            height: refMain.value.clientHeight-0.2
+        };
+    }));
+
+    useContextProvider(contextDashboard, signalTopBottom);
+    
     return (
-        <div class={"font-oldstyle text-sky-950 flex h-screen max-h-screen"}>
+        <div class={"font-oldstyle text-sky-950 flex h-screen max-h-screen "}>
             <div class={"side-bar border-r border-slate-300 min-w-[250px]"}>
                 <div class={"p-4 grid gap-8"}>
                     <h1 class={"text-3xl font-bold"}>FitWorld</h1>
@@ -31,7 +54,7 @@ export const Dashboard = component$<DashboardProps>((props) => {
                     </ul>
                 </div>
             </div>
-            <div class={"nav-bar flex-grow flex flex-col "}>
+            <div class={"flex-grow flex flex-col "}>
                 <div class={"flex justify-between p-4 items-center border-b border-slate-300"}>
                     <div class="flex w-full max-w-sm items-center">
                         <Input type="email" class={"rounded-r-none rounded-l-md"} placeholder="find feeds and notes"   />
@@ -39,10 +62,10 @@ export const Dashboard = component$<DashboardProps>((props) => {
                     </div>
                     <MyModal name={props.name} signout={props.signout} />
                 </div>
-                <div class={"main flex flex-grow flex-col overflow-y-auto bg-sky-100"}>
+                <div class={"main flex flex-grow flex-col overflow-y-auto bg-sky-100"} ref={refMain}>
                     <Slot />
                 </div>
-                <div class={"footer bg-sky-950"}>
+                <div class={"footer bg-sky-950"} >
                     <div class={"p-1 text-sky-200"}>
                         <p class={"text-sm text-center"}>© 2024 Publish Notes. All rights reserved.</p>
                     </div>
