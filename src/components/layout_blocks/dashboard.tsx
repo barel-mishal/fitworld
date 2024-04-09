@@ -71,7 +71,7 @@ export const Dashboard = component$<DashboardProps>((props) => {
                     </div>
                     <MyModal name={props.name} signout={props.signout} />
                 </div>
-                <div class={"main flex flex-grow flex-col overflow-y-auto bg-sky-100"} ref={refMain}>
+                <div class={"main flex flex-grow flex-col overflow-y-auto "} ref={refMain}>
                     <Slot />
                 </div>
                 <div class={"footer bg-sky-950"} >
