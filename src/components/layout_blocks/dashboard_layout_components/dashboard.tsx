@@ -1,9 +1,9 @@
 import { $, type Signal, Slot, component$, createContextId, useContextProvider, useOnWindow, useSignal } from "@builder.io/qwik";
-import { Modal, ModalContent, ModalFooter, ModalHeader, ModalTrigger, ModalWrapper } from "../../ui/modal/modal";
 import { Button } from "../../ui/button/button";
 import { Input } from "../../ui/input/input";
-import { Form, Link } from "@builder.io/qwik-city";
+import { Link } from "@builder.io/qwik-city";
 import { type ReturnTypeSignout } from "~/routes/plugin@auth";
+import { MyModal } from "./dashboard copy";
 
 
 export interface DashboardProps {
@@ -84,44 +84,3 @@ export const Dashboard = component$<DashboardProps>((props) => {
     );
 });
 
-interface AuthProps extends DashboardProps {}
-
-export const MyModal = component$<AuthProps>((props) => {
-    return (
-        <ModalWrapper>
-            <ModalTrigger>
-                <Button class={"rounded-full w-12 h-12"}>B</Button>
-            </ModalTrigger>
-            <Modal>
-                <ModalHeader>
-                <h2 class="text-lg font-bold">{props.name}</h2>
-                <p class="text-sm font-light">
-                    Make changes to your profile here. Click save when you're done.
-                </p>
-                </ModalHeader>
-                <ModalContent>
-                <div class="grid gap-4 py-4">
-                    <div class="grid grid-cols-4 items-center gap-4">
-                    {/* <Label for="name" class="text-right">
-                        Name
-                    </Label>
-                    <Input id="name" defaultValue="Pedro Duarte" class="col-span-3" />
-                    </div>
-                    <div class="grid grid-cols-4 items-center gap-4">
-                    <Label for="username" class="text-right">
-                        Username
-                    </Label>
-                    <Input id="username" defaultValue="@peduarte" class="col-span-3" /> */}
-                    </div>
-                </div>
-                </ModalContent>
-                <ModalFooter>
-                    <Form action={props.signout}>
-                        <input type="hidden" name="callbackUrl" value="/auth/signout" />
-                        <Button>Logout</Button>
-                    </Form>
-                </ModalFooter>
-            </Modal>
-        </ModalWrapper>
-    );
-});
