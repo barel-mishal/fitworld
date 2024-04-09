@@ -1,7 +1,7 @@
 import { $, type Signal, Slot, component$, createContextId, useContextProvider, useOnWindow, useSignal } from "@builder.io/qwik";
-import { Modal, ModalContent, ModalFooter, ModalHeader, ModalTrigger, ModalWrapper } from "../ui/modal/modal";
-import { Button } from "../ui/button/button";
-import { Input } from "../ui/input/input";
+import { Modal, ModalContent, ModalFooter, ModalHeader, ModalTrigger, ModalWrapper } from "../../ui/modal/modal";
+import { Button } from "../../ui/button/button";
+import { Input } from "../../ui/input/input";
 import { Form, Link } from "@builder.io/qwik-city";
 import { type ReturnTypeSignout } from "~/routes/plugin@auth";
 
@@ -84,10 +84,7 @@ export const Dashboard = component$<DashboardProps>((props) => {
     );
 });
 
-interface AuthProps {
-    name: string;
-    signout: ReturnTypeSignout
-}
+interface AuthProps extends DashboardProps {}
 
 export const MyModal = component$<AuthProps>((props) => {
     return (

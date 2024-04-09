@@ -2,7 +2,7 @@ import { component$, useContext } from '@builder.io/qwik';
 import { routeLoader$ } from "@builder.io/qwik-city";
 import DOMPurify from "isomorphic-dompurify";
 import { marked } from "marked";
-import { contextDashboard } from '~/components/layout_blocks/dashboard';
+import { contextDashboard } from '~/components/layout_blocks/dashboard_layout_components/dashboard';
 
 
 

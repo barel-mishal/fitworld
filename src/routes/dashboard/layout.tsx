@@ -1,5 +1,5 @@
 import { component$, Slot } from '@builder.io/qwik';
-import { Dashboard } from '~/components/layout_blocks/dashboard';
+import { Dashboard } from '~/components/layout_blocks/dashboard_layout_components/dashboard';
 import { useAuthSession, useAuthSignout } from '../plugin@auth';
 import { type RequestHandler } from '@builder.io/qwik-city';
 import { type Session } from '@auth/core/types';
