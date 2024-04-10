@@ -1,11 +1,21 @@
-import { component$} from '@builder.io/qwik';
-import { type RequestHandler, } from "@builder.io/qwik-city";
-import { NotesLayout } from '~/components/layout_blocks/notes_layout_components/notes';
+import { Resource, component$, useResource$} from '@builder.io/qwik';
+import { useLocation, type RequestHandler, } from "@builder.io/qwik-city";
+import { type NoteProps, NotesLayout } from '~/components/layout_blocks/notes_layout_components/notes';
+import { serverGetNote } from '~/routes/api/service';
 
 export default component$(() => {
+  const location = useLocation();
+  const note = useResource$<NoteProps | undefined>(async () => {
+    return await serverGetNote(location.params.id);
+  })
 
   return (
-    <NotesLayout />
+    <Resource 
+      value={note} 
+      onResolved={(note) => {
+      return <NotesLayout note={note} />}} 
+      onPending={() => <div>Loading...</div>} 
+    />
   );
 });
 
@@ -19,7 +29,6 @@ export const onDelete: RequestHandler = async (requestEvent) => {
 export const onPut: RequestHandler = async (requestEvent) => { 
   console.log("edit", await requestEvent.parseBody())
 
-  
 }
 
  // todo: update a notes

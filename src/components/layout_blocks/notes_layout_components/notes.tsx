@@ -14,19 +14,21 @@ export interface NoteProps {
     id: number;
 }
 
-
-export const NotesLayout = component$<NoteProps>(() => {
+export const useNote = (note: NoteProps) => {
     const notes = useResource$<{notes: NoteProps[]}>(async () => await serverNotes());
     const store = useStore({
-        content: "", 
+        content: note.text, 
         edit: true, 
-        selectedNote: 1,
+        selectedNote: note.id,
         textEdit: $(function (this: {edit: boolean}) {
           return this.edit ? "Preview" : "Edit";
         }),
         toggleEdit: $(function (this: {edit: boolean}) {
           this.edit = !this.edit;
-        })
+        }),
+        updateContext: $(function (this: {content: string}, newContent: string) {
+            this.content = newContent;
+        }),
       });
       
       const dashboardContext = useContext(contextDashboard);
@@ -36,35 +38,53 @@ export const NotesLayout = component$<NoteProps>(() => {
         const sanitisedMarkdown = DOMPurify.sanitize(parsedMarkdown);
         return sanitisedMarkdown;
       }
+
+    return {
+        notes,
+        store,
+        parsedMarkdown: parsedMarkdown(),
+        dashboardContext
+        
+    }
+}
+
+
+export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => {
+    if (!props.note) {
+        return <div>Loading...</div>
+    }
+
+    const notesState = useNote(props.note);
+
     return (
         <div class="flex gap-2  ">
-        <aside class="w-[200px] border-r p-4 gap-6 flex flex-col">
-          <h1 class="font-bold text-3xl">Notes</h1>
-          <ul class="grid gap-1">
+            <aside class="w-[200px] border-r p-4 gap-6 flex flex-col">
+                <h1 class="font-bold text-3xl">Notes</h1>
+                <ul class="grid gap-1">
 
-            <Resource 
-                value={notes}
-                onResolved={(notes) => {
-                    return notes.notes.map((note) => {
-                        return (
-                            <li class="rounded-md text-sky-900 overflow-hidden" key={note.id}>
-                                <Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200 border border-sky-200", note.id === store.selectedNote && "bg-sky-100"]} href={`/dashboard/notes/${note.id}`}>{note.text}</Link>
-                            </li>
-                        )
-                    });
-                }}
-            />
+                <Resource 
+                    value={notesState.notes}
+                    onResolved={(notes) => {
+                        return notes.notes.map((note) => {
+                            return (
+                                <li class="rounded-md text-sky-900 overflow-hidden" key={note.id}>
+                                    <Link reload  class={["grid p-4 hover:bg-sky-100 transition-all duration-200 border border-sky-200", note.id === notesState.store.selectedNote && "bg-sky-100"]} href={`/dashboard/notes/${note.id}`}>{note.text}</Link>
+                                </li>
+                            )
+                        });
+                    }}
+                />
 
           </ul>
         </aside>
-        <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${dashboardContext.value.height}px`}}>
+        <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${notesState.dashboardContext.value.height}px`}}>
           <div class="">
-            {store.edit ? <Textarea onInput$={(e, el) => store.content = el.value}></Textarea> : 
+            {notesState.store.edit ? <Textarea onInput$={(e, el) => notesState.store.updateContext(el.value)} value={notesState.store.content}></Textarea> : 
             <div 
             contentEditable='inherit' class="prose max-w-[600px] px-14 py-12 border" 
-            dangerouslySetInnerHTML={parsedMarkdown()} ></div>}
+            dangerouslySetInnerHTML={notesState.parsedMarkdown} ></div>}
   
-            <Button onClick$={() => store.toggleEdit()}>{store.textEdit()}</Button>
+            <Button onClick$={() => notesState.store.toggleEdit()}>{notesState.store.textEdit()}</Button>
             <Button onClick$={async () => {
               await fetchDelete("1")
             }}>Delete</Button>
