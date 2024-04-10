@@ -2,12 +2,14 @@ import { component$, useContext } from "@builder.io/qwik";
 import { NotesLayoutContext } from "./NotesContext";
 import { NotesLayoutAside } from "./SideBarNotes";
 import { Button } from "~/components/ui/button/button";
-import { fetchDelete } from "~/routes/dashboard/notes";
 import { Textarea } from "~/components/ui/textarea/textarea";
 import { PublishModal } from "./PublishModal";
+import { serverDeleteNote } from "~/routes/api/service";
+import { useNavigate } from "@builder.io/qwik-city";
 
 export const NotesContainer = component$(() => {
     const notesState = useContext(NotesLayoutContext);
+    const navigate = useNavigate();
     if (!notesState.store) {
         return <div>Not found</div>;
     }
@@ -25,7 +27,9 @@ export const NotesContainer = component$(() => {
                   <Button 
                   class=""
                   onClick$={async () => {
-                    await fetchDelete("1")
+                    const deleted = await serverDeleteNote(notesState.store.selectedNote);
+                    console.log(deleted);
+                    navigate("/dashboard/notes", {forceReload: true});
                   }}>Delete</Button>
                   
                   <PublishModal name={notesState.store.title} id={notesState.store.selectedNote} />

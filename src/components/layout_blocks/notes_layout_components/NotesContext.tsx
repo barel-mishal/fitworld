@@ -11,7 +11,6 @@ export interface NoteProps {
     id: string;
 }
 
-
 export const useNote = <T extends NoteProps | undefined,>(note: T) => {
   const dashboardContext = useContext(contextDashboard);
   const location = useLocation();
@@ -46,7 +45,7 @@ export const useNote = <T extends NoteProps | undefined,>(note: T) => {
         parseMarkdown: $(function (this: {content: string, parsedContent: string}) {
           const parsedMarkdown = parseMarkdown(this.content);
           this.parsedContent = parsedMarkdown;
-        })
+        }),
       });
 
       // eslint-disable-next-line qwik/no-use-visible-task

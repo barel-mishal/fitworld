@@ -9,7 +9,6 @@ export const onRequest: RequestHandler = (event) => {
   if (!isSignedIn || session.user?.email === "dreamwork@dreamwork.network") {
     event.redirect(302, "/");
   }
-
 };
 
 

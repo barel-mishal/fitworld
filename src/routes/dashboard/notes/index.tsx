@@ -12,12 +12,6 @@ export default component$(() => {
   );
 });
 
-// todo: delete a notes
-export const onDelete: RequestHandler = async (requestEvent) => {
-  console.log("delete", await requestEvent.parseBody())
-
-}
-
 // todo: update a notes
 export const onPut: RequestHandler = async (requestEvent) => { 
   console.log("edit", await requestEvent.parseBody())
@@ -33,10 +27,6 @@ export const factoryFetch = async (method: "DELETE" | "PUT" | "POST", id: string
     body: JSON.stringify({ id: id }),
   });
   return response
-}
-
-export const fetchDelete = async (id: string) => {
-  return factoryFetch("DELETE", id)
 }
 
 export const fetchPut = async (id: string) => {
