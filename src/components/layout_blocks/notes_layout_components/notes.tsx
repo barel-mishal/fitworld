@@ -1,5 +1,4 @@
 import { component$, useContextProvider } from "@builder.io/qwik";
-import { Button } from "~/components/ui/button/button";
 import { NotesLayoutContext, useNote } from "./NotesContext";
 import { NotesLayoutAside } from "./SideBarNotes";
 import { NotesContainer } from "./NoteComp";
