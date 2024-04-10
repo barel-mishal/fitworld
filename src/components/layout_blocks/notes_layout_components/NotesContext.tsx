@@ -4,6 +4,7 @@ import { contextDashboard } from "../dashboard_layout_components/dashboard";
 import { marked } from "marked";
 import DOMPurify from "isomorphic-dompurify";
 import { serverNotes } from "~/routes/api/service";
+import { useLocation } from "@builder.io/qwik-city";
 
 export interface NoteProps {
     title: string;
@@ -12,8 +13,21 @@ export interface NoteProps {
 }
 
 
-export const useNote = (note: NoteProps) => {
+export const useNote = <T extends NoteProps | undefined,>(note: T) => {
+  const dashboardContext = useContext(contextDashboard);
+  const location = useLocation();
+
+
     const dataNotes = useResource$<{notes: NoteProps[]}>(async () => await serverNotes());
+    if (!note) {
+        return {
+            dataNotes,
+            store: undefined,
+            parsedMarkdown: "",
+            dashboardContext,
+            location
+        } as const;
+    }
 
     const store = useStore({
         content: note.text, 
@@ -29,9 +43,7 @@ export const useNote = (note: NoteProps) => {
             this.content = newContent;
         }),
       });
-      
-      const dashboardContext = useContext(contextDashboard);
-    
+          
       const parsedMarkdown = () => {
         const parsedMarkdown = marked.parse(store.content) as string;
         const sanitisedMarkdown = DOMPurify.sanitize(parsedMarkdown);
@@ -42,11 +54,12 @@ export const useNote = (note: NoteProps) => {
         dataNotes,
         store,
         parsedMarkdown: parsedMarkdown(),
-        dashboardContext
-    }
+        dashboardContext,
+        location
+    } as const;
 }
 
-export type NotesLayoutContextType = ReturnType<typeof useNote>;
+export type NotesLayoutContextType = ReturnType<typeof useNote> ;
 
 export const NotesLayoutContext = createContextId<NotesLayoutContextType>("NotesLayoutContext");
 

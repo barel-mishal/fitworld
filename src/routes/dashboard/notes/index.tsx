@@ -1,21 +1,13 @@
-import { component$, useResource$ } from '@builder.io/qwik';
+import { component$ } from '@builder.io/qwik';
 import { type RequestHandler, } from "@builder.io/qwik-city";
-import { type NoteProps } from '~/components/layout_blocks/notes_layout_components/NotesContext';
-import { NotesLayoutAside } from '~/components/layout_blocks/notes_layout_components/SideBarNotes';
-import { Button } from '~/components/ui/button/button';
-import { serverNotes } from '~/routes/api/service';
+import { NotesLayout } from '~/components/layout_blocks/notes_layout_components/notes';
+
 
 
 export default component$(() => {
-  const dataNotes = useResource$<{notes: NoteProps[]}>(async () => await serverNotes());
 
   return (<>
-  <div class="flex gap-2  ">
-    <NotesLayoutAside notes={dataNotes} selectedNoteId={undefined} />
-    <Button onClick$={async () => {
-        await fetchPost("1")
-    }}>new note</Button>
-  </div>
+    <NotesLayout note={undefined} />
   </>
   );
 });

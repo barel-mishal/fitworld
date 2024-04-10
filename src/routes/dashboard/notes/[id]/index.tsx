@@ -1,6 +1,7 @@
 import { Resource, component$, useResource$ } from '@builder.io/qwik';
 import { useLocation, } from "@builder.io/qwik-city";
-import { type NoteProps, NotesLayout } from '~/components/layout_blocks/notes_layout_components/Notes';
+import { type NoteProps } from '~/components/layout_blocks/notes_layout_components/NotesContext';
+import { NotesLayout } from '~/components/layout_blocks/notes_layout_components/notes';
 import { serverGetNote } from '~/routes/api/service';
 
 export default component$(() => {
@@ -14,7 +15,7 @@ export default component$(() => {
     <Resource 
       value={note} 
       onResolved={(note) => {
-      if (!note) return <div>Not found</div>;
+      if (!note) return <NotesLayout note={{id: "", text: "Not Found", title: ""}} />;
       return <NotesLayout note={note} />}} 
       onPending={() => <NotesLayout note={{id: "", text: "", title: ""}} />} 
     />
