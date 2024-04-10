@@ -24,11 +24,6 @@ export const onPut: RequestHandler = async (requestEvent) => {
 }
 
  // todo: new a note
-//  export const onPost: RequestHandler = async (requestEvent) => { 
-//   const data = await serverNotes();
-//   data.notes = [...data.notes, { id: (data.notes.length + 1).toString(), title: "", text: "" }];
-//   throw requestEvent.redirect(302, `/dashboard/`);
-// }
 
 
 
