@@ -27,10 +27,12 @@ export const NotesContainer = component$(() => {
                 }}>Delete</Button>
                 
                 <Button 
-                class="sticky top-4"
+                class="sticky top-4 "
                 onClick$={async () => {
                   await fetchPut("1")
-                }}>Publish</Button>
+                }}><p class="whitespace-nowrap">Publish</p></Button>
+
+                <p class=" col-span-3 self-center text-slate-500">Status draft</p>
                 
             <div class="col-span-6">
               {
