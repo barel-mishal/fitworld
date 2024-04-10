@@ -14,24 +14,26 @@ export const NotesContainer = component$(() => {
     return (
         <div class="flex gap-2 flex-grow  ">
             <NotesLayoutAside notes={notesState.dataNotes} selectedNoteId={notesState.location.params.id} />
-        <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${notesState.dashboardContext.value.height}px`}}>
+        <section class={"flex overflow-y-auto flex-grow "} style={{height: `${notesState.dashboardContext.value.height}px`}}>
           <div class="grid grid-cols-6 p-4 gap-4 grid-rows-[auto,1fr]">
-                <Button 
-                class="sticky top-4 bg-sky-800"
-                onClick$={() => notesState.store.toggleEdit()}>
-                  {notesState.store.textEdit()}
-                </Button>
-                <Button 
-                class=""
-                onClick$={async () => {
-                  await fetchDelete("1")
-                }}>Delete</Button>
-                
-                <PublishModal name={notesState.store.title} id={notesState.store.selectedNote} />
+            <div class="grid lg:grid-cols-6 col-span-full gap-2">
+                  <Button 
+                  class="sticky top-4 bg-sky-800"
+                  onClick$={() => notesState.store.toggleEdit()}>
+                    {notesState.store.textEdit()}
+                  </Button>
+                  <Button 
+                  class=""
+                  onClick$={async () => {
+                    await fetchDelete("1")
+                  }}>Delete</Button>
+                  
+                  <PublishModal name={notesState.store.title} id={notesState.store.selectedNote} />
 
-                <p class=" col-span-3 self-center text-slate-500">Status draft</p>
+                  <p class="col-span-3 text-slate-500">Status draft</p>
+            </div>
                 
-            <div class="col-span-6">
+            <div class="col-span-6 ">
               {
               notesState.store.edit 
               ? 
@@ -40,7 +42,9 @@ export const NotesContainer = component$(() => {
               onInput$={(e, el) => notesState.store.updateContext(el.value)} 
               value={notesState.store.content}></Textarea> 
               : 
-              <div contentEditable='inherit' class="prose max-w-[600px] px-4 py-4 border mb-4 rounded-md" dangerouslySetInnerHTML={notesState.store.parsedContent}></div>}</div>
+              <div class="px-4 py-4 border mb-4 rounded-md "><div contentEditable='inherit' class="prose " dangerouslySetInnerHTML={notesState.store.parsedContent}></div></div>
+              }</div>
+              
   
           
           </div>
