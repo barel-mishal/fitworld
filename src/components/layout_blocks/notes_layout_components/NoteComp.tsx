@@ -36,9 +36,12 @@ export const NotesContainer = component$(() => {
               {
               notesState.store.edit 
               ? 
-              <Textarea class="h-full" onInput$={(e, el) => notesState.store.updateContext(el.value)} value={notesState.store.content}></Textarea> 
+              <Textarea 
+              class="h-full" 
+              onInput$={(e, el) => notesState.store.updateContext(el.value)} 
+              value={notesState.store.content}></Textarea> 
               : 
-              <div contentEditable='inherit' class="prose max-w-[600px] px-4 py-4 border mb-4 rounded-md" dangerouslySetInnerHTML={notesState.parsedMarkdown}></div>}</div>
+              <div contentEditable='inherit' class="prose max-w-[600px] px-4 py-4 border mb-4 rounded-md" dangerouslySetInnerHTML={notesState.store.parsedContent}></div>}</div>
   
           
           </div>

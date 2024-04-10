@@ -1,10 +1,11 @@
-import { $, createContextId, useContext, useResource$, useStore } from "@builder.io/qwik";
+import { $, createContextId, useContext, useResource$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 
 import { contextDashboard } from "../dashboard_layout_components/dashboard";
 import { marked } from "marked";
 import DOMPurify from "isomorphic-dompurify";
 import { serverNotes } from "~/routes/api/service";
 import { useLocation } from "@builder.io/qwik-city";
+import { parseMarkdown } from "~/util/parseMarkdown";
 
 export interface NoteProps {
     title: string;
@@ -31,6 +32,7 @@ export const useNote = <T extends NoteProps | undefined,>(note: T) => {
 
     const store = useStore({
         content: note.text, 
+        parsedContent: "",
         edit: false, 
         selectedNote: note.id,
         textEdit: $(function (this: {edit: boolean}) {
@@ -42,18 +44,21 @@ export const useNote = <T extends NoteProps | undefined,>(note: T) => {
         updateContext: $(function (this: {content: string}, newContent: string) {
             this.content = newContent;
         }),
+        parseMarkdown: $(function (this: {content: string, parsedContent: string}) {
+          const parsedMarkdown = parseMarkdown(this.content);
+          this.parsedContent = parsedMarkdown;
+        })
       });
-          
-      const parsedMarkdown = () => {
-        const parsedMarkdown = marked.parse(store.content) as string;
-        const sanitisedMarkdown = DOMPurify.sanitize(parsedMarkdown);
-        return sanitisedMarkdown;
-      }
+
+      // eslint-disable-next-line qwik/no-use-visible-task
+      useVisibleTask$(async ({track}) => {
+        track(() => store.content);
+        await store.parseMarkdown();
+      })
 
     return {
         dataNotes,
         store,
-        parsedMarkdown: parsedMarkdown(),
         dashboardContext,
         location
     } as const;
