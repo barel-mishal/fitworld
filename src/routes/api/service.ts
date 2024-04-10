@@ -65,3 +65,7 @@ export const serverNewNote = server$(async function() {
     serverData.notes = [...serverData.notes, { id: (serverData.notes.length + 2).toString(), title: "Note " + serverData.notes.length, text: "" }]
     return {note: serverData.notes.at(-1)}
 });
+export const serverDeleteNote = server$(async function(id: string) {
+    serverData.notes = serverData.notes.filter((note) => note.id !== id);
+    return {note: id}
+});
