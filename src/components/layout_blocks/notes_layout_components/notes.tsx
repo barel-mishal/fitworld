@@ -3,6 +3,7 @@ import { Button } from "~/components/ui/button/button";
 import { NotesLayoutContext, useNote } from "./NotesContext";
 import { NotesLayoutAside } from "./SideBarNotes";
 import { NotesContainer } from "./NoteComp";
+import { Link } from "@builder.io/qwik-city";
 
 
 export interface NoteProps {
@@ -26,11 +27,7 @@ export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => 
            ">
             <div class="space-y-4">
                 <p class="text-4xl font-semibold text-sky-950/70 [text-wrap:balance] w-fit">Your Next Great Idea Starts Here</p>
-                <Button onClick$={async () => {
-                    //  await fetchPost();
-                }}>
-                    New note
-                </Button>
+                <Link href="/dashboard/notes/new">Save</Link>
             </div>
 
         </div>

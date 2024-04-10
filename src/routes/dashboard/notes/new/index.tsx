@@ -4,5 +4,5 @@ import { serverNotes } from '~/routes/api/service';
 export const onRequest: RequestHandler = async ({redirect}) => {
   const data = await serverNotes();
   data.notes = [...data.notes, { id: (data.notes.length + 1).toString(), title: "", text: "" }];
-  throw redirect(302, `/dashboard/`);
+  throw redirect(302, `/dashboard/notes/${data.notes.length}`);
 }

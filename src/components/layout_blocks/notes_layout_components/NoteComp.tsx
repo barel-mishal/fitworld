@@ -4,6 +4,7 @@ import { NotesLayoutAside } from "./SideBarNotes";
 import { Button } from "~/components/ui/button/button";
 import { fetchDelete, fetchPut } from "~/routes/dashboard/notes";
 import { Textarea } from "~/components/ui/textarea/textarea";
+import { Link } from "@builder.io/qwik-city";
 
 export const NotesContainer = component$(() => {
     const notesState = useContext(NotesLayoutContext);
@@ -27,8 +28,7 @@ export const NotesContainer = component$(() => {
             <Button onClick$={async () => {
               await fetchPut("1")
             }}>Edit</Button>
-            <Button onClick$={async () => {
-            }}>Save</Button>
+            <Link href="/dashboard/notes/new">Save</Link>
           </div>
         </section>
       </div>
