@@ -1,21 +1,22 @@
-import { Resource, component$, useResource$} from '@builder.io/qwik';
-import { useLocation, type RequestHandler, } from "@builder.io/qwik-city";
-import { type NoteProps, NotesLayout } from '~/components/layout_blocks/notes_layout_components/notes';
-import { serverGetNote } from '~/routes/api/service';
+import { component$, useResource$ } from '@builder.io/qwik';
+import { type RequestHandler, } from "@builder.io/qwik-city";
+import { NotesLayoutAside, type NoteProps } from '~/components/layout_blocks/notes_layout_components/notes';
+import { Button } from '~/components/ui/button/button';
+import { serverNotes } from '~/routes/api/service';
+
 
 export default component$(() => {
-  const location = useLocation();
-  const note = useResource$<NoteProps | undefined>(async () => {
-    return await serverGetNote(location.params.id);
-  })
+  const dataNotes = useResource$<{notes: NoteProps[]}>(async () => await serverNotes());
 
-  return (
-    <Resource 
-      value={note} 
-      onResolved={(note) => {
-      return <NotesLayout note={note} />}} 
-      onPending={() => <div>Loading...</div>} 
-    />
+  return (<>
+  <div class="flex gap-2  ">
+
+    <NotesLayoutAside notes={dataNotes} selectedNoteId={undefined} />
+    <Button onClick$={async () => {
+        await fetchPost("1")
+    }}>new note</Button>
+  </div>
+  </>
   );
 });
 

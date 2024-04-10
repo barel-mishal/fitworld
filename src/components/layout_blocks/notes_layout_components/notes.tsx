@@ -1,5 +1,5 @@
-import { $, Resource, component$, useContext, useResource$, useStore } from "@builder.io/qwik";
-import { Link } from "@builder.io/qwik-city";
+import { $, Resource, type ResourceReturn, component$, createContextId, useContext, useResource$, useStore, useContextProvider } from "@builder.io/qwik";
+import { Link, useLocation } from "@builder.io/qwik-city";
 import { Button } from "~/components/ui/button/button";
 import { Textarea } from "~/components/ui/textarea/textarea";
 import { fetchDelete, fetchPost, fetchPut } from "~/routes/dashboard/notes";
@@ -11,11 +11,13 @@ import { serverNotes } from "~/routes/api/service";
 export interface NoteProps {
     title: string;
     text: string;
-    id: number;
+    id: string;
 }
 
+
 export const useNote = (note: NoteProps) => {
-    const notes = useResource$<{notes: NoteProps[]}>(async () => await serverNotes());
+    const dataNotes = useResource$<{notes: NoteProps[]}>(async () => await serverNotes());
+
     const store = useStore({
         content: note.text, 
         edit: true, 
@@ -40,43 +42,31 @@ export const useNote = (note: NoteProps) => {
       }
 
     return {
-        notes,
+        dataNotes,
         store,
         parsedMarkdown: parsedMarkdown(),
         dashboardContext
-        
     }
 }
 
+export type NotesLayoutContextType = ReturnType<typeof useNote>;
 
-export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => {
-    if (!props.note) {
-        return <div>Loading...</div>
-    }
+export const NotesLayoutContext = createContextId<NotesLayoutContextType>("NotesLayoutContext");
+
+
+
+export const NotesLayout = component$<{note: NoteProps}>((props) => {
+    const location = useLocation();
+
+    const dataNotes = useResource$<{notes: NoteProps[]}>(async () => await serverNotes());
 
     const notesState = useNote(props.note);
 
+    useContextProvider(NotesLayoutContext, notesState);
+
     return (
         <div class="flex gap-2  ">
-            <aside class="w-[200px] border-r p-4 gap-6 flex flex-col">
-                    <h1 class="font-bold text-3xl">Notes</h1>
-                    <ul class="grid gap-1">
-
-                    <Resource 
-                        value={notesState.notes}
-                        onResolved={(notes) => {
-                            return notes.notes.map((note) => {
-                                return (
-                                    <li class="rounded-md text-sky-900 overflow-hidden" key={note.id}>
-                                        <Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200 border border-sky-200", note.id === notesState.store.selectedNote && "bg-sky-100"]} href={`/dashboard/notes/${note.id}`}>{note.text}</Link>
-                                    </li>
-                                )
-                            });
-                        }}
-                    />
-
-            </ul>
-            </aside>
+            <NotesLayoutAside notes={dataNotes} selectedNoteId={location.params.id} />
         <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${notesState.dashboardContext.value.height}px`}}>
           <div class="">
             {notesState.store.edit ? <Textarea onInput$={(e, el) => notesState.store.updateContext(el.value)} value={notesState.store.content}></Textarea> : 
@@ -98,4 +88,29 @@ export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => 
         </section>
       </div>
     )
+});
+
+export const NotesLayoutAside = component$<{
+    notes: ResourceReturn<{notes: NoteProps[]}>,
+    selectedNoteId: string | undefined
+}>((props) => {
+    return <aside class="w-[200px] border-r p-4 gap-6 flex flex-col">
+            <h1 class="font-bold text-3xl">Notes</h1>
+            <ul class="grid gap-1">
+
+            <Resource 
+                value={props.notes}
+                onResolved={(notes) => {
+                    return notes.notes.map((note) => {
+                        return (
+                            <li class="rounded-md text-sky-900 overflow-hidden" key={note.id}>
+                                <Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200 border border-sky-200", note.id === props.selectedNoteId && "bg-sky-100"]} href={`/dashboard/notes/${note.id}`}>{note.text}</Link>
+                            </li>
+                        )
+                    });
+                }}
+            />
+
+        </ul>
+</aside>
 })

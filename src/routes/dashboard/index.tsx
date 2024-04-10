@@ -33,7 +33,6 @@ export const serverLoader = server$(async function() {
   return {
     data: "server data"
   };
-    
 });
 
 export default component$(() => {
@@ -44,6 +43,7 @@ export default component$(() => {
       {sc.value?.user?.name}
       <Button onClick$={async () => {
         const data = await serverLoader();
+        console.log(data);
         
       }}>home</Button>
     </div>
