@@ -23,10 +23,6 @@ export const onPut: RequestHandler = async (requestEvent) => {
   console.log("edit", await requestEvent.parseBody())
 }
 
- // todo: new a note
-
-
-
 export const factoryFetch = async (method: "DELETE" | "PUT" | "POST", id: string | undefined) => {
   const response = await fetch(`/dashboard/notes/`, {
     method: method,

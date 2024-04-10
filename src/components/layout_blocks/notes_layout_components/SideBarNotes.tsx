@@ -10,13 +10,13 @@ export const NotesLayoutAside = component$<{
             <h1 class="font-bold text-3xl">Notes</h1>
             <ul class="grid gap-1">
 
-            <Resource 
+            <Resource
                 value={props.notes}
                 onResolved={(notes) => {
                     return notes.notes.map((note) => {
                         return (
                             <li class="rounded-md text-sky-900 overflow-hidden" key={note.id}>
-                                <Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200 border border-sky-200", note.id === props.selectedNoteId && "bg-sky-100"]} href={`/dashboard/notes/${note.id}`}>{note.text}</Link>
+                                <Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200 border border-sky-200", note.id === props.selectedNoteId && "bg-sky-100"]} href={`/dashboard/notes/${note.id}`}>{note.title}</Link>
                             </li>
                         )
                     });

@@ -28,7 +28,6 @@ export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => 
                 <p class="text-4xl font-semibold text-sky-950/70 [text-wrap:balance] w-fit">Your Next Great Idea Starts Here</p>
                 <Link href="/dashboard/notes/new">Save</Link>
             </div>
-
         </div>
         </div>
       </div>
