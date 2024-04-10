@@ -1,7 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { type RequestHandler, } from "@builder.io/qwik-city";
 import { NotesLayout } from '~/components/layout_blocks/notes_layout_components/notes';
-import { serverNotes } from '~/routes/api/service';
 
 
 
@@ -25,12 +24,13 @@ export const onPut: RequestHandler = async (requestEvent) => {
 }
 
  // todo: new a note
- export const onPost: RequestHandler = async (requestEvent) => { 
-  const data = await serverNotes();
-  data.notes = [...data.notes, { id: (data.notes.length + 1).toString(), title: "", text: "" }];
-  throw requestEvent.redirect(302, `/dashboard/`);
-  throw requestEvent.redirect(302, `/dashboard/notes/${data.notes.length}`);
-}
+//  export const onPost: RequestHandler = async (requestEvent) => { 
+//   const data = await serverNotes();
+//   data.notes = [...data.notes, { id: (data.notes.length + 1).toString(), title: "", text: "" }];
+//   throw requestEvent.redirect(302, `/dashboard/`);
+// }
+
+
 
 export const factoryFetch = async (method: "DELETE" | "PUT" | "POST", id: string | undefined) => {
   const response = await fetch(`/dashboard/notes/`, {
@@ -51,12 +51,5 @@ export const fetchDelete = async (id: string) => {
 export const fetchPut = async (id: string) => {
   return factoryFetch("PUT", id)
 }
-
-export const fetchPost = async () => {
-  return factoryFetch("POST", undefined)
-}
-  
-  // todo: view a note
-// todo: create a new note
 
 

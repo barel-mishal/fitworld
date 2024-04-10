@@ -2,7 +2,7 @@ import { component$, useContext } from "@builder.io/qwik";
 import { NotesLayoutContext } from "./NotesContext";
 import { NotesLayoutAside } from "./SideBarNotes";
 import { Button } from "~/components/ui/button/button";
-import { fetchDelete, fetchPost, fetchPut } from "~/routes/dashboard/notes";
+import { fetchDelete, fetchPut } from "~/routes/dashboard/notes";
 import { Textarea } from "~/components/ui/textarea/textarea";
 
 export const NotesContainer = component$(() => {
@@ -28,7 +28,6 @@ export const NotesContainer = component$(() => {
               await fetchPut("1")
             }}>Edit</Button>
             <Button onClick$={async () => {
-              await fetchPost()
             }}>Save</Button>
           </div>
         </section>
