@@ -1,8 +1,6 @@
 import { $, createContextId, useContext, useResource$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 
 import { contextDashboard } from "../dashboard_layout_components/dashboard";
-import { marked } from "marked";
-import DOMPurify from "isomorphic-dompurify";
 import { serverNotes } from "~/routes/api/service";
 import { useLocation } from "@builder.io/qwik-city";
 import { parseMarkdown } from "~/util/parseMarkdown";

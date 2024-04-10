@@ -30,7 +30,7 @@ export const NotesContainer = component$(() => {
                 class="sticky top-4"
                 onClick$={async () => {
                   await fetchPut("1")
-                }}>Edit</Button>
+                }}>Publish</Button>
                 
             <div class="col-span-6">
               {

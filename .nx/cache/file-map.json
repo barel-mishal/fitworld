@@ -156,7 +156,23 @@
         },
         {
           "file": "src/components/layout_blocks/dashboard_layout_components/dashboardModal.tsx",
-          "hash": "7709184560477161255"
+          "hash": "18235399213986936937"
+        },
+        {
+          "file": "src/components/layout_blocks/notes_layout_components/NoteComp.tsx",
+          "hash": "4389853351445644763"
+        },
+        {
+          "file": "src/components/layout_blocks/notes_layout_components/NotesContext.tsx",
+          "hash": "5006235125233771184"
+        },
+        {
+          "file": "src/components/layout_blocks/notes_layout_components/SideBarNotes.tsx",
+          "hash": "16383409692492842486"
+        },
+        {
+          "file": "src/components/layout_blocks/notes_layout_components/notes.tsx",
+          "hash": "9654238385346394844"
         },
         {
           "file": "src/components/router-head/router-head.tsx",
@@ -179,6 +195,10 @@
           "hash": "7199405005343027892"
         },
         {
+          "file": "src/components/ui/textarea/textarea.tsx",
+          "hash": "5374252117874200457"
+        },
+        {
           "file": "src/entry.dev.tsx",
           "hash": "15859778472158270085"
         },
@@ -197,6 +217,10 @@
         {
           "file": "src/root.tsx",
           "hash": "9687959275163285543"
+        },
+        {
+          "file": "src/routes/api/service.ts",
+          "hash": "4283098887364609834"
         },
         {
           "file": "src/routes/auth/new-user/index.tsx",
@@ -220,15 +244,23 @@
         },
         {
           "file": "src/routes/dashboard/index.tsx",
-          "hash": "13435407745187793891"
+          "hash": "1545108751340964045"
         },
         {
           "file": "src/routes/dashboard/layout.tsx",
           "hash": "10235792060041586535"
         },
         {
+          "file": "src/routes/dashboard/notes/[id]/index.tsx",
+          "hash": "1556215050496799522"
+        },
+        {
           "file": "src/routes/dashboard/notes/index.tsx",
-          "hash": "14864985413561126024"
+          "hash": "14273583133718087505"
+        },
+        {
+          "file": "src/routes/dashboard/notes/new/index.tsx",
+          "hash": "12024911799107996414"
         },
         {
           "file": "src/routes/dashboard/profile/index.tsx",
@@ -253,6 +285,10 @@
         {
           "file": "src/routes/service-worker.ts",
           "hash": "12052162101020602501"
+        },
+        {
+          "file": "src/util/parseMarkdown.ts",
+          "hash": "11031776175277540389"
         },
         {
           "file": "tailwind.config.js",
