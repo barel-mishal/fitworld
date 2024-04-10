@@ -2,8 +2,9 @@ import { component$, useContext } from "@builder.io/qwik";
 import { NotesLayoutContext } from "./NotesContext";
 import { NotesLayoutAside } from "./SideBarNotes";
 import { Button } from "~/components/ui/button/button";
-import { fetchDelete, fetchPut } from "~/routes/dashboard/notes";
+import { fetchDelete } from "~/routes/dashboard/notes";
 import { Textarea } from "~/components/ui/textarea/textarea";
+import { PublishModal } from "./PublishModal";
 
 export const NotesContainer = component$(() => {
     const notesState = useContext(NotesLayoutContext);
@@ -26,11 +27,7 @@ export const NotesContainer = component$(() => {
                   await fetchDelete("1")
                 }}>Delete</Button>
                 
-                <Button 
-                class="sticky top-4 "
-                onClick$={async () => {
-                  await fetchPut("1")
-                }}><p class="whitespace-nowrap">Publish</p></Button>
+                <PublishModal name={notesState.store.title} id={notesState.store.selectedNote} />
 
                 <p class=" col-span-3 self-center text-slate-500">Status draft</p>
                 
@@ -51,3 +48,4 @@ export const NotesContainer = component$(() => {
       </div>
     )
 });
+

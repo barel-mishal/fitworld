@@ -31,6 +31,7 @@ export const useNote = <T extends NoteProps | undefined,>(note: T) => {
     const store = useStore({
         content: note.text, 
         parsedContent: "",
+        title: note.title,
         edit: false, 
         selectedNote: note.id,
         textEdit: $(function (this: {edit: boolean}) {
