@@ -28,8 +28,7 @@ export const onPut: RequestHandler = async (requestEvent) => {
  export const onPost: RequestHandler = async ({redirect}) => { 
   const data = await serverNotes();
   data.notes = [...data.notes, { id: (data.notes.length + 1).toString(), title: "", text: "" }];
-  console.log("/dashboard/notes/" + data.notes.at(-1)?.id)
-  throw redirect(303, "/dashboard/notes/" + data.notes.at(-1)?.id);
+  throw redirect(302, "/dashboard");
 }
 
 export const factoryFetch = async (method: "DELETE" | "PUT" | "POST", id: string | undefined) => {

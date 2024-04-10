@@ -11,7 +11,7 @@ export const NotesContainer = component$(() => {
         return <div>Not found</div>;
     }
     return (
-        <div class="flex gap-2  ">
+        <div class="flex gap-2 flex-grow  ">
             <NotesLayoutAside notes={notesState.dataNotes} selectedNoteId={notesState.location.params.id} />
         <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${notesState.dashboardContext.value.height}px`}}>
           <div class="">

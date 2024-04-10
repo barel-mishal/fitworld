@@ -18,7 +18,7 @@ export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => 
     useContextProvider(NotesLayoutContext, notesState);
 
     if (!notesState.store) {
-        return   <div class="flex gap-2 ">
+        return   <div class="flex gap-2 flex-grow">
         <NotesLayoutAside notes={notesState.dataNotes} selectedNoteId={undefined} />
         <div class="p-4 m-auto">
           <div class="
