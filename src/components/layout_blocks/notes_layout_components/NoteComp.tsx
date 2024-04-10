@@ -17,12 +17,12 @@ export const NotesContainer = component$(() => {
         <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${notesState.dashboardContext.value.height}px`}}>
           <div class="grid grid-cols-6 p-4 gap-4 grid-rows-[auto,1fr]">
                 <Button 
-                class="sticky top-4"
+                class="sticky top-4 bg-sky-800"
                 onClick$={() => notesState.store.toggleEdit()}>
                   {notesState.store.textEdit()}
                 </Button>
                 <Button 
-                class="sticky top-4"
+                class=""
                 onClick$={async () => {
                   await fetchDelete("1")
                 }}>Delete</Button>

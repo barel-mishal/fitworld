@@ -1,7 +1,6 @@
-import { Signal, component$, useSignal } from "@builder.io/qwik";
+import { type Signal, component$, useSignal } from "@builder.io/qwik";
 import { Modal, ModalContent, ModalFooter, ModalHeader, ModalTrigger, ModalWrapper } from "../../ui/modal/modal";
 import { Button } from "../../ui/button/button";
-import { Form } from "@builder.io/qwik-city";
 
 import { type ResolvedOption } from '@qwik-ui/headless';
 import {

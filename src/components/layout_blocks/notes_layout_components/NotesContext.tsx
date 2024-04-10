@@ -35,7 +35,7 @@ export const useNote = <T extends NoteProps | undefined,>(note: T) => {
         edit: false, 
         selectedNote: note.id,
         textEdit: $(function (this: {edit: boolean}) {
-          return this.edit ? "Preview" : "Edit";
+          return this.edit ? "Preview" : "Modify";
         }),
         toggleEdit: $(function (this: {edit: boolean}) {
           this.edit = !this.edit;
