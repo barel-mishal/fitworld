@@ -46,7 +46,13 @@ export const NotesContainer = component$(() => {
               onInput$={(e, el) => notesState.store.updateContext(el.value)} 
               value={notesState.store.content}></Textarea> 
               : 
-              <div class="px-4 py-4 border mb-4 rounded-md "><div contentEditable='inherit' class="prose " dangerouslySetInnerHTML={notesState.store.parsedContent}></div></div>
+              <div class="px-4 py-4 border mb-4 rounded-md ">
+                <div 
+                contentEditable='inherit' 
+                class="prose " 
+                dangerouslySetInnerHTML={notesState.store.parsedContent}>
+                </div>
+                </div>
               }</div>
               
   
