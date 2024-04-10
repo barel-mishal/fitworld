@@ -60,4 +60,3 @@ export const fetchPost = async () => {
 // todo: create a new note
 
 
-
