@@ -1,4 +1,4 @@
-import { $, component$, useContext, useStore } from "@builder.io/qwik";
+import { $, Resource, component$, useContext, useResource$, useStore } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 import { Button } from "~/components/ui/button/button";
 import { Textarea } from "~/components/ui/textarea/textarea";
@@ -6,11 +6,21 @@ import { fetchDelete, fetchPost, fetchPut } from "~/routes/dashboard/notes";
 import { contextDashboard } from "../dashboard_layout_components/dashboard";
 import { marked } from "marked";
 import DOMPurify from "isomorphic-dompurify";
+import { serverNotes } from "~/routes/api/service";
 
-export const NotesLayout = component$(() => {
+export interface NoteProps {
+    title: string;
+    text: string;
+    id: number;
+}
+
+
+export const NotesLayout = component$<NoteProps>(() => {
+    const notes = useResource$<{notes: NoteProps[]}>(async () => await serverNotes());
     const store = useStore({
         content: "", 
         edit: true, 
+        selectedNote: 1,
         textEdit: $(function (this: {edit: boolean}) {
           return this.edit ? "Preview" : "Edit";
         }),
@@ -31,18 +41,20 @@ export const NotesLayout = component$(() => {
         <aside class="w-[200px] border-r p-4 gap-6 flex flex-col">
           <h1 class="font-bold text-3xl">Notes</h1>
           <ul class="grid gap-1">
-            <li><Link class={[
-              "grid p-2 hover:bg-sky-100 bg-sky-100 transition-all duration-200 rounded-md border border-sky-100"
-            ]} href="/dashboard">Dashboard</Link></li>
-            <li><Link class={[
-              "grid p-2 hover:bg-sky-100 transition-all duration-200 rounded-md border border-sky-100"
-            ]} href="/dashboard">Dashboard</Link></li>
-            <li><Link class={[
-              "grid p-2 hover:bg-sky-100 transition-all duration-200 rounded-md border border-sky-100"
-            ]} href="/dashboard">Dashboard</Link></li>
-            <li><Link class={[
-              "grid p-2 hover:bg-sky-100 transition-all duration-200 rounded-md border border-sky-100"
-            ]} href="/dashboard">Dashboard</Link></li>
+
+            <Resource 
+                value={notes}
+                onResolved={(notes) => {
+                    return notes.notes.map((note) => {
+                        return (
+                            <li class="rounded-md text-sky-900 overflow-hidden" key={note.id}>
+                                <Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200 border border-sky-200", note.id === store.selectedNote && "bg-sky-100"]} href={`/dashboard/notes/${note.id}`}>{note.text}</Link>
+                            </li>
+                        )
+                    });
+                }}
+            />
+
           </ul>
         </aside>
         <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${dashboardContext.value.height}px`}}>
