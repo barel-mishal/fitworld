@@ -31,7 +31,7 @@ export const useNote = <T extends NoteProps | undefined,>(note: T) => {
 
     const store = useStore({
         content: note.text, 
-        edit: true, 
+        edit: false, 
         selectedNote: note.id,
         textEdit: $(function (this: {edit: boolean}) {
           return this.edit ? "Preview" : "Edit";

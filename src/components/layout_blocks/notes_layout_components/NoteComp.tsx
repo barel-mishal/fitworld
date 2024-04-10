@@ -16,23 +16,29 @@ export const NotesContainer = component$(() => {
         <section class={"flex overflow-y-auto flex-grow justify-center"} style={{height: `${notesState.dashboardContext.value.height}px`}}>
           <div class="grid grid-cols-6 p-4 gap-4 grid-rows-[auto,1fr]">
                 <Button 
-                class=""
+                class="sticky top-4"
                 onClick$={() => notesState.store.toggleEdit()}>
                   {notesState.store.textEdit()}
                 </Button>
-                <Button onClick$={async () => {
+                <Button 
+                class="sticky top-4"
+                onClick$={async () => {
                   await fetchDelete("1")
                 }}>Delete</Button>
                 
-                <Button onClick$={async () => {
+                <Button 
+                class="sticky top-4"
+                onClick$={async () => {
                   await fetchPut("1")
                 }}>Edit</Button>
                 
             <div class="col-span-6">
-              {notesState.store.edit ? <Textarea class="h-full" onInput$={(e, el) => notesState.store.updateContext(el.value)} value={notesState.store.content}></Textarea> : 
-              <div 
-              contentEditable='inherit' class="prose max-w-[600px] px-14 py-12 border" dangerouslySetInnerHTML={notesState.parsedMarkdown} ></div>}
-            </div>
+              {
+              notesState.store.edit 
+              ? 
+              <Textarea class="h-full" onInput$={(e, el) => notesState.store.updateContext(el.value)} value={notesState.store.content}></Textarea> 
+              : 
+              <div contentEditable='inherit' class="prose max-w-[600px] px-4 py-4 border mb-4 rounded-md" dangerouslySetInnerHTML={notesState.parsedMarkdown}></div>}</div>
   
           
           </div>
