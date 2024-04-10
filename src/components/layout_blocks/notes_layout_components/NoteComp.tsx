@@ -13,6 +13,12 @@ export const NotesContainer = component$(() => {
     if (!notesState.store) {
         return <div>Not found</div>;
     }
+    // TODO: Add a loading state
+    // TODO: Add a not found state
+    // TODO: Add a error state
+    // TODO: Add a success delete state
+    // TODO: Add a success update state
+    // TODO: Add a message before delete
     return (
         <div class="flex gap-2 flex-grow  ">
             <NotesLayoutAside notes={notesState.dataNotes} selectedNoteId={notesState.location.params.id} />
