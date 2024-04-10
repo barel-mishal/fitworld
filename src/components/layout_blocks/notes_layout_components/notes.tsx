@@ -23,7 +23,7 @@ export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => 
         <div class="p-4 m-auto">
           <div class="
             p-8 bg-white
-          border-8 border-dashed border-gray-600/25 rounded-lg
+           border-dashed border-gray-600/25 rounded-lg border-[6px]
            ">
             <div class="space-y-4">
                 <p class="text-4xl font-semibold text-sky-950/70 [text-wrap:balance] w-fit">Your Next Great Idea Starts Here</p>
