@@ -1,4 +1,4 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { Signal, component$, useSignal } from "@builder.io/qwik";
 import { Modal, ModalContent, ModalFooter, ModalHeader, ModalTrigger, ModalWrapper } from "../../ui/modal/modal";
 import { Button } from "../../ui/button/button";
 import { Form } from "@builder.io/qwik-city";
@@ -22,6 +22,11 @@ interface PublishProps {
 }
 
 export const PublishModal = component$<PublishProps>((props) => {
+    const selectedOptionIndexSig = useSignal<number>(-1);
+    const objectExample = [
+        { testValue: 'pubilsh', testLabel: 'Pubilsh', disabled: false },
+        { testValue: 'draft', testLabel: 'Draft', disabled: false },
+    ];
     return (
         <ModalWrapper>
             <ModalTrigger>
@@ -36,58 +41,48 @@ export const PublishModal = component$<PublishProps>((props) => {
                     </p>
                     <h2 class="text-lg font-bold">{props.name}</h2>
                 </ModalHeader>
+                    
                 <ModalContent>
                     <div class="grid gap-4 py-4">
                         <div class="grid grid-cols-4 items-center gap-4">
+                        <ComboboxPublish objectExample={objectExample} selectedOptionIndexSig={selectedOptionIndexSig} />
                         </div>
                     </div>
                 </ModalContent>
                 <ModalFooter>
-                    <Form >
-                        <ComboboxPublish/>
                         <Button>Submit</Button>
-                    </Form>
                 </ModalFooter>
+                    
             </Modal>
         </ModalWrapper>
     );
 });
 
-
-
-export const ComboboxPublish = component$(() => {
-  const selectedOptionIndexSig = useSignal<number>(-1);
-
-  const objectExample = [
-    { testValue: 'alice', testLabel: 'Alice', disabled: true },
-    { testValue: 'joana', testLabel: 'Joana', disabled: true },
-    { testValue: 'malcolm', testLabel: 'Malcolm', disabled: false },
-    { testValue: 'zack', testLabel: 'Zack', disabled: true },
-    { testValue: 'brian', testLabel: 'Brian', disabled: false },
-    { testValue: 'ryan', testLabel: 'Ryan', disabled: false },
-    { testValue: 'joe', testLabel: 'Joe', disabled: false },
-    { testValue: 'randy', testLabel: 'Randy', disabled: false },
-    { testValue: 'david', testLabel: 'David', disabled: true },
-    { testValue: 'joseph', testLabel: 'Joseph', disabled: false },
-  ];
-
-  type MyData = {
+type MyData = {
     testValue: string;
     testLabel: string;
     disabled: boolean;
-  };
+};
+
+interface ComboboxPublishProps {
+    objectExample: MyData[];
+    selectedOptionIndexSig: Signal<number>;
+}
+
+export const ComboboxPublish = component$<ComboboxPublishProps>((props) => {
+
 
   return (
     <Combobox
-      options={objectExample}
+      options={props.objectExample}
       optionValueKey="testValue"
       optionLabelKey="testLabel"
       optionDisabledKey="disabled"
-      bind:selectedIndex={selectedOptionIndexSig}
+      bind:selectedIndex={props.selectedOptionIndexSig}
     >
-      <ComboboxLabel>Personal Trainers ⚡</ComboboxLabel>
+      <ComboboxLabel>Show your great to... </ComboboxLabel>
       <ComboboxControl>
-        <ComboboxInput placeholder="Jim" />
+        <ComboboxInput placeholder="Publish" />
         <ComboboxTrigger />
       </ComboboxControl>
       <ComboboxPopover gutter={8}>
@@ -97,7 +92,7 @@ export const ComboboxPublish = component$(() => {
             return (
               <ComboboxOption key={option.key} resolved={option} index={index}>
                 <span>{myData.testLabel}</span>
-                {selectedOptionIndexSig.value === index && <LuCheck />}
+                {props.selectedOptionIndexSig.value === index && <LuCheck />}
               </ComboboxOption>
             );
           }}
