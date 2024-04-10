@@ -25,10 +25,11 @@ export const onPut: RequestHandler = async (requestEvent) => {
 }
 
  // todo: new a note
- export const onPost: RequestHandler = async ({redirect}) => { 
+ export const onPost: RequestHandler = async (requestEvent) => { 
   const data = await serverNotes();
   data.notes = [...data.notes, { id: (data.notes.length + 1).toString(), title: "", text: "" }];
-  throw redirect(302, "/dashboard");
+  throw requestEvent.redirect(302, `/dashboard/`);
+  throw requestEvent.redirect(302, `/dashboard/notes/${data.notes.length}`);
 }
 
 export const factoryFetch = async (method: "DELETE" | "PUT" | "POST", id: string | undefined) => {
@@ -37,9 +38,10 @@ export const factoryFetch = async (method: "DELETE" | "PUT" | "POST", id: string
     headers: {
       "Content-Type": "application/json",
     },
+    redirect: "follow", // manual, *follow, error
     body: JSON.stringify({ id: id }),
   });
-  return response.text();
+  return response
 }
 
 export const fetchDelete = async (id: string) => {

@@ -28,7 +28,7 @@ export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => 
             <div class="space-y-4">
                 <p class="text-4xl font-semibold text-sky-950/70 [text-wrap:balance] w-fit">Your Next Great Idea Starts Here</p>
                 <Button onClick$={async () => {
-                    await fetchPost()
+                     await fetchPost();
                 }}>
                     New note
                 </Button>
