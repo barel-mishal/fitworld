@@ -67,6 +67,7 @@ export const serverData = {
   ],
 };
 
+// ********* Notes API *********
 export const serverNotes = server$(async function() {
   return serverData
 });
