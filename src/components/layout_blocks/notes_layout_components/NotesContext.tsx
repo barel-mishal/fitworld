@@ -32,7 +32,7 @@ export const useNote = <T extends NoteProps | undefined,>(note: T) => {
         content: note.text, 
         parsedContent: "",
         title: note.title,
-        edit: false, 
+        edit: true, 
         selectedNote: note.id,
         textEdit: $(function (this: {edit: boolean}) {
           return this.edit ? "Preview" : "Modify";
