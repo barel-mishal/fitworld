@@ -18,16 +18,16 @@ export const MyModal = component$<AuthProps>((props) => {
             </ModalTrigger>
             <Modal>
                 <ModalHeader>
-                <h2 class="text-lg font-bold">{props.name}</h2>
-                <p class="text-sm font-light">
-                    Make changes to your profile here. Click save when you're done.
-                </p>
+                    <h2 class="text-lg font-bold">{props.name}</h2>
+                    <p class="text-sm font-light">
+                        Make changes to your profile here. Click save when you're done.
+                    </p>
                 </ModalHeader>
                 <ModalContent>
-                <div class="grid gap-4 py-4">
-                    <div class="grid grid-cols-4 items-center gap-4">
+                    <div class="grid gap-4 py-4">
+                        <div class="grid grid-cols-4 items-center gap-4">
+                        </div>
                     </div>
-                </div>
                 </ModalContent>
                 <ModalFooter>
                     <Form action={props.signout}>

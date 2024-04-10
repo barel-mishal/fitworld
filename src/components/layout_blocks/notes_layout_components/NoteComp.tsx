@@ -4,7 +4,6 @@ import { NotesLayoutAside } from "./SideBarNotes";
 import { Button } from "~/components/ui/button/button";
 import { fetchDelete, fetchPut } from "~/routes/dashboard/notes";
 import { Textarea } from "~/components/ui/textarea/textarea";
-import { Link } from "@builder.io/qwik-city";
 
 export const NotesContainer = component$(() => {
     const notesState = useContext(NotesLayoutContext);
@@ -29,7 +28,6 @@ export const NotesContainer = component$(() => {
                   await fetchPut("1")
                 }}>Edit</Button>
                 
-                <Link href="/dashboard/notes/new">New note</Link>
             <div class="col-span-6">
               {notesState.store.edit ? <Textarea class="h-full" onInput$={(e, el) => notesState.store.updateContext(el.value)} value={notesState.store.content}></Textarea> : 
               <div 
