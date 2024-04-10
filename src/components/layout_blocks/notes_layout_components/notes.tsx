@@ -68,7 +68,7 @@ export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => 
                             return notes.notes.map((note) => {
                                 return (
                                     <li class="rounded-md text-sky-900 overflow-hidden" key={note.id}>
-                                        <Link reload  class={["grid p-4 hover:bg-sky-100 transition-all duration-200 border border-sky-200", note.id === notesState.store.selectedNote && "bg-sky-100"]} href={`/dashboard/notes/${note.id}`}>{note.text}</Link>
+                                        <Link class={["grid p-4 hover:bg-sky-100 transition-all duration-200 border border-sky-200", note.id === notesState.store.selectedNote && "bg-sky-100"]} href={`/dashboard/notes/${note.id}`}>{note.text}</Link>
                                     </li>
                                 )
                             });
