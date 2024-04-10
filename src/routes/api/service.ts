@@ -87,3 +87,11 @@ export const serverDeleteNote = server$(async function(id: string) {
 export const getPublishNotes = server$(async function() {
     return serverData.notes.filter((note) => note.publishedAt !== undefined);
 });
+export const getUnPublishNotes = server$(async function() {
+    return serverData.notes.filter((note) => note.publishedAt === undefined);
+});
+export const serverPublishNote = server$(async function(id: string) {
+    const note = serverData.notes.findIndex((note) => note.id === id);
+    serverData.notes[note].publishedAt = new Date();
+    return {note: serverData.notes[note]}
+});
