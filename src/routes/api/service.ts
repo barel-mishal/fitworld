@@ -58,4 +58,4 @@ export const serverGetNote = server$(async function(id: string) {
 export const serverNewNote = server$(async function() {
     notes.notes = [...notes.notes, { id: (notes.notes.length + 2).toString(), title: "Note " + notes.notes.length, text: "" }]
     return {note: notes.notes.at(-1)}
-})
+});
