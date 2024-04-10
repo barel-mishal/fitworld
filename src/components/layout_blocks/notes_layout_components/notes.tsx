@@ -18,11 +18,24 @@ export const NotesLayout = component$<{note: NoteProps | undefined}>((props) => 
     useContextProvider(NotesLayoutContext, notesState);
 
     if (!notesState.store) {
-        return   <div class="flex gap-2  ">
+        return   <div class="flex gap-2 ">
         <NotesLayoutAside notes={notesState.dataNotes} selectedNoteId={undefined} />
-        <Button onClick$={async () => {
-            await fetchPost("1")
-        }}>new note</Button>
+        <div class="p-4 m-auto">
+          <div class="
+            p-8 bg-white
+          border-8 border-dashed border-gray-600/25 rounded-lg
+           ">
+            <div class="space-y-4">
+                <p class="text-4xl font-semibold text-sky-950/70 [text-wrap:balance] w-fit">Your Next Great Idea Starts Here</p>
+                <Button onClick$={async () => {
+                    await fetchPost()
+                }}>
+                    New note
+                </Button>
+            </div>
+
+        </div>
+        </div>
       </div>
     }
 

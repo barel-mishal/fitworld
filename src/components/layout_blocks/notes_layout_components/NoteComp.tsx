@@ -28,7 +28,7 @@ export const NotesContainer = component$(() => {
               await fetchPut("1")
             }}>Edit</Button>
             <Button onClick$={async () => {
-              await fetchPost("1")
+              await fetchPost()
             }}>Save</Button>
           </div>
         </section>

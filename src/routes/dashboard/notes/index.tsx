@@ -1,6 +1,7 @@
 import { component$ } from '@builder.io/qwik';
 import { type RequestHandler, } from "@builder.io/qwik-city";
 import { NotesLayout } from '~/components/layout_blocks/notes_layout_components/notes';
+import { serverNotes } from '~/routes/api/service';
 
 
 
@@ -18,50 +19,41 @@ export const onDelete: RequestHandler = async (requestEvent) => {
 
 }
 
-// todo: edit a notes
+// todo: update a notes
 export const onPut: RequestHandler = async (requestEvent) => { 
   console.log("edit", await requestEvent.parseBody())
-
 }
 
- // todo: update a notes
- export const onPost: RequestHandler = async (requestEvent) => { 
-  console.log("update", await requestEvent.parseBody())
-   
+ // todo: new a note
+ export const onPost: RequestHandler = async ({redirect}) => { 
+  const data = await serverNotes();
+  data.notes = [...data.notes, { id: (data.notes.length + 1).toString(), title: "", text: "" }];
+  console.log("/dashboard/notes/" + data.notes.at(-1)?.id)
+  throw redirect(303, "/dashboard/notes/" + data.notes.at(-1)?.id);
+}
+
+export const factoryFetch = async (method: "DELETE" | "PUT" | "POST", id: string | undefined) => {
+  const response = await fetch(`/dashboard/notes/`, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id: id }),
+  });
+  return response.text();
 }
 
 export const fetchDelete = async (id: string) => {
-  const response = await fetch(`/dashboard/notes/`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({id})
-  });
-  return response.text();
-};
+  return factoryFetch("DELETE", id)
+}
 
 export const fetchPut = async (id: string) => {
-  const response = await fetch(`/dashboard/notes/`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({id})
-  });
-  return response.text()
-};
+  return factoryFetch("PUT", id)
+}
 
-export const fetchPost = async (id: string) => {
-  const response = await fetch(`/dashboard/notes/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({id})
-  });
-  return response.text()
-};
+export const fetchPost = async () => {
+  return factoryFetch("POST", undefined)
+}
   
   // todo: view a note
 // todo: create a new note
