@@ -49,8 +49,8 @@ export default component$(() => {
   return (
   
     <HeaderMainBottomNav >
-      <div q:slot='header'><Button onClick$={prev}><BsArrowLeft /></Button></div>
-      <div q:slot='main'><Slot /></div>
+      <div q:slot='header' class=""><Button onClick$={prev}><BsArrowLeft /></Button></div>
+      <div q:slot='main' class=" bg-sky-50/40 h-full flex items-center"><Slot /></div>
       <div q:slot='footer'><Button onClick$={next}>CONTINUE</Button></div>
     </HeaderMainBottomNav>
   );
