@@ -23,6 +23,7 @@ export default component$(() => {
         <div>
           <label class="" for="day">Day</label>
           <input 
+            inputMode='numeric'
             ref={refDay}
             class={cn(
               "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
@@ -40,6 +41,7 @@ export default component$(() => {
         <div>
           <label class="" for="month">Month</label>
           <input 
+            inputMode='numeric'
             ref={refMonth}
             onFocus$={(e,el) => {
               el.select();
@@ -73,6 +75,7 @@ export default component$(() => {
         <div>
           <label class="" for="year">Year</label>
           <input 
+            inputMode='numeric'
             ref={refYear}
             onFocus$={(e,el) => {
               el.select();
