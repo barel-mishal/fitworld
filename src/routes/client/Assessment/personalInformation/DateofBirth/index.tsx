@@ -52,7 +52,7 @@ export default component$(() => {
             onInput$={(e,el) => {
               const { value } = el;
               birthDate.value = { ...birthDate.value, day: value };
-              if (value.length === 2) {
+              if (value.length >= 1) {
                 refMonth.value?.focus();
               }
             }} />
@@ -65,7 +65,7 @@ export default component$(() => {
             ref={refMonth}
             onFocus$={(e,el) => {
               el.select();
-              const isDay = birthDate.value.day.length === 2;
+              const isDay = birthDate.value.day.length >= 1;
               if (isDay) {
                 refMonth.value?.focus();
               } else {
