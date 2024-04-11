@@ -20,7 +20,7 @@ export default component$(() => {
   
     <HeaderMainBottomNav >
       <div q:slot='header'>אנרגיה, חלבון, מים, פיטנס</div>
-      <div q:slot='main'>הדרך שלי <AppLink route="/client/Assessment/" >Hello</AppLink></div>
+      <div q:slot='main'>הדרך שלי <AppLink route="/client/Assessment/">Hello</AppLink></div>
       <div q:slot='footer'>ניווט בין לידרבוארד למסך הראשי</div>
     </HeaderMainBottomNav>
   );

@@ -26,6 +26,9 @@ export const buttonVariants = cva(
         lg: " px-8 h-16 py-4 text-lg",
         icon: "h-10 w-10",
       },
+      threeD: {
+        true: "",
+      }
     },
     defaultVariants: {
       look: "primary",
@@ -36,10 +39,12 @@ export const buttonVariants = cva(
 
 type ButtonProps = PropsOf<"button"> & VariantProps<typeof buttonVariants>;
 
-export const Button = component$<ButtonProps>(({ size, look, ...props }) => {
+export const Button = component$<ButtonProps>(({ size, look, threeD, ...props }) => {
   return (
-    <button {...props} class={cn(buttonVariants({ size, look }), props.class)}>
+    <button {...props} class={cn(buttonVariants({ size, look, threeD }), props.class)}>
       <Slot />
     </button>
   );
 });
+
+

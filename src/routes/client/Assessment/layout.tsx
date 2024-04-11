@@ -1,5 +1,5 @@
 import { type Session } from '@auth/core/types';
-import { $, Slot, component$ } from '@builder.io/qwik';
+import { $, Slot, component$, createContextId, useContextProvider, useStore, useVisibleTask$ } from '@builder.io/qwik';
 import { useLocation, useNavigate, type RequestHandler } from '@builder.io/qwik-city';
 import { BsArrowLeft } from '@qwikest/icons/bootstrap';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
@@ -15,7 +15,24 @@ export const onRequest: RequestHandler = (event) => {
   }
 };
 
+export const contextAssessmentStore = createContextId<{
+  personalInformation: {
+    name?: string;
+    dateOfBirth?: string;
+    gender?: string;
+    height?: string;
+    currentWeight?: string;
+  },
+  settings: {
+    buttonStyle: "outline" | "ghost";
+  }
+}>("Assessment");
+
+
 export default component$(() => {
+  const assessmentStore = useStore({ settings: { buttonStyle: "outline"}, personalInformation: {gender: "", name: ""} } as const);
+  useContextProvider(contextAssessmentStore, assessmentStore);
+
   const routes: RoutesLiteral[] = [
     "/client/Assessment/",
     "/client/Assessment/personalInformation/",
@@ -45,13 +62,20 @@ export default component$(() => {
     }
   });
 
+  useVisibleTask$(({track}) => {
+    const curr = track(assessmentStore);
+    console.log(curr);
+  })
+
+
+
   // Phone size screen is 380px wide 600px tall
   return (
   
     <HeaderMainBottomNav >
       <div q:slot='header' class=""><Button onClick$={prev} look={"ghost"} class="text-emerald-200 p-0 active:bg-transparent hover:bg-transparent "><BsArrowLeft class="" style={{height: 30, width: 30}} /></Button></div>
       <div q:slot='main' class=" h-full flex items-center"><Slot /></div>
-      <div q:slot='footer'><Button class="w-full " look={"outline"} size={"md"} onClick$={next}>CONTINUE</Button></div>
+      <div q:slot='footer'><Button class="w-full " role={"button"} look={assessmentStore.settings.buttonStyle} size={"md"} onClick$={next}>CONTINUE</Button></div>
     </HeaderMainBottomNav>
   );
 });
