@@ -49,9 +49,9 @@ export default component$(() => {
   return (
   
     <HeaderMainBottomNav >
-      <div q:slot='header' class=""><Button onClick$={prev}><BsArrowLeft /></Button></div>
-      <div q:slot='main' class=" bg-sky-50/40 h-full flex items-center"><Slot /></div>
-      <div q:slot='footer'><Button onClick$={next}>CONTINUE</Button></div>
+      <div q:slot='header' class=""><Button onClick$={prev} look={"ghost"} class="text-emerald-200 p-0 active:bg-transparent hover:bg-transparent "><BsArrowLeft class="" style={{height: 30, width: 30}} /></Button></div>
+      <div q:slot='main' class=" h-full flex items-center"><Slot /></div>
+      <div q:slot='footer'><Button class="w-full " look={"outline"} size={"md"} onClick$={next}>CONTINUE</Button></div>
     </HeaderMainBottomNav>
   );
 });

@@ -7,7 +7,7 @@ export default component$(() => {
   const refMonth = useSignal<HTMLInputElement>();
   const birthDate = useSignal({ day: '', month: '', year: '' });
   return (
-    <div class="bg-sky-200/35 grid h-full grid-rows-[auto,1fr]">
+    <div class="grid h-full grid-rows-[auto,1fr]">
       <h1 class="my-3 text-2xl font-bold [text-wrap:balance] ">What is your date of birth?</h1>
       <fieldset class="grid grid-cols-[1fr,1fr,2.5fr] gap-3 place-self-center" title='birth-date' >
         <legend class="sr-only">Date of Birth</legend>
