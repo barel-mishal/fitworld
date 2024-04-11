@@ -18,19 +18,20 @@ export const onRequest: RequestHandler = (event) => {
 export const contextAssessmentStore = createContextId<{
   personalInformation: {
     name?: string;
-    dateOfBirth?: string;
+    dateOfBirth?: Date;
     gender?: string;
     height?: string;
     currentWeight?: string;
   },
   settings: {
     buttonStyle: "outline" | "ghost";
+    buttonDisabled: boolean;
   }
 }>("Assessment");
 
 
 export default component$(() => {
-  const assessmentStore = useStore({ settings: { buttonStyle: "outline"}, personalInformation: {gender: "", name: ""} } as const);
+  const assessmentStore = useStore({ settings: { buttonStyle: "outline", buttonDisabled: false}, personalInformation: {gender: "", name: ""} } as const);
   useContextProvider(contextAssessmentStore, assessmentStore);
 
   const routes: RoutesLiteral[] = [
@@ -75,7 +76,7 @@ export default component$(() => {
     <HeaderMainBottomNav >
       <div q:slot='header' class=""><Button onClick$={prev} look={"ghost"} class="text-emerald-200 p-0 active:bg-transparent hover:bg-transparent "><BsArrowLeft class="" style={{height: 30, width: 30}} /></Button></div>
       <div q:slot='main' class=" h-full flex items-center"><Slot /></div>
-      <div q:slot='footer'><Button class="w-full " role={"button"} look={assessmentStore.settings.buttonStyle} size={"md"} onClick$={next}>CONTINUE</Button></div>
+      <div q:slot='footer'><Button disabled={assessmentStore.settings.buttonDisabled} class="w-full" role={"button"} look={assessmentStore.settings.buttonStyle} size={"md"} onClick$={next}>CONTINUE</Button></div>
     </HeaderMainBottomNav>
   );
 });

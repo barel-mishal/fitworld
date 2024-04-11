@@ -1,4 +1,4 @@
-import { component$, useContext } from '@builder.io/qwik';
+import { component$, useContext, useVisibleTask$ } from '@builder.io/qwik';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../layout';
 import { cn } from '@qwik-ui/utils';
@@ -6,6 +6,15 @@ import { cn } from '@qwik-ui/utils';
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({track}) => {
+    const name = track(() => sc.personalInformation.name);
+    if (!name) {
+      sc.settings.buttonDisabled = true
+      return 
+    }
+    sc.settings.buttonDisabled = false;
+  });
   return (
     <div class="w-full">
 

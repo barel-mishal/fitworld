@@ -1,4 +1,4 @@
-import { component$, useSignal } from '@builder.io/qwik';
+import { component$, useComputed$, useSignal } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 
 export default component$(() => {
@@ -6,6 +6,15 @@ export default component$(() => {
   const refYear = useSignal<HTMLInputElement>();
   const refMonth = useSignal<HTMLInputElement>();
   const birthDate = useSignal({ day: '', month: '', year: '' });
+  const age = useComputed$(() => {
+    const isEmpty = birthDate.value.day.length === 0 && birthDate.value.month.length === 0 && birthDate.value.year.length === 0;
+    if (isEmpty) return "Please enter your date of birth.";
+    const isValid = birthDate.value.day.length === 2 && birthDate.value.month.length === 2 && birthDate.value.year.length === 4;
+    if (!isValid) return "Please enter a valid date of birth.";
+    const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
+    const age = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 365));
+    return `Your age is: ${age}, let's move on!`;
+  });
   return (
     <div class="grid h-full grid-rows-[auto,1fr]">
       <h1 class="my-3 text-2xl font-bold [text-wrap:balance] ">What is your date of birth?</h1>
@@ -93,6 +102,11 @@ export default component$(() => {
           />
         </div>
       </fieldset>
+      <div class="grid place-self-start">
+        <p>
+          {age.value}
+        </p>
+      </div>
     </div>
   );
 });
