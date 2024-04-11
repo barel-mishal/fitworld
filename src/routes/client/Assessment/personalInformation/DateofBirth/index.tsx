@@ -1,20 +1,38 @@
-import { component$, useComputed$, useSignal } from '@builder.io/qwik';
+import { component$, useComputed$, useContext, useSignal, useVisibleTask$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
+import { contextAssessmentStore } from '../../layout';
 
 export default component$(() => {
+  const sc = useContext(contextAssessmentStore);
+  sc.settings.buttonDisabled = true;
   const refDay = useSignal<HTMLInputElement>();
   const refYear = useSignal<HTMLInputElement>();
   const refMonth = useSignal<HTMLInputElement>();
   const birthDate = useSignal({ day: '', month: '', year: '' });
+  const isEmpty = useComputed$(() => {
+    return birthDate.value.day.length === 0 && birthDate.value.month.length === 0 && birthDate.value.year.length === 0;
+  });
+  const isValid = useComputed$(() => {
+    return birthDate.value.day.length === 2 && birthDate.value.month.length === 2 && birthDate.value.year.length === 4;
+  });
   const age = useComputed$(() => {
-    const isEmpty = birthDate.value.day.length === 0 && birthDate.value.month.length === 0 && birthDate.value.year.length === 0;
-    if (isEmpty) return "Please enter your date of birth.";
-    const isValid = birthDate.value.day.length === 2 && birthDate.value.month.length === 2 && birthDate.value.year.length === 4;
-    if (!isValid) return "Please enter a valid date of birth.";
+    if (isEmpty.value) return "Please enter your date of birth.";
+    if (!isValid.value) return "Please enter a valid date of birth.";
     const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
     const age = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 365));
     return `Your age is: ${age}, let's move on!`;
   });
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({track}) => {
+    const v = track(() => isValid.value);
+    if (!v) {
+      sc.settings.buttonDisabled = true;
+      return;
+    } 
+    sc.settings.buttonDisabled = false;
+
+  }, {strategy: "intersection-observer"});
+  
   return (
     <div class="grid h-full grid-rows-[auto,1fr]">
       <h1 class="my-3 text-2xl font-bold [text-wrap:balance] ">What is your date of birth?</h1>
@@ -24,6 +42,7 @@ export default component$(() => {
           <label class="" for="day">Day</label>
           <input 
             inputMode='numeric'
+            value={birthDate.value.day}
             ref={refDay}
             class={cn(
               "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
@@ -42,6 +61,7 @@ export default component$(() => {
           <label class="" for="month">Month</label>
           <input 
             inputMode='numeric'
+            value={birthDate.value.month}
             ref={refMonth}
             onFocus$={(e,el) => {
               el.select();
@@ -76,6 +96,7 @@ export default component$(() => {
           <label class="" for="year">Year</label>
           <input 
             inputMode='numeric'
+            value={birthDate.value.year}
             ref={refYear}
             onFocus$={(e,el) => {
               el.select();

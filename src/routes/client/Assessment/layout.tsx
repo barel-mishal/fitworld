@@ -63,6 +63,7 @@ export default component$(() => {
     }
   });
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({track}) => {
     const curr = track(assessmentStore);
     console.log(curr);
