@@ -10,10 +10,10 @@ export const NotesLayoutAside = component$<{
     return <aside class="w-[200px] border-r p-4 gap-6 flex flex-col">
             <h1 class="font-bold text-3xl flex gap-2 items-center justify-between">
                 <p>Notes</p>
-                <Link href="/dashboard/notes/new" class="bg-sky-950 rounded-full p-2">
-                    <BsPlusLg class="fill-sky-50 h-4 w-4" />
-                    </Link>
-            </h1>
+                <Link href="/dashboard/notes/new" class="bg-sky-800 rounded-full p-2">
+                    <BsPlusLg class="fill-sky-50 h-4 w-4 " style={{fill: "#f0f9ff", height: "1rem", width: "1rem"}}  />
+                    </Link>   
+                </h1>
             <ul class="grid gap-1">
 
             <Resource

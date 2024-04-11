@@ -27,7 +27,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
         return connection.token;
       },
       session: async (connection) => {
-        const a = connection;
+        // const a = connection;
         // const user = await db
         
         return connection.session;
