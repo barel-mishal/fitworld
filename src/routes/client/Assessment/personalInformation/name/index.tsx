@@ -5,12 +5,12 @@ import { Label } from '~/components/ui/label/label';
 
 export default component$(() => {
   return (
-    <div>
+    <div class="w-full">
 
-      <div class="grid w-full max-w-sm items-center gap-1.5">
-        <Label for="email-2">Email</Label>
-        <Input type="email" id="email-2" placeholder="Email" />
-        <p class="text-sm text-muted-foreground">Enter your email address.</p>
+      <div class="grid max-w-sm items-center gap-1.5 ">
+        <Label for="email-2" class="text-emerald-100">Nickname</Label>
+        <Input type="nickname" id="nickname" placeholder="Me" class=""/>
+        <p class="text-sm text-emerald-200/70">The name shown by others in the application </p>
       </div>
 
     </div>
