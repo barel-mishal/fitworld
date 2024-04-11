@@ -3,9 +3,9 @@ import { NotesLayoutContext } from "./NotesContext";
 import { NotesLayoutAside } from "./SideBarNotes";
 import { Button } from "~/components/ui/button/button";
 import { Textarea } from "~/components/ui/textarea/textarea";
-import { PublishModal } from "./PublishModal";
 import { serverDeleteNote } from "~/routes/api/service";
 import { useNavigate } from "@builder.io/qwik-city";
+import { BsTrash } from "@qwikest/icons/bootstrap";
 
 export const NotesContainer = component$(() => {
     const notesState = useContext(NotesLayoutContext);
@@ -31,16 +31,17 @@ export const NotesContainer = component$(() => {
                     {notesState.store.textEdit()}
                   </Button>
                   <Button 
-                  class=""
+                  class="
+                  flex gap-2 outline outline-pink-800 
+                  bg-transparent text-pink-800 hover:bg-pink-100 ease-in-out 
+                  transition-all duration-300
+                  "
                   onClick$={async () => {
                     const deleted = await serverDeleteNote(notesState.store.selectedNote);
                     console.log(deleted);
                     navigate("/dashboard/notes", {forceReload: true});
-                  }}>Delete</Button>
-                  
-                  <PublishModal name={notesState.store.title} id={notesState.store.selectedNote} />
-
-                  <p class="col-span-3 text-slate-500">Status draft</p>
+                  }}><BsTrash /><p>Delete</p></Button>
+            
             </div>
                 
             <div class="col-span-6 ">

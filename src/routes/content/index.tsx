@@ -4,7 +4,7 @@ import { serverGetPublishNotes } from '../api/service';
 export default component$(() => {
   const publicNotes = useResource$(async () => await serverGetPublishNotes()); 
   return (
-    <div>
+    <div class="">
       <Resource value={publicNotes} onResolved={(val) => {
         return <div>{val.map(v => {
           return <div key={v.id}>{v.title}</div>;

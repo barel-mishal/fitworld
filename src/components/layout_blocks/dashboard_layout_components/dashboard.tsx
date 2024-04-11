@@ -62,7 +62,7 @@ export const Dashboard = component$<DashboardProps>((props) => {
             <div class={"flex-grow flex flex-col "}>
                 <div class={"flex justify-between p-4 items-center border-b border-slate-300"}>
                     <div class="flex w-full max-w-sm items-center">
-                        <Input type="email" class={"rounded-r-none rounded-l-md"} placeholder="find feeds and notes"   />
+                        <Input type="email" class={"rounded-r-none rounded-l-md"} placeholder="Find feeds, notes and users"   />
                         <Button type="submit" class={"rounded-l-none"}>Search</Button>
                     </div>
                     <MyModal name={props.name} signout={props.signout} />

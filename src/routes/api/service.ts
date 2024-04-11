@@ -94,5 +94,6 @@ export const serverGetUnPublishNotes = server$(async function() {
 export const serverPublishNote = server$(async function(id: string) {
     const note = serverData.notes.findIndex((note) => note.id === id);
     serverData.notes[note].publishedAt = new Date();
+    console.log(serverData.notes[note]);
     return {note: serverData.notes[note]}
 });

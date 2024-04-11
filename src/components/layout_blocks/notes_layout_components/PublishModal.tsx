@@ -29,7 +29,7 @@ export const PublishModal = component$<PublishProps>((props) => {
     return (
         <ModalWrapper>
             <ModalTrigger>
-                <Button class={""}>
+                <Button class={""} >
                     <p>Publish</p>
                 </Button>
             </ModalTrigger>
@@ -49,7 +49,9 @@ export const PublishModal = component$<PublishProps>((props) => {
                     </div>
                 </ModalContent>
                 <ModalFooter>
-                        <Button>Submit</Button>
+                        <Button onClick$={() => {
+                          
+                        }}>Submit</Button>
                 </ModalFooter>
                     
             </Modal>
