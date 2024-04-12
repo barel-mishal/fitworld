@@ -18,9 +18,9 @@ export const onRequest: RequestHandler = (event) => {
 export const contextAssessmentStore = createContextId<{
   personalInformation: {
     name?: string;
-    dateOfBirth?: Date;
+    dateOfBirth?: Date | undefined;
     gender?: string;
-    height?: string;
+    height: {type: "cm", value: number} | {type: "m", value: number} | {type: "FT", value: number};
     currentWeight?: string;
   },
   settings: {
@@ -31,7 +31,14 @@ export const contextAssessmentStore = createContextId<{
 
 
 export default component$(() => {
-  const assessmentStore = useStore({ settings: { buttonStyle: "outline", buttonDisabled: false}, personalInformation: {gender: "", name: ""} } as const);
+  const assessmentStore = useStore({ 
+    settings: { buttonStyle: "outline", buttonDisabled: false}, 
+    personalInformation: {
+      gender: "", 
+      name: "",
+      dateOfBirth: undefined,
+      height: {type: "cm", value: 0},
+    } } as const);
   useContextProvider(contextAssessmentStore, assessmentStore);
 
   const routes: RoutesLiteral[] = [
