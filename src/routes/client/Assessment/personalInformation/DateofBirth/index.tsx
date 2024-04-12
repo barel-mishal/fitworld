@@ -34,7 +34,6 @@ export default component$(() => {
     return `Your age is: ${age}, let's move on!`;
   });
 
-  
   return (
     <div class="grid h-full grid-rows-[auto,1fr]">
       <h1 class="my-3 text-2xl font-bold [text-wrap:balance] ">What is your date of birth?</h1>
@@ -74,6 +73,7 @@ export default component$(() => {
               const month = parseInt(value, 10);
               birthDate.value = { ...birthDate.value, month: isNaN(month) ? "" : month.toString() };
             }}
+            onKeyDown$={(e,el) => e.key === 'Backspace' && el.value.length === 0 && refDay.value?.focus()}
           />
         </div>
         <div>
@@ -92,6 +92,7 @@ export default component$(() => {
               const year = parseInt(value, 10);
               birthDate.value = { ...birthDate.value, year: isNaN(year) ? "" : year.toString() };
             }}
+            onKeyDown$={(e,el) => e.key === 'Backspace' && el.value.length === 0 && refMonth.value?.focus()}
           />
         </div>
       </fieldset>
