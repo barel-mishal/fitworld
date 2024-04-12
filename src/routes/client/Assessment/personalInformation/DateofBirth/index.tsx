@@ -1,10 +1,11 @@
-import { component$, useComputed$, useContext, useSignal, useStore } from '@builder.io/qwik';
+import { component$, useComputed$, useContext, useSignal } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { contextAssessmentStore } from '../../layout';
 
 export default component$(() => {
   // https://claude.ai/chat/d86dbc49-6a60-44b8-bee9-2f6acf1155d9
   const sc = useContext(contextAssessmentStore);
+  sc.settings.buttonDisabled = true;
   const refDay = useSignal<HTMLInputElement>();
   const refYear = useSignal<HTMLInputElement>();
   const refMonth = useSignal<HTMLInputElement>();
@@ -23,9 +24,11 @@ export default component$(() => {
   
     return isValidDay && isValidMonth && isValidYear;
   });
+  const ERROR_MESSAGE = "Please enter a valid date of birth.";
+  const ERROR_EMPTY_MESSAGE = "Please enter your date of birth.";
   const age = useComputed$(() => {
-    if (isEmpty.value) return "Please enter your date of birth.";
-    if (!isValid.value) return "Please enter a valid date of birth.";
+    if (isEmpty.value) return ERROR_EMPTY_MESSAGE;
+    if (!isValid.value) return ERROR_MESSAGE;
     const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
     const age = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 365));
     return `Your age is: ${age}, let's move on!`;
@@ -51,7 +54,7 @@ export default component$(() => {
             onInput$={(e,el) => {
               const { value } = el;
               const day = parseInt(value, 10);
-              birthDate.value = { ...birthDate.value, day: day.toString() };
+              birthDate.value = { ...birthDate.value, day: isNaN(day) ? "" : day.toString() };
             }}
           />
         </div>
@@ -60,7 +63,7 @@ export default component$(() => {
           <input 
             ref={refMonth}
             inputMode='numeric'
-            // value={birthDate.value.month}
+            value={birthDate.value.month}
             class={cn(
               "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
               "text-center text-xl"
@@ -68,8 +71,8 @@ export default component$(() => {
             placeholder='00' name='month'
             onInput$={(e,el) => {
               const { value } = el;
-              const day = parseInt(value, 10);
-              birthDate.value = { ...birthDate.value, day: day.toString() };
+              const month = parseInt(value, 10);
+              birthDate.value = { ...birthDate.value, month: isNaN(month) ? "" : month.toString() };
             }}
           />
         </div>
@@ -78,7 +81,7 @@ export default component$(() => {
           <input 
             ref={refYear}
             inputMode='numeric'
-            // value={birthDate.value.year}
+            value={birthDate.value.year}
             class={cn(
               "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
               "text-center text-xl"
@@ -86,14 +89,14 @@ export default component$(() => {
             placeholder='0000' name='year'
             onInput$={(e,el) => {
               const { value } = el;
-              const day = parseInt(value, 10);
-              birthDate.value = { ...birthDate.value, day: day.toString() };
+              const year = parseInt(value, 10);
+              birthDate.value = { ...birthDate.value, year: isNaN(year) ? "" : year.toString() };
             }}
           />
         </div>
       </fieldset>
       <div class="grid place-self-start">
-        <p>
+        <p class={[ERROR_MESSAGE === age.value ? "text-rose-700" : "text-emerald-200"]}>
           {age.value}
         </p>
       </div>
