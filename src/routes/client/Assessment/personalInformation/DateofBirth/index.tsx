@@ -1,4 +1,4 @@
-import { component$, useComputed$, useContext, useSignal } from '@builder.io/qwik';
+import { component$, useComputed$, useContext, useSignal, useVisibleTask$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { contextAssessmentStore } from '../../layout';
 
@@ -33,6 +33,16 @@ export default component$(() => {
     const age = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 365));
     return `Your age is: ${age}, let's move on!`;
   });
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({track}) => {
+    const v = track(() => isValid.value);
+    if (!v) {
+      sc.settings.buttonDisabled = true;
+      return;
+    } 
+    sc.settings.buttonDisabled = false;
+
+  }, {strategy: "intersection-observer"});
 
   return (
     <div class="grid h-full grid-rows-[auto,1fr]">
@@ -97,7 +107,7 @@ export default component$(() => {
         </div>
       </fieldset>
       <div class="grid place-self-start">
-        <p class={[ERROR_MESSAGE === age.value ? "text-rose-700" : "text-emerald-200"]}>
+        <p class={[ERROR_MESSAGE === age.value ? "text-rose-300" : "text-emerald-200"]}>
           {age.value}
         </p>
       </div>

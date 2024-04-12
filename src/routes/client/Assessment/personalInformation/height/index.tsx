@@ -62,6 +62,10 @@ export const MyPopover = component$(() => {
           <button>
             <span>FT</span>
           </button>
+
+          <button>
+            <span>M</span>
+          </button>
         </div>
       </Popover>
     </>
