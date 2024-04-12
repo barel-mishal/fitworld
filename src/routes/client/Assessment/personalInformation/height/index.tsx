@@ -1,4 +1,4 @@
-import { component$, useContext, useSignal, useComputed$, useOn, $ } from '@builder.io/qwik';
+import { component$, useContext, useSignal, useComputed$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../layout';
@@ -96,7 +96,7 @@ export const MyPopover = component$<HeightGetter>(() => {
     <>
       <PopoverTrigger
         ref={triggerRef}
-        class={buttonVariants({ look: 'outline' })}
+        class={buttonVariants({ look: 'outline', class: "rounded-sm" })}
         popovertarget="hero-id"
       >
         <span>
@@ -112,6 +112,7 @@ export const MyPopover = component$<HeightGetter>(() => {
         floating={true}
         placement="bottom"
         id="hero-id"
+
       >
         <div class="grid gap-4 w-auto">
           <button onClick$={() => {
