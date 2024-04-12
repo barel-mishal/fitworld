@@ -3,6 +3,7 @@ import { cn } from '@qwik-ui/utils';
 import { contextAssessmentStore } from '../../layout';
 
 export default component$(() => {
+  // https://claude.ai/chat/d86dbc49-6a60-44b8-bee9-2f6acf1155d9
   const sc = useContext(contextAssessmentStore);
   sc.settings.buttonDisabled = true;
   const refDay = useSignal<HTMLInputElement>();
@@ -13,7 +14,15 @@ export default component$(() => {
     return birthDate.value.day.length === 0 && birthDate.value.month.length === 0 && birthDate.value.year.length === 0;
   });
   const isValid = useComputed$(() => {
-    return birthDate.value.day.length === 2 && birthDate.value.month.length === 2 && birthDate.value.year.length === 4;
+    const day = parseInt(birthDate.value.day, 10);
+    const month = parseInt(birthDate.value.month, 10);
+    const year = parseInt(birthDate.value.year, 10);
+  
+    const isValidDay = day >= 1 && day <= 31;
+    const isValidMonth = month >= 1 && month <= 12;
+    const isValidYear = !isNaN(year) && birthDate.value.year.length === 4;
+  
+    return isValidDay && isValidMonth && isValidYear;
   });
   const age = useComputed$(() => {
     if (isEmpty.value) return "Please enter your date of birth.";
@@ -52,7 +61,7 @@ export default component$(() => {
             onInput$={(e,el) => {
               const { value } = el;
               birthDate.value = { ...birthDate.value, day: value };
-              if (value.length >= 1) {
+              if (value.length === 2) {
                 refMonth.value?.focus();
               }
             }} />
@@ -65,24 +74,13 @@ export default component$(() => {
             ref={refMonth}
             onFocus$={(e,el) => {
               el.select();
-              const isDay = birthDate.value.day.length >= 1;
+              const isDay = birthDate.value.day.length === 2;
               if (isDay) {
                 refMonth.value?.focus();
               } else {
                 refDay.value?.focus();
               }
             }}
-            class={cn(
-              "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-              "text-center text-xl"
-            )}
-            onKeyDown$={(e,el) => {
-              console.log(e.key);
-              if (e.key === 'Backspace' && el.value.length === 0) {
-                refDay.value?.focus();
-              }
-            }}
-            placeholder='00' name='month'
             onInput$={(e,el) => {
               const { value } = el;
               birthDate.value = { ...birthDate.value, month: value };
@@ -90,6 +88,16 @@ export default component$(() => {
                 refYear.value?.focus();
               }
             }}
+            onKeyDown$={(e,el) => {
+              if (e.key === 'Backspace' && el.value.length === 0) {
+                refDay.value?.focus();
+              }
+            }}
+            class={cn(
+              "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+              "text-center text-xl"
+            )}
+            placeholder='00' name='month'
           />
         </div>
         <div>
@@ -103,7 +111,7 @@ export default component$(() => {
               const isDayMonth = birthDate.value.day.length === 2 && birthDate.value.month.length === 2;
               if (isDayMonth) {
                 refYear.value?.focus();
-              } else if (birthDate.value.day.length < 2) {
+              } else if (birthDate.value.day.length === 2) {
                 refDay.value?.focus();
               } else {
                 refMonth.value?.focus();
