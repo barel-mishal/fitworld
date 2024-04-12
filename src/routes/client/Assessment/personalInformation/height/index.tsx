@@ -6,14 +6,15 @@ import { PopoverTrigger } from '@qwik-ui/headless';
 import { buttonVariants } from '~/components/ui/button/button';
 import { Popover } from '~/components/ui/popover/popover';
 import { convertUnits } from '~/util/convertUnits';
+import { formatedNumber } from '~/util/formatNumber';
 
 
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
 
-  const computeHeight = useComputed$(async () => `${convertUnits(170, "cm", sc.personalInformation.height.type)}${sc.personalInformation.height.type}`);
-  const inputHeightValue = () => sc.personalInformation.height.value ? `${sc.personalInformation.height.value}${sc.personalInformation.height.type}` : "";
+  const computeHeight = useComputed$(async () => `${formatedNumber(convertUnits(170, "cm", sc.personalInformation.height.type))}${sc.personalInformation.height.type}`);
+  const inputHeightValue = () => sc.personalInformation.height.value ? `${formatedNumber(sc.personalInformation.height.value)}${sc.personalInformation.height.type}` : "";
   return (
     <div class="grid grid-cols-[1fr,auto] gap-4 w-full">
 
@@ -24,7 +25,7 @@ export default component$(() => {
           sc.personalInformation.height.value = height;
           }} class={cn(
             "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-          )} value={inputHeightValue()} 
+          )} value={inputHeightValue()}
         />
 
         <p class="text-sm text-emerald-200/70 h-5">The name shown by others in the application </p>
