@@ -25,12 +25,16 @@ interface AssessmentStoreType {
     dateOfBirth: Date | undefined,
     height: {type: "cm" | "m" | "FT", value: number},
     currentWeight: number,
-  }
+  },
+  currentView: RoutesLiteral
 } 
 
 export const useAssessmentStore = () => {
   const assessmentStore = useStore<AssessmentStoreType>({ 
-    settings: { buttonStyle: "outline", buttonDisabled: false}, 
+    settings: { 
+      buttonStyle: "outline", 
+      buttonDisabled: false 
+    }, 
     personalInformation: {
       gender: "", 
       name: "",
@@ -40,7 +44,8 @@ export const useAssessmentStore = () => {
         value: 0
       },
       currentWeight: 0,
-  } 
+    },
+    currentView: "/client/Assessment/",
 });
 
 
