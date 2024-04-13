@@ -5,7 +5,7 @@ import { contextAssessmentStore } from '../../layout';
 import { PopoverTrigger } from '@qwik-ui/headless';
 import { buttonVariants } from '~/components/ui/button/button';
 import { Popover } from '~/components/ui/popover/popover';
-import { convertUnits } from '~/util/convertUnits';
+import { convertHeightUnits } from '~/util/convertUnits';
 import { formatedNumber } from '~/util/formatNumber';
 
 
@@ -15,7 +15,7 @@ export default component$(() => {
   const refHeight = useSignal<HTMLButtonElement>();
   const isAvtive = useSignal<boolean>(false);
 
-  const computeHeight = useComputed$(async () => `${formatedNumber(convertUnits(170, "cm", sc.personalInformation.height.type))}`);
+  const computeHeight = useComputed$(async () => `${formatedNumber(convertHeightUnits(170, "cm", sc.personalInformation.height.type))}`);
   const inputHeightValue = () => {
     const isActiveAndEmpty = isAvtive.value && !sc.personalInformation.height.value;
     if (isActiveAndEmpty) {
@@ -129,19 +129,19 @@ export const MyPopover = component$<HeightGetter>(() => {
       >
         <div class="grid gap-4 w-auto">
           <button onClick$={() => {
-            sc.personalInformation.height = {type: "cm", value: parseFloat(formatedNumber(convertUnits(sc.personalInformation.height.value, sc.personalInformation.height.type, "cm")))};
+            sc.personalInformation.height = {type: "cm", value: parseFloat(formatedNumber(convertHeightUnits(sc.personalInformation.height.value, sc.personalInformation.height.type, "cm")))};
           }}>
             <span>CM</span>
           </button>
 
           <button onClick$={() => {
-            sc.personalInformation.height = {type: "m", value: parseFloat(formatedNumber(convertUnits(sc.personalInformation.height.value, sc.personalInformation.height.type, "m")))};
+            sc.personalInformation.height = {type: "m", value: parseFloat(formatedNumber(convertHeightUnits(sc.personalInformation.height.value, sc.personalInformation.height.type, "m")))};
           }}>
             <span>M</span>
           </button>
 
           <button onClick$={() => {
-            sc.personalInformation.height = {type: "FT", value: parseFloat(formatedNumber(convertUnits(sc.personalInformation.height.value, sc.personalInformation.height.type, "FT")))};
+            sc.personalInformation.height = {type: "FT", value: parseFloat(formatedNumber(convertHeightUnits(sc.personalInformation.height.value, sc.personalInformation.height.type, "FT")))};
           }}>
             <span>FT</span>
           </button>
