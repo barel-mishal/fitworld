@@ -15,30 +15,42 @@ export const onRequest: RequestHandler = (event) => {
   }
 };
 
-export const contextAssessmentStore = createContextId<{
+interface AssessmentStoreType {
+  settings: { buttonStyle: "outline" | "link" | "primary" | "secondary" | "alert" | "ghost" | null | undefined,
+  buttonDisabled: boolean
+},
   personalInformation: {
-    name?: string;
-    dateOfBirth?: Date | undefined;
-    gender?: string;
-    height: {type: "cm", value: number} | {type: "m", value: number} | {type: "FT", value: number};
-    currentWeight?: string;
-  },
-  settings: {
-    buttonStyle: "outline" | "ghost";
-    buttonDisabled: boolean;
+    gender: "female" | "male" | "" | undefined,
+    name: string,
+    dateOfBirth: Date | undefined,
+    height: {type: string, value: number},
+    currentWeight: number,
   }
-}>("Assessment");
+} 
 
-
-export default component$(() => {
-  const assessmentStore = useStore({ 
+export const useAssessmentStore = () => {
+  const assessmentStore = useStore<AssessmentStoreType>({ 
     settings: { buttonStyle: "outline", buttonDisabled: false}, 
     personalInformation: {
       gender: "", 
       name: "",
       dateOfBirth: undefined,
       height: {type: "cm", value: 0},
-    } } as const);
+      currentWeight: 0,
+  } 
+});
+
+
+  return assessmentStore;
+}
+
+export type AssessmentStore = ReturnType<typeof useAssessmentStore>;
+
+export const contextAssessmentStore = createContextId<AssessmentStore>("Assessment");
+
+
+export default component$(() => {
+  const assessmentStore = useAssessmentStore();
   useContextProvider(contextAssessmentStore, assessmentStore);
 
   const routes: RoutesLiteral[] = [
@@ -72,8 +84,8 @@ export default component$(() => {
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({track}) => {
-    const curr = track(assessmentStore);
-    console.log(curr);
+    const curr = track(() => assessmentStore);
+    console.log(curr, "current", assessmentStore.settings.buttonDisabled);
   })
 
 

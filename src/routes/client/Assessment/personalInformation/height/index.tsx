@@ -1,4 +1,4 @@
-import { component$, useContext, useSignal, useComputed$ } from '@builder.io/qwik';
+import { component$, useContext, useSignal, useComputed$, useTask$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../layout';
@@ -31,6 +31,26 @@ export default component$(() => {
     }
     return "";
   };
+
+  const isValid = useComputed$(() => {
+    const isNan = isNaN(sc.personalInformation.height.value);
+    const isBig = sc.personalInformation.height.value > 0;
+    return !isNan && isBig
+  });
+
+  useTask$(() => {
+    sc.settings.buttonDisabled = true;
+  })
+
+  useTask$(({track}) => {
+    const valid = track(() => isValid.value);
+    console.log("valid", valid, sc.personalInformation.height.value);
+    if (valid) {
+      sc.settings.buttonDisabled = false;
+    } else {
+      sc.settings.buttonDisabled = true;
+    }
+  });
 
   return (
     <div class="grid grid-cols-[1fr,auto] gap-4 w-full">
@@ -66,15 +86,9 @@ export default component$(() => {
 
 interface HeightGetter {
   height?: {
-    type: "cm";
+    type: string;
     value: number;
-} | {
-    type: "m";
-    value: number;
-} | {
-    type: "FT";
-    value: number;
-} | undefined
+  }
 }
 
 export const MyPopover = component$<HeightGetter>(() => {
