@@ -10,6 +10,7 @@ export type AppRoutes =
   | "/auth/verify-request/"
   | "/client/"
   | "/client/Assessment/"
+  | "/client/Assessment/lifestyleFactors/"
   | "/client/Assessment/personalInformation/"
   | "/client/Assessment/personalInformation/DateofBirth/"
   | "/client/Assessment/personalInformation/current-weight/"
@@ -35,6 +36,7 @@ export interface AppRouteMap {
   "/auth/verify-request/": {};
   "/client/": {};
   "/client/Assessment/": {};
+  "/client/Assessment/lifestyleFactors/": {};
   "/client/Assessment/personalInformation/": {};
   "/client/Assessment/personalInformation/DateofBirth/": {};
   "/client/Assessment/personalInformation/current-weight/": {};
@@ -61,6 +63,7 @@ export interface AppRouteParamsFunction {
   (route: "/auth/verify-request/", params?: {}): string;
   (route: "/client/", params?: {}): string;
   (route: "/client/Assessment/", params?: {}): string;
+  (route: "/client/Assessment/lifestyleFactors/", params?: {}): string;
   (route: "/client/Assessment/personalInformation/", params?: {}): string;
   (
     route: "/client/Assessment/personalInformation/DateofBirth/",
@@ -99,6 +102,7 @@ export type AppLinkProps =
   | { route: "/auth/verify-request/" }
   | { route: "/client/" }
   | { route: "/client/Assessment/" }
+  | { route: "/client/Assessment/lifestyleFactors/" }
   | { route: "/client/Assessment/personalInformation/" }
   | { route: "/client/Assessment/personalInformation/DateofBirth/" }
   | { route: "/client/Assessment/personalInformation/current-weight/" }

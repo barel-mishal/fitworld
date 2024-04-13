@@ -2,6 +2,7 @@ import { type Session } from '@auth/core/types';
 import { component$ } from '@builder.io/qwik';
 import { type RequestHandler } from '@builder.io/qwik-city';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
+import { PhDNA, PhDrop, PhHeart, PhLightning } from '~/components/icons/icons';
 import { AppLink } from '~/routes.config';
 
 export const onRequest: RequestHandler = (event) => {
@@ -16,12 +17,28 @@ export const onRequest: RequestHandler = (event) => {
 export default component$(() => {
   
   // Phone size screen is 380px wide 600px tall
+  // אנרגיה, חלבון, מים, פיטנס
   return (
   
     <HeaderMainBottomNav >
-      <div q:slot='header'>אנרגיה, חלבון, מים, פיטנס</div>
+      <div q:slot='header'><NavBar /></div>
       <div q:slot='main'>הדרך שלי <AppLink route="/client/Assessment/">Hello</AppLink></div>
       <div q:slot='footer'>ניווט בין לידרבוארד למסך הראשי</div>
     </HeaderMainBottomNav>
   );
 });
+
+export const NavBar = component$(() => {
+
+
+  return (
+    <ul class="grid grid-cols-4">
+      <li class="grid grid-cols-2 items-center"><PhLightning class="fill-yellow-500 h-8 w-8 " /><p class="text-xs">300</p></li>
+      <li class="grid grid-cols-2 items-center"><PhDrop      class="fill-sky-500 h-8 w-8" />    <p class="text-xs">200</p></li>
+      <li class="grid grid-cols-2 items-center"><PhHeart     class="fill-rose-500 h-8 w-8 " />  <p class="text-xs">400</p></li>
+      <li class="grid grid-cols-2 items-center"><PhDNA       class="fill-green-500 h-8 w-8 " /> <p class="text-xs">210</p></li>
+    </ul>
+  )
+});
+
+
