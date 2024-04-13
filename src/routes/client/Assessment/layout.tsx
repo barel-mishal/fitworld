@@ -26,6 +26,11 @@ interface AssessmentStoreType {
     height: {type: "cm" | "m" | "FT", value: number},
     currentWeight: {unit: "kg" | "g" | "lb", value: number},
   },
+  lifeStyle: {
+    occupation: string,
+    activityLevel: string,
+    goals: [string, string, string]
+  },
   currentView: RoutesLiteral
 } 
 
@@ -47,6 +52,11 @@ export const useAssessmentStore = () => {
         unit: "kg", 
         value: 0
       }
+    },
+    lifeStyle: {
+      occupation: "",
+      activityLevel: "",
+      goals: ["", "", ""],
     },
     currentView: "/client/Assessment/",
 });
