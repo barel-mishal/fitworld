@@ -24,7 +24,7 @@ interface AssessmentStoreType {
     name: string,
     dateOfBirth: Date | undefined,
     height: {type: "cm" | "m" | "FT", value: number},
-    currentWeight: number,
+    currentWeight: {unit: "kg" | "g" | "lbs", value: number},
   },
   currentView: RoutesLiteral
 } 
@@ -43,7 +43,10 @@ export const useAssessmentStore = () => {
         type: "cm", 
         value: 0
       },
-      currentWeight: 0,
+      currentWeight: {
+        unit: "kg", 
+        value: 0
+      }
     },
     currentView: "/client/Assessment/",
 });
@@ -93,7 +96,7 @@ export default component$(() => {
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(({track}) => {
     const curr = track(() => assessmentStore);
-    console.log(curr, "current", assessmentStore.settings.buttonDisabled);
+    console.log("assessmentStore", curr);
   })
 
 
