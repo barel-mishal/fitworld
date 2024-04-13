@@ -18,18 +18,18 @@ export default component$(() => {
   
   // Phone size screen is 380px wide 600px tall
   // אנרגיה, חלבון, מים, פיטנס
+  // ניווט בין לידרבוארד למסך הראשי
   return (
   
     <HeaderMainBottomNav >
       <div q:slot='header'><NavBar /></div>
-      <div q:slot='main'>הדרך שלי <AppLink route="/client/Assessment/">Hello</AppLink></div>
-      <div q:slot='footer'>ניווט בין לידרבוארד למסך הראשי</div>
+      <div q:slot='main'><AppLink route="/client/Assessment/">Section Getting started</AppLink></div>
+      <div q:slot='footer'><NavBar /></div>
     </HeaderMainBottomNav>
   );
 });
 
 export const NavBar = component$(() => {
-
 
   return (
     <ul class="grid grid-cols-4">
@@ -40,5 +40,7 @@ export const NavBar = component$(() => {
     </ul>
   )
 });
+
+
 
 
