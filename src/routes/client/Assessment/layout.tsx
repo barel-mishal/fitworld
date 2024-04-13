@@ -24,7 +24,7 @@ interface AssessmentStoreType {
     name: string,
     dateOfBirth: Date | undefined,
     height: {type: "cm" | "m" | "FT", value: number},
-    currentWeight: {unit: "kg" | "g" | "lbs", value: number},
+    currentWeight: {unit: "kg" | "g" | "lb", value: number},
   },
   currentView: RoutesLiteral
 } 

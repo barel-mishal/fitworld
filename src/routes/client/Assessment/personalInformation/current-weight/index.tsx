@@ -141,7 +141,7 @@ export const MyPopover = component$<HeightGetter>(() => {
           </button>
 
           <button onClick$={() => {
-            sc.personalInformation.currentWeight = {unit: "lbs", value: parseFloat(formatedNumber(convertWeightUnits(sc.personalInformation.currentWeight.value, sc.personalInformation.currentWeight.unit, "lbs")))};
+            sc.personalInformation.currentWeight = {unit: "lb", value: parseFloat(formatedNumber(convertWeightUnits(sc.personalInformation.currentWeight.value, sc.personalInformation.currentWeight.unit, "lb")))};
           }}>
             <span>LBS</span>
           </button>
