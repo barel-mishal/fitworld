@@ -37,7 +37,7 @@ export default component$(() => {
   useTask$(({track}) => {
     const height = track(() => sc.personalInformation.height);
     if (!height.value) {
-      sc.settings.buttonDisabled = true
+      sc.settings.buttonDisabled = true;
       return 
     }
     sc.settings.buttonDisabled = false;
