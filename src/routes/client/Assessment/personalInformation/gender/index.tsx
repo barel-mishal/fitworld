@@ -1,18 +1,22 @@
-import { component$, useContext, useTask$ } from '@builder.io/qwik';
+import { component$, useComputed$, useContext, useTask$ } from '@builder.io/qwik';
 import { Button } from '~/components/ui/button/button';
 import { contextAssessmentStore } from '../../layout';
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
 
+  const isValid = useComputed$(() => {
+    return sc.personalInformation.gender !== ""
+  })
+
   useTask$(({track}) => {
-    const gender = track(() => sc.personalInformation.gender);
-    if (gender === "") {
+    const valid = track(() => isValid.value);
+    if (valid) {
+      sc.settings.buttonDisabled = false;
+    } else {
       sc.settings.buttonDisabled = true;
-      return;
     }
-    sc.settings.buttonDisabled = false;
-  });
+  })
   
   return (
     <div class="grid grid-cols-2 w-full gap-4 grid-rows-[200px] ">

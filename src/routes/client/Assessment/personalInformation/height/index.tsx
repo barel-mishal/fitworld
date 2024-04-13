@@ -1,4 +1,4 @@
-import { component$, useContext, useSignal, useComputed$, useTask$ } from '@builder.io/qwik';
+import { component$, useContext, useSignal, useComputed$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../layout';
@@ -23,7 +23,6 @@ export default component$(() => {
     }
     const isActiveAndNotEmpty = isAvtive.value && sc.personalInformation.height.value;
     if (isActiveAndNotEmpty) {
-      console.log("active and not empty");
       return sc.personalInformation.height.value;
     }
     const isNotActiveAndNotEmpty = !isAvtive.value && sc.personalInformation.height.value;
@@ -32,16 +31,6 @@ export default component$(() => {
     }
     return "";
   };
-
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useTask$(({track}) => {
-    const height = track(() => sc.personalInformation.height);
-    if (!height.value) {
-      sc.settings.buttonDisabled = true;
-      return 
-    }
-    sc.settings.buttonDisabled = false;
-  });
 
   return (
     <div class="grid grid-cols-[1fr,auto] gap-4 w-full">

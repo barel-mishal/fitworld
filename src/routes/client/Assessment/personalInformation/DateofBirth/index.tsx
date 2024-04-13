@@ -8,10 +8,19 @@ export default component$(() => {
   const refDay = useSignal<HTMLInputElement>();
   const refYear = useSignal<HTMLInputElement>();
   const refMonth = useSignal<HTMLInputElement>();
-  const birthDate = useSignal({ day: '', month: '', year: '' });
+  const day = sc.personalInformation.dateOfBirth ? sc.personalInformation.dateOfBirth.getDay() : "";
+  const month = sc.personalInformation.dateOfBirth ? sc.personalInformation.dateOfBirth.getMonth() : "";
+  const year = sc.personalInformation.dateOfBirth ? sc.personalInformation.dateOfBirth.getFullYear() : "";
+  const birthDate = useSignal({
+    day: day ? day.toString() : "",
+    month: month ? month.toString() : "",
+    year: year ? year.toString() : "",
+  });
+  
   const isEmpty = useComputed$(() => {
     return birthDate.value.day.length === 0 && birthDate.value.month.length === 0 && birthDate.value.year.length === 0;
   });
+  
   const isValid = useComputed$(() => {
     const day = parseInt(birthDate.value.day, 10);
     const month = parseInt(birthDate.value.month, 10);
@@ -23,8 +32,10 @@ export default component$(() => {
   
     return isValidDay && isValidMonth && isValidYear;
   });
+  
   const ERROR_MESSAGE = "Please enter a valid date of birth.";
   const ERROR_EMPTY_MESSAGE = "Please enter your date of birth.";
+  
   const age = useComputed$(() => {
     if (isEmpty.value) return ERROR_EMPTY_MESSAGE;
     if (!isValid.value) return ERROR_MESSAGE;
@@ -32,15 +43,17 @@ export default component$(() => {
     const age = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 365));
     return `Your age is: ${age}, let's move on!`;
   });
-  // eslint-disable-next-line qwik/no-use-visible-task
+
   useTask$(({track}) => {
-    const v = track(() => isValid.value);
-    if (!v) {
+    const valid = track(() => isValid.value);
+    if (valid) {
+      sc.settings.buttonDisabled = false;
+      const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
+      sc.personalInformation.dateOfBirth = date;
+    } else {
       sc.settings.buttonDisabled = true;
-      return;
-    } 
-    sc.settings.buttonDisabled = false;
-  });
+    }
+  })
 
   return (
     <div class="grid h-full grid-rows-[auto,1fr]">
@@ -50,6 +63,7 @@ export default component$(() => {
         <div>
           <label class="" for="day">Day</label>
           <input 
+            
             ref={refDay}
             inputMode='numeric'
             value={birthDate.value.day}
