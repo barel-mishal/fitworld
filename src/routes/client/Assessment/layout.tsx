@@ -23,7 +23,7 @@ interface AssessmentStoreType {
     gender: "female" | "male" | "" | undefined,
     name: string,
     dateOfBirth: Date | undefined,
-    height: {type: "cm" | "m" | "FT" | undefined, value: number},
+    height: {type: "cm" | "m" | "FT", value: number},
     currentWeight: number,
   }
 } 
