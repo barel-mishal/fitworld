@@ -1,4 +1,4 @@
-import { component$, useContext, useSignal, useComputed$ } from '@builder.io/qwik';
+import { component$, useContext, useSignal, useComputed$, useVisibleTask$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../layout';
@@ -12,6 +12,7 @@ import { formatedNumber } from '~/util/formatNumber';
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
+  sc.settings.buttonDisabled = false;
   const refHeight = useSignal<HTMLButtonElement>();
   const isAvtive = useSignal<boolean>(false);
 
@@ -31,7 +32,17 @@ export default component$(() => {
       return `${formatedNumber(sc.personalInformation.height.value)}`;
     }
     return "";
-  }
+  };
+
+  // eslint-disable-next-line qwik/no-use-visible-task
+  useVisibleTask$(({track}) => {
+    const height = track(() => sc.personalInformation.height);
+    if (!height.value) {
+      sc.settings.buttonDisabled = true
+      return 
+    }
+    sc.settings.buttonDisabled = false;
+  });
 
   return (
     <div class="grid grid-cols-[1fr,auto] gap-4 w-full">
