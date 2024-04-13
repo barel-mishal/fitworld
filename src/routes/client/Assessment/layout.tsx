@@ -23,7 +23,7 @@ interface AssessmentStoreType {
     gender: "female" | "male" | "" | undefined,
     name: string,
     dateOfBirth: Date | undefined,
-    height: {type: string, value: number},
+    height: {type: "cm" | "m" | "FT" | undefined, value: number},
     currentWeight: number,
   }
 } 
@@ -35,7 +35,10 @@ export const useAssessmentStore = () => {
       gender: "", 
       name: "",
       dateOfBirth: undefined,
-      height: {type: "cm", value: 0},
+      height: {
+        type: "cm", 
+        value: 0
+      },
       currentWeight: 0,
   } 
 });
