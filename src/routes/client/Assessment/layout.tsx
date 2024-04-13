@@ -107,9 +107,7 @@ export default component$(() => {
   useVisibleTask$(({track}) => {
     const curr = track(() => assessmentStore);
     console.log("assessmentStore", curr);
-  })
-
-
+  });
 
   // Phone size screen is 380px wide 600px tall
   return (
