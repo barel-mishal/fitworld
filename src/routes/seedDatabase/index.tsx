@@ -106,7 +106,30 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD roles ON TABLE user TYPE array<string> DEFAULT ["user"];
   DEFINE FIELD roles.* ON TABLE user TYPE string;
   DEFINE FIELD providerId ON TABLE user TYPE string;
+  DEFINE FIELD createdAt ON user VALUE time::now() READONLY;
+  DEFINE FIELD updateAt ON user VALUE time::now() READONLY;
   DEFINE INDEX userProviderId ON TABLE user COLUMNS providerId UNIQUE;
+
+  DEFINE EVENT createdUser ON TABLE user WHEN $event = "CREATE" THEN (
+    CREATE profile;
+  );
+
+  DEFINE TABLE profile SCHEMAFULL
+    PERMISSIONS
+      FOR select
+        WHERE userId = $auth.id
+      FOR update
+        WHERE userId = $auth.id
+      FOR delete
+        WHERE userId = $auth.id OR $auth.role = "admin";
+  DEFINE FIELD userId ON TABLE profile TYPE record DEFAULT $auth.id;
+  DEFINE FIELD email ON TABLE profile TYPE string;
+  DEFINE FIELD name ON TABLE profile TYPE string;
+  DEFINE FIELD image ON TABLE profile TYPE string;
+  DEFINE FIELD createdAt ON profile VALUE time::now() READONLY;
+  DEFINE FIELD updateAt ON profile VALUE time::now() READONLY;
+  DEFINE INDEX profileUserId ON TABLE profile COLUMNS userId UNIQUE;
+
 
 
   
