@@ -29,12 +29,17 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
     callbacks: {
       jwt: async (connection) => {
         if (connection.account) {
-          await db.signup({
-            scope: "account",
-            database: "database", 
-            namespace: "namespace", 
-            pass: connection.account.providerAccountId
-          });
+          try {
+            await db.signup({
+              scope: "account",
+              database: "database", 
+              namespace: "namespace", 
+              pass: connection.account.providerAccountId,
+              providerId: connection.account.providerAccountId
+            });
+          } catch (error) {
+            console.error('\n\n ** Database signup error ** \n\n', error);
+          }
           connection.token.providerId = connection.account.providerAccountId;
         }
         return connection.token;
@@ -46,11 +51,12 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
           scope: "account",
           database: "database", 
           namespace: "namespace", 
-          pass: connection.token.providerId
+          pass: connection.token.providerId,
         });
 
         return {...connection.session, database: { token }};
       },
+
     },
     pages: {
       signIn: '/auth/signin',

@@ -1,0 +1,32 @@
+#V2
+CREATE nutri SET name = protein;
+SELECT * FROM nutri;
+CREATE nutri SET name = 'protein';
+SELECT * FROM nutri;
+delete nutri:utswgd677fd8fckmk7c8
+SELECT * FROM nutri;
+DEFINE NAMESPACE IF NOT EXISTS namespace;
+DEFINE DATABASE IF NOT EXISTS database;
+  DEFINE NAMESPACE IF NOT EXISTS namespace;\n  DEFINE DATABASE IF NOT EXISTS database;\n  USE NS namespace DB database;\n  DEFINE SCOPE IF NOT EXISTS account SESSION 1w\n    SIGNUP ( CREATE user SET pass = crypto::argon2::generate($pass) )\n    SIGNIN ( SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass) );\n  \n  DEFINE USER barel ON ROOT PASSWORD '123456' ROLES OWNER;
+  USE NS namespace DB database;\n  DEFINE SCOPE IF NOT EXISTS account SESSION 1w\n    SIGNUP ( CREATE user SET pass = crypto::argon2::generate($pass) )\n    SIGNIN ( SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass) );\n  \n  DEFINE USER barel ON ROOT PASSWORD '123456' ROLES OWNER;
+DEFINE USER barel ON ROOT PASSWORD '123456' ROLES OWNER;
+  DEFINE USER IF NOT EXISTS barel ON ROOT PASSWORD '123456' ROLES OWNER;\n
+  DEFINE TOKEN barel ON DATABASE TYPE HS512 VALUE "sNSYneezcr8kqphfOC6NwwraUHJCVAt0XjsRSNmssBaBRh3WyMa9TRfq8ST7fsU2H2kGiOpU4GbAF1bCiXmM1b3JGgleBzz7rsrz6VvYEM4q3CLkcO8CMBIlhwhzWmy8"\n
+info for db;
+  DEFINE TABLE user SCHEMAFULL;\n  DEFINE FIELD pass ON TABLE user TYPE string;\n  DEFINE FIELD roles ON TABLE user TYPE array<string> DEFAULT ["user"];\n  DEFINE FIELD roles.* ON TABLE user TYPE string;
+DELETE user:zfqofw5fe2psijqaaxtm;
+select * from user;
+select roles from user;
+DELETE user where roles = NONE;
+select roles from user;
+  DEFINE FIELD providerId ON TABLE user TYPE string;\n  DEFINE INDEX userProviderId ON TABLE user COLUMNS providerId UNIQUE;
+  DEFINE NAMESPACE IF NOT EXISTS namespace;\n  DEFINE DATABASE IF NOT EXISTS database;
+USE NS namespace DB database;
+  DEFINE SCOPE IF NOT EXISTS account SESSION 1w\n    SIGNUP ( CREATE user SET pass = crypto::argon2::generate($pass) )\n    SIGNIN ( SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass) );
+DEFINE USER IF NOT EXISTS barel ON ROOT PASSWORD '123456' ROLES OWNER;
+  DEFINE TOKEN IF NOT EXISTS barel ON DATABASE TYPE HS512 VALUE "sNSYneezcr8kqphfOC6NwwraUHJCVAt0XjsRSNmssBaBRh3WyMa9TRfq8ST7fsU2H2kGiOpU4GbAF1bCiXmM1b3JGgleBzz7rsrz6VvYEM4q3CLkcO8CMBIlhwhzWmy8";\n
+  DEFINE TABLE user SCHEMAFULL\n    PERMISSIONS\n      FOR select\n        WHERE id = $auth.id\n      FOR create\n        WHERE id = $auth.id\n      FOR update\n        WHERE id = $auth.id\n      FOR delete\n        WHERE id = $auth.id OR $auth.role = "admin";\n  DEFINE FIELD pass ON TABLE user TYPE string;\n  DEFINE FIELD roles ON TABLE user TYPE array<string> DEFAULT ["user"];\n  DEFINE FIELD roles.* ON TABLE user TYPE string;\n  DEFINE FIELD providerId ON TABLE user TYPE string;\n  DEFINE INDEX userProviderId ON TABLE user COLUMNS providerId UNIQUE;
+  DEFINE SCOPE IF NOT EXISTS account SESSION 1w\n    SIGNUP ( CREATE user SET pass = crypto::argon2::generate($pass) )\n    SIGNIN ( SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass) );
+DEFINE NAMESPACE IF NOT EXISTS namespace;\n  DEFINE DATABASE IF NOT EXISTS database;\n\n  USE NS namespace DB database;\n  \n  DEFINE SCOPE IF NOT EXISTS account SESSION 1w\n    SIGNUP ( CREATE user SET pass = crypto::argon2::generate($pass) )\n    SIGNIN ( SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass) );\n  \n  DEFINE USER IF NOT EXISTS barel ON ROOT PASSWORD '123456' ROLES OWNER;\n    \n  -- Set the name of the token\n  -- Use this token provider for database authorization\n  -- Specify the cryptographic signature algorithm used to verify the token\n  -- Specify the secret used to sign and verify the authenticity of the token\n  DEFINE TOKEN IF NOT EXISTS barel ON DATABASE TYPE HS512 VALUE "sNSYneezcr8kqphfOC6NwwraUHJCVAt0XjsRSNmssBaBRh3WyMa9TRfq8ST7fsU2H2kGiOpU4GbAF1bCiXmM1b3JGgleBzz7rsrz6VvYEM4q3CLkcO8CMBIlhwhzWmy8";\n\n  DEFINE TABLE user SCHEMAFULL\n    PERMISSIONS\n      FOR select\n        WHERE id = $auth.id\n      FOR create\n        WHERE id = $auth.id\n      FOR update\n        WHERE id = $auth.id\n      FOR delete\n        WHERE id = $auth.id OR $auth.role = "admin";\n  DEFINE FIELD pass ON TABLE user TYPE string;\n  DEFINE FIELD roles ON TABLE user TYPE array<string> DEFAULT ["user"];\n  DEFINE FIELD roles.* ON TABLE user TYPE string;\n  DEFINE FIELD providerId ON TABLE user TYPE string;\n  DEFINE INDEX userProviderId ON TABLE user COLUMNS providerId UNIQUE;
+REMOVE TABLE user;
+  DEFINE TABLE user SCHEMAFULL\n    PERMISSIONS\n      FOR select\n        WHERE id = $auth.id\n      FOR update\n        WHERE id = $auth.id\n      FOR delete\n        WHERE id = $auth.id OR $auth.role = "admin";\n  DEFINE FIELD pass ON TABLE user TYPE string;\n  DEFINE FIELD roles ON TABLE user TYPE array<string> DEFAULT ["user"];\n  DEFINE FIELD roles.* ON TABLE user TYPE string;\n  DEFINE FIELD providerId ON TABLE user TYPE string;\n  DEFINE INDEX userProviderId ON TABLE user COLUMNS providerId UNIQUE;

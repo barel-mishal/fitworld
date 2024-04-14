@@ -83,11 +83,9 @@ export const serverDatabaseSchema = server$(async () => {
   USE NS namespace DB database;
   
   DEFINE SCOPE IF NOT EXISTS account SESSION 1w
-    SIGNUP ( CREATE user SET pass = crypto::argon2::generate($pass) )
+    SIGNUP ( CREATE user SET pass = crypto::argon2::generate($pass), providerId = $providerId )
     SIGNIN ( SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass) );
   
-  USE SCOPE account;
-
   DEFINE USER IF NOT EXISTS barel ON ROOT PASSWORD '123456' ROLES OWNER;
     
   -- Set the name of the token
@@ -100,15 +98,17 @@ export const serverDatabaseSchema = server$(async () => {
     PERMISSIONS
       FOR select
         WHERE id = $auth.id
-      FOR create
-        WHERE id = $auth.id
       FOR update
         WHERE id = $auth.id
       FOR delete
-        WHERE id = $auth.id OR $auth.role = "admin"
+        WHERE id = $auth.id OR $auth.role = "admin";
   DEFINE FIELD pass ON TABLE user TYPE string;
   DEFINE FIELD roles ON TABLE user TYPE array<string> DEFAULT ["user"];
   DEFINE FIELD roles.* ON TABLE user TYPE string;
+  DEFINE FIELD providerId ON TABLE user TYPE string;
+  DEFINE INDEX userProviderId ON TABLE user COLUMNS providerId UNIQUE;
+
+
   
 
   ` 
