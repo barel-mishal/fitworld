@@ -53,8 +53,9 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
           namespace: "namespace", 
           pass: connection.token.providerId,
         });
+        const profile = await db.query("SELECT * FROM profile WHERE userId = auth.id");
 
-        return {...connection.session, database: { token }};
+        return {...connection.session, database: { token, profile }};
       },
 
     },

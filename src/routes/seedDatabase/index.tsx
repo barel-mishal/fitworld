@@ -122,13 +122,56 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id
       FOR delete
         WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE profile TYPE record DEFAULT $auth.id;
+  DEFINE FIELD userId ON TABLE profile TYPE record VALUE $auth.id;
   DEFINE FIELD email ON TABLE profile TYPE string;
   DEFINE FIELD name ON TABLE profile TYPE string;
   DEFINE FIELD image ON TABLE profile TYPE string;
   DEFINE FIELD createdAt ON profile VALUE time::now() READONLY;
   DEFINE FIELD updateAt ON profile VALUE time::now() READONLY;
   DEFINE INDEX profileUserId ON TABLE profile COLUMNS userId UNIQUE;
+
+  DEFINE TABLE personalInfo SCHEMAFULL
+    PERMISSIONS
+      FOR select
+        WHERE userId = $auth.id
+      FOR update
+        WHERE userId = $auth.id
+      FOR delete
+        WHERE userId = $auth.id OR $auth.role = "admin";
+  DEFINE FIELD userId ON TABLE personalInfo TYPE record VALUE $auth.id;
+  DEFINE FIELD nickname ON TABLE personalInfo TYPE string;
+  DEFINE FIELD dateOfBirth ON TABLE personalInfo TYPE string
+  DEFINE FIELD createdAt ON personalInfo VALUE time::now() READONLY;
+  DEFINE FIELD updateAt ON personalInfo VALUE time::now() READONLY;
+  DEFINE INDEX personalInfoUserId ON TABLE personalInfo COLUMNS userId UNIQUE;
+
+  DEFINE TABLE weights SCHEMAFULL
+    PERMISSIONS
+      FOR select
+        WHERE userId = $auth.id
+      FOR update
+        WHERE userId = $auth.id
+      FOR delete
+        WHERE userId = $auth.id OR $auth.role = "admin";
+  DEFINE FIELD userId ON TABLE weights TYPE record VALUE $auth.id;
+  DEFINE FIELD weight ON TABLE weights TYPE number;
+  DEFINE FIELD createdAt ON weights VALUE time::now() READONLY;
+  DEFINE FIELD updateAt ON weights VALUE time::now() READONLY;
+  DEFINE INDEX weightsUserId ON TABLE weights COLUMNS userId UNIQUE;
+
+  DEFINE TABLE heights SCHEMAFULL
+    PERMISSIONS
+      FOR select
+        WHERE userId = $auth.id
+      FOR update
+        WHERE userId = $auth.id
+      FOR delete
+        WHERE userId = $auth.id OR $auth.role = "admin";
+  DEFINE FIELD userId ON TABLE heights TYPE record VALUE $auth.id;
+  DEFINE FIELD height ON TABLE heights TYPE number;
+  DEFINE FIELD createdAt ON heights VALUE time::now() READONLY;
+  DEFINE FIELD updateAt ON heights VALUE time::now() READONLY;
+  DEFINE INDEX heightsUserId ON TABLE heights COLUMNS userId UNIQUE;
 
 
 
