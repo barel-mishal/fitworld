@@ -41,3 +41,8 @@ export function PhCaretRight(props: PropsOf<'svg'>, key: string) {
     <svg xmlns="http://www.w3.org/2000/svg" key={key} {...props} width="36" height="36" viewBox="0 0 256 256"><path d="M176,128,96,208V48Z" opacity="0.2"></path><path d="M181.66,122.34l-80-80A8,8,0,0,0,88,48V208a8,8,0,0,0,13.66,5.66l80-80A8,8,0,0,0,181.66,122.34ZM104,188.69V67.31L164.69,128Z"></path></svg>
   )
 }
+export function PhUser(props: PropsOf<'svg'>, key: string) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" key={key} {...props} width="36" height="36" viewBox="0 0 256 256"><path d="M192,96a64,64,0,1,1-64-64A64,64,0,0,1,192,96Z" opacity="0.2"></path><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path></svg>
+  )
+}
