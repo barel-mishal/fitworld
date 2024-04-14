@@ -11,7 +11,7 @@ export interface Props {
 
 interface AuthProps extends Props {}
 
-export const MyModalSignOut = component$<AuthProps>((props) => {
+export const ModalLogout = component$<AuthProps>((props) => {
     return (
         <ModalWrapper>
             <ModalTrigger>

@@ -6,7 +6,7 @@ export const onRequest: RequestHandler = (event) => {
   const session: Session | null = event.sharedMap.get('session');
   const isSignedIn = session && new Date(session.expires) > new Date();
   if (isSignedIn) {
-    throw event.redirect(302, `/dashboard`);
+    throw event.redirect(302, `/client/play`);
   }
 };
 

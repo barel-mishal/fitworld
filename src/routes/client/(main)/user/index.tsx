@@ -1,7 +1,7 @@
 import { component$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
+import { ModalLogout } from '~/components/gamelayouts/modals/ModalLogout';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
-import { MyModalSignOut } from '~/components/layout_blocks/dashboard_layout_components/dashboardModal';
 import { useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
 
 export default component$(() => {
@@ -15,7 +15,7 @@ export default component$(() => {
           <div>
             New route works.
             <p>{auth.value?.user?.email}</p>
-            <MyModalSignOut name={auth.value?.user?.name ?? "B"} signout={signout} />
+            <ModalLogout name={auth.value?.user?.name ?? "B"} signout={signout} />
           </div>
         </div>
     </div>

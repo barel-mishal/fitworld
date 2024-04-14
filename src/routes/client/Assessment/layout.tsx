@@ -12,7 +12,7 @@ export const onRequest: RequestHandler = (event) => {
   const isSignedIn = session && new Date(session.expires) > new Date();
   if (!isSignedIn) {
     console.log("redirecting")
-    throw event.redirect(302, `/`);
+    throw event.redirect(302, `/client/play/`);
   }
 };
 
