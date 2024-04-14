@@ -110,7 +110,7 @@ export const MyPopover = component$<HeightGetter>(() => {
       <PopoverTrigger
         ref={triggerRef}
         class={buttonVariants({ look: 'outline', class: "rounded-sm" })}
-        popovertarget="hero-id"
+        popovertarget="unit-height-id"
       >
         <span>
           {sc.personalInformation.height.type.toUpperCase()}
@@ -124,7 +124,7 @@ export const MyPopover = component$<HeightGetter>(() => {
         anchorRef={triggerRef}
         floating={true}
         placement="bottom"
-        id="hero-id"
+        id="unit-height-id"
 
       >
         <div class="grid gap-4 w-auto">

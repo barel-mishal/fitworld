@@ -44,7 +44,6 @@ export default component$(() => {
 
   useTask$(({track}) => {
     const valid = track(() => isValid.value);
-    console.log("valid", valid, sc.personalInformation.currentWeight.value);
     if (valid) {
       sc.settings.buttonDisabled = false;
     } else {
@@ -110,7 +109,7 @@ export const MyPopover = component$<HeightGetter>(() => {
       <PopoverTrigger
         ref={triggerRef}
         class={buttonVariants({ look: 'outline', class: "rounded-sm" })}
-        popovertarget="hero-id"
+        popovertarget="current-weight"
       >
         <span>
           {sc.personalInformation.currentWeight.unit.toUpperCase()}
@@ -124,7 +123,7 @@ export const MyPopover = component$<HeightGetter>(() => {
         anchorRef={triggerRef}
         floating={true}
         placement="bottom"
-        id="hero-id"
+        id="current-weight"
 
       >
         <div class="grid gap-4 w-auto">

@@ -83,6 +83,7 @@ export default component$(() => {
     "/client/Assessment/personalInformation/gender/",
     "/client/Assessment/personalInformation/height/",
     "/client/Assessment/personalInformation/current-weight/",
+    "/client/play/" as "/client/(main)/play/"
   ];
   
   const location = useLocation();
