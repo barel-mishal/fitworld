@@ -20,7 +20,7 @@ export default component$(() => {
         </div>
     </div>
     <div class="bg-emerald-950 content-center">
-      <div q:slot='footer' class=""><BottomNavBar /></div>
+      <div q:slot='footer' class=""><BottomNavBar user={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} /></div>
     </div>
   </div>
   );

@@ -1,6 +1,6 @@
-import { PropsOf, component$ } from "@builder.io/qwik";
-import { VariantProps, cva } from "class-variance-authority";
-import { PhCaretRight, PhDNA, PhDrop, PhFlag, PhHeart, PhLightning, PhUser } from "~/components/icons/icons";
+import { type PropsOf, component$ } from "@builder.io/qwik";
+import { type VariantProps, cva } from "class-variance-authority";
+import { PhDNA, PhDrop, PhFlag, PhHeart, PhLightning, PhRanking, PhUser } from "~/components/icons/icons";
 import { AppLink } from "~/routes.config";
 
 export const TopNavBar = component$(() => {
@@ -51,24 +51,18 @@ export const TopNavBar = component$(() => {
   };
 
   interface BottomNavBar {
-    flag: Alink;
-    user: Alink;
-    leaderBoard: Alink;
+    flag?: Alink;
+    user?: Alink;
+    leaderBoard?: Alink;
   }
   
   
   export const BottomNavBar = component$<BottomNavBar>((props) => {
     return (
       <ul class="grid grid-cols-3 ">
-        <li class="grid items-center justify-items-center">
-          <AppLink route='/client/' {...props.flag}>
-            <PhCaretRight class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
-        <li class="grid items-center justify-items-center">
-          <AppLink route='/client/(main)/user/' {...props.user}>
-            <PhUser       class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
-        <li class="grid items-center justify-items-center">
-          <AppLink route='/client/(main)/leaderBoard/' {...props.leaderBoard}>
-            <PhFlag       class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
+        <li class="grid items-center justify-items-center"><AppLink route='/client/(main)/play/' {...props.flag}><PhFlag class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
+        <li class="grid items-center justify-items-center"><AppLink route='/client/(main)/user/' {...props.user || {}}><PhUser       class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
+        <li class="grid items-center justify-items-center"><AppLink route='/client/(main)/leaderBoard/' {...props.leaderBoard || {}}><PhRanking       class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
       </ul>
     )
   });
