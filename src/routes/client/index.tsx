@@ -46,9 +46,9 @@ export const TopNavBar = component$(() => {
 export const BottomNavBar = component$(() => {
   return (
     <ul class="grid grid-cols-3 ">
-      <li class="grid items-center justify-items-center"><PhCaretRight class="fill-indigo-500 h-8 w-8 " /></li>
-      <li class="grid items-center justify-items-center"><PhUser       class="fill-indigo-500 h-8 w-8 " /></li>
-      <li class="grid items-center justify-items-center"><PhFlag       class="fill-indigo-500 h-8 w-8 " /></li>
+      <li class="grid items-center justify-items-center"><AppLink route='/client/user/'><PhCaretRight class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
+      <li class="grid items-center justify-items-center"><AppLink route='/client/user/'><PhUser       class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
+      <li class="grid items-center justify-items-center"><AppLink route='/client/user/'><PhFlag       class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
     </ul>
   )
 });
