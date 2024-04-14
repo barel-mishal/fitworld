@@ -2,7 +2,7 @@ import { type Session } from '@auth/core/types';
 import { component$ } from '@builder.io/qwik';
 import { type RequestHandler } from '@builder.io/qwik-city';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
-import { PhDNA, PhDrop, PhHeart, PhLightning } from '~/components/icons/icons';
+import { PhDNA, PhDrop, PhFlag, PhHeart, PhLightning } from '~/components/icons/icons';
 import { AppLink } from '~/routes.config';
 
 export const onRequest: RequestHandler = (event) => {
@@ -21,15 +21,17 @@ export default component$(() => {
   // ניווט בין לידרבוארד למסך הראשי
   return (
   
-    <HeaderMainBottomNav >
-      <div q:slot='header'><NavBar /></div>
+    <HeaderMainBottomNav 
+    classMain='tw '
+    class="grid-rows-[40px,1fr,40px]">
+      <div q:slot='header'><TopNavBar /></div>
       <div q:slot='main'><AppLink route="/client/Assessment/">Section Getting started</AppLink></div>
-      <div q:slot='footer'><NavBar /></div>
+      <div q:slot='footer' class=""><BottomNavBar /></div>
     </HeaderMainBottomNav>
   );
 });
 
-export const NavBar = component$(() => {
+export const TopNavBar = component$(() => {
 
   return (
     <ul class="grid grid-cols-4">
@@ -37,6 +39,16 @@ export const NavBar = component$(() => {
       <li class="grid grid-cols-2 items-center"><PhDrop      class="fill-sky-500 h-8 w-8" />    <p class="text-xs">200</p></li>
       <li class="grid grid-cols-2 items-center"><PhHeart     class="fill-rose-500 h-8 w-8 " />  <p class="text-xs">400</p></li>
       <li class="grid grid-cols-2 items-center"><PhDNA       class="fill-green-500 h-8 w-8 " /> <p class="text-xs">210</p></li>
+    </ul>
+  )
+});
+
+export const BottomNavBar = component$(() => {
+
+  return (
+    <ul class="grid grid-cols-2 ">
+      <li class="grid items-center justify-items-center"><PhFlag class="fill-indigo-500 h-8 w-8 " /></li>
+      <li class="grid items-center justify-items-center"><PhFlag class="fill-indigo-500 h-8 w-8 " /></li>
     </ul>
   )
 });

@@ -32,20 +32,22 @@ export const buttonVariants = cva(
   },
 );
 
-type DivGameLayoutProps = PropsOf<"div"> & VariantProps<typeof buttonVariants>;
+type DivGameLayoutProps = PropsOf<"div"> & VariantProps<typeof buttonVariants> & {
+  classMain?: string;
+};
 
 
-export default component$<DivGameLayoutProps>(() => {
+export default component$<DivGameLayoutProps>((props) => {
   // Phone size screen is 380px wide 600px tall
   return (
-    <div class={cn("grid grid-rows-[40px,1fr,60px] h-screen text-emerald-50 p-3 bg-emerald-950")}>
-      <div class="bg-emerald-950">
+    <div class={cn("grid grid-rows-[40px,1fr,60px] h-screen text-emerald-50 p-3 bg-emerald-950", props.class)}>
+      <div class="bg-emerald-950 content-center">
         <Slot name="header" />
       </div>
-      <div class="bg-emerald-950 overflow-y-auto ">
+      <div class={cn("bg-emerald-950 overflow-y-auto", props.classMain)}>
         <Slot name="main" />
       </div>
-      <div class="bg-emerald-950">
+      <div class="bg-emerald-950 content-center">
         <Slot name="footer" />
       </div>
     </div>

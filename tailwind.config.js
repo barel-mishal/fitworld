@@ -108,4 +108,10 @@ export default {
       });
     }),
   ],
+  "tailwindCSS.experimental.classRegex": [
+    // Matches the default Tailwind class regex --tw
+    "tw(?:-[a-z0-9]+)?",
+
+  ]
+  
 };
