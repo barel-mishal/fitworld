@@ -158,6 +158,7 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD createdAt ON weights TYPE datetime VALUE $value OR time::now();
   DEFINE FIELD updateAt ON weights TYPE datetime VALUE $value OR time::now();
   DEFINE INDEX weightsUserId ON TABLE weights COLUMNS userId UNIQUE;
+  DEFINE INDEX weightsCreatedAt ON TABLE weights COLUMNS createdAt;
 
   DEFINE TABLE heights SCHEMAFULL
     PERMISSIONS
@@ -172,6 +173,7 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD createdAt ON heights TYPE datetime VALUE $value OR time::now();
   DEFINE FIELD updateAt ON heights TYPE datetime VALUE $value OR time::now();
   DEFINE INDEX heightsUserId ON TABLE heights COLUMNS userId UNIQUE;
+  DEFINE INDEX heightsCreatedAt ON TABLE heights COLUMNS createdAt;
 
 
 
