@@ -15,9 +15,8 @@ export const ModalLogout = component$<AuthProps>((props) => {
     return (
         <ModalWrapper>
             <ModalTrigger>
-                <Button class={"rounded-full w-12 h-12 relative"}>
-                    <span class="absolute h-2 w-2 bg-rose-500 top-0 left-0 rounded-full"></span>
-                    <p>B</p>
+                <Button class={"text-rose-400"} look={"ghost"}>
+                    <p>Logout</p>
                 </Button>
             </ModalTrigger>
             <Modal>
