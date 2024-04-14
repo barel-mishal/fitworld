@@ -9,6 +9,8 @@ export type AppRoutes =
   | "/auth/signout/"
   | "/auth/verify-request/"
   | "/client/"
+  | "/client/(main)/journy/"
+  | "/client/(main)/user/"
   | "/client/Assessment/"
   | "/client/Assessment/lifestyleFactors/"
   | "/client/Assessment/personalInformation/"
@@ -17,7 +19,6 @@ export type AppRoutes =
   | "/client/Assessment/personalInformation/gender/"
   | "/client/Assessment/personalInformation/height/"
   | "/client/Assessment/personalInformation/name/"
-  | "/client/user/"
   | "/content/"
   | "/dashboard/"
   | "/dashboard/feed/"
@@ -36,6 +37,8 @@ export interface AppRouteMap {
   "/auth/signout/": {};
   "/auth/verify-request/": {};
   "/client/": {};
+  "/client/(main)/journy/": {};
+  "/client/(main)/user/": {};
   "/client/Assessment/": {};
   "/client/Assessment/lifestyleFactors/": {};
   "/client/Assessment/personalInformation/": {};
@@ -44,7 +47,6 @@ export interface AppRouteMap {
   "/client/Assessment/personalInformation/gender/": {};
   "/client/Assessment/personalInformation/height/": {};
   "/client/Assessment/personalInformation/name/": {};
-  "/client/user/": {};
   "/content/": {};
   "/dashboard/": {};
   "/dashboard/feed/": {};
@@ -64,6 +66,8 @@ export interface AppRouteParamsFunction {
   (route: "/auth/signout/", params?: {}): string;
   (route: "/auth/verify-request/", params?: {}): string;
   (route: "/client/", params?: {}): string;
+  (route: "/client/(main)/journy/", params?: {}): string;
+  (route: "/client/(main)/user/", params?: {}): string;
   (route: "/client/Assessment/", params?: {}): string;
   (route: "/client/Assessment/lifestyleFactors/", params?: {}): string;
   (route: "/client/Assessment/personalInformation/", params?: {}): string;
@@ -84,7 +88,6 @@ export interface AppRouteParamsFunction {
     params?: {},
   ): string;
   (route: "/client/Assessment/personalInformation/name/", params?: {}): string;
-  (route: "/client/user/", params?: {}): string;
   (route: "/content/", params?: {}): string;
   (route: "/dashboard/", params?: {}): string;
   (route: "/dashboard/feed/", params?: {}): string;
@@ -104,6 +107,8 @@ export type AppLinkProps =
   | { route: "/auth/signout/" }
   | { route: "/auth/verify-request/" }
   | { route: "/client/" }
+  | { route: "/client/(main)/journy/" }
+  | { route: "/client/(main)/user/" }
   | { route: "/client/Assessment/" }
   | { route: "/client/Assessment/lifestyleFactors/" }
   | { route: "/client/Assessment/personalInformation/" }
@@ -112,7 +117,6 @@ export type AppLinkProps =
   | { route: "/client/Assessment/personalInformation/gender/" }
   | { route: "/client/Assessment/personalInformation/height/" }
   | { route: "/client/Assessment/personalInformation/name/" }
-  | { route: "/client/user/" }
   | { route: "/content/" }
   | { route: "/dashboard/" }
   | { route: "/dashboard/feed/" }
