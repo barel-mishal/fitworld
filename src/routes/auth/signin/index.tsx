@@ -4,14 +4,6 @@ import { Button } from '~/components/ui/button/button';
 import { useAuthSignin } from '~/routes/plugin@auth';
 import { BsGoogle, BsCompass } from '@qwikest/icons/bootstrap';
 
-// export const onRequest: RequestHandler = (event) => {
-//   const session: Session | null = event.sharedMap.get('session');
-//   const isSignedIn = session && new Date(session.expires) > new Date();
-//   if (isSignedIn) {
-//     throw event.redirect(302, `/dashboard`);
-//   }
-// };
-
 export default component$(() => {
   const signIn = useAuthSignin();
   return (

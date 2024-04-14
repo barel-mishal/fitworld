@@ -5,12 +5,12 @@ import { useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
 export default component$(() => {
   const auth = useAuthSession();
   const signout = useAuthSignout();
+  console.log('auth', auth.value);
   return (
     <div>
       New route works.
       <p>{auth.value?.user?.email}</p>
       <MyModalSignOut name={auth.value?.user?.name ?? "B"} signout={signout} />
-
     </div>
   );
 });

@@ -6,7 +6,14 @@ import { Surreal } from "surrealdb.js";
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   serverAuth$(({ env }) => {
     const db = new Surreal();
-    db.connect("http://0.0.0.0:8000/rpc", { database: "database", namespace: "namespace", auth: { username: "root", password: "root" } });
+    db.connect("http://0.0.0.0:8000/rpc", { 
+      database: "database", 
+      namespace: "namespace", 
+      auth: { 
+        username: "root", 
+        password: "root" 
+      } 
+    });
     db.use({ namespace: "namespace", database: "database" });
 
     return {
@@ -22,6 +29,12 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
     callbacks: {
       jwt: async (connection) => {
         if (connection.account) {
+          await db.signup({
+            scope: "account",
+            database: "database", 
+            namespace: "namespace", 
+            pass: connection.account.providerAccountId
+          });
           connection.token.providerId = connection.account.providerAccountId;
         }
         return connection.token;
@@ -29,8 +42,14 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
       session: async (connection) => {
         // const a = connection;
         // const user = await db
-        
-        return connection.session;
+        const token = await db.signin({
+          scope: "account",
+          database: "database", 
+          namespace: "namespace", 
+          pass: connection.token.providerId
+        });
+
+        return {...connection.session, database: { token }};
       },
     },
     pages: {
