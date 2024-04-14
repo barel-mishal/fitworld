@@ -155,8 +155,8 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id OR $auth.role = "admin";
   DEFINE FIELD userId ON TABLE weights TYPE record VALUE $auth.id;
   DEFINE FIELD weight ON TABLE weights TYPE number;
-  DEFINE FIELD createdAt ON weights VALUE time::now() READONLY;
-  DEFINE FIELD updateAt ON weights VALUE time::now() READONLY;
+  DEFINE FIELD createdAt ON weights TYPE datetime VALUE $value OR time::now();
+  DEFINE FIELD updateAt ON weights TYPE datetime VALUE $value OR time::now();
   DEFINE INDEX weightsUserId ON TABLE weights COLUMNS userId UNIQUE;
 
   DEFINE TABLE heights SCHEMAFULL
@@ -169,8 +169,8 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id OR $auth.role = "admin";
   DEFINE FIELD userId ON TABLE heights TYPE record VALUE $auth.id;
   DEFINE FIELD height ON TABLE heights TYPE number;
-  DEFINE FIELD createdAt ON heights VALUE time::now() READONLY;
-  DEFINE FIELD updateAt ON heights VALUE time::now() READONLY;
+  DEFINE FIELD createdAt ON heights TYPE datetime VALUE $value OR time::now();
+  DEFINE FIELD updateAt ON heights TYPE datetime VALUE $value OR time::now();
   DEFINE INDEX heightsUserId ON TABLE heights COLUMNS userId UNIQUE;
 
 
