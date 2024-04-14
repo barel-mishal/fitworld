@@ -2,7 +2,7 @@ import { $, type Signal, Slot, component$, createContextId, useContextProvider, 
 import { Button } from "../../ui/button/button";
 import { Input } from "../../ui/input/input";
 import { type ReturnTypeSignout } from "~/routes/plugin@auth";
-import { MyModal } from "./dashboardModal";
+import { MyModalSignOut } from "./dashboardModal";
 import { NavLink } from "~/components/HookComponent/NavLink";
 
 
@@ -65,7 +65,7 @@ export const Dashboard = component$<DashboardProps>((props) => {
                         <Input type="email" class={"rounded-r-none rounded-l-md"} placeholder="Find feeds, notes and users"   />
                         <Button type="submit" class={"rounded-l-none"}>Search</Button>
                     </div>
-                    <MyModal name={props.name} signout={props.signout} />
+                    <MyModalSignOut name={props.name} signout={props.signout} />
                 </div>
                 <div class={"main flex flex-grow flex-col overflow-y-auto "} ref={refMain}>
                     <Slot />

@@ -7,7 +7,7 @@ import { type DashboardProps } from "./dashboard";
 
 interface AuthProps extends DashboardProps {}
 
-export const MyModal = component$<AuthProps>((props) => {
+export const MyModalSignOut = component$<AuthProps>((props) => {
     return (
         <ModalWrapper>
             <ModalTrigger>
