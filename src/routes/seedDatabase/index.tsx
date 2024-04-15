@@ -145,7 +145,9 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id OR $auth.role = "admin";
   DEFINE FIELD userId ON TABLE personalInfo TYPE record VALUE $auth.id;
   DEFINE FIELD nickname ON TABLE personalInfo TYPE string;
-  DEFINE FIELD dateOfBirth ON TABLE personalInfo TYPE string
+  DEFINE FIELD dateOfBirth ON TABLE personalInfo TYPE string;
+  DEFINE FIELD goals ON TABLE personalInfo TYPE array<string>;
+  DEFINE FIELD goals.* ON TABLE personalInfo TYPE string;
   DEFINE FIELD createdAt ON personalInfo VALUE time::now() READONLY;
   DEFINE FIELD updateAt ON personalInfo VALUE time::now() READONLY;
   DEFINE INDEX personalInfoUserId ON TABLE personalInfo COLUMNS userId UNIQUE;
