@@ -2,18 +2,19 @@ import { component$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { ModalLogout } from '~/components/gamelayouts/modals/ModalLogout';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
-import { useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
+import { type ReturnTypeSession, useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
 
 export default component$(() => {
-  const auth = useAuthSession();
+  const auth: ReturnTypeSession = useAuthSession().value as ReturnTypeSession;
   const signout = useAuthSignout();
+  console.log(auth.database.profile)
   return (
   <div class={cn("grid grid-rows-[1fr,30px] h-screen text-emerald-50 p-3 bg-emerald-950")}>
     <div class={cn("bg-emerald-950 overflow-y-auto")}>
         <div >
           <Settings />
           <div>
-            <ModalLogout name={auth.value?.user?.name ?? "B"} signout={signout} />
+            <ModalLogout name={auth.user?.name ?? "B"} signout={signout} />
           </div>
         </div>
     </div>

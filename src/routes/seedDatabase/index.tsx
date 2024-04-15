@@ -131,11 +131,6 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD updateAt ON profile VALUE time::now() DEFAULT time::now();
   DEFINE INDEX profileUserId ON TABLE profile COLUMNS userId UNIQUE;
 
-  DEFINE EVENT createdUser ON TABLE user WHEN $event = "CREATE" THEN (
-    CREATE profile SET userId = $after.id
-  );
-
-
   DEFINE TABLE personalInfo SCHEMAFULL
     PERMISSIONS
       FOR select

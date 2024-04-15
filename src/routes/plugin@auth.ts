@@ -62,7 +62,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
         });
         const profile = await db.query<[[SchemaProfileType]]>("SELECT * FROM profile WHERE userId = $auth.id");
 
-        return {...connection.session, database: { token, profile: profile[0][0] }};
+        return {...connection.session, database: { token, profile: profile[0][0] }} ;
       },
 
     },
@@ -76,6 +76,8 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   }});
 
 export type ReturnTypeSignout = ReturnType<typeof useAuthSignout>;
+export type ReturnTypeSignin = ReturnType<typeof useAuthSignin>;
+export type ReturnTypeSession = ReturnType<typeof useAuthSession>["value"] & { database: { token: string, profile: SchemaProfileType } };
 
   /*
 
