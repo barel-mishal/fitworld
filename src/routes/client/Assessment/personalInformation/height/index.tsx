@@ -15,40 +15,40 @@ export default component$(() => {
   const refHeight = useSignal<HTMLButtonElement>();
   const isAvtive = useSignal<boolean>(false);
 
-  const computeHeight = useComputed$(async () => `${formatedNumber(convertHeightUnits(170, "cm", sc.personalInformation.height.type))}`);
+  const computeHeight = useComputed$(async () => `${formatedNumber(convertHeightUnits(170, "cm", sc.assessmentStore.personalInformation.height.type))}`);
   const inputHeightValue = () => {
-    const isActiveAndEmpty = isAvtive.value && !sc.personalInformation.height.value;
+    const isActiveAndEmpty = isAvtive.value && !sc.assessmentStore.personalInformation.height.value;
     if (isActiveAndEmpty) {
       return "";
     }
-    const isActiveAndNotEmpty = isAvtive.value && sc.personalInformation.height.value;
+    const isActiveAndNotEmpty = isAvtive.value && sc.assessmentStore.personalInformation.height.value;
     if (isActiveAndNotEmpty) {
-      return sc.personalInformation.height.value;
+      return sc.assessmentStore.personalInformation.height.value;
     }
-    const isNotActiveAndNotEmpty = !isAvtive.value && sc.personalInformation.height.value;
+    const isNotActiveAndNotEmpty = !isAvtive.value && sc.assessmentStore.personalInformation.height.value;
     if (isNotActiveAndNotEmpty) {
-      return `${formatedNumber(sc.personalInformation.height.value)}`;
+      return `${formatedNumber(sc.assessmentStore.personalInformation.height.value)}`;
     }
     return "";
   };
 
   const isValid = useComputed$(() => {
-    const isNan = isNaN(sc.personalInformation.height.value);
-    const isBig = sc.personalInformation.height.value > 0;
+    const isNan = isNaN(sc.assessmentStore.personalInformation.height.value);
+    const isBig = sc.assessmentStore.personalInformation.height.value > 0;
     return !isNan && isBig
   });
 
   useTask$(() => {
-    sc.settings.buttonDisabled = true;
+    sc.assessmentStore.settings.buttonDisabled = true;
   })
 
   useTask$(({track}) => {
     const valid = track(() => isValid.value);
-    console.log("valid", valid, sc.personalInformation.height.value);
+    console.log("valid", valid, sc.assessmentStore.personalInformation.height.value);
     if (valid) {
-      sc.settings.buttonDisabled = false;
+      sc.assessmentStore.settings.buttonDisabled = false;
     } else {
-      sc.settings.buttonDisabled = true;
+      sc.assessmentStore.settings.buttonDisabled = true;
     }
   });
 
@@ -61,7 +61,7 @@ export default component$(() => {
         ref={refHeight}
         type="Height" id="Height" placeholder={computeHeight.value.toString()} onInput$={async (e,el) => {
           const height = parseFloat(el.value);
-          sc.personalInformation.height.value = height;
+          sc.assessmentStore.personalInformation.height.value = height;
           }} class={cn(
             "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
           )} value={inputHeightValue()}
@@ -77,7 +77,7 @@ export default component$(() => {
       </div>
       <div class="grid max-w-sm items-center gap-1.5 ">
         <Label for="email-2" class="text-emerald-100">Unit</Label>
-        <MyPopover height={sc.personalInformation.height} />
+        <MyPopover height={sc.assessmentStore.personalInformation.height} />
       </div>
 
     </div>
@@ -96,7 +96,7 @@ export const MyPopover = component$<HeightGetter>(() => {
   const triggerRef = useSignal<HTMLButtonElement>();
   const popoverRef = useSignal<HTMLElement>();
   const getHeightUnit = () => {
-    switch (sc.personalInformation.height.type) {
+    switch (sc.assessmentStore.personalInformation.height.type) {
       case "cm":
       case "m":
         return "Metric";
@@ -113,7 +113,7 @@ export const MyPopover = component$<HeightGetter>(() => {
         popovertarget="unit-height-id"
       >
         <span>
-          {sc.personalInformation.height.type.toUpperCase()}
+          {sc.assessmentStore.personalInformation.height.type.toUpperCase()}
         </span>
       </PopoverTrigger>
       <Popover
@@ -129,19 +129,19 @@ export const MyPopover = component$<HeightGetter>(() => {
       >
         <div class="grid gap-4 w-auto">
           <button onClick$={() => {
-            sc.personalInformation.height = {type: "cm", value: parseFloat(formatedNumber(convertHeightUnits(sc.personalInformation.height.value, sc.personalInformation.height.type, "cm")))};
+            sc.assessmentStore.personalInformation.height = {type: "cm", value: parseFloat(formatedNumber(convertHeightUnits(sc.assessmentStore.personalInformation.height.value, sc.assessmentStore.personalInformation.height.type, "cm")))};
           }}>
             <span>CM</span>
           </button>
 
           <button onClick$={() => {
-            sc.personalInformation.height = {type: "m", value: parseFloat(formatedNumber(convertHeightUnits(sc.personalInformation.height.value, sc.personalInformation.height.type, "m")))};
+            sc.assessmentStore.personalInformation.height = {type: "m", value: parseFloat(formatedNumber(convertHeightUnits(sc.assessmentStore.personalInformation.height.value, sc.assessmentStore.personalInformation.height.type, "m")))};
           }}>
             <span>M</span>
           </button>
 
           <button onClick$={() => {
-            sc.personalInformation.height = {type: "FT", value: parseFloat(formatedNumber(convertHeightUnits(sc.personalInformation.height.value, sc.personalInformation.height.type, "FT")))};
+            sc.assessmentStore.personalInformation.height = {type: "FT", value: parseFloat(formatedNumber(convertHeightUnits(sc.assessmentStore.personalInformation.height.value, sc.assessmentStore.personalInformation.height.type, "FT")))};
           }}>
             <span>FT</span>
           </button>
