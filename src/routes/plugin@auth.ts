@@ -3,7 +3,7 @@ import Google from "@auth/core/providers/google";
 import type { Provider } from "@auth/core/providers";
 import { Surreal } from "surrealdb.js";
 import { type SchemaProfileType } from "~/util/types";
-import { Session } from "@auth/core/types";
+import { type Session } from "@auth/core/types";
 
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   serverAuth$(({ env }) => {
