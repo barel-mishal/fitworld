@@ -65,10 +65,17 @@ export default component$(() => {
     // take long time
     const route = location.url.pathname as RoutesLiteralAssessment;
     const actions: Record<RoutesLiteralAssessment, () => unknown> = {
-      "/client/Assessment/personalInformation/name/": () => sc.actionProfileMerge.submit({ field: "name", value: sc.assessmentStore.personalInformation.name }),
+      "/client/Assessment/personalInformation/name/": () => {
+        sc.actionProfileMerge.submit({ field: "name", value: sc.assessmentStore.personalInformation.name })
+      },
       "/client/Assessment/personalInformation/DateofBirth/": () => {
+
         if (!sc.assessmentStore.personalInformation.dateOfBirth) return;
         sc.actionProfileMerge.submit({ field: "dateOfBirth", value: sc.assessmentStore.personalInformation.dateOfBirth });
+      },
+      '/client/Assessment/personalInformation/gender/': function (): unknown {
+        sc.actionProfileMerge.submit({ field: "gender", value: sc.assessmentStore.personalInformation.gender });
+        return 
       },
       '/client/Assessment/': function (): unknown {
         // throw new Error('Function not implemented.');
@@ -84,20 +91,12 @@ export default component$(() => {
       '/client/Assessment/personalInformation/current-weight/': function (): unknown {
         throw new Error('Function not implemented.');
       },
-      '/client/Assessment/personalInformation/gender/': function (): unknown {
-        
-        throw new Error('Function not implemented.');
-      },
       '/client/Assessment/personalInformation/height/': function (): unknown {
         throw new Error('Function not implemented.');
       },
       '/client/(main)/play/': function (): unknown {
         throw new Error('Function not implemented.');
       }
-
-      // m
-      // k=2m
-      // 
     }
     const result = await actions[route]();
     console.log("result", result);

@@ -53,7 +53,7 @@ export default component$(() => {
     } else {
       sc.assessmentStore.settings.buttonDisabled = true;
     }
-  })
+  });
 
   return (
     <div class="grid h-full grid-rows-[auto,1fr]">

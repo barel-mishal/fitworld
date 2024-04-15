@@ -5,7 +5,7 @@ import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
 
 export default component$(() => {
-  const auth = useAuthSession().value as ReturnTypeSession;
+  const auth = useAuthSession().value as ReturnTypeSession | null;
   const signout = useAuthSignout();
   return (
   <div class={cn("grid grid-rows-[1fr,30px] h-screen text-emerald-50 p-3 bg-emerald-950")}>
@@ -13,7 +13,7 @@ export default component$(() => {
         <div >
           <Settings />
           <div>
-            <ModalLogout name={auth.user?.name ?? "B"} signout={signout} />
+            <ModalLogout name={auth?.user?.name ?? "B"} signout={signout} />
           </div>
         </div>
     </div>

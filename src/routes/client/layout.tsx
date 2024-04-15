@@ -10,7 +10,7 @@ interface AssessmentStoreType {
   buttonDisabled: boolean
 },
   personalInformation: {
-    gender: "female" | "male" | "" | undefined,
+    gender: "female" | "male" | "",
     name: string,
     dateOfBirth: Date | undefined,
     height: {type: "cm" | "m" | "FT", value: number},
@@ -79,7 +79,8 @@ export const useActionMergeProfile = routeAction$(async (data, {sharedMap, redir
   const token = session.database.token;
   const db = await serverInitDatabase();
   await db.authenticate(token);
-  const merge = await db.merge(id, { [data.field]: data.value })
+  const merge = await db.merge(id, { [data.field]: data.value });
+
   return {
     merge
   }

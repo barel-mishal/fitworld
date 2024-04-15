@@ -48,8 +48,6 @@ export const serverInitDatabase = server$(async () => {
     } 
   });
   db.use({ namespace: "namespace", database: "database" });
-
-
   return db;
   
 });
@@ -125,16 +123,15 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD userId ON TABLE profile TYPE record VALUE $auth.id DEFAULT $auth.id;
   DEFINE FIELD email ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
   DEFINE FIELD name ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
-
   DEFINE FIELD nickname ON TABLE profile TYPE string DEFAULT meta::id($auth.id);
   DEFINE FIELD image ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
-  DEFINE INDEX profileUserId ON TABLE profile COLUMNS userId UNIQUE;
-  DEFINE FIELD dateOfBirth ON TABLE profile TYPE string;
-  DEFINE FIELD goals ON TABLE profile TYPE array<string>;
-  DEFINE FIELD goals.* ON TABLE profile TYPE string;
-  DEFINE FIELD about ON TABLE profile TYPE option<string>;
+  DEFINE FIELD dateOfBirth ON TABLE profile TYPE option<datetime> DEFAULT NONE;
+  DEFINE FIELD goals ON TABLE profile TYPE array<string> DEFAULT ["", "", ""];
+  DEFINE FIELD goals.* ON TABLE profile TYPE string DEFAULT "";
+  DEFINE FIELD about ON TABLE profile TYPE option<string> DEFAULT "";
   DEFINE FIELD createdAt ON profile VALUE time::now() DEFAULT time::now();
   DEFINE FIELD updateAt ON profile VALUE time::now() DEFAULT time::now();
+  DEFINE INDEX profileUserId ON TABLE profile COLUMNS userId UNIQUE;
   DEFINE INDEX nickname ON TABLE profile COLUMNS nickname UNIQUE;
 
   DEFINE TABLE weights SCHEMAFULL
@@ -166,10 +163,6 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD updateAt ON heights TYPE datetime VALUE $value OR time::now();
   DEFINE INDEX heightsUserId ON TABLE heights COLUMNS userId UNIQUE;
   DEFINE INDEX heightsCreatedAt ON TABLE heights COLUMNS createdAt;
-
-
-
-  
 
   ` 
   return schema;
