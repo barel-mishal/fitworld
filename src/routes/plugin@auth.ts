@@ -3,6 +3,7 @@ import Google from "@auth/core/providers/google";
 import type { Provider } from "@auth/core/providers";
 import { Surreal } from "surrealdb.js";
 import { type SchemaProfileType } from "~/util/types";
+import { Session } from "@auth/core/types";
 
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   serverAuth$(({ env }) => {
@@ -43,7 +44,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
                 providerId: connection.account.providerAccountId,
               });
               // Create profile
-              await db.create("profile");
+              await db.query("CREATE profile; CREATE personalInfo;");
             }
           } catch (error) {
             console.error('\n\n ** Database signup error ** \n\n', error);
@@ -77,6 +78,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
 
 export type ReturnTypeSignout = ReturnType<typeof useAuthSignout>;
 export type ReturnTypeSignin = ReturnType<typeof useAuthSignin>;
+export type ExtendSession = Session & { database: { token: string, profile: SchemaProfileType } };
 export type ReturnTypeSession = ReturnType<typeof useAuthSession>["value"] & { database: { token: string, profile: SchemaProfileType } };
 
   /*

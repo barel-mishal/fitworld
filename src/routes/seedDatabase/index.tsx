@@ -125,7 +125,7 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD userId ON TABLE profile TYPE record VALUE $auth.id DEFAULT $auth.id;
   DEFINE FIELD email ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
   DEFINE FIELD name ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
-  DEFINE FIELD nickname ON TABLE personalInfo TYPE string VALUE $value OR "" DEFAULT meta::id($auth.id);
+  DEFINE FIELD nickname ON TABLE profile TYPE string DEFAULT meta::id($auth.id);
   DEFINE FIELD image ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
   DEFINE FIELD createdAt ON profile VALUE time::now() DEFAULT time::now();
   DEFINE FIELD updateAt ON profile VALUE time::now() DEFAULT time::now();
