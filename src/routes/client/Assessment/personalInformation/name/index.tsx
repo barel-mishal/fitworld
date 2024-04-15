@@ -1,6 +1,6 @@
 import { component$, useContext, useTask$ } from '@builder.io/qwik';
 import { Label } from '~/components/ui/label/label';
-import { contextAssessmentStore } from '../../layout';
+import { contextAssessmentStore } from '../../../layout';
 import { cn } from '@qwik-ui/utils';
 
 

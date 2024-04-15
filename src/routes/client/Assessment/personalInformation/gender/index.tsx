@@ -1,6 +1,6 @@
 import { component$, useComputed$, useContext, useTask$ } from '@builder.io/qwik';
 import { Button } from '~/components/ui/button/button';
-import { contextAssessmentStore } from '../../layout';
+import { contextAssessmentStore } from '../../../layout';
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);

@@ -1,6 +1,6 @@
 import { component$, useComputed$, useContext, useSignal, useTask$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
-import { contextAssessmentStore } from '../../layout';
+import { contextAssessmentStore } from '../../../layout';
 
 export default component$(() => {
   // https://claude.ai/chat/d86dbc49-6a60-44b8-bee9-2f6acf1155d9

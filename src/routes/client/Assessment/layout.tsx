@@ -1,12 +1,12 @@
 import { type Session } from '@auth/core/types';
-import { $, Slot, component$, createContextId, useComputed$, useContextProvider, useStore, useVisibleTask$ } from '@builder.io/qwik';
+import { $, Slot, component$, useComputed$, useContext, useVisibleTask$ } from '@builder.io/qwik';
 import { useLocation, useNavigate, type RequestHandler } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { Bs0Circle, BsArrowLeft } from '@qwikest/icons/bootstrap';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
 import { Button } from '~/components/ui/button/button';
 import { type RoutesLiteral } from '~/util/types';
-import { useActionMergeProfile } from '../layout';
+import { contextAssessmentStore } from '../layout';
 
 export const onRequest: RequestHandler = (event) => {
   const session: Session | null = event.sharedMap.get('session');
@@ -17,66 +17,10 @@ export const onRequest: RequestHandler = (event) => {
   }
 };
 
-interface AssessmentStoreType {
-  settings: { buttonStyle: "outline" | "link" | "primary" | "secondary" | "alert" | "ghost" | null | undefined,
-  buttonDisabled: boolean
-},
-  personalInformation: {
-    gender: "female" | "male" | "" | undefined,
-    name: string,
-    dateOfBirth: Date | undefined,
-    height: {type: "cm" | "m" | "FT", value: number},
-    currentWeight: {unit: "kg" | "g" | "lb", value: number},
-  },
-  lifeStyle: {
-    occupation: string,
-    activityLevel: string,
-    goals: [string, string, string]
-  },
-  currentView: RoutesLiteral
-} 
-
-export const useAssessmentStore = () => {
-  const actionProfileMerge = useActionMergeProfile()
-
-  const assessmentStore = useStore<AssessmentStoreType>({ 
-    settings: { 
-      buttonStyle: "outline", 
-      buttonDisabled: false 
-    }, 
-    personalInformation: {
-      gender: "", 
-      name: "",
-      dateOfBirth: undefined,
-      height: {
-        type: "cm", 
-        value: 0
-      },
-      currentWeight: {
-        unit: "kg", 
-        value: 0
-      }
-    },
-    lifeStyle: {
-      occupation: "",
-      activityLevel: "",
-      goals: ["", "", ""],
-    },
-    currentView: "/client/Assessment/",
-});
-
-
-  return {assessmentStore, actionProfileMerge};
-}
-
-export type AssessmentStore = ReturnType<typeof useAssessmentStore>;
-
-export const contextAssessmentStore = createContextId<AssessmentStore>("Assessment");
 
 
 export default component$(() => {
-  const sc = useAssessmentStore();
-  useContextProvider(contextAssessmentStore, sc);
+  const sc = useContext(contextAssessmentStore)
 
   const routes: RoutesLiteral[] = [
     "/client/Assessment/",
