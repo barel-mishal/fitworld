@@ -22,7 +22,10 @@ export const onRequest: RequestHandler = (event) => {
 export default component$(() => {
   const sc = useContext(contextAssessmentStore)
 
-  const routes: RoutesLiteral[] = [
+  type FilterAssessmentPaths<T> = T extends (`/client/Assessment/${string}` | `/client/(main)/play/`) ? T : never;
+  type RoutesLiteralAssessment = FilterAssessmentPaths<RoutesLiteral>;
+
+  const routes: RoutesLiteralAssessment[] = [
     "/client/Assessment/",
     "/client/Assessment/personalInformation/",
     "/client/Assessment/personalInformation/name/",
@@ -32,6 +35,7 @@ export default component$(() => {
     "/client/Assessment/personalInformation/current-weight/",
     "/client/play/" as "/client/(main)/play/"
   ];
+
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -59,39 +63,12 @@ export default component$(() => {
 
   const merge = $(async () => {
     // take long time
-    const route = location.url.pathname as RoutesLiteral;
-    const actions: Record<RoutesLiteral, () => unknown> = {
+    const route = location.url.pathname as RoutesLiteralAssessment;
+    const actions: Record<RoutesLiteralAssessment, () => unknown> = {
       "/client/Assessment/personalInformation/name/": () => sc.actionProfileMerge.submit({ field: "name", value: sc.assessmentStore.personalInformation.name }),
       "/client/Assessment/personalInformation/DateofBirth/": () => {
         if (!sc.assessmentStore.personalInformation.dateOfBirth) return;
         sc.actionProfileMerge.submit({ field: "dateOfBirth", value: sc.assessmentStore.personalInformation.dateOfBirth });
-      },
-      '/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/auth/new-user/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/auth/signin/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/auth/signout/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/auth/verify-request/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/client/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/client/(main)/leaderBoard/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/client/(main)/play/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/client/(main)/user/': function (): unknown {
-        throw new Error('Function not implemented.');
       },
       '/client/Assessment/': function (): unknown {
         throw new Error('Function not implemented.');
@@ -111,34 +88,7 @@ export default component$(() => {
       '/client/Assessment/personalInformation/height/': function (): unknown {
         throw new Error('Function not implemented.');
       },
-      '/content/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/dashboard/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/dashboard/feed/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/dashboard/notes/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/dashboard/notes/[id]/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/dashboard/notes/new/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/dashboard/profile/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/dashboard/profile/settings/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/dashboard/settings/': function (): unknown {
-        throw new Error('Function not implemented.');
-      },
-      '/seedDatabase/': function (): unknown {
+      '/client/(main)/play/': function (): unknown {
         throw new Error('Function not implemented.');
       }
     }
