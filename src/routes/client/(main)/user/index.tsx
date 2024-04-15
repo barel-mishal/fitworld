@@ -7,7 +7,6 @@ import { useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
 export default component$(() => {
   const auth = useAuthSession();
   const signout = useAuthSignout();
-  console.log('auth', auth.value);
   return (
   <div class={cn("grid grid-rows-[1fr,30px] h-screen text-emerald-50 p-3 bg-emerald-950")}>
     <div class={cn("bg-emerald-950 overflow-y-auto")}>

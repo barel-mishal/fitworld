@@ -125,6 +125,7 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD userId ON TABLE profile TYPE record VALUE $auth.id DEFAULT $auth.id;
   DEFINE FIELD email ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
   DEFINE FIELD name ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
+  DEFINE FIELD nickname ON TABLE personalInfo TYPE string VALUE $value OR "" DEFAULT meta::id($auth.id);
   DEFINE FIELD image ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
   DEFINE FIELD createdAt ON profile VALUE time::now() DEFAULT time::now();
   DEFINE FIELD updateAt ON profile VALUE time::now() DEFAULT time::now();
@@ -144,13 +145,14 @@ export const serverDatabaseSchema = server$(async () => {
       FOR delete
         WHERE userId = $auth.id OR $auth.role = "admin";
   DEFINE FIELD userId ON TABLE personalInfo TYPE record VALUE $auth.id;
-  DEFINE FIELD nickname ON TABLE personalInfo TYPE string;
   DEFINE FIELD dateOfBirth ON TABLE personalInfo TYPE string;
   DEFINE FIELD goals ON TABLE personalInfo TYPE array<string>;
   DEFINE FIELD goals.* ON TABLE personalInfo TYPE string;
+  DEFINE FIELD about ON TABLE personalInfo TYPE option<string>;
   DEFINE FIELD createdAt ON personalInfo VALUE time::now() READONLY;
   DEFINE FIELD updateAt ON personalInfo VALUE time::now() READONLY;
   DEFINE INDEX personalInfoUserId ON TABLE personalInfo COLUMNS userId UNIQUE;
+  DEFINE INDEX nickname ON TABLE personalInfo COLUMNS nickname UNIQUE;
 
   DEFINE TABLE weights SCHEMAFULL
     PERMISSIONS
