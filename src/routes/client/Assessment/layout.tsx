@@ -112,7 +112,7 @@ export default component$(() => {
   
     <HeaderMainBottomNav >
       <div q:slot='header' class=""><Button onClick$={prev} look={"ghost"} class={cn("text-emerald-200 p-0 active:bg-transparent hover:bg-transparent ", isFirst.value && "hidden")}><BsArrowLeft class="" style={{height: 30, width: 30}} /></Button></div>
-      <div q:slot='main' class=" h-full flex items-center"><Slot /></div>
+      <div q:slot='main' class=" h-full flex items-start"><Slot /></div>
       <div q:slot='footer'><Button 
         disabled={sc.assessmentStore.settings.buttonDisabled} 
         class="w-full" 
