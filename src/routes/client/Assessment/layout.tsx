@@ -115,19 +115,91 @@ export default component$(() => {
 
   const merge = $(async () => {
     // take long time
-    switch (location.url.pathname) {
-      case "/client/Assessment/personalInformation/name/":
-        await sc.actionProfileMerge.submit({field: "name", value: sc.assessmentStore.personalInformation.name});
-        break;
-      case "/client/Assessment/personalInformation/DateofBirth/":
-        if (!sc.assessmentStore.personalInformation.dateOfBirth) {
-          break;
-        }
-        await sc.actionProfileMerge.submit({field: "dateOfBirth", value: sc.assessmentStore.personalInformation.dateOfBirth});
-        break;
-      default:
-          break;
+    const route = location.url.pathname as RoutesLiteral;
+    const actions: Record<RoutesLiteral, () => unknown> = {
+      "/client/Assessment/personalInformation/name/": () => sc.actionProfileMerge.submit({ field: "name", value: sc.assessmentStore.personalInformation.name }),
+      "/client/Assessment/personalInformation/DateofBirth/": () => {
+        if (!sc.assessmentStore.personalInformation.dateOfBirth) return;
+        sc.actionProfileMerge.submit({ field: "dateOfBirth", value: sc.assessmentStore.personalInformation.dateOfBirth });
+      },
+      '/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/auth/new-user/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/auth/signin/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/auth/signout/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/auth/verify-request/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/(main)/leaderBoard/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/(main)/play/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/(main)/user/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/Assessment/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/Assessment/lifestyleFactors/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/Assessment/personalInformation/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/Assessment/personalInformation/current-weight/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/Assessment/personalInformation/gender/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/client/Assessment/personalInformation/height/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/content/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/dashboard/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/dashboard/feed/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/dashboard/notes/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/dashboard/notes/[id]/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/dashboard/notes/new/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/dashboard/profile/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/dashboard/profile/settings/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/dashboard/settings/': function (): unknown {
+        throw new Error('Function not implemented.');
+      },
+      '/seedDatabase/': function (): unknown {
+        throw new Error('Function not implemented.');
+      }
     }
+    const result = await actions[route]();
+    console.log("result", result);
   });
 
   // eslint-disable-next-line qwik/no-use-visible-task
