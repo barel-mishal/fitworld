@@ -7,7 +7,6 @@ export const onRequest: RequestHandler = (event) => {
   
   const session: Session | null = event.sharedMap.get('session');
   const isSignedIn = session && new Date(session.expires) > new Date();
-  console.log('session', !isSignedIn || session.user?.email === "dreamwork@dreamwork.network");
   if (!isSignedIn || session.user?.email === "dreamwork@dreamwork.network") {
     return;
   } else {
@@ -83,7 +82,10 @@ export const serverDatabaseSchema = server$(async () => {
   USE NS namespace DB database;
   
   DEFINE SCOPE IF NOT EXISTS account SESSION 1w
-    SIGNUP ( CREATE user SET pass = crypto::argon2::generate($pass), providerId = $providerId )
+    SIGNUP (
+      CREATE user SET pass = crypto::argon2::generate($pass), providerId = $providerId
+      RETURN *
+    )
     SIGNIN ( SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass) );
   
   DEFINE USER IF NOT EXISTS barel ON ROOT PASSWORD '123456' ROLES OWNER;
@@ -106,13 +108,9 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD roles ON TABLE user TYPE array<string> DEFAULT ["user"];
   DEFINE FIELD roles.* ON TABLE user TYPE string;
   DEFINE FIELD providerId ON TABLE user TYPE string;
-  DEFINE FIELD createdAt ON user VALUE time::now() READONLY;
-  DEFINE FIELD updateAt ON user VALUE time::now() READONLY;
+  DEFINE FIELD createdAt ON user VALUE time::now() DEFAULT time::now() READONLY;
+  DEFINE FIELD updateAt ON user VALUE time::now() DEFAULT time::now() READONLY;
   DEFINE INDEX userProviderId ON TABLE user COLUMNS providerId UNIQUE;
-
-  DEFINE EVENT createdUser ON TABLE user WHEN $event = "CREATE" THEN (
-    CREATE profile;
-  );
 
   DEFINE TABLE profile SCHEMAFULL
     PERMISSIONS
@@ -120,15 +118,22 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id
       FOR update
         WHERE userId = $auth.id
+      FOR create
+        WHERE userId = $auth.id
       FOR delete
         WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE profile TYPE record VALUE $auth.id;
-  DEFINE FIELD email ON TABLE profile TYPE string;
-  DEFINE FIELD name ON TABLE profile TYPE string;
-  DEFINE FIELD image ON TABLE profile TYPE string;
-  DEFINE FIELD createdAt ON profile VALUE time::now() READONLY;
-  DEFINE FIELD updateAt ON profile VALUE time::now() READONLY;
+  DEFINE FIELD userId ON TABLE profile TYPE record VALUE $auth.id DEFAULT $auth.id;
+  DEFINE FIELD email ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
+  DEFINE FIELD name ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
+  DEFINE FIELD image ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
+  DEFINE FIELD createdAt ON profile VALUE time::now() DEFAULT time::now();
+  DEFINE FIELD updateAt ON profile VALUE time::now() DEFAULT time::now();
   DEFINE INDEX profileUserId ON TABLE profile COLUMNS userId UNIQUE;
+
+  DEFINE EVENT createdUser ON TABLE user WHEN $event = "CREATE" THEN (
+    CREATE profile SET userId = $after.id
+  );
+
 
   DEFINE TABLE personalInfo SCHEMAFULL
     PERMISSIONS

@@ -2,6 +2,7 @@ import { serverAuth$ } from "@builder.io/qwik-auth";
 import Google from "@auth/core/providers/google";
 import type { Provider } from "@auth/core/providers";
 import { Surreal } from "surrealdb.js";
+import { type SchemaProfileType } from "~/util/types";
 
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   serverAuth$(({ env }) => {
@@ -30,32 +31,38 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
       jwt: async (connection) => {
         if (connection.account) {
           try {
-            await db.signup({
-              scope: "account",
-              database: "database", 
-              namespace: "namespace", 
-              pass: connection.account.providerAccountId,
-              providerId: connection.account.providerAccountId
-            });
+            // Check if user exists in database
+            const check = await db.query<[[SchemaProfileType] | []]>("SELECT * FROM user WHERE providerId = $id", { id: connection.account.providerAccountId });
+            if (check[0].length === 0) {
+              // If user does not exist, create user
+              await db.signup({
+                scope: "account",
+                database: "database", 
+                namespace: "namespace", 
+                pass: connection.account.providerAccountId,
+                providerId: connection.account.providerAccountId,
+              });
+              // Create profile
+              await db.create("profile");
+            }
           } catch (error) {
             console.error('\n\n ** Database signup error ** \n\n', error);
           }
+          // Set token providerId to account providerAccountId
           connection.token.providerId = connection.account.providerAccountId;
         }
         return connection.token;
       },
       session: async (connection) => {
-        // const a = connection;
-        // const user = await db
         const token = await db.signin({
           scope: "account",
           database: "database", 
           namespace: "namespace", 
           pass: connection.token.providerId,
         });
-        const profile = await db.query("SELECT * FROM profile WHERE userId = auth.id");
+        const profile = await db.query<[[SchemaProfileType]]>("SELECT * FROM profile WHERE userId = $auth.id");
 
-        return {...connection.session, database: { token, profile }};
+        return {...connection.session, database: { token, profile: profile[0][0] }};
       },
 
     },
@@ -75,7 +82,7 @@ export type ReturnTypeSignout = ReturnType<typeof useAuthSignout>;
 authorization result {
   "user": {
     "id": "11008905783463",
-    "name": "DREAM WORK",
+  "name": "DREAM WORK",
     "email": "dreamwork@dreamwowork",
     "image": "https://lh3.googleusercontent.com/a/ACg8ocKkJ3JPUacxI7_sjClONtIxitK8HIdxZH2NgoGIyAo1FUS28Q=s96-c"
   },
