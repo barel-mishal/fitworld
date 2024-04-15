@@ -71,18 +71,21 @@ export default component$(() => {
         sc.actionProfileMerge.submit({ field: "dateOfBirth", value: sc.assessmentStore.personalInformation.dateOfBirth });
       },
       '/client/Assessment/': function (): unknown {
-        throw new Error('Function not implemented.');
+        // throw new Error('Function not implemented.');
+        return 
       },
       '/client/Assessment/lifestyleFactors/': function (): unknown {
+
         throw new Error('Function not implemented.');
       },
       '/client/Assessment/personalInformation/': function (): unknown {
-        throw new Error('Function not implemented.');
+        return
       },
       '/client/Assessment/personalInformation/current-weight/': function (): unknown {
         throw new Error('Function not implemented.');
       },
       '/client/Assessment/personalInformation/gender/': function (): unknown {
+        
         throw new Error('Function not implemented.');
       },
       '/client/Assessment/personalInformation/height/': function (): unknown {
@@ -91,6 +94,10 @@ export default component$(() => {
       '/client/(main)/play/': function (): unknown {
         throw new Error('Function not implemented.');
       }
+
+      // m
+      // k=2m
+      // 
     }
     const result = await actions[route]();
     console.log("result", result);
