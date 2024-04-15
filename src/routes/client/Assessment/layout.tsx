@@ -69,7 +69,6 @@ export default component$(() => {
         sc.actionProfileMerge.submit({ field: "name", value: sc.assessmentStore.personalInformation.name })
       },
       "/client/Assessment/personalInformation/DateofBirth/": () => {
-
         if (!sc.assessmentStore.personalInformation.dateOfBirth) return;
         sc.actionProfileMerge.submit({ field: "dateOfBirth", value: sc.assessmentStore.personalInformation.dateOfBirth });
       },
