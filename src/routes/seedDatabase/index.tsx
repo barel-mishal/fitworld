@@ -134,7 +134,7 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE INDEX profileUserId ON TABLE profile COLUMNS userId UNIQUE;
   DEFINE INDEX nickname ON TABLE profile COLUMNS nickname UNIQUE;
 
-  DEFINE TABLE weights SCHEMAFULL
+  DEFINE TABLE weight SCHEMAFULL
     PERMISSIONS
       FOR select
         WHERE userId = $auth.id
@@ -142,14 +142,14 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id
       FOR delete
         WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE weights TYPE record VALUE $auth.id;
-  DEFINE FIELD weight ON TABLE weights TYPE number;
-  DEFINE FIELD createdAt ON weights TYPE datetime VALUE $value OR time::now();
-  DEFINE FIELD updateAt ON weights TYPE datetime VALUE $value OR time::now();
-  DEFINE INDEX weightsUserId ON TABLE weights COLUMNS userId UNIQUE;
-  DEFINE INDEX weightsCreatedAt ON TABLE weights COLUMNS createdAt;
+  DEFINE FIELD userId ON TABLE weight TYPE record VALUE $auth.id;
+  DEFINE FIELD weight ON TABLE weight TYPE number;
+  DEFINE FIELD createdAt ON weight TYPE datetime VALUE $value OR time::now();
+  DEFINE FIELD updateAt ON weight TYPE datetime VALUE $value OR time::now();
+  DEFINE INDEX weightUserId ON TABLE weight COLUMNS userId UNIQUE;
+  DEFINE INDEX weightCreatedAt ON TABLE weight COLUMNS createdAt;
 
-  DEFINE TABLE heights SCHEMAFULL
+  DEFINE TABLE height SCHEMAFULL
     PERMISSIONS
       FOR select
         WHERE userId = $auth.id
@@ -157,12 +157,12 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id
       FOR delete
         WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE heights TYPE record VALUE $auth.id;
-  DEFINE FIELD height ON TABLE heights TYPE number;
-  DEFINE FIELD createdAt ON heights TYPE datetime VALUE $value OR time::now();
-  DEFINE FIELD updateAt ON heights TYPE datetime VALUE $value OR time::now();
-  DEFINE INDEX heightsUserId ON TABLE heights COLUMNS userId UNIQUE;
-  DEFINE INDEX heightsCreatedAt ON TABLE heights COLUMNS createdAt;
+  DEFINE FIELD userId ON TABLE height TYPE record VALUE $auth.id;
+  DEFINE FIELD height ON TABLE height TYPE number;
+  DEFINE FIELD createdAt ON height TYPE datetime VALUE $value OR time::now();
+  DEFINE FIELD updateAt ON height TYPE datetime VALUE $value OR time::now();
+  DEFINE INDEX heightUserId ON TABLE height COLUMNS userId UNIQUE;
+  DEFINE INDEX heightCreatedAt ON TABLE height COLUMNS createdAt;
 
   ` 
   return schema;

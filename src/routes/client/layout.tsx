@@ -88,6 +88,24 @@ export const useActionMergeProfile = routeAction$(async (data, {sharedMap, redir
   value: z.string().or(z.number()).or(z.boolean()).or(z.array(z.string())).or(z.date()),
   field: z.string()
 }));
+export const useActionMergeWeight = routeAction$(async (data, {sharedMap, redirect}) => {
+  const session: ExtendSession | null = sharedMap.get('session');
+  console.log('session', session);
+  
+  const id = session?.database.profile.id;
+  if (!id) throw redirect(302, `/`);
+  const token = session.database.token;
+  const db = await serverInitDatabase();
+  await db.authenticate(token);
+  const merge = await db.merge(id, { [data.field]: data.value });
+
+  return {
+    merge
+  }
+}, zod$({
+  value: z.string().or(z.number()).or(z.boolean()).or(z.array(z.string())).or(z.date()),
+  field: z.string()
+}));
 
 
 
