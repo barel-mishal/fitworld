@@ -8,6 +8,7 @@ export type AppRoutes =
   | "/auth/signin/"
   | "/auth/signout/"
   | "/auth/verify-request/"
+  | "/client/"
   | "/client/(main)/leaderBoard/"
   | "/client/(main)/play/"
   | "/client/(main)/user/"
@@ -36,6 +37,7 @@ export interface AppRouteMap {
   "/auth/signin/": {};
   "/auth/signout/": {};
   "/auth/verify-request/": {};
+  "/client/": {};
   "/client/(main)/leaderBoard/": {};
   "/client/(main)/play/": {};
   "/client/(main)/user/": {};
@@ -65,6 +67,7 @@ export interface AppRouteParamsFunction {
   (route: "/auth/signin/", params?: {}): string;
   (route: "/auth/signout/", params?: {}): string;
   (route: "/auth/verify-request/", params?: {}): string;
+  (route: "/client/", params?: {}): string;
   (route: "/client/(main)/leaderBoard/", params?: {}): string;
   (route: "/client/(main)/play/", params?: {}): string;
   (route: "/client/(main)/user/", params?: {}): string;
@@ -106,6 +109,7 @@ export type AppLinkProps =
   | { route: "/auth/signin/" }
   | { route: "/auth/signout/" }
   | { route: "/auth/verify-request/" }
+  | { route: "/client/" }
   | { route: "/client/(main)/leaderBoard/" }
   | { route: "/client/(main)/play/" }
   | { route: "/client/(main)/user/" }
