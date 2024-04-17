@@ -14,7 +14,10 @@ export default component$(() => {
     classMain='tw '
     class="grid-rows-[40px,1fr,30px]">
       <div q:slot='header'><TopNavBar /></div>
-      <div q:slot='main'><AppLink route="/client/Assessment/"><TrackFood /></AppLink></div>
+      <div q:slot='main'><TrackFood />
+        <AppLink route="/client/Assessment/">
+        Get Started
+        </AppLink></div>
       <div q:slot='footer' class=""><BottomNavBar flag={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} /></div>
     </HeaderMainBottomNav>
   );
@@ -36,8 +39,8 @@ export const TrackFood = component$(() => {
         <div class="grid gap-3">
           {myEats.eats.map((eat) => {
             return (
-              <div key={eat.id} class="grid-cols-3 grid">
-
+              <div key={eat.id} class="grid-cols-4 grid">
+                <button onClick$={() => {}}>grab me</button>
                 <input type="text" class="bg-transparent" value={eat.food} />
                 <input type="text" class="bg-transparent" value={eat.unit} />
                 <input type="text" class="bg-transparent" value={eat.amount} />
