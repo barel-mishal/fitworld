@@ -1,11 +1,12 @@
 import { type PropsOf, Slot, component$, useSignal, useVisibleTask$ } from '@builder.io/qwik';
+import { cn } from '@qwik-ui/utils';
 import { Sortable, Plugins } from '@shopify/draggable';
 
 type LiBlockProps = PropsOf<"li">;
 
-export const Block = component$<LiBlockProps>(() => {
+export const Block = component$<LiBlockProps>((props) => {
   return (
-    <li class="Block--isDraggable">
+    <li {...props} class={cn("Block--isDraggable", props.class)}>
       <Slot />
     </li>
   );
@@ -20,7 +21,7 @@ export interface SortableProps extends PropsOf<"ul"> {
  *  - To use this component, wrap the items in a `SortableComp` and each item in a `Block component`.
  *  - The `Block` component is a draggable item.
 */
-export const SortableComp = component$<SortableProps>(() => {
+export const SortableComp = component$<SortableProps>((props) => {
   const containers = useSignal<HTMLUListElement>();
 
   // eslint-disable-next-line qwik/no-use-visible-task
@@ -46,7 +47,7 @@ export const SortableComp = component$<SortableProps>(() => {
 
   });
   return (
-      <ul ref={containers}>
+      <ul ref={containers} {...props}>
         <Slot />
       </ul>
   );
