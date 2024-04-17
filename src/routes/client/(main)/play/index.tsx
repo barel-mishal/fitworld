@@ -1,4 +1,5 @@
 import { component$, useStore } from '@builder.io/qwik';
+import { LuMoveVertical } from '@qwikest/icons/lucide';
 import { Block, SortableComp } from '~/components/Sortable/Sortable';
 import { Draggable } from '~/components/draggable/draggable';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
@@ -44,11 +45,16 @@ export const TrackFood = component$(() => {
         <SortableComp class="grid gap-3">
           {myEats.eats.map((eat) => {
             return (
-              <Block key={eat.id} class="grid-cols-4 grid">
-                <button onClick$={() => {}}>grab me</button>
-                <input type="text" class="bg-transparent" value={eat.food} />
-                <input type="text" class="bg-transparent" value={eat.unit} />
-                <input type="text" class="bg-transparent" value={eat.amount} />
+              <Block key={eat.id} class="grid grid-cols-[auto,1fr] gap-2">
+                
+                <button onClick$={() => {}} class="">
+                  <LuMoveVertical class="fill-zinc-900 scale-75" fill='#1e293b'  />
+                </button>
+                <fieldset class="grid grid-cols-3 gap-3 ">
+                  <input type="text" class="bg-transparent" value={eat.food} />
+                  <input type="text" class="bg-transparent" value={eat.unit} />
+                  <input type="text" class="bg-transparent" value={eat.amount} />
+                </fieldset>
               </Block>
             )
           })}
