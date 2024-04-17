@@ -35,6 +35,7 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
 
   const actionProfileMerge = useActionMergeProfile();
   const actionWeightMerge = useActionMergeProfile();
+  const actionHeightMerge = useActionMergeProfile();
 
   const assessmentStore = useStore<AssessmentStoreType>({ 
     settings: { 
@@ -46,7 +47,7 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
 });
 
 
-  return {assessmentStore, actionProfileMerge, actionWeightMerge};
+  return {assessmentStore, actionProfileMerge, actionWeightMerge, actionHeightMerge};
 }
 
 export type AssessmentStore = ReturnType<typeof useAssessmentStore>;
@@ -112,6 +113,26 @@ export const useActionMergeWeight = routeAction$(async (data, {sharedMap, redire
   // const merge = await db.merge(id, { [data.field]: data.value });
   const merge = await db.query_raw(`
   select * from weight where user = $auth.id;
+  
+  `)
+  console.log('merge', merge);
+  return {
+    merge
+  }
+}, zod$({
+  value: z.string().or(z.number()).or(z.boolean()).or(z.array(z.string())).or(z.date()),
+  field: z.string()
+}));
+export const useActionMergeHeight = routeAction$(async (data, {sharedMap, redirect}) => {
+  console.log('data', data);
+  const session: ExtendSession | null = sharedMap.get('session');
+  const token = session?.database.token
+  if (!token) throw redirect(302, `/`);
+  const db = await serverInitDatabase();
+  await db.authenticate(token);
+  // const merge = await db.merge(id, { [data.field]: data.value });
+  const merge = await db.query_raw(`
+  select * from height where user = $auth.id;
   
   `)
   console.log('merge', merge);

@@ -77,21 +77,22 @@ export default component$(() => {
         return 
       },
       '/client/Assessment/': function (): unknown {
-        // throw new Error('Function not implemented.');
-        return 
+        throw new Error('Function not implemented.'); 
       },
       '/client/Assessment/lifestyleFactors/': function (): unknown {
-
         throw new Error('Function not implemented.');
       },
       '/client/Assessment/personalInformation/': function (): unknown {
         return
       },
       '/client/Assessment/personalInformation/current-weight/': function (): unknown {
-        throw new Error('Function not implemented.');
+        sc.actionWeightMerge.submit({ field: "weight", value: sc.assessmentStore.data.personalInformation.currentWeight.value });
+        return
       },
       '/client/Assessment/personalInformation/height/': function (): unknown {
-        throw new Error('Function not implemented.');
+        console.log("height", sc.assessmentStore.data.personalInformation.height.value)
+        sc.actionHeightMerge.submit({ field: "height", value: sc.assessmentStore.data.personalInformation.height.value });
+        return
       },
       '/client/(main)/play/': function (): unknown {
         throw new Error('Function not implemented.');
