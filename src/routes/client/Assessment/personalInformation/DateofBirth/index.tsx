@@ -47,11 +47,8 @@ export default component$(() => {
   useTask$(({track}) => {
     const valid = track(() => isValid.value);
     if (valid) {
-      sc.assessmentStore.settings.buttonDisabled = false;
       const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
       sc.assessmentStore.data.personalInformation.dateOfBirth = date;
-    } else {
-      sc.assessmentStore.settings.buttonDisabled = true;
     }
   });
 

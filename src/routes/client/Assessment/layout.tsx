@@ -77,7 +77,7 @@ export default component$(() => {
         return 
       },
       '/client/Assessment/': function (): unknown {
-        throw new Error('Function not implemented.'); 
+        return 
       },
       '/client/Assessment/lifestyleFactors/': function (): unknown {
         throw new Error('Function not implemented.');
