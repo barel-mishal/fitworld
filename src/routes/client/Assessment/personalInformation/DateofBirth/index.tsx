@@ -1,6 +1,6 @@
 import { component$, useComputed$, useContext, useSignal, useTask$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
-import { contextAssessmentStore } from '../../layout';
+import { contextAssessmentStore } from '../../../layout';
 
 export default component$(() => {
   // https://claude.ai/chat/d86dbc49-6a60-44b8-bee9-2f6acf1155d9
@@ -8,9 +8,9 @@ export default component$(() => {
   const refDay = useSignal<HTMLInputElement>();
   const refYear = useSignal<HTMLInputElement>();
   const refMonth = useSignal<HTMLInputElement>();
-  const day = sc.personalInformation.dateOfBirth ? sc.personalInformation.dateOfBirth.getDay() : "";
-  const month = sc.personalInformation.dateOfBirth ? sc.personalInformation.dateOfBirth.getMonth() : "";
-  const year = sc.personalInformation.dateOfBirth ? sc.personalInformation.dateOfBirth.getFullYear() : "";
+  const day = sc.assessmentStore.data.personalInformation.dateOfBirth ? sc.assessmentStore.data.personalInformation.dateOfBirth.getDay() : "";
+  const month = sc.assessmentStore.data.personalInformation.dateOfBirth ? sc.assessmentStore.data.personalInformation.dateOfBirth.getMonth() : "";
+  const year = sc.assessmentStore.data.personalInformation.dateOfBirth ? sc.assessmentStore.data.personalInformation.dateOfBirth.getFullYear() : "";
   const birthDate = useSignal({
     day: day ? day.toString() : "",
     month: month ? month.toString() : "",
@@ -47,13 +47,10 @@ export default component$(() => {
   useTask$(({track}) => {
     const valid = track(() => isValid.value);
     if (valid) {
-      sc.settings.buttonDisabled = false;
       const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
-      sc.personalInformation.dateOfBirth = date;
-    } else {
-      sc.settings.buttonDisabled = true;
+      sc.assessmentStore.data.personalInformation.dateOfBirth = date;
     }
-  })
+  });
 
   return (
     <div class="grid h-full grid-rows-[auto,1fr]">

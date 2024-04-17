@@ -7,7 +7,6 @@ export const onRequest: RequestHandler = (event) => {
   
   const session: Session | null = event.sharedMap.get('session');
   const isSignedIn = session && new Date(session.expires) > new Date();
-  console.log('session', !isSignedIn || session.user?.email === "dreamwork@dreamwork.network");
   if (!isSignedIn || session.user?.email === "dreamwork@dreamwork.network") {
     return;
   } else {
@@ -49,8 +48,6 @@ export const serverInitDatabase = server$(async () => {
     } 
   });
   db.use({ namespace: "namespace", database: "database" });
-
-
   return db;
   
 });
@@ -83,7 +80,10 @@ export const serverDatabaseSchema = server$(async () => {
   USE NS namespace DB database;
   
   DEFINE SCOPE IF NOT EXISTS account SESSION 1w
-    SIGNUP ( CREATE user SET pass = crypto::argon2::generate($pass), providerId = $providerId )
+    SIGNUP (
+      CREATE user SET pass = crypto::argon2::generate($pass), providerId = $providerId
+      RETURN *
+    )
     SIGNIN ( SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass) );
   
   DEFINE USER IF NOT EXISTS barel ON ROOT PASSWORD '123456' ROLES OWNER;
@@ -106,13 +106,9 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD roles ON TABLE user TYPE array<string> DEFAULT ["user"];
   DEFINE FIELD roles.* ON TABLE user TYPE string;
   DEFINE FIELD providerId ON TABLE user TYPE string;
-  DEFINE FIELD createdAt ON user VALUE time::now() READONLY;
-  DEFINE FIELD updateAt ON user VALUE time::now() READONLY;
+  DEFINE FIELD createdAt ON user VALUE time::now() DEFAULT time::now() READONLY;
+  DEFINE FIELD updateAt ON user VALUE time::now() DEFAULT time::now() READONLY;
   DEFINE INDEX userProviderId ON TABLE user COLUMNS providerId UNIQUE;
-
-  DEFINE EVENT createdUser ON TABLE user WHEN $event = "CREATE" THEN (
-    CREATE profile;
-  );
 
   DEFINE TABLE profile SCHEMAFULL
     PERMISSIONS
@@ -120,17 +116,25 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id
       FOR update
         WHERE userId = $auth.id
+      FOR create
+        WHERE userId = $auth.id
       FOR delete
         WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE profile TYPE record VALUE $auth.id;
-  DEFINE FIELD email ON TABLE profile TYPE string;
-  DEFINE FIELD name ON TABLE profile TYPE string;
-  DEFINE FIELD image ON TABLE profile TYPE string;
-  DEFINE FIELD createdAt ON profile VALUE time::now() READONLY;
-  DEFINE FIELD updateAt ON profile VALUE time::now() READONLY;
+  DEFINE FIELD userId ON TABLE profile TYPE record VALUE $auth.id DEFAULT $auth.id;
+  DEFINE FIELD email ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
+  DEFINE FIELD name ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
+  DEFINE FIELD nickname ON TABLE profile TYPE string DEFAULT meta::id($auth.id);
+  DEFINE FIELD image ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
+  DEFINE FIELD dateOfBirth ON TABLE profile TYPE option<datetime> DEFAULT NONE;
+  DEFINE FIELD goals ON TABLE profile TYPE array<string> DEFAULT ["", "", ""];
+  DEFINE FIELD goals.* ON TABLE profile TYPE string DEFAULT "";
+  DEFINE FIELD about ON TABLE profile TYPE option<string> DEFAULT "";
+  DEFINE FIELD createdAt ON profile VALUE time::now() DEFAULT time::now();
+  DEFINE FIELD updateAt ON profile VALUE time::now() DEFAULT time::now();
   DEFINE INDEX profileUserId ON TABLE profile COLUMNS userId UNIQUE;
+  DEFINE INDEX nickname ON TABLE profile COLUMNS nickname UNIQUE;
 
-  DEFINE TABLE personalInfo SCHEMAFULL
+  DEFINE TABLE weight SCHEMAFULL
     PERMISSIONS
       FOR select
         WHERE userId = $auth.id
@@ -138,14 +142,14 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id
       FOR delete
         WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE personalInfo TYPE record VALUE $auth.id;
-  DEFINE FIELD nickname ON TABLE personalInfo TYPE string;
-  DEFINE FIELD dateOfBirth ON TABLE personalInfo TYPE string
-  DEFINE FIELD createdAt ON personalInfo VALUE time::now() READONLY;
-  DEFINE FIELD updateAt ON personalInfo VALUE time::now() READONLY;
-  DEFINE INDEX personalInfoUserId ON TABLE personalInfo COLUMNS userId UNIQUE;
+  DEFINE FIELD userId ON TABLE weight TYPE record VALUE $auth.id;
+  DEFINE FIELD weight ON TABLE weight TYPE number;
+  DEFINE FIELD createdAt ON weight TYPE datetime VALUE $value OR time::now();
+  DEFINE FIELD updateAt ON weight TYPE datetime VALUE $value OR time::now();
+  DEFINE INDEX weightUserId ON TABLE weight COLUMNS userId UNIQUE;
+  DEFINE INDEX weightCreatedAt ON TABLE weight COLUMNS createdAt;
 
-  DEFINE TABLE weights SCHEMAFULL
+  DEFINE TABLE height SCHEMAFULL
     PERMISSIONS
       FOR select
         WHERE userId = $auth.id
@@ -153,31 +157,12 @@ export const serverDatabaseSchema = server$(async () => {
         WHERE userId = $auth.id
       FOR delete
         WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE weights TYPE record VALUE $auth.id;
-  DEFINE FIELD weight ON TABLE weights TYPE number;
-  DEFINE FIELD createdAt ON weights TYPE datetime VALUE $value OR time::now();
-  DEFINE FIELD updateAt ON weights TYPE datetime VALUE $value OR time::now();
-  DEFINE INDEX weightsUserId ON TABLE weights COLUMNS userId UNIQUE;
-  DEFINE INDEX weightsCreatedAt ON TABLE weights COLUMNS createdAt;
-
-  DEFINE TABLE heights SCHEMAFULL
-    PERMISSIONS
-      FOR select
-        WHERE userId = $auth.id
-      FOR update
-        WHERE userId = $auth.id
-      FOR delete
-        WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE heights TYPE record VALUE $auth.id;
-  DEFINE FIELD height ON TABLE heights TYPE number;
-  DEFINE FIELD createdAt ON heights TYPE datetime VALUE $value OR time::now();
-  DEFINE FIELD updateAt ON heights TYPE datetime VALUE $value OR time::now();
-  DEFINE INDEX heightsUserId ON TABLE heights COLUMNS userId UNIQUE;
-  DEFINE INDEX heightsCreatedAt ON TABLE heights COLUMNS createdAt;
-
-
-
-  
+  DEFINE FIELD userId ON TABLE height TYPE record VALUE $auth.id;
+  DEFINE FIELD height ON TABLE height TYPE number;
+  DEFINE FIELD createdAt ON height TYPE datetime VALUE $value OR time::now();
+  DEFINE FIELD updateAt ON height TYPE datetime VALUE $value OR time::now();
+  DEFINE INDEX heightUserId ON TABLE height COLUMNS userId UNIQUE;
+  DEFINE INDEX heightCreatedAt ON TABLE height COLUMNS createdAt;
 
   ` 
   return schema;
