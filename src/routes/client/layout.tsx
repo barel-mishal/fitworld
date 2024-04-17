@@ -8,7 +8,7 @@ import { serverInitDatabase } from '../seedDatabase';
 interface PersonalInformation {
   gender: "female" | "male" | "",
   name: string,
-  dateOfBirth: Date | undefined | string,
+  dateOfBirth?: Date | undefined,
   height: {type: "cm" | "m" | "FT", value: number},
   currentWeight: {unit: "kg" | "g" | "lb", value: number},
 }
@@ -16,7 +16,7 @@ interface PersonalInformation {
 interface LifeStyle {
   occupation: string,
   activityLevel: string,
-  goals: [string, string, string]
+  goals: string[]
 }
 
 interface AssessmentStoreType {
@@ -30,18 +30,17 @@ interface AssessmentStoreType {
   currentView: RoutesLiteral
 } 
 
-export const useSchemaAssessment = () => {
-  return z.object({
+export const SchemaAssessment = z.object({
     personalInformation: z.object({
-      gender: z.string().default(""),
+      gender: z.enum(["female", "male", ""]).default(""),
       name: z.string().default(""),
-      dateOfBirth: z.string().pipe( z.coerce.date() ).optional(),
+      dateOfBirth: z.string().pipe( z.coerce.date() ).or(z.date()).optional(),
       height: z.object({
-        type: z.string().default("cm"),
+        type: z.enum(["FT", "m", "cm"]).default("cm"),
         value: z.number().default(0)
       }),
       currentWeight: z.object({
-        unit: z.string().default("kg"),
+        unit: z.enum(["kg", "g", "lb"]).default("kg"),
         value: z.number().default(0)
       })
     }),
@@ -64,9 +63,11 @@ export const useSchemaAssessment = () => {
       goals: ["", "", ""]
     }
   });
-}
 
-export const useAssessmentStore = (props: {personalInformation: PersonalInformation, lifeStyle: LifeStyle}) => {
+export type TypeSchemaAssessment = z.infer<typeof SchemaAssessment>;
+
+
+export const useAssessmentStore = (data: TypeSchemaAssessment) => {
 
   const actionProfileMerge = useActionMergeProfile();
   const actionWeightMerge = useActionMergeProfile();
@@ -76,7 +77,7 @@ export const useAssessmentStore = (props: {personalInformation: PersonalInformat
       buttonStyle: "outline", 
       buttonDisabled: false 
     }, 
-    data: useSchemaAssessment().parse(props) as {personalInformation: PersonalInformation, lifeStyle: LifeStyle},
+    data,
     currentView: "/client/Assessment/",
 });
 
@@ -97,7 +98,7 @@ export const useLoaderAssessment = routeLoader$(function({sharedMap})  {
 
 export default component$(() => {
   const profile = useLoaderAssessment();
-  const sc = useAssessmentStore({
+  const parsed = SchemaAssessment.parse({
     personalInformation: {
       gender: profile.value?.gender || "",
       name: profile.value?.name || "",
@@ -110,7 +111,8 @@ export default component$(() => {
       activityLevel: "",
       goals: ["", "", ""]
     }
-  });
+  }) as {personalInformation: PersonalInformation, lifeStyle: LifeStyle}
+  const sc = useAssessmentStore(parsed);
   useContextProvider(contextAssessmentStore, sc);
 
   // Phone size screen is 380px wide 600px tall
