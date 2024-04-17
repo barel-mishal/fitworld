@@ -1,7 +1,7 @@
 import { Slot, component$, createContextId, useContextProvider, useStore } from '@builder.io/qwik';
 import { routeAction$, routeLoader$, z, zod$ } from '@builder.io/qwik-city';
 
-import { type RoutesLiteral } from '~/util/types';
+import { type TypeSchemaAssessment, type RoutesLiteral, SchemaAssessment } from '~/util/types';
 import { type ExtendSession } from '../plugin@auth';
 import { serverInitDatabase } from '../seedDatabase';
 
@@ -29,42 +29,6 @@ interface AssessmentStoreType {
   }
   currentView: RoutesLiteral
 } 
-
-export const SchemaAssessment = z.object({
-    personalInformation: z.object({
-      gender: z.enum(["female", "male", ""]).default(""),
-      name: z.string().default(""),
-      dateOfBirth: z.string().pipe( z.coerce.date() ).or(z.date()).optional(),
-      height: z.object({
-        type: z.enum(["FT", "m", "cm"]).default("cm"),
-        value: z.number().default(0)
-      }),
-      currentWeight: z.object({
-        unit: z.enum(["kg", "g", "lb"]).default("kg"),
-        value: z.number().default(0)
-      })
-    }),
-    lifeStyle: z.object({
-      occupation: z.string().default(""),
-      activityLevel: z.string().default(""),
-      goals: z.array(z.string()).default(["", "", ""])
-    }),
-  }).default({
-    personalInformation: {
-      gender: "",
-      name: "",
-      dateOfBirth: undefined,
-      height: {type: "cm", value: 0},
-      currentWeight: {unit: "kg", value: 0},
-    },
-    lifeStyle: {
-      occupation: "",
-      activityLevel: "",
-      goals: ["", "", ""]
-    }
-  });
-
-export type TypeSchemaAssessment = z.infer<typeof SchemaAssessment>;
 
 
 export const useAssessmentStore = (data: TypeSchemaAssessment) => {
