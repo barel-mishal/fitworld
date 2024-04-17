@@ -8,18 +8,11 @@ export type SchemaProfileType = {
   name: string;
   email: string;
   picture: string;
+  nickname: string;
+  dateOfBirth: string;
+  gender: "female" | "male" | "";
   createdAt: string;
   updateAt: string;
-};
-
-export type SchemaPersonalInfoType = {
-    id?: string;
-    userId: string;
-    nickname: string;
-    dateOfBirth: string;
-    gender: "female" | "male" | "";
-    createdAt: string;
-    updateAt: string;
 };
 
 export type SchemaUserType = {

@@ -8,9 +8,9 @@ export default component$(() => {
   const refDay = useSignal<HTMLInputElement>();
   const refYear = useSignal<HTMLInputElement>();
   const refMonth = useSignal<HTMLInputElement>();
-  const day = sc.assessmentStore.personalInformation.dateOfBirth ? sc.assessmentStore.personalInformation.dateOfBirth.getDay() : "";
-  const month = sc.assessmentStore.personalInformation.dateOfBirth ? sc.assessmentStore.personalInformation.dateOfBirth.getMonth() : "";
-  const year = sc.assessmentStore.personalInformation.dateOfBirth ? sc.assessmentStore.personalInformation.dateOfBirth.getFullYear() : "";
+  const day = sc.assessmentStore.data.personalInformation.dateOfBirth ? sc.assessmentStore.data.personalInformation.dateOfBirth.getDay() : "";
+  const month = sc.assessmentStore.data.personalInformation.dateOfBirth ? sc.assessmentStore.data.personalInformation.dateOfBirth.getMonth() : "";
+  const year = sc.assessmentStore.data.personalInformation.dateOfBirth ? sc.assessmentStore.data.personalInformation.dateOfBirth.getFullYear() : "";
   const birthDate = useSignal({
     day: day ? day.toString() : "",
     month: month ? month.toString() : "",
@@ -49,7 +49,7 @@ export default component$(() => {
     if (valid) {
       sc.assessmentStore.settings.buttonDisabled = false;
       const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
-      sc.assessmentStore.personalInformation.dateOfBirth = date;
+      sc.assessmentStore.data.personalInformation.dateOfBirth = date;
     } else {
       sc.assessmentStore.settings.buttonDisabled = true;
     }

@@ -66,14 +66,14 @@ export default component$(() => {
     const route = location.url.pathname as RoutesLiteralAssessment;
     const actions: Record<RoutesLiteralAssessment, () => unknown> = {
       "/client/Assessment/personalInformation/name/": () => {
-        sc.actionProfileMerge.submit({ field: "name", value: sc.assessmentStore.personalInformation.name })
+        sc.actionProfileMerge.submit({ field: "name", value: sc.assessmentStore.data.personalInformation.name })
       },
       "/client/Assessment/personalInformation/DateofBirth/": () => {
-        if (!sc.assessmentStore.personalInformation.dateOfBirth) return;
-        sc.actionProfileMerge.submit({ field: "dateOfBirth", value: sc.assessmentStore.personalInformation.dateOfBirth });
+        if (!sc.assessmentStore.data.personalInformation.dateOfBirth) return;
+        sc.actionProfileMerge.submit({ field: "dateOfBirth", value: sc.assessmentStore.data.personalInformation.dateOfBirth });
       },
       '/client/Assessment/personalInformation/gender/': function (): unknown {
-        sc.actionProfileMerge.submit({ field: "gender", value: sc.assessmentStore.personalInformation.gender });
+        sc.actionProfileMerge.submit({ field: "gender", value: sc.assessmentStore.data.personalInformation.gender });
         return 
       },
       '/client/Assessment/': function (): unknown {
