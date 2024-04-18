@@ -1,10 +1,12 @@
-import { component$, useStore } from '@builder.io/qwik';
+import { component$, useStore, useVisibleTask$ } from '@builder.io/qwik';
 import { LuMoveVertical } from '@qwikest/icons/lucide';
 import { Block, SortableComp } from '~/components/Sortable/Sortable';
 import { Draggable } from '~/components/draggable/draggable';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
 import { TopNavBar, BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { AppLink } from '~/routes.config';
+import { loadScript } from "@paypal/paypal-js";
+
 
 export default component$(() => {
   
@@ -22,6 +24,8 @@ export default component$(() => {
         Get Started
         </AppLink>
         <Draggable />
+        <Paypal />
+
 
       </div>
       <div q:slot='footer' class=""><BottomNavBar flag={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} /></div>
@@ -64,3 +68,28 @@ export const TrackFood = component$(() => {
   )
 });
 
+
+export const Paypal = component$(() => {
+  useVisibleTask$(() => {
+  loadScript({ clientId: "test", currency: "USD" })
+      .then((paypal) => {
+        if (!paypal || !paypal.Buttons) {
+          return
+        } 
+        const pay = paypal.Buttons({})
+              .render("#your-container-element")
+              .catch((error) => {
+                  console.error("failed to render the PayPal Buttons", error);
+              });
+        
+
+        return paypal
+      })
+      .catch((error) => {
+          console.error("failed to load the PayPal JS SDK script", error);
+      });
+  });
+  return <>
+    <div id="your-container-element"></div>
+  </>
+});
