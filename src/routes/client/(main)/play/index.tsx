@@ -2,7 +2,6 @@ import { component$, useVisibleTask$ } from '@builder.io/qwik';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
 import { TopNavBar, BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { loadScript } from "@paypal/paypal-js";
-import { TrackFood } from '~/components/TrackFood/trackFood';
 
 
 export default component$(() => {
@@ -17,7 +16,8 @@ export default component$(() => {
     class="grid-rows-[40px,1fr,30px]">
       <div q:slot='header'><TopNavBar /></div>
       <div q:slot='main'>
-        <TrackFood />
+        {/* <TrackFood /> */}
+        dfdslkj
       </div>
       <div q:slot='footer' class=""><BottomNavBar flag={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} /></div>
     </HeaderMainBottomNav>
