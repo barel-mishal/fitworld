@@ -1,7 +1,6 @@
 import { component$, useStore, useVisibleTask$ } from '@builder.io/qwik';
 import { LuMoveVertical } from '@qwikest/icons/lucide';
 import { Block, SortableComp } from '~/components/Sortable/Sortable';
-import { Draggable } from '~/components/draggable/draggable';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
 import { TopNavBar, BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { AppLink } from '~/routes.config';
@@ -19,14 +18,8 @@ export default component$(() => {
     classMain='tw '
     class="grid-rows-[40px,1fr,30px]">
       <div q:slot='header'><TopNavBar /></div>
-      <div q:slot='main'><TrackFood />
-        <AppLink route="/client/Assessment/">
-        Get Started
-        </AppLink>
-        <Draggable />
-        <Paypal />
-
-
+      <div q:slot='main'>
+        <TrackFood />
       </div>
       <div q:slot='footer' class=""><BottomNavBar flag={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} /></div>
     </HeaderMainBottomNav>
@@ -70,6 +63,7 @@ export const TrackFood = component$(() => {
 
 
 export const Paypal = component$(() => {
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
   loadScript({ clientId: "test", currency: "USD" })
       .then((paypal) => {
@@ -82,6 +76,7 @@ export const Paypal = component$(() => {
                   console.error("failed to render the PayPal Buttons", error);
               });
         
+        console.log(pay);
 
         return paypal
       })
