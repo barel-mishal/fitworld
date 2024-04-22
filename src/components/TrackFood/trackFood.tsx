@@ -1,4 +1,4 @@
-import { $, component$, useComputed$, useStore } from "@builder.io/qwik";
+import { $, component$, useStore } from "@builder.io/qwik";
 import { Block, SortableComp } from "../Sortable/Sortable";
 import { LuMoveVertical } from "@qwikest/icons/lucide";
 import { createUniqueKey } from "~/util/createId";
@@ -39,18 +39,39 @@ export const TrackFood = component$(() => {
         unit: "",
         amount: "",
         food: "",
-      }
+      },
+      bindNewEat: $(function(this: {newEat: Eat}, key: keyof Eat, value: string) {
+        this.newEat[key] = value;
+      }),
+      resetNewEat: $(function(this: {newEat: Omit<Eat, "id">}) {
+        this.newEat = {
+          unit: "",
+          amount: "",
+          food: "",
+        }
+      })
     });
+
+    const onKeyPressNewEat = $((e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        const newEat = {
+          ...myEats.newEat,
+          id: createUniqueKey()
+        }
+        myEats.addEat(newEat);
+        myEats.resetNewEat();
+      }
+    })
   
   
     return (
       <>
         <div class="grid gap-5">
           <SortableComp class="grid gap-3">
-            <fieldset class="grid grid-cols-3 gap-3 ">
-                <input type="text" class="rounded-md bg-emerald-800" value={myEats.newEat.food}  />
-                <input type="text" class="rounded-md bg-emerald-800" value={myEats.newEat.unit} />
-                <input type="text" class="rounded-md bg-emerald-800" value={myEats.newEat.amount} />
+            <fieldset class="grid grid-cols-3 gap-3 " onKeyPress$={onKeyPressNewEat}>
+                <input type="text" class="rounded-md bg-emerald-800" value={myEats.newEat.food} onInput$={(e,el) => myEats.bindNewEat("food", el.value)} />
+                <input type="text" class="rounded-md bg-emerald-800" value={myEats.newEat.unit} onInput$={(e,el) => myEats.bindNewEat("unit", el.value)} />
+                <input type="text" class="rounded-md bg-emerald-800" value={myEats.newEat.amount} onInput$={(e,el) => myEats.bindNewEat("amount", el.value)} />
             </fieldset>
             {myEats.eats.map((eat) => {
               return (
@@ -67,10 +88,6 @@ export const TrackFood = component$(() => {
               )
             })}
           </SortableComp>
-          <button
-            onClick$={() => myEats.addDefault()}
-            class="bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200 z-20 m-2"
-          >Add New</button>
         </div>
       </>
     )
