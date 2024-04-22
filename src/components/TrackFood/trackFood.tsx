@@ -41,11 +41,6 @@ export const TrackFood = component$(() => {
         food: "",
       }
     });
-    
-    
-    const asList = useComputed$(() => {
-      return Array.from(myEats.eats.values());
-    });
   
   
     return (
@@ -57,7 +52,7 @@ export const TrackFood = component$(() => {
                 <input type="text" class="rounded-md bg-emerald-800" value={myEats.newEat.unit} />
                 <input type="text" class="rounded-md bg-emerald-800" value={myEats.newEat.amount} />
             </fieldset>
-            {asList.value.map((eat) => {
+            {myEats.eats.map((eat) => {
               return (
                 <Block key={eat.id} class="grid grid-cols-[auto,1fr] gap-2">
                   <button onClick$={() => {}} class="">
