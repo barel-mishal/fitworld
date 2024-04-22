@@ -28,7 +28,7 @@ interface AssessmentStoreType {
     lifeStyle: LifeStyle,
   }
   currentView: RoutesLiteral,
-  onInputHeight: (value: number) => void,
+  onInputHeight$: (value: number) => void,
   actions: {
     mergeProfile: MergeProfileType,
     mergeWeight: MergeWeightType,
@@ -51,7 +51,7 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
     }, 
     data,
     currentView: "/client/Assessment/",
-    onInputHeight: $(function(this: {data: AssessmentStoreType["data"]}, value: number) {
+    onInputHeight$: $(function(this: {data: AssessmentStoreType["data"]}, value: number) {
       this.data.personalInformation.height.value = value;
     }),
     actions: {
