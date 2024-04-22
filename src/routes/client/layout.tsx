@@ -1,4 +1,4 @@
-import { $, Slot, component$, createContextId, useContextProvider, useStore } from '@builder.io/qwik';
+import { $, type QRL, Slot, component$, createContextId, useContextProvider, useStore } from '@builder.io/qwik';
 import { routeAction$, routeLoader$, z, zod$ } from '@builder.io/qwik-city';
 
 import { type TypeSchemaAssessment, type RoutesLiteral, SchemaAssessment } from '~/util/types';
@@ -28,7 +28,7 @@ interface AssessmentStoreType {
     lifeStyle: LifeStyle,
   }
   currentView: RoutesLiteral,
-  onInputHeight$: (value: number) => void,
+  onInputHeight$: QRL<(value: number) => void>,
   actions: {
     mergeProfile: MergeProfileType,
     mergeWeight: MergeWeightType,
@@ -47,11 +47,11 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
   const assessmentStore = useStore<AssessmentStoreType>({ 
     settings: { 
       buttonStyle: "outline", 
-      buttonDisabled: true 
+      buttonDisabled: false 
     }, 
     data,
     currentView: "/client/Assessment/",
-    onInputHeight$: $(function(this: {data: AssessmentStoreType["data"]}, value: number) {
+    onInputHeight$: $(function(this: { data: AssessmentStoreType["data"] }, value: number) {
       this.data.personalInformation.height.value = value;
     }),
     actions: {
@@ -62,7 +62,7 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
 });
 
 
-  return {assessmentStore, actionProfileMerge, actionWeightMerge, actionHeightMerge};
+  return assessmentStore;
 }
 
 export type AssessmentStore = ReturnType<typeof useAssessmentStore>;

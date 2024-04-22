@@ -8,9 +8,9 @@ export default component$(() => {
   const refDay = useSignal<HTMLInputElement>();
   const refYear = useSignal<HTMLInputElement>();
   const refMonth = useSignal<HTMLInputElement>();
-  const day = sc.assessmentStore.data.personalInformation.dateOfBirth ? sc.assessmentStore.data.personalInformation.dateOfBirth.getDay() : "";
-  const month = sc.assessmentStore.data.personalInformation.dateOfBirth ? sc.assessmentStore.data.personalInformation.dateOfBirth.getMonth() : "";
-  const year = sc.assessmentStore.data.personalInformation.dateOfBirth ? sc.assessmentStore.data.personalInformation.dateOfBirth.getFullYear() : "";
+  const day = sc.data.personalInformation.dateOfBirth ? sc.data.personalInformation.dateOfBirth.getDay() : "";
+  const month = sc.data.personalInformation.dateOfBirth ? sc.data.personalInformation.dateOfBirth.getMonth() : "";
+  const year = sc.data.personalInformation.dateOfBirth ? sc.data.personalInformation.dateOfBirth.getFullYear() : "";
   const birthDate = useSignal({
     day: day ? day.toString() : "",
     month: month ? month.toString() : "",
@@ -48,7 +48,7 @@ export default component$(() => {
     const valid = track(() => isValid.value);
     if (valid) {
       const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
-      sc.assessmentStore.data.personalInformation.dateOfBirth = date;
+      sc.data.personalInformation.dateOfBirth = date;
     }
   });
 

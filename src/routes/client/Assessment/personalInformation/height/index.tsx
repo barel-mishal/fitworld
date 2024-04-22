@@ -15,19 +15,19 @@ export default component$(() => {
   const refHeight = useSignal<HTMLButtonElement>();
   const isAvtive = useSignal<boolean>(false);
 
-  const computeHeight = useComputed$(async () => `${formatedNumber(convertHeightUnits(170, "cm", sc.assessmentStore.data.personalInformation.height.type))}`);
+  const computeHeight = useComputed$(async () => `${formatedNumber(convertHeightUnits(170, "cm", sc.data.personalInformation.height.type))}`);
   const inputHeightValue = () => {
-    const isActiveAndEmpty = isAvtive.value && !sc.assessmentStore.data.personalInformation.height.value;
+    const isActiveAndEmpty = isAvtive.value && !sc.data.personalInformation.height.value;
     if (isActiveAndEmpty) {
       return "";
     }
-    const isActiveAndNotEmpty = isAvtive.value && sc.assessmentStore.data.personalInformation.height.value;
+    const isActiveAndNotEmpty = isAvtive.value && sc.data.personalInformation.height.value;
     if (isActiveAndNotEmpty) {
-      return sc.assessmentStore.data.personalInformation.height.value;
+      return sc.data.personalInformation.height.value;
     }
-    const isNotActiveAndNotEmpty = !isAvtive.value && sc.assessmentStore.data.personalInformation.height.value;
+    const isNotActiveAndNotEmpty = !isAvtive.value && sc.data.personalInformation.height.value;
     if (isNotActiveAndNotEmpty) {
-      return `${formatedNumber(sc.assessmentStore.data.personalInformation.height.value)}`;
+      return `${formatedNumber(sc.data.personalInformation.height.value)}`;
     }
     return "";
   };
@@ -41,7 +41,7 @@ export default component$(() => {
         ref={refHeight}
         type="Height" id="Height" placeholder={computeHeight.value.toString()} onInput$={async (e,el) => {
           const height = parseFloat(el.value);
-          sc.assessmentStore.data.personalInformation.height.value = height;
+          sc.data.personalInformation.height.value = height;
           }} class={cn(
             "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
           )} value={inputHeightValue()}
@@ -57,7 +57,7 @@ export default component$(() => {
       </div>
       <div class="grid max-w-sm items-center gap-1.5 ">
         <Label for="email-2" class="text-emerald-100">Unit</Label>
-        <MyPopover height={sc.assessmentStore.data.personalInformation.height} />
+        <MyPopover height={sc.data.personalInformation.height} />
       </div>
 
     </div>
@@ -76,7 +76,7 @@ export const MyPopover = component$<HeightGetter>(() => {
   const triggerRef = useSignal<HTMLButtonElement>();
   const popoverRef = useSignal<HTMLElement>();
   const getHeightUnit = () => {
-    switch (sc.assessmentStore.data.personalInformation.height.type) {
+    switch (sc.data.personalInformation.height.type) {
       case "cm":
       case "m":
         return "Metric";
@@ -93,7 +93,7 @@ export const MyPopover = component$<HeightGetter>(() => {
         popovertarget="unit-height-id"
       >
         <span>
-          {sc.assessmentStore.data.personalInformation.height.type.toUpperCase()}
+          {sc.data.personalInformation.height.type.toUpperCase()}
         </span>
       </PopoverTrigger>
       <Popover
@@ -109,19 +109,19 @@ export const MyPopover = component$<HeightGetter>(() => {
       >
         <div class="grid gap-4 w-auto">
           <button onClick$={() => {
-            sc.assessmentStore.data.personalInformation.height = {type: "cm", value: parseFloat(formatedNumber(convertHeightUnits(sc.assessmentStore.data.personalInformation.height.value, sc.assessmentStore.data.personalInformation.height.type, "cm")))};
+            sc.data.personalInformation.height = {type: "cm", value: parseFloat(formatedNumber(convertHeightUnits(sc.data.personalInformation.height.value, sc.data.personalInformation.height.type, "cm")))};
           }}>
             <span>CM</span>
           </button>
 
           <button onClick$={() => {
-            sc.assessmentStore.data.personalInformation.height = {type: "m", value: parseFloat(formatedNumber(convertHeightUnits(sc.assessmentStore.data.personalInformation.height.value, sc.assessmentStore.data.personalInformation.height.type, "m")))};
+            sc.data.personalInformation.height = {type: "m", value: parseFloat(formatedNumber(convertHeightUnits(sc.data.personalInformation.height.value, sc.data.personalInformation.height.type, "m")))};
           }}>
             <span>M</span>
           </button>
 
           <button onClick$={() => {
-            sc.assessmentStore.data.personalInformation.height = {type: "FT", value: parseFloat(formatedNumber(convertHeightUnits(sc.assessmentStore.data.personalInformation.height.value, sc.assessmentStore.data.personalInformation.height.type, "FT")))};
+            sc.data.personalInformation.height = {type: "FT", value: parseFloat(formatedNumber(convertHeightUnits(sc.data.personalInformation.height.value, sc.data.personalInformation.height.type, "FT")))};
           }}>
             <span>FT</span>
           </button>
