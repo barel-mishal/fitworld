@@ -1,4 +1,4 @@
-import { component$, useContext, useTask$ } from '@builder.io/qwik';
+import { component$, useContext } from '@builder.io/qwik';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../../layout';
 import { cn } from '@qwik-ui/utils';
@@ -6,10 +6,6 @@ import { cn } from '@qwik-ui/utils';
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
-
-  useTask$(() => {
-    sc.assessmentStore.settings.buttonDisabled = true;
-  });
 
   return (
     <div class="w-full">
@@ -19,7 +15,6 @@ export default component$(() => {
 
         <input type="nickname" id="nickname" placeholder="Me" onInput$={async (e,el) => {
           sc.assessmentStore.data.personalInformation.name = el.value;
-          sc.assessmentStore.settings.buttonDisabled = !el.value;
         }} class={cn(
           "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
         )} value={sc.assessmentStore.data.personalInformation.name}/>

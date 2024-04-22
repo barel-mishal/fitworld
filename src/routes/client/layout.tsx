@@ -35,13 +35,13 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
   // TODO: finish form https://claude.ai/chat/bcc02085-d35f-4ffd-ad5a-09c7737c3208
 
   const actionProfileMerge = useActionMergeProfile();
-  const actionWeightMerge = useActionMergeProfile();
-  const actionHeightMerge = useActionMergeProfile();
+  const actionWeightMerge = useActionMergeWeight();
+  const actionHeightMerge = useActionMergeHeight();
 
   const assessmentStore = useStore<AssessmentStoreType>({ 
     settings: { 
       buttonStyle: "outline", 
-      buttonDisabled: false 
+      buttonDisabled: true 
     }, 
     data,
     currentView: "/client/Assessment/",
