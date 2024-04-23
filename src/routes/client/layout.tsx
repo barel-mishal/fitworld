@@ -1,5 +1,5 @@
 import { $, type QRL, Slot, component$, createContextId, useContextProvider, useStore } from '@builder.io/qwik';
-import { routeAction$, routeLoader$, z, zod$ } from '@builder.io/qwik-city';
+import { routeAction$, routeLoader$, server$, z, zod$ } from '@builder.io/qwik-city';
 
 import { type TypeSchemaAssessment, type RoutesLiteral, SchemaAssessment } from '~/util/types';
 import { type ExtendSession } from '../plugin@auth';
@@ -30,19 +30,24 @@ interface AssessmentStoreType {
   currentView: RoutesLiteral,
   onInputHeight$: QRL<(value: number) => void>,
   actions: {
-    mergeProfile: MergeProfileType,
-    mergeWeight: MergeWeightType,
-    mergeHeight: MergeHeightType,
+    mergeProfile: {
+      submit: QRL<(this: { isRuning: boolean; }, data: {field: string, value: string}) => MergeProfileType>
+      isRuning: boolean
+    },
+    mergeWeight: {
+      submit: QRL<(this: { isRuning: boolean; }, data: {field: string, value: string}) => MergeProfileType>,
+      isRuning: boolean
+    },
+    mergeHeight: {
+      submit: QRL<(this: { isRuning: boolean; }, data: {field: string, value: string}) => MergeProfileType>;
+      isRuning: boolean
+    },
   }
 } 
 
 
 export const useAssessmentStore = (data: TypeSchemaAssessment) => {
   // TODO: finish form https://claude.ai/chat/bcc02085-d35f-4ffd-ad5a-09c7737c3208
-
-  const actionProfileMerge = useActionMergeProfile();
-  const actionWeightMerge = useActionMergeWeight();
-  const actionHeightMerge = useActionMergeHeight();
 
   const assessmentStore = useStore<AssessmentStoreType>({ 
     settings: { 
@@ -55,9 +60,27 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
       this.data.personalInformation.height.value = value;
     }),
     actions: {
-      mergeProfile: actionProfileMerge,
-      mergeWeight: actionWeightMerge,
-      mergeHeight: actionHeightMerge
+      mergeProfile: {
+        submit: $(async function(this: { isRuning: boolean }, data: {field: string, value: string}) {
+          const result = await serverMergeProfile(data);
+          return result;
+        }),
+        isRuning: false
+      },
+      mergeWeight: {
+        submit: $(async function(this: { isRuning: boolean }, data: {field: string, value: string}) {
+          const result = serverMergeWeight(data);
+          return result;
+        }),
+        isRuning: false
+      },
+      mergeHeight: {
+        submit: $(async function(this: { isRuning: boolean }, data: {field: string, value: string}) {
+          const result = serverMergeHeight(data);
+          return result;
+        }),
+        isRuning: false
+      }
     }
 });
 
@@ -83,7 +106,7 @@ export default component$(() => {
       gender: profile.value?.gender || "",
       name: profile.value?.name || "",
       dateOfBirth: profile.value?.dateOfBirth || undefined,
-      height: {type: "cm", value: 0},
+      height: { type: "cm", value: 0 },
       currentWeight: {unit: "kg", value: 0},
     },
     lifeStyle: {
@@ -101,10 +124,10 @@ export default component$(() => {
   );
 });
 
-export const useActionMergeProfile = routeAction$(async (data, {sharedMap, redirect}) => {
-  const session: ExtendSession | null = sharedMap.get('session');
+export const serverMergeProfile = server$(async function(data) {
+  const session: ExtendSession | null = this.sharedMap.get('session');
   const id = session?.database.profile.id;
-  if (!id) throw redirect(302, `/`);
+  if (!id) throw new Error('No profile id');
   const token = session.database.token;
   const db = await serverInitDatabase();
   await db.authenticate(token);
@@ -113,41 +136,34 @@ export const useActionMergeProfile = routeAction$(async (data, {sharedMap, redir
   return {
     merge
   }
-}, zod$({
-  value: z.string().or(z.number()).or(z.boolean()).or(z.array(z.string())).or(z.date()),
-  field: z.string()
-}));
+});
 
-export type MergeProfileType = ReturnType<typeof useActionMergeProfile>;
+export type MergeProfileType = ReturnType<typeof serverMergeProfile>;
 
 
-export const useActionMergeWeight = routeAction$(async (data, {sharedMap, redirect}) => {
-  const session: ExtendSession | null = sharedMap.get('session');
+export const serverMergeWeight = server$(async function(data) {
+  const session: ExtendSession | null = this.sharedMap.get('session');
   const token = session?.database.token
-  if (!token) throw redirect(302, `/`);
+  if (!token) throw new Error('No token');
   const db = await serverInitDatabase();
   await db.authenticate(token);
   // const merge = await db.merge(id, { [data.field]: data.value });
   const merge = await db.query_raw(`
   select * from weight where user = $auth.id;
-  
   `)
-  console.log('merge', merge);
+  console.log('merge', merge, data);
   return {
     merge
   }
-}, zod$({
-  value: z.string().or(z.number()).or(z.boolean()).or(z.array(z.string())).or(z.date()),
-  field: z.string()
-}));
+});
 
-export type MergeWeightType = ReturnType<typeof useActionMergeWeight>;
+export type MergeWeightType = ReturnType<typeof serverMergeWeight>;
 
-export const useActionMergeHeight = routeAction$(async (data, {sharedMap, redirect}) => {
+export const serverMergeHeight = server$(async function(data) {
   console.log('data', data);
-  const session: ExtendSession | null = sharedMap.get('session');
+  const session: ExtendSession | null = this.sharedMap.get('session');
   const token = session?.database.token
-  if (!token) throw redirect(302, `/`);
+  if (!token) throw new Error('No token');
   const db = await serverInitDatabase();
   await db.authenticate(token);
   // const merge = await db.merge(id, { [data.field]: data.value });
@@ -155,16 +171,13 @@ export const useActionMergeHeight = routeAction$(async (data, {sharedMap, redire
   select * from height where user = $auth.id;
   
   `)
-  console.log('merge', merge);
+  console.log('merge', merge, data);
   return {
     merge
   }
-}, zod$({
-  value: z.string().or(z.number()).or(z.boolean()).or(z.array(z.string())).or(z.date()),
-  field: z.string()
-}));
+});
 
-export type MergeHeightType = ReturnType<typeof useActionMergeHeight>;
+export type MergeHeightType = ReturnType<typeof serverMergeHeight>;
 
 
 

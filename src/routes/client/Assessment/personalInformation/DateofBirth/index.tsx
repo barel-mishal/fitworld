@@ -44,14 +44,6 @@ export default component$(() => {
     return `Your age is: ${age}, let's move on!`;
   });
 
-  useTask$(({track}) => {
-    const valid = track(() => isValid.value);
-    if (valid) {
-      const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
-      sc.data.personalInformation.dateOfBirth = date;
-    }
-  });
-
   return (
     <div class="grid h-full grid-rows-[auto,1fr]">
       <h1 class="my-3 text-2xl font-bold [text-wrap:balance] ">What is your date of birth?</h1>

@@ -2,7 +2,8 @@ import { type Session } from '@auth/core/types';
 import { $, Slot, component$, useComputed$, useContext } from '@builder.io/qwik';
 import { useLocation, useNavigate, type RequestHandler } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
-import { Bs0Circle, BsArrowLeft } from '@qwikest/icons/bootstrap';
+import { BsArrowLeft } from '@qwikest/icons/bootstrap';
+import { FaUploadSolid } from '@qwikest/icons/font-awesome';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
 import { Button } from '~/components/ui/button/button';
 import { type RoutesLiteral } from '~/util/types';
@@ -90,7 +91,6 @@ export default component$(() => {
         return
       },
       '/client/Assessment/personalInformation/height/': function (): unknown {
-        console.log("height", sc.data.personalInformation.height.value)
         sc.actions.mergeHeight.submit({ field: "height", value: sc.data.personalInformation.height.value });
         return
       },
@@ -114,7 +114,7 @@ export default component$(() => {
         role={"button"} 
         look={sc.settings.buttonStyle} 
         size={"md"} 
-        onClick$={[merge, next]}> {sc.actions.mergeProfile.isRunning ? <Bs0Circle /> : <p>CONTINUE</p>  } </Button></div>
+        onClick$={[merge, next]}> {sc.actions.mergeProfile.isRunning ? <FaUploadSolid /> : <p>CONTINUE</p>  } </Button></div>
     </HeaderMainBottomNav>
   );
 });
