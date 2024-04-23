@@ -1,9 +1,10 @@
 import { $, type QRL, Slot, component$, createContextId, useContextProvider, useStore } from '@builder.io/qwik';
-import { routeAction$, routeLoader$, server$, z, zod$ } from '@builder.io/qwik-city';
+import { routeLoader$, server$ } from '@builder.io/qwik-city';
 
 import { type TypeSchemaAssessment, type RoutesLiteral, SchemaAssessment } from '~/util/types';
 import { type ExtendSession } from '../plugin@auth';
 import { serverInitDatabase } from '../seedDatabase';
+import { QueryResult, RawQueryResult } from 'surrealdb.js/script/types';
 
 interface PersonalInformation {
   gender: "female" | "male" | "",
@@ -35,11 +36,11 @@ interface AssessmentStoreType {
       isRuning: boolean
     },
     mergeWeight: {
-      submit: QRL<(this: { isRuning: boolean; }, data: {field: string, value: string}) => MergeProfileType>,
+      submit: QRL<(this: { isRuning: boolean; }, data: { field: string; value: string; }) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
       isRuning: boolean
     },
     mergeHeight: {
-      submit: QRL<(this: { isRuning: boolean; }, data: {field: string, value: string}) => MergeProfileType>;
+      submit: QRL<(this: { isRuning: boolean; }, data: { field: string; value: string; }) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
       isRuning: boolean
     },
   }
