@@ -1,6 +1,5 @@
-import { type Session } from '@auth/core/types';
 import { $, Slot, component$, useComputed$, useContext } from '@builder.io/qwik';
-import { useLocation, useNavigate, type RequestHandler } from '@builder.io/qwik-city';
+import { useLocation, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { BsArrowLeft } from '@qwikest/icons/bootstrap';
 import { FaUploadSolid } from '@qwikest/icons/font-awesome';
@@ -8,15 +7,6 @@ import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMai
 import { Button } from '~/components/ui/button/button';
 import { type RoutesLiteral } from '~/util/types';
 import { contextAssessmentStore } from '../layout';
-
-export const onRequest: RequestHandler = (event) => {
-  const session: Session | null = event.sharedMap.get('session');
-  const isSignedIn = session && new Date(session.expires) > new Date();
-  if (!isSignedIn) {
-    console.log("redirecting")
-    throw event.redirect(302, `/client/play/`);
-  }
-};
 
 
 

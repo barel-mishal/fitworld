@@ -1,10 +1,20 @@
 import { $, type QRL, Slot, component$, createContextId, useContextProvider, useStore } from '@builder.io/qwik';
-import { routeLoader$, server$ } from '@builder.io/qwik-city';
+import { type RequestHandler, routeLoader$, server$ } from '@builder.io/qwik-city';
 
 import { type TypeSchemaAssessment, type RoutesLiteral, SchemaAssessment } from '~/util/types';
 import { type ExtendSession } from '../plugin@auth';
 import { serverInitDatabase } from '../seedDatabase';
-import { QueryResult, RawQueryResult } from 'surrealdb.js/script/types';
+import { type QueryResult, type RawQueryResult } from 'surrealdb.js/script/types';
+import { type Session } from '@auth/core/types';
+
+export const onRequest: RequestHandler = (event) => {
+  const session: Session | null = event.sharedMap.get('session');
+  const isSignedIn = session && new Date(session.expires) > new Date();
+  if (!isSignedIn) {
+    console.log("redirecting")
+    throw event.redirect(302, `/auth/signin`);
+  }
+};
 
 interface PersonalInformation {
   gender: "female" | "male" | "",
@@ -179,6 +189,3 @@ export const serverMergeHeight = server$(async function(data) {
 });
 
 export type MergeHeightType = ReturnType<typeof serverMergeHeight>;
-
-
-

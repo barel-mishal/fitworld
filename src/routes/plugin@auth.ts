@@ -70,6 +70,9 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
     pages: {
       signIn: '/auth/signin',
       signOut: '/auth/signout',
+      verifyRequest: '/auth/verify-request',
+      // 
+      newUser: '/auth/new-user',
       error: '/auth/error', // Error code passed in query string as ?error=
       // verifyRequest: '/auth/verify-request', // (used for check email message)
       // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
