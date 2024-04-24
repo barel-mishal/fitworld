@@ -60,8 +60,10 @@ export default component$(() => {
         sc.actions.mergeProfile.submit({ field: "name", value: sc.data.personalInformation.name })
       },
       "/client/Assessment/personalInformation/DateofBirth/": () => {
+
         if (!sc.data.personalInformation.dateOfBirth) return;
-        sc.actions.mergeProfile.submit({ field: "dateOfBirth", value: sc.data.personalInformation.dateOfBirth });
+        const date = new Date(`${sc.data.personalInformation.dateOfBirth.year}-${sc.data.personalInformation.dateOfBirth.month}-${sc.data.personalInformation.dateOfBirth.day}`);
+        sc.actions.mergeProfile.submit({ field: "dateOfBirth", value: date });
       },
       '/client/Assessment/personalInformation/gender/': function (): unknown {
         sc.actions.mergeProfile.submit({ field: "gender", value: sc.data.personalInformation.gender });

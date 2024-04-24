@@ -44,7 +44,14 @@ export const SchemaAssessment = z.object({
   personalInformation: z.object({
     gender: z.enum(["female", "male", ""]).default(""),
     name: z.string().default(""),
-    dateOfBirth: z.string().pipe( z.coerce.date() ).or(z.date()).optional(),
+    dateOfBirth: z.string().pipe( z.coerce.date() ).or(z.date()).optional().transform((value) => {
+      if (!value) return undefined;
+      return {
+        day: value.getDate().toString(),
+        month: (value.getMonth() + 1).toString(),
+        year: value.getFullYear().toString()
+      }
+    }),
     height: z.object({
       type: z.enum(["FT", "m", "cm"]).default("cm"),
       value: z.number().default(0)

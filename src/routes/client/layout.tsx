@@ -19,7 +19,11 @@ export const onRequest: RequestHandler = (event) => {
 interface PersonalInformation {
   gender: "female" | "male" | "",
   name: string,
-  dateOfBirth?: Date | undefined,
+  dateOfBirth?: {
+    day: string,
+    month: string,
+    year: string
+  };
   height: {type: "cm" | "m" | "FT", value: number},
   currentWeight: {unit: "kg" | "g" | "lb", value: number},
 }
@@ -42,16 +46,16 @@ interface AssessmentStoreType {
   onInputHeight$: QRL<(value: number) => void>,
   actions: {
     mergeProfile: {
-      submit: QRL<(this: { isRuning: boolean; }, data: {field: string, value: string}) => MergeProfileType>
-      isRuning: boolean
+      submit: QRL<(this: { isRunning: boolean; }, data: {field: string, value: string | Date | number}) => MergeProfileType>
+      isRunning: boolean
     },
     mergeWeight: {
-      submit: QRL<(this: { isRuning: boolean; }, data: { field: string; value: string; }) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
-      isRuning: boolean
+      submit: QRL<(this: { isRunning: boolean; }, data: { field: string; value: number; }) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
+      isRunning: boolean
     },
     mergeHeight: {
-      submit: QRL<(this: { isRuning: boolean; }, data: { field: string; value: string; }) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
-      isRuning: boolean
+      submit: QRL<(this: { isRunning: boolean; }, data: { field: string; value: number; }) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
+      isRunning: boolean
     },
   }
 } 
@@ -72,25 +76,25 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
     }),
     actions: {
       mergeProfile: {
-        submit: $(async function(this: { isRuning: boolean }, data: {field: string, value: string}) {
+        submit: $(async function(this: { isRunning: boolean }, data: {field: string, value: string | Date | number}) {
           const result = await serverMergeProfile(data);
           return result;
         }),
-        isRuning: false
+        isRunning: false
       },
       mergeWeight: {
-        submit: $(async function(this: { isRuning: boolean }, data: {field: string, value: string}) {
-          const result = serverMergeWeight(data);
+        submit: $(async function(this: { isRunning: boolean }, data: {field: string, value: number}) {
+          const result = await serverMergeWeight(data);
           return result;
         }),
-        isRuning: false
+        isRunning: false
       },
       mergeHeight: {
-        submit: $(async function(this: { isRuning: boolean }, data: {field: string, value: string}) {
-          const result = serverMergeHeight(data);
+        submit: $(async function(this: { isRunning: boolean }, data: {field: string, value: number}) {
+          const result = await serverMergeHeight(data);
           return result;
         }),
-        isRuning: false
+        isRunning: false
       }
     }
 });
@@ -142,6 +146,7 @@ export const serverMergeProfile = server$(async function(data) {
   const token = session.database.token;
   const db = await serverInitDatabase();
   await db.authenticate(token);
+  console.log('data', data);
   const merge = await db.merge(id, { [data.field]: data.value });
 
   return {
@@ -171,7 +176,6 @@ export const serverMergeWeight = server$(async function(data) {
 export type MergeWeightType = ReturnType<typeof serverMergeWeight>;
 
 export const serverMergeHeight = server$(async function(data) {
-  console.log('data', data);
   const session: ExtendSession | null = this.sharedMap.get('session');
   const token = session?.database.token
   if (!token) throw new Error('No token');

@@ -1,4 +1,4 @@
-import { component$, useComputed$, useContext, useSignal, useTask$ } from '@builder.io/qwik';
+import { component$, useComputed$, useContext, useSignal } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { contextAssessmentStore } from '../../../layout';
 
@@ -8,27 +8,23 @@ export default component$(() => {
   const refDay = useSignal<HTMLInputElement>();
   const refYear = useSignal<HTMLInputElement>();
   const refMonth = useSignal<HTMLInputElement>();
-  const day = sc.data.personalInformation.dateOfBirth ? sc.data.personalInformation.dateOfBirth.getDay() : "";
-  const month = sc.data.personalInformation.dateOfBirth ? sc.data.personalInformation.dateOfBirth.getMonth() : "";
-  const year = sc.data.personalInformation.dateOfBirth ? sc.data.personalInformation.dateOfBirth.getFullYear() : "";
-  const birthDate = useSignal({
-    day: day ? day.toString() : "",
-    month: month ? month.toString() : "",
-    year: year ? year.toString() : "",
-  });
+
   
   const isEmpty = useComputed$(() => {
-    return birthDate.value.day.length === 0 && birthDate.value.month.length === 0 && birthDate.value.year.length === 0;
+    return sc.data.personalInformation.dateOfBirth?.day.length === 0 && sc.data.personalInformation.dateOfBirth.month.length === 0 && sc.data.personalInformation.dateOfBirth.year.length === 0;
   });
   
   const isValid = useComputed$(() => {
-    const day = parseInt(birthDate.value.day, 10);
-    const month = parseInt(birthDate.value.month, 10);
-    const year = parseInt(birthDate.value.year, 10);
+    const dayString = sc.data.personalInformation.dateOfBirth?.day || "";
+    const monthString = sc.data.personalInformation.dateOfBirth?.month || "";
+    const yearString = sc.data.personalInformation.dateOfBirth?.year || "";
+    const day = parseInt(dayString, 10);
+    const month = parseInt(monthString, 10);
+    const year = parseInt(yearString, 10);
   
     const isValidDay = day >= 1 && day <= 31;
     const isValidMonth = month >= 1 && month <= 12;
-    const isValidYear = !isNaN(year) && birthDate.value.year.length === 4;
+    const isValidYear = !isNaN(year) && sc.data.personalInformation.dateOfBirth?.year.length === 4;
   
     return isValidDay && isValidMonth && isValidYear;
   });
@@ -39,7 +35,7 @@ export default component$(() => {
   const age = useComputed$(() => {
     if (isEmpty.value) return ERROR_EMPTY_MESSAGE;
     if (!isValid.value) return ERROR_MESSAGE;
-    const date = new Date(`${birthDate.value.year}-${birthDate.value.month}-${birthDate.value.day}`);
+    const date = new Date(`${sc.data.personalInformation.dateOfBirth?.year}-${sc.data.personalInformation.dateOfBirth?.month}-${sc.data.personalInformation.dateOfBirth?.day}`);
     const age = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 365));
     return `Your age is: ${age}, let's move on!`;
   });
@@ -55,7 +51,7 @@ export default component$(() => {
             
             ref={refDay}
             inputMode='numeric'
-            value={birthDate.value.day}
+            value={sc.data.personalInformation.dateOfBirth?.day}
             class={cn(
               "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
               "text-center text-xl"
@@ -64,7 +60,8 @@ export default component$(() => {
             onInput$={(e,el) => {
               const { value } = el;
               const day = parseInt(value, 10);
-              birthDate.value = { ...birthDate.value, day: isNaN(day) ? "" : day.toString() };
+              if (sc.data.personalInformation.dateOfBirth === undefined) sc.data.personalInformation.dateOfBirth = { day: "", month: "", year: "" };
+              sc.data.personalInformation.dateOfBirth = { ...sc.data.personalInformation.dateOfBirth, day: isNaN(day) ? "" : day.toString() } ;
             }}
           />
         </div>
@@ -73,7 +70,7 @@ export default component$(() => {
           <input 
             ref={refMonth}
             inputMode='numeric'
-            value={birthDate.value.month}
+            value={sc.data.personalInformation.dateOfBirth?.month}
             class={cn(
               "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
               "text-center text-xl"
@@ -82,7 +79,8 @@ export default component$(() => {
             onInput$={(e,el) => {
               const { value } = el;
               const month = parseInt(value, 10);
-              birthDate.value = { ...birthDate.value, month: isNaN(month) ? "" : month.toString() };
+              if (sc.data.personalInformation.dateOfBirth === undefined) sc.data.personalInformation.dateOfBirth = { day: "", month: "", year: "" };
+              sc.data.personalInformation.dateOfBirth = { ...sc.data.personalInformation.dateOfBirth, month: isNaN(month) ? "" : month.toString() };
             }}
             onKeyDown$={(e,el) => e.key === 'Backspace' && el.value.length === 0 && refDay.value?.focus()}
           />
@@ -92,7 +90,7 @@ export default component$(() => {
           <input 
             ref={refYear}
             inputMode='numeric'
-            value={birthDate.value.year}
+            value={sc.data.personalInformation.dateOfBirth?.year}
             class={cn(
               "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
               "text-center text-xl"
@@ -101,7 +99,8 @@ export default component$(() => {
             onInput$={(e,el) => {
               const { value } = el;
               const year = parseInt(value, 10);
-              birthDate.value = { ...birthDate.value, year: isNaN(year) ? "" : year.toString() };
+              if (sc.data.personalInformation.dateOfBirth === undefined) sc.data.personalInformation.dateOfBirth = { day: "", month: "", year: "" };
+              sc.data.personalInformation.dateOfBirth = { ...sc.data.personalInformation.dateOfBirth, year: isNaN(year) ? "" : year.toString() };
             }}
             onKeyDown$={(e,el) => e.key === 'Backspace' && el.value.length === 0 && refMonth.value?.focus()}
           />
