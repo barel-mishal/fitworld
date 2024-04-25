@@ -9,7 +9,7 @@ export default component$(() => {
     classMain='tw '
     class="grid-rows-[40px,1fr,60px] p-0">
       <div q:slot='header' class="p-2">
-        Your Food Records
+        <p class="tracking-wider font-bold">Your Food Records</p>
       </div>
       <div q:slot='main' class="p-2">
         <TrackFood />
