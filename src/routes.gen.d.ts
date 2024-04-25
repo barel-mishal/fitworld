@@ -11,6 +11,7 @@ export type AppRoutes =
   | "/client/"
   | "/client/(main)/leaderBoard/"
   | "/client/(main)/play/"
+  | "/client/(main)/track/"
   | "/client/(main)/user/"
   | "/client/Assessment/"
   | "/client/Assessment/lifestyleFactors/"
@@ -41,6 +42,7 @@ export interface AppRouteMap {
   "/client/": {};
   "/client/(main)/leaderBoard/": {};
   "/client/(main)/play/": {};
+  "/client/(main)/track/": {};
   "/client/(main)/user/": {};
   "/client/Assessment/": {};
   "/client/Assessment/lifestyleFactors/": {};
@@ -72,6 +74,7 @@ export interface AppRouteParamsFunction {
   (route: "/client/", params?: {}): string;
   (route: "/client/(main)/leaderBoard/", params?: {}): string;
   (route: "/client/(main)/play/", params?: {}): string;
+  (route: "/client/(main)/track/", params?: {}): string;
   (route: "/client/(main)/user/", params?: {}): string;
   (route: "/client/Assessment/", params?: {}): string;
   (route: "/client/Assessment/lifestyleFactors/", params?: {}): string;
@@ -115,6 +118,7 @@ export type AppLinkProps =
   | { route: "/client/" }
   | { route: "/client/(main)/leaderBoard/" }
   | { route: "/client/(main)/play/" }
+  | { route: "/client/(main)/track/" }
   | { route: "/client/(main)/user/" }
   | { route: "/client/Assessment/" }
   | { route: "/client/Assessment/lifestyleFactors/" }

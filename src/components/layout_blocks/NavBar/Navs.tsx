@@ -1,6 +1,6 @@
 import { type PropsOf, component$ } from "@builder.io/qwik";
 import { type VariantProps, cva } from "class-variance-authority";
-import { PhDNA, PhDrop, PhFlag, PhHeart, PhLightning, PhRanking, PhUser } from "~/components/icons/icons";
+import { PhDNA, PhDrop, PhFlag, PhHeart, PhLightning, PhNotepad, PhRanking, PhUser } from "~/components/icons/icons";
 import { AppLink } from "~/routes.config";
 
 export const TopNavBar = component$(() => {
@@ -59,7 +59,8 @@ export const TopNavBar = component$(() => {
   
   export const BottomNavBar = component$<BottomNavBar>((props) => {
     return (
-      <ul class="grid grid-cols-3 ">
+      <ul class="grid grid-cols-4 ">
+        <li class="grid items-center justify-items-center"><AppLink route='/client/(main)/track/' {...props.leaderBoard || {}}><PhNotepad class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
         <li class="grid items-center justify-items-center"><AppLink route='/client/(main)/play/' {...props.flag}><PhFlag class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
         <li class="grid items-center justify-items-center"><AppLink route='/client/(main)/user/' {...props.user || {}}><PhUser       class="fill-indigo-500 h-8 w-8 " /></AppLink></li>
         <li class="grid items-center justify-items-center"><AppLink route='/client/(main)/leaderBoard/' {...props.leaderBoard || {}}><PhRanking       class="fill-indigo-500 h-8 w-8 " /></AppLink></li>

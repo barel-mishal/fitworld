@@ -25,7 +25,7 @@ export default component$(() => {
     if (isActiveAndNotEmpty) {
       return sc.data.personalInformation.weight.value;
     }
-    const isNotActiveAndNotEmpty = !isAvtive.value && sc.data.personalInformation?.weight?.value;
+    const isNotActiveAndNotEmpty = !isAvtive.value && sc.data.personalInformation.weight.value;
     if (isNotActiveAndNotEmpty) {
       return `${formatedNumber(sc.data.personalInformation.weight.value)}`;
     }

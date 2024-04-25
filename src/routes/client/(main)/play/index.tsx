@@ -14,7 +14,9 @@ export default component$(() => {
     <HeaderMainBottomNav 
     classMain='tw '
     class="grid-rows-[40px,1fr,30px]">
-      <div q:slot='header'><TopNavBar /></div>
+      <div q:slot='header'>
+        <TopNavBar />
+      </div>
       <div q:slot='main'>
         dfdslkj
       </div>
