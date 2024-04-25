@@ -1,4 +1,4 @@
-import { component$, useContext, useVisibleTask$ } from '@builder.io/qwik';
+import { component$, useContext } from '@builder.io/qwik';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../../layout';
 import { cn } from '@qwik-ui/utils';
@@ -6,10 +6,6 @@ import { cn } from '@qwik-ui/utils';
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
-
-  useVisibleTask$(async () => {
-    console.log(sc)
-  });  
 
   return (
     <div class="w-full">
