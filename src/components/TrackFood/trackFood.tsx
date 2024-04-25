@@ -13,8 +13,8 @@ type Eat = {
 export const TrackFood = component$(() => {
     const myEats = useStore({
       eats: [
-         {unit: "כפית", amount: "1", food: "חלב", id: "123", refFood: undefined}, 
-         {unit: "כפית", amount: "2", food: "קינואה", id: "1234", refFood: undefined}    
+         {unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         {unit: "כפית", amount: "2", food: "קינואה", id: "1234" }    
       ],
       groupBy: $(function(this: {eats: Eat[]}, key: keyof Eat) {
         const group = this.eats.reduce((acc, eat) => {
@@ -28,6 +28,7 @@ export const TrackFood = component$(() => {
       }),
       bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {
         const eat = this.eats.find(eat => eat.id === id);
+        console.log(eat);
         if (eat) {
           eat[key] = value;
         }
@@ -53,7 +54,6 @@ export const TrackFood = component$(() => {
     });
 
     const onKeyPressNewEat = $((e: KeyboardEvent) => {
-      console.log(e, e.key, e.target)
       if (e.key === "Enter") {
         const newEat = {
           ...myEats.newEat,
@@ -75,9 +75,21 @@ export const TrackFood = component$(() => {
           </section>
           <SortableComp class="grid gap-3">
             <fieldset class="grid grid-cols-3 gap-3 " onKeyPress$={onKeyPressNewEat}>
-                <input id={"new-food"} type="text" class="rounded-sm p-2 bg-emerald-800" value={myEats.newEat.food} onInput$={(e,el) => myEats.bindNewEat("food", el.value)} />
-                <input id={"new-unit"} type="text" class="rounded-sm p-2 bg-emerald-800" value={myEats.newEat.unit} onInput$={(e,el) => myEats.bindNewEat("unit", el.value)} />
-                <input id={"new-amount"} type="text" class="rounded-sm p-2 bg-emerald-800" value={myEats.newEat.amount} onInput$={(e,el) => myEats.bindNewEat("amount", el.value)} />
+                <input id={"new-food"}  
+                  type="text" 
+                  class="rounded-sm p-2 bg-emerald-800" 
+                  value={myEats.newEat.food} onInput$={(e,el) => myEats.bindNewEat("food", el.value)} 
+                />
+                <input id={"new-unit"} 
+                  type="text" 
+                  class="rounded-sm p-2 bg-emerald-800" 
+                  value={myEats.newEat.unit} onInput$={(e,el) => myEats.bindNewEat("unit", el.value)} 
+                />
+                <input id={"new-amount"} 
+                  type="text" 
+                  class="rounded-sm p-2 bg-emerald-800" 
+                  value={myEats.newEat.amount} onInput$={(e,el) => myEats.bindNewEat("amount", el.value)} 
+                />
             </fieldset>
             {myEats.eats.map((eat) => {
               return (
