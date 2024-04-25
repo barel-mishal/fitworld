@@ -10,6 +10,11 @@ type Eat = {
     food: string,
     id: string
   }
+/*
+1. Move between inputs food, unit, amount with enter key. 
+2. When all are filled, add to the list of eats. on enter key.
+3. When added, clear the inputs.
+*/
 export const TrackFood = component$(() => {
     const myEats = useStore({
       eats: [
@@ -28,7 +33,6 @@ export const TrackFood = component$(() => {
       }),
       bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {
         const eat = this.eats.find(eat => eat.id === id);
-        console.log(eat);
         if (eat) {
           eat[key] = value;
         }
@@ -40,7 +44,10 @@ export const TrackFood = component$(() => {
         unit: "",
         amount: "",
         food: "",
-      },
+      } as Eat,
+      addEatId: $(function(this: {newEat: Eat}) {
+        this.newEat.id = createUniqueKey();
+      }),
       bindNewEat: $(function(this: {newEat: Eat}, key: keyof Eat, value: string) {
         this.newEat[key] = value;
       }),
@@ -55,11 +62,8 @@ export const TrackFood = component$(() => {
 
     const onKeyPressNewEat = $((e: KeyboardEvent) => {
       if (e.key === "Enter") {
-        const newEat = {
-          ...myEats.newEat,
-          id: createUniqueKey()
-        }
-        myEats.addEat(newEat);
+        myEats.addEatId();
+        myEats.addEat(myEats.newEat);
         myEats.resetNewEat();
       }
     })
