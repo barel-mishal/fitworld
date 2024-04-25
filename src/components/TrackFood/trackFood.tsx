@@ -69,13 +69,13 @@ export const TrackFood = component$(() => {
         parent.children[2] as HTMLInputElement
       ];
       const whoIsEmpty = childrens.find((inp) => !inp.value);
-      if (whoIsEmpty && e.key === "Enter") return whoIsEmpty.focus();
-
-      if (e.key === "Enter") {
+      if (whoIsEmpty && e.key === "Enter") { 
+        whoIsEmpty.focus(); 
+      } else if (e.key === "Enter") {
         myEats.addEatId();
         myEats.addEat(myEats.newEat);
         myEats.resetNewEat();
-      } 
+      }
     })
   
   
