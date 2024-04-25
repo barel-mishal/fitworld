@@ -61,11 +61,21 @@ export const TrackFood = component$(() => {
     });
 
     const onKeyPressNewEat = $((e: KeyboardEvent) => {
+      const input = e.target as HTMLInputElement;
+      const parent = input.parentElement as HTMLFieldSetElement; // has three input
+      const childrens: [HTMLInputElement, HTMLInputElement, HTMLInputElement] = [
+        parent.children[0] as HTMLInputElement,
+        parent.children[1] as HTMLInputElement, 
+        parent.children[2] as HTMLInputElement
+      ];
+      const whoIsEmpty = childrens.find((inp) => !inp.value);
+      if (whoIsEmpty && e.key === "Enter") return whoIsEmpty.focus();
+
       if (e.key === "Enter") {
         myEats.addEatId();
         myEats.addEat(myEats.newEat);
         myEats.resetNewEat();
-      }
+      } 
     })
   
   
