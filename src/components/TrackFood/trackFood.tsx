@@ -98,9 +98,21 @@ export const TrackFood = component$(() => {
                     <LuMoveVertical class="fill-zinc-900 scale-75" fill='#1e293b'  />
                   </button>
                   <fieldset class="grid grid-cols-3 gap-3 ">
-                    <input type="text" class="bg-transparent" value={eat.food} onInput$={(e,el) => myEats.bindValue("food", el.value, eat.id)} />
-                    <input type="text" class="bg-transparent" value={eat.unit} onInput$={(e,el) => myEats.bindValue("unit", el.value, eat.id)} />
-                    <input type="text" class="bg-transparent" value={eat.amount} onInput$={(e,el) => myEats.bindValue("amount", el.value, eat.id)} />
+                    <input 
+                      type="text" 
+                      class="bg-transparent"
+                      value={eat.food} 
+                      onInput$={(e,el) => myEats.bindValue("food", el.value, eat.id)} />
+                    <input 
+                      type="text" 
+                      class="bg-transparent"
+                      value={eat.unit} 
+                      onInput$={(e,el) => myEats.bindValue("unit", el.value, eat.id)} />
+                    <input 
+                      type="text" 
+                      class="bg-transparent" 
+                      value={eat.amount} 
+                      onInput$={(e,el) => myEats.bindValue("amount", el.value, eat.id)} />
                   </fieldset>
                 </Block>
               )
