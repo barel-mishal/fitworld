@@ -147,7 +147,6 @@ export const useLoaderAssessmentData = routeLoader$(async function({sharedMap}) 
     ( $weight )
   END;
   `);
-  console.log('height', height);
   if (height[2].status === "ERR") throw new Error('Error fetching height');
   if (height[5].status === "ERR") throw new Error('No height record found');
   const parsed = SchemaAssessment.parse({
@@ -164,7 +163,6 @@ export const useLoaderAssessmentData = routeLoader$(async function({sharedMap}) 
       goals: ["", "", ""]
     }
   }) as {personalInformation: PersonalInformation, lifeStyle: LifeStyle};
-  console.log('parsed', parsed)
   return parsed
 })
 

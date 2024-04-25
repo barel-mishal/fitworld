@@ -11,15 +11,18 @@ type Eat = {
     id: string
   }
 /*
-1. Move between inputs food, unit, amount with enter key. 
-2. When all are filled, add to the list of eats. on enter key.
-3. When added, clear the inputs.
+1. bring food group from database
+2. get all food groups from database to application on typing
+3. selecting from foods within database and insert them into id
+4. selecting all the unit from within this unit appropetly
+5. ui bwllow all food as list of items
+6. when using selected foods 
 */
 export const TrackFood = component$(() => {
     const myEats = useStore({
       eats: [
-         {unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
-         {unit: "כפית", amount: "2", food: "קינואה", id: "1234" }    
+         { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" }    
       ],
       groupBy: $(function(this: {eats: Eat[]}, key: keyof Eat) {
         const group = this.eats.reduce((acc, eat) => {

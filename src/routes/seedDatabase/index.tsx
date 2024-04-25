@@ -2,6 +2,7 @@ import { type Session } from '@auth/core/types';
 import { component$ } from '@builder.io/qwik';
 import { server$, type RequestHandler } from '@builder.io/qwik-city';
 import { Surreal } from 'surrealdb.js';
+import foodGroup from '~/food_groups.json';
 
 export const onRequest: RequestHandler = (event) => {
   
@@ -26,7 +27,7 @@ export default component$(() => {
         <h1>Table users</h1>
         <button
         onClick$={async () => {
-          const signin = await serverTestSigninToDatabase();
+          const signin = await serverSeedFoodGroupsDatabase();
           console.log('seed database', signin);
 
           console.log('seed database');
@@ -76,98 +77,149 @@ export const serverDatabaseSchema = server$(async () => {
   const schema = `
   DEFINE NAMESPACE IF NOT EXISTS namespace;
   DEFINE DATABASE IF NOT EXISTS database;
-
   USE NS namespace DB database;
-  
-  DEFINE SCOPE IF NOT EXISTS account SESSION 1w
-    SIGNUP (
-      CREATE user SET pass = crypto::argon2::generate($pass), providerId = $providerId
-      RETURN *
-    )
-    SIGNIN ( SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass) );
-  
-  DEFINE USER IF NOT EXISTS barel ON ROOT PASSWORD '123456' ROLES OWNER;
-    
-  -- Set the name of the token
-  -- Use this token provider for database authorization
-  -- Specify the cryptographic signature algorithm used to verify the token
-  -- Specify the secret used to sign and verify the authenticity of the token
-  DEFINE TOKEN IF NOT EXISTS barel ON DATABASE TYPE HS512 VALUE "sNSYneezcr8kqphfOC6NwwraUHJCVAt0XjsRSNmssBaBRh3WyMa9TRfq8ST7fsU2H2kGiOpU4GbAF1bCiXmM1b3JGgleBzz7rsrz6VvYEM4q3CLkcO8CMBIlhwhzWmy8";
-
-  DEFINE TABLE user SCHEMAFULL
+  DEFINE SCOPE IF NOT EXISTS account SESSION 1w SIGNUP (CREATE user SET pass = crypto::argon2::generate($pass), providerId = $providerId RETURN *) SIGNIN (SELECT * FROM user WHERE crypto::argon2::compare(pass, $pass));
+  DEFINE USER IF NOT EXISTS barel ON ROOT PASSHASH '$argon2id$v=19$m=19456,t=2,p=1$TszD2PAhlKvIMPizSuhGuA$lTd+wXGiw+Z4Dh7gqXpNN2bgl3pPQ8JlO4DDPL4oRmk' ROLES OWNER;
+  DEFINE TOKEN IF NOT EXISTS barel ON DATABASE TYPE HS512 VALUE 'sNSYneezcr8kqphfOC6NwwraUHJCVAt0XjsRSNmssBaBRh3WyMa9TRfq8ST7fsU2H2kGiOpU4GbAF1bCiXmM1b3JGgleBzz7rsrz6VvYEM4q3CLkcO8CMBIlhwhzWmy8';
+  DEFINE TABLE user TYPE ANY SCHEMAFULL
     PERMISSIONS
-      FOR select
+      FOR select, update
         WHERE id = $auth.id
-      FOR update
-        WHERE id = $auth.id
+      FOR create NONE
       FOR delete
-        WHERE id = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD pass ON TABLE user TYPE string;
-  DEFINE FIELD roles ON TABLE user TYPE array<string> DEFAULT ["user"];
-  DEFINE FIELD roles.* ON TABLE user TYPE string;
-  DEFINE FIELD providerId ON TABLE user TYPE string;
-  DEFINE FIELD createdAt ON user VALUE time::now() DEFAULT time::now() READONLY;
-  DEFINE FIELD updateAt ON user VALUE time::now() DEFAULT time::now() READONLY;
-  DEFINE INDEX userProviderId ON TABLE user COLUMNS providerId UNIQUE;
-
-  DEFINE TABLE profile SCHEMAFULL
+        WHERE id = $auth.id OR $auth.role = 'admin'
+  ;
+  DEFINE FIELD pass ON user TYPE string
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD roles ON user TYPE array<string> DEFAULT [
+    'user'
+  ]
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD roles[*] ON user TYPE string
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD providerId ON user TYPE string
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD createdAt ON user DEFAULT time::now() READONLY VALUE time::now()
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD updateAt ON user DEFAULT time::now() READONLY VALUE time::now()
+    PERMISSIONS FULL
+  ;
+  DEFINE INDEX userProviderId ON user FIELDS providerId UNIQUE;
+  DEFINE TABLE profile TYPE ANY SCHEMAFULL
     PERMISSIONS
-      FOR select
-        WHERE userId = $auth.id
-      FOR update
-        WHERE userId = $auth.id
-      FOR create
+      FOR select, create, update
         WHERE userId = $auth.id
       FOR delete
-        WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE profile TYPE record VALUE $auth.id DEFAULT $auth.id;
-  DEFINE FIELD email ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
-  DEFINE FIELD name ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
-  DEFINE FIELD nickname ON TABLE profile TYPE string DEFAULT meta::id($auth.id);
-  DEFINE FIELD image ON TABLE profile TYPE string VALUE $value OR "" DEFAULT "";
-  DEFINE FIELD dateOfBirth ON TABLE profile TYPE option<datetime> DEFAULT NONE;
-  DEFINE FIELD goals ON TABLE profile TYPE array<string> DEFAULT ["", "", ""];
-  DEFINE FIELD goals.* ON TABLE profile TYPE string DEFAULT "";
-  DEFINE FIELD gender ON TABLE profile TYPE string;
-  DEFINE FIELD about ON TABLE profile TYPE option<string> DEFAULT "";
-  DEFINE FIELD createdAt ON profile VALUE time::now() DEFAULT time::now();
-  DEFINE FIELD updateAt ON profile VALUE time::now() DEFAULT time::now();
-  DEFINE INDEX profileUserId ON TABLE profile COLUMNS userId UNIQUE;
-  DEFINE INDEX nickname ON TABLE profile COLUMNS nickname UNIQUE;
-
-  DEFINE TABLE weight SCHEMAFULL
+        WHERE userId = $auth.id OR $auth.role = 'admin'
+  ;
+  DEFINE FIELD userId ON profile TYPE record DEFAULT $auth.id VALUE $auth.id
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD email ON profile TYPE string DEFAULT '' VALUE $value OR ''
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD name ON profile TYPE string DEFAULT '' VALUE $value OR ''
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD nickname ON profile TYPE string DEFAULT meta::id($auth.id)
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD image ON profile TYPE string DEFAULT '' VALUE $value OR ''
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD dateOfBirth ON profile TYPE option<datetime> DEFAULT NONE
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD goals ON profile TYPE array<string> DEFAULT [
+    '',
+    '',
+    ''
+  ]
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD goals[*] ON profile TYPE string DEFAULT ''
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD gender ON profile TYPE string
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD about ON profile TYPE option<string> DEFAULT ''
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD createdAt ON profile DEFAULT time::now() VALUE time::now()
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD updateAt ON profile DEFAULT time::now() VALUE time::now()
+    PERMISSIONS FULL
+  ;
+  DEFINE INDEX profileUserId ON profile FIELDS userId UNIQUE;
+  DEFINE INDEX nickname ON profile FIELDS nickname UNIQUE;
+  
+  DEFINE TABLE height TYPE ANY SCHEMAFULL
     PERMISSIONS
-      FOR select
+      FOR select, update
         WHERE userId = $auth.id
-      FOR update
-        WHERE userId = $auth.id
+      FOR create NONE
       FOR delete
-        WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE weight TYPE record VALUE $auth.id;
-  DEFINE FIELD weight ON TABLE weight TYPE number;
-  DEFINE FIELD createdAt ON weight TYPE datetime VALUE $value OR time::now();
-  DEFINE FIELD updateAt ON weight TYPE datetime VALUE $value OR time::now();
-  DEFINE INDEX weightUserId ON TABLE weight COLUMNS userId UNIQUE;
-  DEFINE INDEX weightCreatedAt ON TABLE weight COLUMNS createdAt;
-
-  DEFINE TABLE height SCHEMAFULL
+        WHERE userId = $auth.id OR $auth.role = 'admin'
+  ;
+  DEFINE FIELD userId ON height TYPE record VALUE $auth.id DEFAULT $auth.id
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD type ON height TYPE string VALUE $value ASSERT $value INSIDE ["cm", "m", "FT"] DEFAULT "cm"
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD value ON height TYPE number DEFAULT 0
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD createdAt ON height TYPE datetime VALUE $value OR time::now() DEFAULT time::now()
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD updateAt ON height TYPE datetime VALUE $value OR time::now() DEFAULT time::now()
+    PERMISSIONS FULL
+  ;
+  DEFINE INDEX heightUserId ON height FIELDS userId;
+  DEFINE INDEX heightCreatedAt ON height FIELDS createdAt;
+  
+  DEFINE TABLE weight TYPE ANY SCHEMAFULL
     PERMISSIONS
-      FOR select
+      FOR select, update
         WHERE userId = $auth.id
-      FOR update
-        WHERE userId = $auth.id
+      FOR create NONE
       FOR delete
-        WHERE userId = $auth.id OR $auth.role = "admin";
-  DEFINE FIELD userId ON TABLE height TYPE record VALUE $auth.id;
-  DEFINE FIELD type ON TABLE height TYPE string VALUE $value OR "cm";
-  DEFINE FIELD value ON TABLE height TYPE number;
-  DEFINE FIELD createdAt ON height TYPE datetime VALUE $value OR time::now();
-  DEFINE FIELD updateAt ON height TYPE datetime VALUE $value OR time::now();
-  DEFINE INDEX heightUserId ON TABLE height COLUMNS userId UNIQUE;
-  DEFINE INDEX heightCreatedAt ON TABLE height COLUMNS createdAt;
-
+        WHERE userId = $auth.id OR $auth.role = 'admin'
+  ;
+  DEFINE FIELD userId ON weight TYPE record VALUE $auth.id DEFAULT $auth.id
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD type ON weight TYPE string VALUE $value ASSERT $value INSIDE ['kg', 'g', 'lb'] DEFAULT "kg"
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD value ON weight TYPE number DEFAULT 0
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD createdAt ON weight TYPE datetime VALUE $value OR time::now() DEFAULT time::now()
+    PERMISSIONS FULL
+  ;
+  DEFINE FIELD updateAt ON weight TYPE datetime VALUE $value OR time::now() DEFAULT time::now()
+    PERMISSIONS FULL
+  ;
+  DEFINE INDEX heightUserId ON weight FIELDS userId;
+  DEFINE INDEX heightCreatedAt ON weight FIELDS createdAt;
   ` 
   return schema;
+});
+
+export const serverSeedFoodGroupsDatabase = server$(async () => {
+  const db = await serverInitDatabase();
+  console.log(foodGroup);
+
+  return 
 });
 
 
