@@ -128,6 +128,7 @@ export const serverDatabaseSchema = server$(async () => {
   DEFINE FIELD dateOfBirth ON TABLE profile TYPE option<datetime> DEFAULT NONE;
   DEFINE FIELD goals ON TABLE profile TYPE array<string> DEFAULT ["", "", ""];
   DEFINE FIELD goals.* ON TABLE profile TYPE string DEFAULT "";
+  DEFINE FIELD gender ON TABLE profile TYPE string;
   DEFINE FIELD about ON TABLE profile TYPE option<string> DEFAULT "";
   DEFINE FIELD createdAt ON profile VALUE time::now() DEFAULT time::now();
   DEFINE FIELD updateAt ON profile VALUE time::now() DEFAULT time::now();
@@ -158,7 +159,8 @@ export const serverDatabaseSchema = server$(async () => {
       FOR delete
         WHERE userId = $auth.id OR $auth.role = "admin";
   DEFINE FIELD userId ON TABLE height TYPE record VALUE $auth.id;
-  DEFINE FIELD height ON TABLE height TYPE number;
+  DEFINE FIELD type ON TABLE height TYPE string VALUE $value OR "cm";
+  DEFINE FIELD value ON TABLE height TYPE number;
   DEFINE FIELD createdAt ON height TYPE datetime VALUE $value OR time::now();
   DEFINE FIELD updateAt ON height TYPE datetime VALUE $value OR time::now();
   DEFINE INDEX heightUserId ON TABLE height COLUMNS userId UNIQUE;

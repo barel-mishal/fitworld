@@ -16,6 +16,19 @@ export const onRequest: RequestHandler = (event) => {
   }
 };
 
+export interface HeightGetter {
+  type: "cm" | "m" | "FT";
+  value: number; 
+  id: string;
+  [key: string]: string | number;
+}
+export interface WeightGetter {
+  type: "kg" | "g" | "lb";
+  value: number;
+  id: string;
+  [key: string]: string | number;
+}
+
 interface PersonalInformation {
   gender: "female" | "male" | "",
   name: string,
@@ -24,14 +37,14 @@ interface PersonalInformation {
     month: string,
     year: string
   };
-  height: {type: "cm" | "m" | "FT", value: number},
-  currentWeight: {unit: "kg" | "g" | "lb", value: number},
+  height: HeightGetter,
+  weight: WeightGetter,
 }
 
 interface LifeStyle {
   occupation: string,
   activityLevel: string,
-  goals: string[]
+  goals: string[];
 }
 
 interface AssessmentStoreType {
@@ -50,11 +63,11 @@ interface AssessmentStoreType {
       isRunning: boolean
     },
     mergeWeight: {
-      submit: QRL<(this: { isRunning: boolean; }, data: { field: string; value: number; }) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
+      submit: QRL<(this: { isRunning: boolean; }, data: {value: number, _type: string, record: string}) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
       isRunning: boolean
     },
     mergeHeight: {
-      submit: QRL<(this: { isRunning: boolean; }, data: { field: string; value: number; }) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
+      submit: QRL<(this: { isRunning: boolean; }, data: {value: number, _type: string, record: string}) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
       isRunning: boolean
     },
   }
@@ -83,14 +96,14 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
         isRunning: false
       },
       mergeWeight: {
-        submit: $(async function(this: { isRunning: boolean }, data: {field: string, value: number}) {
+        submit: $(async function(this: { isRunning: boolean }, data: {value: number, _type: string, record: string}) {
           const result = await serverMergeWeight(data);
           return result;
         }),
         isRunning: false
       },
       mergeHeight: {
-        submit: $(async function(this: { isRunning: boolean }, data: {field: string, value: number}) {
+        submit: $(async function(this: { isRunning: boolean }, data: {value: number, _type: string, record: string}) {
           const result = await serverMergeHeight(data);
           return result;
         }),
@@ -107,30 +120,59 @@ export type AssessmentStore = ReturnType<typeof useAssessmentStore>;
 
 export const contextAssessmentStore = createContextId<AssessmentStore>("Assessment");
 
-export const useLoaderAssessment = routeLoader$(function({sharedMap})  {
+export const useLoaderAssessmentData = routeLoader$(async function({sharedMap})  {
   const session = sharedMap.get('session') as ExtendSession | null;
   if (!session) return;
-  return session.database.profile
-})
+  const db = await serverInitDatabase();
+  await db.authenticate(session.database.token);
+  type CustomQueryResult = [null, null, [Partial<HeightGetter>], null, null, [Partial<WeightGetter>]];
 
+  const height = await db.query_raw<CustomQueryResult>(`
+  -- LATEST height record
+  LET $latestHeight = SELECT * FROM height ORDER BY created_at DESC LIMIT 1;
+  LET $length = array::len($latestHeight);
+  
+  IF $length = 0 THEN
+  ( CREATE height )
+  ELSE 
+  ( $latestHeight )
+  END; 
 
-export default component$(() => {
-  const profile = useLoaderAssessment();
+  LET $weight = SELECT * FROM weight ORDER BY created_at DESC LIMIT 1;
+  LET $lengthWeight = array::len($weight);
+  
+  IF $lengthWeight = 0 THEN
+    ( CREATE weight )
+  ELSE 
+    ( $weight )
+  END;
+  `);
+  console.log('height', height);
+  if (height[2].status === "ERR") throw new Error('Error fetching height');
+  if (height[5].status === "ERR") throw new Error('No height record found');
   const parsed = SchemaAssessment.parse({
     personalInformation: {
-      gender: profile.value?.gender || "",
-      name: profile.value?.name || "",
-      dateOfBirth: profile.value?.dateOfBirth || undefined,
-      height: { type: "cm", value: 0 },
-      currentWeight: {unit: "kg", value: 0},
+      gender: session.database.profile.gender || "",
+      name: session.database.profile.name || "",
+      dateOfBirth: session.database.profile.dateOfBirth || undefined,
+      height: height[2].result[0],
+      weight: height[5].result[0],
     },
     lifeStyle: {
       occupation: "",
       activityLevel: "",
       goals: ["", "", ""]
     }
-  }) as {personalInformation: PersonalInformation, lifeStyle: LifeStyle}
-  const sc = useAssessmentStore(parsed);
+  }) as {personalInformation: PersonalInformation, lifeStyle: LifeStyle};
+  console.log('parsed', parsed)
+  return parsed
+})
+
+
+export default component$(() => {
+  const userData = useLoaderAssessmentData()
+
+  const sc = useAssessmentStore(userData.value!);
   useContextProvider(contextAssessmentStore, sc);
 
   // Phone size screen is 380px wide 600px tall
@@ -146,7 +188,6 @@ export const serverMergeProfile = server$(async function(data) {
   const token = session.database.token;
   const db = await serverInitDatabase();
   await db.authenticate(token);
-  console.log('data', data);
   const merge = await db.merge(id, { [data.field]: data.value });
 
   return {
@@ -156,8 +197,8 @@ export const serverMergeProfile = server$(async function(data) {
 
 export type MergeProfileType = ReturnType<typeof serverMergeProfile>;
 
-
-export const serverMergeWeight = server$(async function(data) {
+export const serverMergeWeight = server$(async function(data: {value: number, _type: string, record: string}) {
+  
   const session: ExtendSession | null = this.sharedMap.get('session');
   const token = session?.database.token
   if (!token) throw new Error('No token');
@@ -165,9 +206,13 @@ export const serverMergeWeight = server$(async function(data) {
   await db.authenticate(token);
   // const merge = await db.merge(id, { [data.field]: data.value });
   const merge = await db.query_raw(`
-  select * from weight where user = $auth.id;
-  `)
-  console.log('merge', merge, data);
+  IF type::is::record($record, 'weight') THEN
+    UPDATE $record SET value = $value, type = $_type
+  ELSE
+    CREATE weight SET value = $value, type = $_type
+  END;
+  `, data);
+  console.log('merge', JSON.stringify(merge), data);
   return {
     merge
   }
@@ -175,7 +220,8 @@ export const serverMergeWeight = server$(async function(data) {
 
 export type MergeWeightType = ReturnType<typeof serverMergeWeight>;
 
-export const serverMergeHeight = server$(async function(data) {
+export const serverMergeHeight = server$(async function(data: {value: number, _type: string, record: string}) {
+  
   const session: ExtendSession | null = this.sharedMap.get('session');
   const token = session?.database.token
   if (!token) throw new Error('No token');
@@ -183,10 +229,13 @@ export const serverMergeHeight = server$(async function(data) {
   await db.authenticate(token);
   // const merge = await db.merge(id, { [data.field]: data.value });
   const merge = await db.query_raw(`
-  select * from height where user = $auth.id;
-  
-  `)
-  console.log('merge', merge, data);
+  IF type::is::record($record, 'height') THEN
+    UPDATE $record SET value = $value, type = $_type
+  ELSE
+    CREATE height SET value = $value, type = $_type
+  END;
+  `, data);
+  console.log('merge', JSON.stringify(merge), data);
   return {
     merge
   }

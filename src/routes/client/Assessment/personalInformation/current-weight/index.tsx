@@ -15,19 +15,19 @@ export default component$(() => {
   const refWeight = useSignal<HTMLButtonElement>();
   const isAvtive = useSignal<boolean>(false);
 
-  const computeHeight = useComputed$(async () => `${formatedNumber(convertWeightUnits(76, "kg", sc.data.personalInformation.currentWeight.unit))}`);
+  const computeHeight = useComputed$(async () => `${formatedNumber(convertWeightUnits(76, "kg", sc.data.personalInformation.weight.type))}`);
   const inputHeightValue = () => {
-    const isActiveAndEmpty = isAvtive.value && !sc.data.personalInformation.currentWeight.value;
+    const isActiveAndEmpty = isAvtive.value && !sc.data.personalInformation.weight.value;
     if (isActiveAndEmpty) {
       return "";
     }
-    const isActiveAndNotEmpty = isAvtive.value && sc.data.personalInformation.currentWeight.value;
+    const isActiveAndNotEmpty = isAvtive.value && sc.data.personalInformation.weight.value;
     if (isActiveAndNotEmpty) {
-      return sc.data.personalInformation.currentWeight.value;
+      return sc.data.personalInformation.weight.value;
     }
-    const isNotActiveAndNotEmpty = !isAvtive.value && sc.data.personalInformation.currentWeight.value;
+    const isNotActiveAndNotEmpty = !isAvtive.value && sc.data.personalInformation?.weight?.value;
     if (isNotActiveAndNotEmpty) {
-      return `${formatedNumber(sc.data.personalInformation.currentWeight.value)}`;
+      return `${formatedNumber(sc.data.personalInformation.weight.value)}`;
     }
     return "";
   };
@@ -41,7 +41,7 @@ export default component$(() => {
         ref={refWeight}
         type="Height" id="Height" placeholder={computeHeight.value.toString()} onInput$={async (e,el) => {
           const height = parseFloat(el.value);
-          sc.data.personalInformation.currentWeight.value = height;
+          sc.data.personalInformation.weight.value = height;
           }} class={cn(
             "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
           )} value={inputHeightValue()}
@@ -57,26 +57,18 @@ export default component$(() => {
       </div>
       <div class="grid max-w-sm items-center gap-1.5 ">
         <Label for="email-2" class="text-emerald-100">Unit</Label>
-        <MyPopover height={sc.data.personalInformation.currentWeight} />
+        <MyPopover />
       </div>
-
     </div>
   );
 });
 
-interface HeightGetter {
-  height?: {
-    unit: string;
-    value: number;
-  }
-}
-
-export const MyPopover = component$<HeightGetter>(() => {
+export const MyPopover = component$(() => {
   const sc = useContext(contextAssessmentStore);
   const triggerRef = useSignal<HTMLButtonElement>();
   const popoverRef = useSignal<HTMLElement>();
   const getWeightUnitSystem = () => {
-    switch (sc.data.personalInformation.currentWeight.unit) {
+    switch (sc.data.personalInformation.weight.unit) {
       case "kg":
       case "g":
         return "Metric";
@@ -93,7 +85,7 @@ export const MyPopover = component$<HeightGetter>(() => {
         popovertarget="current-weight"
       >
         <span>
-          {sc.data.personalInformation.currentWeight.unit.toUpperCase()}
+          {sc.data.personalInformation.weight.type.toUpperCase()}
         </span>
       </PopoverTrigger>
       <Popover
@@ -109,19 +101,19 @@ export const MyPopover = component$<HeightGetter>(() => {
       >
         <div class="grid gap-4 w-auto">
           <button onClick$={() => {
-            sc.data.personalInformation.currentWeight = {unit: "kg", value: parseFloat(formatedNumber(convertWeightUnits(sc.data.personalInformation.currentWeight.value, sc.data.personalInformation.currentWeight.unit, "kg")))};
+            sc.data.personalInformation.weight = {...sc.data.personalInformation.weight, type: "kg", value: parseFloat(formatedNumber(convertWeightUnits(sc.data.personalInformation.weight.value, sc.data.personalInformation.weight.type, "kg")))};
           }}>
             <span>KG</span>
           </button>
 
           <button onClick$={() => {
-            sc.data.personalInformation.currentWeight = {unit: "g", value: parseFloat(formatedNumber(convertWeightUnits(sc.data.personalInformation.currentWeight.value, sc.data.personalInformation.currentWeight.unit, "g")))};
+            sc.data.personalInformation.weight = {...sc.data.personalInformation.weight, type: "g", value: parseFloat(formatedNumber(convertWeightUnits(sc.data.personalInformation.weight.value, sc.data.personalInformation.weight.type, "g")))};
           }}>
             <span>G</span>
           </button>
 
           <button onClick$={() => {
-            sc.data.personalInformation.currentWeight = {unit: "lb", value: parseFloat(formatedNumber(convertWeightUnits(sc.data.personalInformation.currentWeight.value, sc.data.personalInformation.currentWeight.unit, "lb")))};
+            sc.data.personalInformation.weight = {...sc.data.personalInformation.weight, type: "lb", value: parseFloat(formatedNumber(convertWeightUnits(sc.data.personalInformation.weight.value, sc.data.personalInformation.weight.type, "lb")))};
           }}>
             <span>LB</span>
           </button>

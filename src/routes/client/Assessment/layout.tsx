@@ -78,12 +78,20 @@ export default component$(() => {
       '/client/Assessment/personalInformation/': function (): unknown {
         return
       },
-      '/client/Assessment/personalInformation/current-weight/': function (): unknown {
-        sc.actions.mergeWeight.submit({ field: "weight", value: sc.data.personalInformation.currentWeight.value });
+      '/client/Assessment/personalInformation/current-weight/': async function () {
+        await sc.actions.mergeWeight.submit({ 
+          value: sc.data.personalInformation.weight.value, 
+          _type: sc.data.personalInformation.weight.type, 
+          record: sc.data.personalInformation.weight.id 
+        });
         return
       },
-      '/client/Assessment/personalInformation/height/': function (): unknown {
-        sc.actions.mergeHeight.submit({ field: "height", value: sc.data.personalInformation.height.value });
+      '/client/Assessment/personalInformation/height/': async function () {
+        await sc.actions.mergeHeight.submit({ 
+          value: sc.data.personalInformation.height.value, 
+          _type: sc.data.personalInformation.height.type, 
+          record: sc.data.personalInformation.height.id 
+        });
         return
       },
       '/client/(main)/play/': function (): unknown {

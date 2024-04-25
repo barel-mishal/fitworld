@@ -4,7 +4,7 @@ import type { RequestHandler } from "@builder.io/qwik-city";
 
 
 export const onGet: RequestHandler = async ({ cacheControl, sharedMap }) => {
-  console.log('sharedMap', sharedMap.get('session'));
+  // console.log('sharedMap', sharedMap.get('session'));
   // Control caching for this request for best performance and to reduce hosting costs:
   // https://qwik.builder.io/docs/caching/
   cacheControl({

@@ -54,11 +54,13 @@ export const SchemaAssessment = z.object({
     }),
     height: z.object({
       type: z.enum(["FT", "m", "cm"]).default("cm"),
-      value: z.number().default(0)
+      value: z.number().default(0),
+      id: z.string()
     }),
-    currentWeight: z.object({
-      unit: z.enum(["kg", "g", "lb"]).default("kg"),
-      value: z.number().default(0)
+    weight: z.object({
+      type: z.enum(["kg", "g", "lb"]).default("kg"),
+      value: z.number().default(0),
+      id: z.string()
     })
   }),
   lifeStyle: z.object({
@@ -71,8 +73,8 @@ export const SchemaAssessment = z.object({
     gender: "",
     name: "",
     dateOfBirth: undefined,
-    height: {type: "cm", value: 0},
-    currentWeight: {unit: "kg", value: 0},
+    height: {type: "cm", value: 0, id: ""},
+    weight: {type: "kg", value: 0, id: ""},
   },
   lifeStyle: {
     occupation: "",
