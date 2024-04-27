@@ -1,4 +1,6 @@
 import { server$ } from "@builder.io/qwik-city";
+import { serverInitDatabase } from "../seedDatabase";
+import { type ExtendSession } from "../plugin@auth";
 
 export const serverData = {
   notes: [
@@ -94,6 +96,58 @@ export const serverGetUnPublishNotes = server$(async function() {
 export const serverPublishNote = server$(async function(id: string) {
     const note = serverData.notes.findIndex((note) => note.id === id);
     serverData.notes[note].publishedAt = new Date();
-    console.log(serverData.notes[note]);
     return {note: serverData.notes[note]}
+});
+
+
+
+// ********* Tracking API *********
+
+
+// DEFINE TABLE Eat TYPE ANY SCHEMAFULL
+// 	PERMISSIONS
+// 		FOR select, update
+// 			WHERE userId = $auth.id
+// 		FOR create NONE
+// 		FOR delete
+// 			WHERE userId = $auth.id OR $auth.role = 'admin'
+// ;
+// DEFINE FIELD userId ON Eat TYPE record<user> VALUE $auth;
+// DEFINE FIELD food ON Eat TYPE record<Ingredient>;
+// DEFINE FIELD amount ON Eat TYPE float DEFAULT 0.0;
+// DEFINE FIELD measurement ON Eat TYPE record<Measurements>;
+// DEFINE FIELD createdAt ON Eat TYPE datetime DEFAULT time::now();
+// DEFINE FIELD updatedAt ON Eat TYPE datetime VALUE $value DEFAULT time::now();
+// DEFINE FIELD eatedAt ON Eat TYPE datetime VALUE $value DEFAULT time::now();
+export const serverAddEat = server$(async function() {
+    try {
+      const db = await serverInitDatabase();
+      const session = await this.sharedMap.get("session") as unknown as ExtendSession;
+      await db.use({ namespace: "namespace", database: "database" });
+      await db.authenticate(session.database.token);
+  
+      const eat = await db.create("Eat", {
+        food: "Ingredient:07akpos8zlxuq5gsq4ls",
+        amount: 1,
+        measurement: "ingredient_measurements:3shv85a3649fbhjogmn8",
+        eatedAt: new Date()
+      });
+      return {
+        eat
+      }
+    } catch (error) {
+      console.error(error);
+    }
+});
+
+export const serverGetIngredients = server$(async function() {
+    try {
+      const db = await serverInitDatabase();
+      await db.use({ namespace: "namespace", database: "database" });
+      const ingredients = await db.select("Ingredient");
+      return {ingredients} as {ingredients: {name: string, id: string}[]}
+    } catch (error) {
+      console.error(error);
+      return {ingredients: []}
+    }
 });
