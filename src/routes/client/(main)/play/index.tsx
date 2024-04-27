@@ -33,7 +33,7 @@ export const Paypal = component$(() => {
       .then((paypal) => {
         if (!paypal || !paypal.Buttons) {
           return
-        } 
+        }
         const pay = paypal.Buttons({})
               .render("#your-container-element")
               .catch((error) => {

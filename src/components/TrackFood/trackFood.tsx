@@ -86,9 +86,9 @@ export const TrackFood = component$(() => {
       <>
         <div class="grid gap-2">
           <section class="grid grid-cols-3 gap-3">
-            <p class="text-emerald-100">Food</p>
-            <p class="text-emerald-100">Unit</p>
-            <p class="text-emerald-100">Amount</p>
+            <label for="new-food" class="text-emerald-100">Food</label>
+            <label for="new-unit" class="text-emerald-100">Unit</label>
+            <label for="new-amount" class="text-emerald-100">Amount</label>
           </section>
           <SortableComp class="grid gap-3">
             <fieldset class="grid grid-cols-3 gap-3 " onKeyPress$={onKeyPressNewEat}>
@@ -108,6 +108,28 @@ export const TrackFood = component$(() => {
                   value={myEats.newEat.amount} onInput$={(e,el) => myEats.bindNewEat("amount", el.value)} 
                 />
             </fieldset>
+            <ul class="overflow-x-auto">
+              <li class="">
+                <h5>
+                  Fast selections
+                </h5>
+                <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1">
+                    <li>
+                      <button class="outline outline-emerald-200/40 px-6 py-2 rounded-sm">water</button>
+                    </li>
+
+                  {[{id: 297, name: "milk"}, {id: 298, name: "water"}, {id: 299, name: "bread"}].map((food) => {
+                    return (
+                      <li key={food.id} class="">
+                        <button class="outline outline-emerald-200/40 px-6 py-2 rounded-sm">
+                          {food.name}
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </li>
+            </ul>
             {myEats.eats.map((eat) => {
               return (
                 <Block key={eat.id} class="grid grid-cols-[auto,1fr] gap-2">
