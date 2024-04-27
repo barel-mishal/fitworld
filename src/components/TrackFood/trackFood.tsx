@@ -2,6 +2,7 @@ import { $, component$, useStore } from "@builder.io/qwik";
 import { Block, SortableComp } from "../Sortable/Sortable";
 import { LuMoveVertical } from "@qwikest/icons/lucide";
 import { createUniqueKey } from "~/util/createId";
+import { BsTrash } from "@qwikest/icons/bootstrap";
 
 
 type Eat = {
@@ -22,7 +23,23 @@ export const TrackFood = component$(() => {
     const myEats = useStore({
       eats: [
          { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
-         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" }    
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" },   
+         { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" },   
+         { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" },   
+         { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" },   
+         { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" },   
+         { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" },   
+         { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" },   
+         { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" },   
+         { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
+         { unit: "כפית", amount: "2", food: "קינואה", id: "1234" },   
       ],
       groupBy: $(function(this: {eats: Eat[]}, key: keyof Eat) {
         const group = this.eats.reduce((acc, eat) => {
@@ -79,18 +96,18 @@ export const TrackFood = component$(() => {
         myEats.addEat(myEats.newEat);
         myEats.resetNewEat();
       }
-    })
+    });
   
   
     return (
       <>
-        <div class="grid gap-2">
-          <section class="grid grid-cols-3 gap-3">
-            <label for="new-food" class="text-emerald-100">Food</label>
-            <label for="new-unit" class="text-emerald-100">Unit</label>
-            <label for="new-amount" class="text-emerald-100">Amount</label>
-          </section>
-          <SortableComp class="grid gap-3">
+        <div class="grid">
+          <div class="grid gap-3 sticky top-0 bg-emerald-950 z-50">
+            <section class="grid grid-cols-3 gap-3">
+              <label for="new-food" class="text-emerald-100">Food</label>
+              <label for="new-unit" class="text-emerald-100">Unit</label>
+              <label for="new-amount" class="text-emerald-100">Amount</label>
+            </section>
             <fieldset class="grid grid-cols-3 gap-3 " onKeyPress$={onKeyPressNewEat}>
                 <input id={"new-food"}  
                   type="text" 
@@ -108,20 +125,19 @@ export const TrackFood = component$(() => {
                   value={myEats.newEat.amount} onInput$={(e,el) => myEats.bindNewEat("amount", el.value)} 
                 />
             </fieldset>
-            <ul class="overflow-x-auto">
-              <li class="">
+            <ul class="overflow-x-auto bg-emerald-950 z-50">
+              <li class="bg-emerald-950">
                 <h5>
                   Fast selections
                 </h5>
-                <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1">
+                <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1 bg-emerald-950">
                     <li>
-                      <button class="outline outline-emerald-200/40 px-6 py-2 rounded-sm">water</button>
+                      <button class="outline outline-emerald-200  px-6 py-2 rounded-sm">water</button>
                     </li>
-
                   {[{id: 297, name: "milk"}, {id: 298, name: "water"}, {id: 299, name: "bread"}].map((food) => {
                     return (
-                      <li key={food.id} class="">
-                        <button class="outline outline-emerald-200/40 px-6 py-2 rounded-sm">
+                      <li key={food.id} class=" bg-emerald-950">
+                        <button class="outline outline-emerald-200 px-6 py-2 rounded-sm">
                           {food.name}
                         </button>
                       </li>
@@ -130,33 +146,41 @@ export const TrackFood = component$(() => {
                 </ul>
               </li>
             </ul>
-            {myEats.eats.map((eat) => {
-              return (
-                <Block key={eat.id} class="grid grid-cols-[auto,1fr] gap-2">
-                  <button onClick$={() => {}} class="">
-                    <LuMoveVertical class="fill-zinc-900 scale-75" fill='#1e293b'  />
-                  </button>
-                  <fieldset class="grid grid-cols-3 gap-3 ">
-                    <input 
-                      type="text" 
-                      class="bg-transparent"
-                      value={eat.food} 
-                      onInput$={(e,el) => myEats.bindValue("food", el.value, eat.id)} />
-                    <input 
-                      type="text" 
-                      class="bg-transparent"
-                      value={eat.unit} 
-                      onInput$={(e,el) => myEats.bindValue("unit", el.value, eat.id)} />
-                    <input 
-                      type="text" 
-                      class="bg-transparent" 
-                      value={eat.amount} 
-                      onInput$={(e,el) => myEats.bindValue("amount", el.value, eat.id)} />
-                  </fieldset>
-                </Block>
-              )
-            })}
-          </SortableComp>
+            <h5>5 Last Eated Record</h5>
+          </div>
+          <div class="overflow-y-auto">
+            <SortableComp class="grid gap-3 ">
+              {myEats.eats.map((eat) => {
+                return (
+                  <Block key={eat.id} class="grid grid-cols-[auto,1fr,auto] gap-2">
+                    <button onClick$={() => {}} class="">
+                      <LuMoveVertical class="fill-zinc-900 scale-75" fill='#1e293b'  />
+                    </button>
+                    <fieldset class="grid grid-cols-3 gap-3 ">
+                      <input 
+                        type="text" 
+                        class="bg-transparent"
+                        value={eat.food} 
+                        onInput$={(e,el) => myEats.bindValue("food", el.value, eat.id)} />
+                      <input 
+                        type="text" 
+                        class="bg-transparent"
+                        value={eat.unit} 
+                        onInput$={(e,el) => myEats.bindValue("unit", el.value, eat.id)} />
+                      <input 
+                        type="text" 
+                        class="bg-transparent" 
+                        value={eat.amount} 
+                        onInput$={(e,el) => myEats.bindValue("amount", el.value, eat.id)} />
+                    </fieldset>
+                    <button class="fill-sky-400">
+                      <BsTrash class="fill-sky-400 " width={5} height={5} fill='#1e293b' />
+                    </button>
+                  </Block>
+                )
+              })}
+            </SortableComp>
+          </div>
         </div>
       </>
     )
