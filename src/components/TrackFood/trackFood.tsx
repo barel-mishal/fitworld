@@ -43,7 +43,7 @@ export const TrackFood = component$(() => {
         whoIsEmpty.focus(); 
       } else if (e.key === "Enter") {
         myEats.addEatId();
-        myEats.addEat(myEats.eating);
+        myEats.addEat(myEats.eating );
         myEats.resetNewEat();
       }
     });
@@ -187,15 +187,18 @@ export function useTrackFood() {
     amount: string,
     food: string,
     measurement: string,
+    foodId?: string,
+    measurementId?: string,
   }
-  const myEats = useStore({
+  const myEats = useStore<{[key: string]: any, eats: Eat[]}>({
     eats: [],
     toLoadIngredient: false,
     addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
-      serverAddEat(eat).then((data) => {
-        console.log(data);
-      });
-      this.eats = this.eats.concat([eat], this.eats);
+      console.log(eat);
+      // serverAddEat(eat).then((data) => {
+      //   console.log(data);
+      // });
+      // this.eats = this.eats.concat([eat], this.eats);
     }),
     bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {
       const eat = this.eats.find(eat => eat.id === id);
@@ -211,8 +214,8 @@ export function useTrackFood() {
     addEatId: $(function(this: {newEat: Eat}) {
       this.newEat.id = createUniqueKey();
     }),
-    bindEating: $(function(this: {bindEating: Eating}, key: keyof Eating, value: string) {
-      this.bindEating[key] = value;
+    bindEating: $(function(this: {eating: Eating}, key: keyof Eating, value: string) {
+      this.eating[key] = value;
     }),
     resetNewEat: $(function(this: {eating: Eating}) {
       this.eating = {
