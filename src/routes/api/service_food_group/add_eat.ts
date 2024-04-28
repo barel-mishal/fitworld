@@ -1,10 +1,9 @@
 import { server$, z } from "@builder.io/qwik-city";
 import { serverInitDatabase } from "~/routes/seedDatabase";
 import { IngredientSchema } from "./get_food_groups";
-import { ExtendSession } from "~/routes/plugin@auth";
+import { type ExtendSession } from "~/routes/plugin@auth";
 
 export const EatSchema = z.object({
-  userId: z.string(),
   id: z.string().optional(),
   food: z.string(),
   amount: z.string().pipe( z.coerce.number() ).or(z.number()),
