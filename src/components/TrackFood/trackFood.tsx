@@ -210,10 +210,6 @@ export function useTrackFood() {
       food: "",
       measurement: "",
     } as Eating,
-
-    addEatId: $(function(this: {newEat: Eat}) {
-      this.newEat.id = createUniqueKey();
-    }),
     bindEating: $(function(this: {eating: Eating}, key: keyof Eating, value: string) {
       this.eating[key] = value;
     }),

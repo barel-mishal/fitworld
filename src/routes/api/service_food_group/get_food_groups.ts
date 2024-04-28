@@ -12,7 +12,7 @@ const UnitSchema = z.object({
   weight: z.number(),
 });
 
-const IngredientSchema = z.object({
+export const IngredientSchema = z.object({
   addCarbs: z.number(),
   addFat: z.number(),
   addProtein: z.number(),
