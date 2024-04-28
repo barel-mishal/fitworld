@@ -1,6 +1,6 @@
 import { $, Resource, Slot, component$, createContextId, useContext, useContextProvider, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
-import { type Eat, transformEat } from "~/routes/api/service_food_group/add_eat";
+import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 import useDebouncer from "~/util/useDebouncer";
 
 
@@ -55,7 +55,10 @@ export const MainTrackFood = component$(() => {
       if (whoIsEmpty && e.key === "Enter") { 
         whoIsEmpty.focus(); 
       } else if (e.key === "Enter") {
-        const foodTransformed = transformEat.parse(myEats.eating);
+        if (!myEats.selectedFood || !myEats.eating.measurementId) return;
+        myEats.selectedFood.amount = parseFloat(myEats.eating.amount);
+        myEats.selectedFood.selectedMeasurement = myEats.eating.measurementId
+        const foodTransformed = transformEat.parse(myEats.selectedFood);
         myEats.addEat(foodTransformed);
         myEats.resetNewEat();
       }
@@ -264,11 +267,10 @@ export function useTrackFood() {
     eats: [] as Eat[],
     state: "idle" as "idle"| "loading" | "ingredients" | "units" | "amounts" | "finish",
     addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
-      console.log(eat);
-      // serverAddEat(eat).then((data) => {
-      //   console.log(data);
-      // });
-      // this.eats = this.eats.concat([eat], this.eats);
+      serverAddEat(eat).then((data) => {
+        console.log(data);
+      });
+      this.eats = this.eats.concat([eat], this.eats);
     }),
     selectedFood: undefined as undefined | Ingredient,
     bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {
@@ -292,7 +294,6 @@ export function useTrackFood() {
       }
     }),
     remove: $(function(this: {eats: Eat[]}, id: string) {
-      console.log(id);
       this.eats = this.eats.filter(eat => eat.id !== id);
     })
   });

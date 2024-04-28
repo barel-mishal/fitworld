@@ -26,18 +26,21 @@ export const transformEat = IngredientSchema.transform((data) => {
 export const serverAddEat = server$(async function(options: Eat) {
     try {
         const parsed = EatSchema.safeParse(options);
+        if (!parsed.success) {
+          console.error(parsed.error);
+          return {
+            parsed
+          }
+        }
         const session = this.sharedMap.get("session") as ExtendSession;
-        console.log(parsed);
         const db = await serverInitDatabase();
         await db.authenticate(session.database.token);
         await db.use({ namespace: "namespace", database: "database" });
 
-        // const result = await db.create<Eat>(`Eat`, options);
-        // console.log(result);
-
-
+        const result = await db.create<Eat>(`Eat`, options);
+        const parsedResult = EatSchema.array().safeParse(result);
       
-        return {eat: []}
+        return parsedResult
     } catch (error) {
         console.error(error);
         return {
