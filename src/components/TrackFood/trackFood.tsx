@@ -1,6 +1,7 @@
 import { $, Resource, Slot, component$, createContextId, useContext, useContextProvider, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat } from "~/routes/api/service_food_group/add_eat";
+import useDebouncer from "~/util/useDebouncer";
 
 
 export const TrackFood = component$(() => {
@@ -23,8 +24,14 @@ export const MainTrackFood = component$(() => {
     const refUnit = useSignal<HTMLInputElement>();
     const refAmount = useSignal<HTMLInputElement>();
     const myEats = useContext(contextFoodTrack);
-    
 
+    const debounce = useDebouncer(
+      $((value: string) => {
+        myEats.bindEating("food", value);
+      }),
+      300
+    );
+    
     const resourceIngredients = useResource$(async ({track, cleanup}) => {
       const value = track(() => ({ isIngredientState: myEats.state, food: myEats.eating.food }));
       
@@ -100,7 +107,7 @@ export const MainTrackFood = component$(() => {
                   class="rounded-sm p-2 bg-emerald-800" 
                   value={myEats.eating.food} 
                   onFocus$={() => myEats.state = "ingredients"}
-                  onInput$={(e,el) => myEats.bindEating("food", el.value)} 
+                  onInput$={async (e,el) => await debounce(el.value)} 
                 />
                 <input id={"new-measurement"} 
                   type="text" 
