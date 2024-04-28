@@ -1,7 +1,14 @@
-import { $, Resource, component$, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { $, Resource, Slot, component$, createContextId, useContext, useContextProvider, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat } from "~/routes/api/service_food_group/add_eat";
 
+
+export const TrackFood = component$(() => {
+  const myEats = useTrackFood();
+  useContextProvider(contextFoodTrack, myEats);
+
+  return <Slot />;
+});
 
 /*
 2. get all food groups from database to application on typing
@@ -11,11 +18,12 @@ import { type Eat, transformEat } from "~/routes/api/service_food_group/add_eat"
 6. when using selected foods 
 7. track nutrition if the person gets something good then he gets a point / treat
 */
-export const TrackFood = component$(() => {
+export const MainTrackFood = component$(() => {
     const refFood = useSignal<HTMLInputElement>();
     const refUnit = useSignal<HTMLInputElement>();
     const refAmount = useSignal<HTMLInputElement>();
-    const myEats = useTrackFood();
+    const myEats = useContext(contextFoodTrack);
+    
 
     const resourceIngredients = useResource$(async ({track, cleanup}) => {
       const value = track(() => ({ isIngredientState: myEats.state, food: myEats.eating.food }));
@@ -173,12 +181,12 @@ export const TrackFood = component$(() => {
                 <h5>
                   {myEats.selectedFood.name}
                 </h5>
-                <ul class="grid  gap-3">
+                <ul class="grid gap-3">
                   {myEats.selectedFood.units.map((unit, index) => {
                     return (
-                      <li key={unit.id}>
+                      <li key={unit.id} class="grid  ">
                         <button 
-                          class="outline outline-emerald-200 px-6 py-2 rounded-sm flex gap-2"
+                          class="outline outline-emerald-200 px-6 py-2 rounded-sm flex gap-2 "
                           onClick$={() => onClickUnit(unit.unit, unit.id)}
                         >
                           <span>{myEats.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
@@ -199,6 +207,19 @@ export const TrackFood = component$(() => {
       </>
     )
   });
+
+export const NextTrackFood = component$(() => {
+
+  return (
+    <>
+      <div class="grid">
+        <button onClick$={() => {}} class="bg-emerald-900 p-2 rounded-sm border-b-2 border-emerald-400 active:border-b-0 transition-all ease-in-out">
+          NEXT
+        </button>
+      </div>
+    </>
+  )
+});
 
 export const wordDistance = (word1: string, word2: string) => {
   const dp = Array.from({length: word1.length + 1}, () => Array.from({length: word2.length + 1}, () => 0));
@@ -266,3 +287,5 @@ export function useTrackFood() {
   });
   return myEats;
 }
+
+export const contextFoodTrack = createContextId<ReturnType<typeof useTrackFood>>("foodTrack");
