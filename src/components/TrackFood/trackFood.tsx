@@ -69,14 +69,14 @@ export const MainTrackFood = component$(() => {
         refUnit.value?.focus();
     });
 
-    const onClickUnit = $(async (unit: string, unitId: string) => {
-      await myEats.bindEating("measurement", unit);
+    const onClickUnit = $(async (unit: Ingredient["units"][number], unitId: string) => {
+      const u = myEats.selectedFood?.units_names[myEats.selectedFood.units.indexOf(unit)];
+      const completeName = `${u} ${unit.weight} ${unit.unit}`;
+      await myEats.bindEating("measurement", completeName);
       await myEats.bindEating("measurementId", unitId);
       await myEats.bindEating("amount", "1");
       myEats.state = "amounts";
       refAmount.value?.focus();
-
-
     });
 
     // eslint-disable-next-line qwik/no-use-visible-task
@@ -135,7 +135,11 @@ export const MainTrackFood = component$(() => {
                     <li>
                       <button 
                       class="outline outline-emerald-200  px-6 py-2 rounded-sm"
-                      onClick$={() => myEats.bindEating("food", "Water")}
+                      onClick$={() => {
+                        myEats.bindEating("food", "Water");
+                        refFood.value?.focus();
+                        myEats.state = "ingredients"
+                      }}
                       >
                         Water
                       </button>
@@ -194,7 +198,7 @@ export const MainTrackFood = component$(() => {
                       <li key={unit.id} class="grid  ">
                         <button 
                           class="outline outline-emerald-200 px-6 py-2 rounded-sm flex gap-2 "
-                          onClick$={() => onClickUnit(unit.unit, unit.id)}
+                          onClick$={() => onClickUnit(unit, unit.id)}
                         >
                           <span>{myEats.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
                         </button>
