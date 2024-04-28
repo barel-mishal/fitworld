@@ -1,4 +1,4 @@
-import { $, Resource, component$, useResource$, useStore } from "@builder.io/qwik";
+import { $, Resource, component$, useResource$, useSignal, useStore } from "@builder.io/qwik";
 import { createUniqueKey } from "~/util/createId";
 import { PhTrash } from "../icons/icons";
 import { serverAddEat, serverGetIngredients } from "~/routes/api/service";
@@ -11,7 +11,6 @@ type Eat = {
     id: string
 }
 /*
-1. bring food group from database
 2. get all food groups from database to application on typing
 3. selecting from foods within database and insert them into id
 4. selecting all the unit from within this unit appropetly
@@ -19,26 +18,12 @@ type Eat = {
 6. when using selected foods 
 */
 export const TrackFood = component$(() => {
+    const refUnit = useSignal<HTMLInputElement>()
     const myEats = useStore({
       eats: [
         { unit: "כפית", amount: "1", food: "חלב", id: "1288" }, 
         { unit: "כפית", amount: "2", food: "קינואה", id: "123234" },   
         { unit: "כפית", amount: "1", food: "חלב", id: "123333" }, 
-        { unit: "כפית", amount: "2", food: "קינואה", id: "124434" },   
-        { unit: "כפית", amount: "1", food: "חלב", id: "12903" }, 
-        { unit: "כפית", amount: "2", food: "קינואה", id: "17234" },   
-        { unit: "כפית", amount: "1", food: "חלב", id: "12893" }, 
-        { unit: "כפית", amount: "2", food: "קינואה", id: "1289934" },   
-        { unit: "כפית", amount: "1", food: "חלב", id: "1203" }, 
-        { unit: "כפית", amount: "2", food: "קינואה", id: "19890234" },   
-        { unit: "כפית", amount: "1", food: "חלב", id: "128863" }, 
-        { unit: "כפית", amount: "2", food: "קינואה", id: "12lkj34" },   
-        { unit: "כפית", amount: "1", food: "חלב", id: "12lkj3" }, 
-        { unit: "כפית", amount: "2", food: "קינואה", id: "198u234" },   
-        { unit: "כפית", amount: "1", food: "חלב", id: "12kjn3" }, 
-        { unit: "כפית", amount: "2", food: "קינואה", id: "1lkj234" },   
-        { unit: "כפית", amount: "1", food: "חלב", id: "123" }, 
-        { unit: "כפית", amount: "2", food: "קינואה", id: "12KJ34" },
       ],
       toLoadIngredient: false,
       groupBy: $(function(this: {eats: Eat[]}, key: keyof Eat) {
@@ -49,7 +34,6 @@ export const TrackFood = component$(() => {
         return group;
       }),
       addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
-
         serverAddEat().then((data) => {
           console.log(data);
         });
@@ -87,11 +71,17 @@ export const TrackFood = component$(() => {
         this.eats = this.eats.filter(eat => eat.id !== id);
       })
     });
-    const resourceIngredients = useResource$(async ({track}) => {
-      const value = track(() => myEats.toLoadIngredient);
-      console.log(value);
-      if (!value) return [];
-      return (await serverGetIngredients()).ingredients
+    const resourceIngredients = useResource$(async ({track, cleanup}) => {
+      const value = track(() => ({ isFoodOnFocus: myEats.toLoadIngredient, food: myEats.newEat.food }));
+      
+      if (!value.isFoodOnFocus) return [];
+      // if (value.food.length === 0) return [];
+      
+      const controller = new AbortController();
+      cleanup(() => controller.abort());
+      
+      const options = { search: value.food, limit: 5 };
+      return (await serverGetIngredients(controller.signal, options)).ingredients; 
     });
 
 
@@ -126,14 +116,15 @@ export const TrackFood = component$(() => {
             <fieldset class="grid grid-cols-3 gap-3 " onKeyPress$={onKeyPressNewEat}>
                 <input id={"new-food"}  
                   type="text" 
+                  autoComplete={"off"}
                   class="rounded-sm p-2 bg-emerald-800" 
                   value={myEats.newEat.food} 
                   onFocus$={() => myEats.toLoadIngredient = true}
-                  onBlur$={() => myEats.toLoadIngredient = false}
                   onInput$={(e,el) => myEats.bindNewEat("food", el.value)} 
                 />
                 <input id={"new-unit"} 
                   type="text" 
+                  ref={refUnit}
                   class="rounded-sm p-2 bg-emerald-800" 
                   value={myEats.newEat.unit} onInput$={(e,el) => myEats.bindNewEat("unit", el.value)} 
                 />
@@ -143,84 +134,95 @@ export const TrackFood = component$(() => {
                   value={myEats.newEat.amount} onInput$={(e,el) => myEats.bindNewEat("amount", el.value)} 
                 />
             </fieldset>
-          </div>
-            <Resource 
-              value={resourceIngredients} 
-              onResolved={(value) => {
-                if (value.length === 0) return (
-                  <>
-                  <ul class="overflow-x-auto bg-emerald-950 z-50">
-                    <li class="bg-emerald-950">
-                      <h5>
-                        Fast selections
-                      </h5>
-                      <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1 bg-emerald-950">
-                          <li>
-                            <button class="outline outline-emerald-200  px-6 py-2 rounded-sm">water</button>
-                          </li>
-                        {[{id: 297, name: "milk"}, {id: 298, name: "water"}, {id: 299, name: "bread"}].map((food) => {
-                          return (
-                            <li key={food.id} class=" bg-emerald-950">
-                              <button class="outline outline-emerald-200 px-6 py-2 rounded-sm">
-                                {food.name}
-                              </button>
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    </li>
-                  </ul>
-
-                       <div class="overflow-y-auto">
-                          <h5>5 Last Eated Record</h5>
-                          <ul class="grid gap-3 ">
-                            {myEats.eats.map((eat) => {
-                              return (
-                                <li key={eat.id} class="grid grid-cols-[1fr,auto] gap-2">
-                                  <fieldset class="grid grid-cols-3 gap-3 ">
-                                    <input 
-                                      type="text" 
-                                      class="bg-transparent"
-                                      value={eat.food} 
-                                      onInput$={(e,el) => myEats.bindValue("food", el.value, eat.id)} />
-                                    <input 
-                                      type="text" 
-                                      class="bg-transparent"
-                                      value={eat.unit} 
-                                      onInput$={(e,el) => myEats.bindValue("unit", el.value, eat.id)} />
-                                    <input 
-                                      type="text" 
-                                      class="bg-transparent" 
-                                      value={eat.amount} 
-                                      onInput$={(e,el) => myEats.bindValue("amount", el.value, eat.id)} />
-                                  </fieldset>
-                                  <button class="fill-sky-400 " onClick$={() => myEats.remove(eat.id)}>
-                                    <PhTrash class="fill-rose-400 " width={20} height={20} />
-                                  </button>
-                                </li>
-                              )
-                            })}
-                          </ul>
-                        </div>
-                  </>
-                );
-                return (
-                  <>
-                  {value.map((food) => {
-                    return (
-                      <button key={food.id} class="outline outline-emerald-200 px-6 py-2 rounded-sm" onClick$={() => {
-                        myEats.bindNewEat("food", food.name);
-                        myEats.toLoadIngredient = false;
-                      }}>
-                        {food.name}
+            <ul class="overflow-x-auto bg-emerald-950 z-50">
+              <li class="bg-emerald-950">
+                <h5>
+                  Fast selections
+                </h5>
+                <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1 bg-emerald-950">
+                    <li>
+                      <button 
+                      class="outline outline-emerald-200  px-6 py-2 rounded-sm"
+                      onClick$={() => {
+                        myEats.bindNewEat("food", "Water");
+                      }}
+                      >
+                        Water
                       </button>
+                    </li>
+                  {[{id: 297, name: "milk"}, {id: 298, name: "water"}, {id: 299, name: "bread"}].map((food) => {
+                    return (
+                      <li key={food.id} class=" bg-emerald-950">
+                        <button class="outline outline-emerald-200 px-6 py-2 rounded-sm" onClick$={() => {
+                          console.log(food.name);
+                          myEats.bindNewEat("food", food.name);
+                        }} >
+                          {food.name}
+                        </button>
+                      </li>
                     )
                   })}
-                  </>
+                </ul>
+              </li>
+            </ul>
+            <Resource 
+            value={resourceIngredients} 
+            onResolved={(value) => {
+              if (value.length === 0) return (
+                <>
+                </>
+              );
+              return (
+                <>
+                {value.map((food) => {
+                  return (
+                    <button key={food.id} 
+                      class="outline outline-emerald-200 px-6 py-2 rounded-sm" 
+                      onClick$={() => {
+                        myEats.bindNewEat("food", food.name);
+                        myEats.toLoadIngredient = false;
+                        refUnit.value?.focus();
+                      }}
+                      >
+                      {food.name}
+                    </button>
+                  )
+                })}
+                </>
+              )
+            }} />
+            <h5>5 Last Eated Record</h5>
+          </div>
+          <div class="overflow-y-auto">
+            <ul class="grid gap-3 ">
+              {myEats.eats.map((eat) => {
+                return (
+                  <li key={eat.id} class="grid grid-cols-[1fr,auto] gap-2">
+                    <fieldset class="grid grid-cols-3 gap-3 ">
+                      <input 
+                        type="text" 
+                        class="bg-transparent"
+                        value={eat.food} 
+                        onInput$={(e,el) => myEats.bindValue("food", el.value, eat.id)} />
+                      <input 
+                        type="text" 
+                        class="bg-transparent"
+                        value={eat.unit} 
+                        onInput$={(e,el) => myEats.bindValue("unit", el.value, eat.id)} />
+                      <input 
+                        type="text" 
+                        class="bg-transparent" 
+                        value={eat.amount} 
+                        onInput$={(e,el) => myEats.bindValue("amount", el.value, eat.id)} />
+                    </fieldset>
+                    <button class="fill-sky-400 " onClick$={() => myEats.remove(eat.id)}>
+                      <PhTrash class="fill-rose-400 " width={20} height={20} />
+                    </button>
+                  </li>
                 )
-              }} />
-            
-     
+              })}
+            </ul>
+          </div>
         </div>
       </>
     )

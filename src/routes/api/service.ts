@@ -139,13 +139,25 @@ export const serverAddEat = server$(async function() {
       console.error(error);
     }
 });
-
-export const serverGetIngredients = server$(async function() {
+interface ServerGetIngredientsOptions {
+  limit?: number;
+  search?: string;
+  [key: string]: string | number | undefined;
+}
+export const serverGetIngredients = server$(async function(options: ServerGetIngredientsOptions) {
     try {
       const db = await serverInitDatabase();
+      
       await db.use({ namespace: "namespace", database: "database" });
-      const ingredients = await db.select("Ingredient");
-      return {ingredients} as {ingredients: {name: string, id: string}[]}
+      const result = await db.query_raw<[{name: string, id: string}[]]>(`
+      IF $search != "" THEN 
+        SELECT * FROM Ingredient WHERE name ~ $search LIMIT $limit
+      ELSE
+        SELECT * FROM Ingredient LIMIT $limit
+      END;
+      `, options);
+      if (result[0].status === "ERR") return {ingredients: []}
+      return {ingredients: result[0].result} 
     } catch (error) {
       console.error(error);
       return {ingredients: []}
