@@ -1,78 +1,24 @@
-import { $, Resource, component$, useResource$, useSignal, useStore } from "@builder.io/qwik";
+import { $, Resource, component$, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { createUniqueKey } from "~/util/createId";
-import { PhTrash } from "../icons/icons";
-import { serverAddEat, serverGetIngredients } from "~/routes/api/service";
+import { serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
+import { type Eat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 
 
-type Eat = {
-    unit: string,
-    amount: string,
-    food: string,
-    id: string
-}
 /*
 2. get all food groups from database to application on typing
 3. selecting from foods within database and insert them into id
 4. selecting all the unit from within this unit appropetly
 5. ui bwllow all food as list of items
 6. when using selected foods 
+7. track nutrition if the person gets something good then he gets a point / treat
 */
 export const TrackFood = component$(() => {
-    const refUnit = useSignal<HTMLInputElement>()
-    const myEats = useStore({
-      eats: [
-        { unit: "כפית", amount: "1", food: "חלב", id: "1288" }, 
-        { unit: "כפית", amount: "2", food: "קינואה", id: "123234" },   
-        { unit: "כפית", amount: "1", food: "חלב", id: "123333" }, 
-      ],
-      toLoadIngredient: false,
-      groupBy: $(function(this: {eats: Eat[]}, key: keyof Eat) {
-        const group = this.eats.reduce((acc, eat) => {
-          acc[eat[key]].push(eat);
-          return acc;
-        }, {} as Record<string, Eat[]>);
-        return group;
-      }),
-      addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
-        serverAddEat().then((data) => {
-          console.log(data);
-        });
-        this.eats = this.eats.concat([eat], this.eats);
-      }),
-      bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {
-        const eat = this.eats.find(eat => eat.id === id);
-        if (eat) {
-          eat[key] = value;
-        }
-      }),
-      addDefault: $(function(this: {eats: Eat[]}) {
-        this.eats.push({unit: "", amount: "", food: "", id: createUniqueKey()});
-      }),
-      newEat: {
-        unit: "",
-        amount: "",
-        food: "",
-      } as Eat,
-      addEatId: $(function(this: {newEat: Eat}) {
-        this.newEat.id = createUniqueKey();
-      }),
-      bindNewEat: $(function(this: {newEat: Eat}, key: keyof Eat, value: string) {
-        this.newEat[key] = value;
-      }),
-      resetNewEat: $(function(this: {newEat: Omit<Eat, "id">}) {
-        this.newEat = {
-          unit: "",
-          amount: "",
-          food: "",
-        }
-      }),
-      remove: $(function(this: {eats: Eat[]}, id: string) {
-        console.log(id);
-        this.eats = this.eats.filter(eat => eat.id !== id);
-      })
-    });
+    const refFood = useSignal<HTMLInputElement>();
+    const refUnit = useSignal<HTMLInputElement>();
+    const myEats = useTrackFood();
+
     const resourceIngredients = useResource$(async ({track, cleanup}) => {
-      const value = track(() => ({ isFoodOnFocus: myEats.toLoadIngredient, food: myEats.newEat.food }));
+      const value = track(() => ({ isFoodOnFocus: myEats.toLoadIngredient, food: myEats.eating.food }));
       
       if (!value.isFoodOnFocus) return [];
       // if (value.food.length === 0) return [];
@@ -83,7 +29,6 @@ export const TrackFood = component$(() => {
       const options = { search: value.food, limit: 5 };
       return (await serverGetIngredients(controller.signal, options)).ingredients; 
     });
-
 
     const onKeyPressNewEat = $((e: KeyboardEvent) => {
       const input = e.target as HTMLInputElement;
@@ -98,42 +43,60 @@ export const TrackFood = component$(() => {
         whoIsEmpty.focus(); 
       } else if (e.key === "Enter") {
         myEats.addEatId();
-        myEats.addEat(myEats.newEat);
+        myEats.addEat(myEats.eating);
         myEats.resetNewEat();
       }
     });
-  
+
+    const onClickFood = $((food: string) => {
+        myEats.bindEating("food", food);
+        myEats.toLoadIngredient = false;
+        refUnit.value?.focus();
+    });
+
+    // eslint-disable-next-line qwik/no-use-visible-task
+    useVisibleTask$(() => {
+      refFood.value?.focus();
+    }, {strategy: "document-ready"});
   
     return (
       <>
         <div class="grid">
+          
           <div class="grid gap-3 sticky top-0 bg-emerald-950 z-50">
+            
+            
             <section class="grid grid-cols-3 gap-3">
               <label for="new-food" class="text-emerald-100">Food</label>
               <label for="new-unit" class="text-emerald-100">Unit</label>
               <label for="new-amount" class="text-emerald-100">Amount</label>
             </section>
+            
+            
             <fieldset class="grid grid-cols-3 gap-3 " onKeyPress$={onKeyPressNewEat}>
                 <input id={"new-food"}  
                   type="text" 
+                  ref={refFood}
                   autoComplete={"off"}
                   class="rounded-sm p-2 bg-emerald-800" 
-                  value={myEats.newEat.food} 
+                  value={myEats.eating.food} 
                   onFocus$={() => myEats.toLoadIngredient = true}
-                  onInput$={(e,el) => myEats.bindNewEat("food", el.value)} 
+                  onInput$={(e,el) => myEats.bindEating("food", el.value)} 
                 />
-                <input id={"new-unit"} 
+                <input id={"new-measurement"} 
                   type="text" 
                   ref={refUnit}
                   class="rounded-sm p-2 bg-emerald-800" 
-                  value={myEats.newEat.unit} onInput$={(e,el) => myEats.bindNewEat("unit", el.value)} 
+                  value={myEats.eating.measurement} onInput$={(e,el) => myEats.bindEating("measurement", el.value)} 
                 />
                 <input id={"new-amount"} 
                   type="text" 
                   class="rounded-sm p-2 bg-emerald-800" 
-                  value={myEats.newEat.amount} onInput$={(e,el) => myEats.bindNewEat("amount", el.value)} 
+                  value={myEats.eating.amount} onInput$={(e,el) => myEats.bindEating("amount", el.value)} 
                 />
             </fieldset>
+            
+            
             <ul class="overflow-x-auto bg-emerald-950 z-50">
               <li class="bg-emerald-950">
                 <h5>
@@ -143,21 +106,18 @@ export const TrackFood = component$(() => {
                     <li>
                       <button 
                       class="outline outline-emerald-200  px-6 py-2 rounded-sm"
-                      onClick$={() => {
-                        myEats.bindNewEat("food", "Water");
-                      }}
+                      onClick$={() => myEats.bindEating("food", "Water")}
                       >
                         Water
                       </button>
                     </li>
-                  {[{id: 297, name: "milk"}, {id: 298, name: "water"}, {id: 299, name: "bread"}].map((food) => {
+                  {[].map((food) => {
                     return (
-                      <li key={food.id} class=" bg-emerald-950">
-                        <button class="outline outline-emerald-200 px-6 py-2 rounded-sm" onClick$={() => {
-                          console.log(food.name);
-                          myEats.bindNewEat("food", food.name);
-                        }} >
-                          {food.name}
+                      <li key={food} class=" bg-emerald-950">
+                        <button 
+                        class="outline outline-emerald-200 px-6 py-2 rounded-sm" 
+                        onClick$={() => myEats.bindEating("food", food)} >
+                          {food}
                         </button>
                       </li>
                     )
@@ -165,66 +125,106 @@ export const TrackFood = component$(() => {
                 </ul>
               </li>
             </ul>
+            
+            
             <Resource 
-            value={resourceIngredients} 
-            onResolved={(value) => {
-              if (value.length === 0) return (
-                <>
-                </>
-              );
-              return (
-                <>
-                {value.map((food) => {
-                  return (
-                    <button key={food.id} 
-                      class="outline outline-emerald-200 px-6 py-2 rounded-sm" 
-                      onClick$={() => {
-                        myEats.bindNewEat("food", food.name);
-                        myEats.toLoadIngredient = false;
-                        refUnit.value?.focus();
-                      }}
-                      >
-                      {food.name}
-                    </button>
-                  )
-                })}
-                </>
-              )
-            }} />
-            <h5>5 Last Eated Record</h5>
-          </div>
-          <div class="overflow-y-auto">
-            <ul class="grid gap-3 ">
-              {myEats.eats.map((eat) => {
+              value={resourceIngredients} 
+              onResolved={(value) => {
+                if (value.length === 0) return (
+                  <>
+                  </>
+                );
                 return (
-                  <li key={eat.id} class="grid grid-cols-[1fr,auto] gap-2">
-                    <fieldset class="grid grid-cols-3 gap-3 ">
-                      <input 
-                        type="text" 
-                        class="bg-transparent"
-                        value={eat.food} 
-                        onInput$={(e,el) => myEats.bindValue("food", el.value, eat.id)} />
-                      <input 
-                        type="text" 
-                        class="bg-transparent"
-                        value={eat.unit} 
-                        onInput$={(e,el) => myEats.bindValue("unit", el.value, eat.id)} />
-                      <input 
-                        type="text" 
-                        class="bg-transparent" 
-                        value={eat.amount} 
-                        onInput$={(e,el) => myEats.bindValue("amount", el.value, eat.id)} />
-                    </fieldset>
-                    <button class="fill-sky-400 " onClick$={() => myEats.remove(eat.id)}>
-                      <PhTrash class="fill-rose-400 " width={20} height={20} />
-                    </button>
-                  </li>
+                  <>
+                  <h5>
+                    <span>{value.length} Popular foods or search for</span> "<span>{myEats.eating.food}</span>" 
+                  </h5>
+                  {value.map((food) => {
+                    console.log(food);
+                    return (
+                      <button key={food.id} 
+                        class="outline outline-emerald-200 px-6 py-2 rounded-sm text-left" 
+                        onClick$={async () => await onClickFood(food.name)}
+                        >
+                        {food.name}
+                      </button>
+                    )
+                  })}
+                  </>
                 )
-              })}
-            </ul>
+              }} 
+            />
+            
           </div>
-        </div>
+
+          </div>
       </>
     )
   });
 
+export const wordDistance = (word1: string, word2: string) => {
+  const dp = Array.from({length: word1.length + 1}, () => Array.from({length: word2.length + 1}, () => 0));
+  for (let i = 0; i <= word1.length; i++) {
+    for (let j = 0; j <= word2.length; j++) {
+      if (i === 0) {
+        dp[i][j] = j;
+      } else if (j === 0) {
+        dp[i][j] = i;
+      } else if (word1[i - 1] === word2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else {
+        dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+  }
+  return dp[word1.length][word2.length];
+};
+
+
+
+export function useTrackFood() {
+  type Eating = {
+    amount: string,
+    food: string,
+    measurement: string,
+  }
+  const myEats = useStore({
+    eats: [],
+    toLoadIngredient: false,
+    addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
+      serverAddEat(eat).then((data) => {
+        console.log(data);
+      });
+      this.eats = this.eats.concat([eat], this.eats);
+    }),
+    bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {
+      const eat = this.eats.find(eat => eat.id === id);
+      if (!eat) return;
+      console.log(eat);
+    }),
+    eating: {
+      amount: "",
+      food: "",
+      measurement: "",
+    } as Eating,
+
+    addEatId: $(function(this: {newEat: Eat}) {
+      this.newEat.id = createUniqueKey();
+    }),
+    bindEating: $(function(this: {bindEating: Eating}, key: keyof Eating, value: string) {
+      this.bindEating[key] = value;
+    }),
+    resetNewEat: $(function(this: {eating: Eating}) {
+      this.eating = {
+        amount: "",
+        food: "",
+        measurement: "",
+      }
+    }),
+    remove: $(function(this: {eats: Eat[]}, id: string) {
+      console.log(id);
+      this.eats = this.eats.filter(eat => eat.id !== id);
+    })
+  });
+  return myEats;
+}

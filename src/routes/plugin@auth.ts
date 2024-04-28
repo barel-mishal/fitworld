@@ -40,10 +40,10 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
                 scope: "account",
                 database: "database", 
                 namespace: "namespace", 
-                pass: connection.account.providerAccountId,
+                pass: connection.account.providerAccountId, // password is providerAccountId
                 providerId: connection.account.providerAccountId,
               });
-              // Create profile
+              // Create profile for that user
               await db.query("CREATE profile; CREATE personalInfo;");
             }
           } catch (error) {
@@ -55,14 +55,16 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
         return connection.token;
       },
       session: async (connection) => {
+        // Signin to database with providerId
         const token = await db.signin({
           scope: "account",
           database: "database", 
           namespace: "namespace", 
           pass: connection.token.providerId,
         });
+        // Get user profile
         const profile = await db.query<[[SchemaProfileType]]>("SELECT * FROM profile WHERE userId = $auth.id");
-
+        // Return session with database token for to authenticate with database and profile
         return {...connection.session, database: { token, profile: profile[0][0] }} ;
       },
 
