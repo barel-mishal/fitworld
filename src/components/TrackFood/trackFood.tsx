@@ -266,12 +266,6 @@ export function useTrackFood() {
     foodId?: string,
     measurementId?: string,
   }
-  const debounceReset = useDebouncer(
-    $(async () => {
-      await store.resetNewEat();
-    }),
-    200
-  );
   const refFood = useSignal<HTMLInputElement>();
   const refUnit = useSignal<HTMLInputElement>();
   const refAmount = useSignal<HTMLInputElement>();
@@ -348,6 +342,12 @@ export function useTrackFood() {
       this.eating.amount = amount;
     }),
   });
+  const debounceReset = useDebouncer(
+    $(async () => {
+      await store.resetNewEat();
+    }),
+    200
+  );
 
   const resourceIngredients = useResource$(async ({track, cleanup}) => {
     const value = track(() => ({ isIngredientState: store.state, food: store.eating.food }));
@@ -366,14 +366,11 @@ export function useTrackFood() {
   const onClickNext = $(async () => {
     let message = "";
     const stats = store.stateStaps;
-    console.log(stats, store.state)
     const index = stats.indexOf(store.state);
     if (index === -1) return;
     const nextIndex = index + 1;
-    console.log(nextIndex, stats.length)
     if (nextIndex >= stats.length) return;
     const goTo = stats[nextIndex];
-    console.log(goTo, "units")
     switch (goTo) {
       case "ingredients":
         store.moveState("ingredients");
@@ -382,34 +379,39 @@ export function useTrackFood() {
         break;
       case "units":
         const food = (await resourceIngredients.value).find((food) => food.id === store.eating.foodId);
-        console.log({food});
         if (!food) return;
-
         store.selectedFood = food;
         store.eating.food = food.name;
-        store.eating.measurementId = food.units[0].id;
+        const unit = food.units[0];
+        store.eating.measurementId = unit.id;
+        store.eating.measurement = `${food.units_names[0]} ${unit.weight} ${unit.unit}`;
+        store.eating.amount = "1";
         store.moveState("units");
         refUnit.value?.focus();
         message = "Please select a unit";
         console.log("units", food.units);
         break;
       case "amounts":
+        if (refAmount.value !== document.activeElement) {
+          refAmount.value?.focus();
+          break;
+        }
         if (!store.selectedFood || !store.eating.measurementId) return;
         store.selectedFood.amount = parseFloat(store.eating.amount);
         store.selectedFood.selectedMeasurement = store.eating.measurementId
         const foodTransformed = transformEat.parse(store.selectedFood);
         await store.addEat(foodTransformed);
-        await store.moveState("ingredients");
-        debounceReset("");
+        await store.moveState("keepgoing");
         refFood.value?.focus();
         message = "Please select an amount";
         break;
-      case "finish":
-        store.moveState("finish");
-        message = "Please finish";
-        break;
+        case "finish":
+          store.moveState("finish");
+          message = "Please finish";
+          break;
       case "keepgoing":
         store.moveState("keepgoing");
+        debounceReset("");
         break;
       default:
         break;
