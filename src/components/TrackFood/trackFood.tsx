@@ -158,7 +158,7 @@ export const MainTrackFood = component$(() => {
                 <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1 bg-emerald-950">
                     <li>
                       <button 
-                      class="outline outline-emerald-200  px-6 py-2 rounded-sm"
+                      class=" border-b-4 border border-emerald-700 px-6 py-2 rounded-sm"
                       onClick$={() => {
                         myEats.store.bindEating("food", "Water");
                         myEats.refFood.value?.focus();
