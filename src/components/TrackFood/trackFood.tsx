@@ -1,4 +1,4 @@
-import { $, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { $, QRL, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 import useDebouncer from "~/util/useDebouncer";
@@ -28,23 +28,9 @@ export const MainTrackFood = component$(() => {
       }),
       300
     );
-    
-    const resourceIngredients = useResource$(async ({track, cleanup}) => {
-      const value = track(() => ({ isIngredientState: myEats.store.state, food: myEats.store.eating.food }));
-      
-      if (value.isIngredientState !== "ingredients") return [];      
-      const controller = new AbortController();
-      cleanup(() => controller.abort());
-
-      const options = { search: value.food, limit: 5 };
-      const ingredients = await serverGetIngredients(controller.signal, options);
-      myEats.store.eating.foodId = ingredients.ingredients[0].id;
-      return ingredients.ingredients;
-    });
-
 
     const onPressArrowsKeys = $(async (e: KeyboardEvent) => {
-      const ingredients = await resourceIngredients.value;
+      const ingredients = await myEats.resourceIngredients.value;
       const currentFood = myEats.store.eating.foodId;
       if (!currentFood) return;
       const index = ingredients.findIndex((food) => food.id === currentFood);
@@ -69,7 +55,6 @@ export const MainTrackFood = component$(() => {
         }
       } else if (myEats.store.state === "units" && e.key === "ArrowUp") {
         if (!myEats.store.selectedFood) return;
-        console.log("unit", myEats.store.eating.measurementId, myEats.store.selectedFood.units)
         const index = myEats.store.selectedFood.units.findIndex((unit) => unit.id === myEats.store.eating.measurementId);
         const next = myEats.store.selectedFood.units.at(index - 1)
         if (next) {
@@ -86,22 +71,14 @@ export const MainTrackFood = component$(() => {
       }
     });
 
-    const onClickFood = $(async (food: Ingredient, foodId: string, ) => {
-        await myEats.store.bindEating("food", food.name);
-        await myEats.store.bindEating("foodId", foodId);
-        myEats.store.selectedFood = food;
+    const onClickFood = $(async (food: Ingredient) => {
+        await myEats.store.updateIngredient(food);
         myEats.store.moveState("units");
         myEats.refUnit.value?.focus();
     });
 
-    
-
-    const onClickUnit = $(async (unit: Ingredient["units"][number], unitId: string) => {
-      const u = myEats.store.selectedFood?.units_names[myEats.store.selectedFood.units.indexOf(unit)];
-      const completeName = `${u} ${unit.weight} ${unit.unit}`;
-      await myEats.store.bindEating("measurement", completeName);
-      await myEats.store.bindEating("measurementId", unitId);
-      await myEats.store.bindEating("amount", "1");
+    const onClickUnit = $(async (unit: Ingredient["units"][number]) => {
+      await myEats.store.updarteUnit(unit);
       myEats.store.moveState("amounts");
       myEats.refAmount.value?.focus();
     });
@@ -113,8 +90,6 @@ export const MainTrackFood = component$(() => {
       myEats.store.moveState("units");
     });
 
-   
-
     // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(() => {
       myEats.refFood.value?.focus();
@@ -125,7 +100,7 @@ export const MainTrackFood = component$(() => {
         myEats.store.resetNewEat();
         myEats.refFood.value?.focus();
       } else if (e.key === "Enter") {
-        const ingredients = await resourceIngredients.value;
+        const ingredients = await myEats.resourceIngredients.value;
         await myEats.onClickNext(ingredients);
       } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         onPressArrowsKeys(e);
@@ -210,7 +185,7 @@ export const MainTrackFood = component$(() => {
             
             
             <Resource 
-              value={resourceIngredients} 
+              value={myEats.resourceIngredients} 
               onResolved={(value) => {
                 if (value.length === 0) return (
                   <>
@@ -226,7 +201,7 @@ export const MainTrackFood = component$(() => {
                       <button key={food.id} 
                         data-active={`${myEats.store.eating.foodId === food.id}`}
                         class="outline outline-emerald-200 px-6 py-2 rounded-sm text-left data-[active=true]:bg-rose-300"
-                        onClick$={async () => await onClickFood(food, food.id)}
+                        onClick$={async () => await onClickFood(food)}
                         >
                         {food.name}
                       </button>
@@ -249,7 +224,7 @@ export const MainTrackFood = component$(() => {
                         <button 
                           data-active={`${unit.id === myEats.store.eating.measurementId}`}
                           class="outline outline-emerald-200 px-6 py-2 rounded-sm flex gap-2 data-[active=true]:bg-rose-300"
-                          onClick$={() => onClickUnit(unit, unit.id)}
+                          onClick$={() => onClickUnit(unit)}
                         >
                           <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
                         </button>
@@ -260,9 +235,6 @@ export const MainTrackFood = component$(() => {
               </>
             
             )}
-
-            
-            
           </div>
 
         </div>
@@ -271,36 +243,18 @@ export const MainTrackFood = component$(() => {
   });
 
 export const NextTrackFood = component$(() => {
+  const myEats = useContext(contextFoodTrack);
 
   return (
     <>
       <div class="grid">
-        <button onClick$={() => {}} class="bg-emerald-900 p-2 rounded-sm border-b-2 border-emerald-400 active:border-b-0 transition-all ease-in-out">
+        <button onClick$={async () => {await myEats.onClickNext([])}} class="bg-emerald-900 p-2 rounded-sm border-b-2 border-emerald-400 active:border-b-0 transition-all ease-in-out">
           NEXT
         </button>
       </div>
     </>
   )
 });
-
-export const wordDistance = (word1: string, word2: string) => {
-  const dp = Array.from({length: word1.length + 1}, () => Array.from({length: word2.length + 1}, () => 0));
-  for (let i = 0; i <= word1.length; i++) {
-    for (let j = 0; j <= word2.length; j++) {
-      if (i === 0) {
-        dp[i][j] = j;
-      } else if (j === 0) {
-        dp[i][j] = i;
-      } else if (word1[i - 1] === word2[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1];
-      } else {
-        dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]);
-      }
-    }
-  }
-  return dp[word1.length][word2.length];
-};
-
 
 
 export function useTrackFood() {
@@ -376,6 +330,22 @@ export function useTrackFood() {
       }
       return this.state;
     }),
+    updateIngredient: $(function(this: {selectedFood: Ingredient, eating: Eating}, food: Ingredient) {
+      this.selectedFood = food;
+      this.eating.food = food.name;
+      this.eating.foodId = food.id;
+    }),
+    updarteUnit: $(async function(this: {selectedFood: Ingredient, eating: Eating, bindEating: QRL<(this: {eating: Eating}, key: keyof Eating, value: string) => void>}, unit: Ingredient["units"][number]) {
+      const u = this.selectedFood.units_names[this.selectedFood.units.indexOf(unit)];
+      const completeName = `${u} ${unit.weight} ${unit.unit}`;
+      await this.bindEating("measurement", completeName);
+      await this.bindEating("measurementId", unit.id);
+      await this.bindEating("amount", "1");
+      return completeName;
+    }),
+    updateAmount: $(function(this: {eating: Eating}, amount: string) {
+      this.eating.amount = amount;
+    }),
   });
   const onClickNext = $(async (ingredients: Ingredient[]) => {
     let message = "";
@@ -424,7 +394,20 @@ export function useTrackFood() {
     }
     return message;
   });
-  return {store, refFood, refUnit, refAmount, onClickNext};
+
+  const resourceIngredients = useResource$(async ({track, cleanup}) => {
+    const value = track(() => ({ isIngredientState: store.state, food: store.eating.food }));
+    
+    if (value.isIngredientState !== "ingredients") return [];      
+    const controller = new AbortController();
+    cleanup(() => controller.abort());
+
+    const options = { search: value.food, limit: 5 };
+    const ingredients = await serverGetIngredients(controller.signal, options);
+    store.eating.foodId = ingredients.ingredients[0].id;
+    return ingredients.ingredients;
+  });
+  return {store, refFood, refUnit, refAmount, onClickNext, resourceIngredients};
 }
 
 export const contextFoodTrack = createContextId<ReturnType<typeof useTrackFood>>("foodTrack");
@@ -433,3 +416,21 @@ export const contextFoodTrack = createContextId<ReturnType<typeof useTrackFood>>
 
 // shiftState
 type State = "idle" | "ingredients" | "units" | "amounts" | "finish" | "keepgoing";
+
+export const wordDistance = (word1: string, word2: string) => {
+  const dp = Array.from({length: word1.length + 1}, () => Array.from({length: word2.length + 1}, () => 0));
+  for (let i = 0; i <= word1.length; i++) {
+    for (let j = 0; j <= word2.length; j++) {
+      if (i === 0) {
+        dp[i][j] = j;
+      } else if (j === 0) {
+        dp[i][j] = i;
+      } else if (word1[i - 1] === word2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else {
+        dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+  }
+  return dp[word1.length][word2.length];
+};
