@@ -100,8 +100,7 @@ export const MainTrackFood = component$(() => {
         myEats.store.resetNewEat();
         myEats.refFood.value?.focus();
       } else if (e.key === "Enter") {
-        const ingredients = await myEats.resourceIngredients.value;
-        await myEats.onClickNext(ingredients);
+        await myEats.onClickNext();
       } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         onPressArrowsKeys(e);
       }
@@ -248,7 +247,7 @@ export const NextTrackFood = component$(() => {
   return (
     <>
       <div class="grid">
-        <button onClick$={async () => {await myEats.onClickNext([])}} class="bg-emerald-900 p-2 rounded-sm border-b-2 border-emerald-400 active:border-b-0 transition-all ease-in-out">
+        <button onClick$={async () => {await myEats.onClickNext()}} class="bg-emerald-900 p-2 rounded-sm border-b-2 border-emerald-400 active:border-b-0 transition-all ease-in-out">
           NEXT
         </button>
       </div>
@@ -347,7 +346,22 @@ export function useTrackFood() {
       this.eating.amount = amount;
     }),
   });
-  const onClickNext = $(async (ingredients: Ingredient[]) => {
+
+  const resourceIngredients = useResource$(async ({track, cleanup}) => {
+    const value = track(() => ({ isIngredientState: store.state, food: store.eating.food }));
+    
+    if (value.isIngredientState !== "ingredients") return [];      
+    const controller = new AbortController();
+    cleanup(() => controller.abort());
+
+    const options = { search: value.food, limit: 5 };
+    const ingredients = await serverGetIngredients(controller.signal, options);
+    store.eating.foodId = ingredients.ingredients[0].id;
+    return ingredients.ingredients;
+  });
+
+  
+  const onClickNext = $(async () => {
     let message = "";
     const stats = store.stateStaps;
     const index = stats.indexOf(store.state);
@@ -362,7 +376,7 @@ export function useTrackFood() {
         message = "Please select a food";
         break;
       case "units":
-        const food = ingredients.find((food) => food.id === store.eating.foodId);
+        const food = (await resourceIngredients.value).find((food) => food.id === store.eating.foodId);
         if (!food) return;
         store.selectedFood = food;
         store.eating.food = food.name;
@@ -395,18 +409,7 @@ export function useTrackFood() {
     return message;
   });
 
-  const resourceIngredients = useResource$(async ({track, cleanup}) => {
-    const value = track(() => ({ isIngredientState: store.state, food: store.eating.food }));
-    
-    if (value.isIngredientState !== "ingredients") return [];      
-    const controller = new AbortController();
-    cleanup(() => controller.abort());
 
-    const options = { search: value.food, limit: 5 };
-    const ingredients = await serverGetIngredients(controller.signal, options);
-    store.eating.foodId = ingredients.ingredients[0].id;
-    return ingredients.ingredients;
-  });
   return {store, refFood, refUnit, refAmount, onClickNext, resourceIngredients};
 }
 
