@@ -78,10 +78,30 @@
   }
 }
 
-/**
- * Tailwind CSS imports
- * View the full documentation at https://tailwindcss.com
- */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* apply tailwind classes */
+@layer components {
+  .btn {
+    @apply border-b-4 border border-emerald-700 px-6 py-2 rounded-sm;
+  }
+  .btn-primary {
+    @apply bg-emerald-900 p-2 rounded-sm border-b-2 border-emerald-400 active:border-b-0 transition-all ease-in-out;
+  }
+  .btn-data-active {
+    @apply data-[active=true]:bg-emerald-900
+  }
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground;
+  }
+  .btn-accent {
+    @apply bg-accent text-accent-foreground;
+  }
+  .btn-alert {
+    @apply bg-alert text-alert-foreground;
+  }
+  .btn-sm {
+    @apply text-sm;
+  }
+  .btn-lg {
+    @apply text-lg;
+  }
+}

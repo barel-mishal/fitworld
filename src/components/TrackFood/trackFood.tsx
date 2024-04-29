@@ -158,7 +158,7 @@ export const MainTrackFood = component$(() => {
                 <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1 bg-emerald-950">
                     <li>
                       <button 
-                      class=" border-b-4 border border-emerald-700 px-6 py-2 rounded-sm"
+                      class="btn"
                       onClick$={() => {
                         myEats.store.bindEating("food", "Water");
                         myEats.refFood.value?.focus();
@@ -172,7 +172,7 @@ export const MainTrackFood = component$(() => {
                     return (
                       <li key={food} class=" bg-emerald-950">
                         <button 
-                        class="outline outline-emerald-200 px-6 py-2 rounded-sm" 
+                        class="btn" 
                         onClick$={() => myEats.store.bindEating("food", food)} >
                           {food}
                         </button>
@@ -200,7 +200,7 @@ export const MainTrackFood = component$(() => {
                     return (
                       <button key={food.id} 
                         data-active={`${myEats.store.eating.foodId === food.id}`}
-                        class="outline outline-emerald-200 px-6 py-2 rounded-sm text-left data-[active=true]:bg-rose-300"
+                        class="btn btn-data-active"
                         onClick$={async () => await onClickFood(food)}
                         >
                         {food.name}
@@ -220,10 +220,10 @@ export const MainTrackFood = component$(() => {
                 <ul class="grid gap-3">
                   {myEats.store.selectedFood.units.map((unit, index) => {
                     return (
-                      <li key={unit.id} class="grid  ">
+                      <li key={unit.id} class="grid btn-data-active">
                         <button 
                           data-active={`${unit.id === myEats.store.eating.measurementId}`}
-                          class="outline outline-emerald-200 px-6 py-2 rounded-sm flex gap-2 data-[active=true]:bg-rose-300"
+                          class="btn btn-data-active"
                           onClick$={() => onClickUnit(unit)}
                         >
                           <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
@@ -248,7 +248,7 @@ export const NextTrackFood = component$(() => {
   return (
     <>
       <div class="grid">
-        <button onClick$={async () => {await myEats.onClickNext()}} class="bg-emerald-900 p-2 rounded-sm border-b-2 border-emerald-400 active:border-b-0 transition-all ease-in-out">
+        <button onClick$={async () => {await myEats.onClickNext()}} class="btn-primary">
           NEXT
         </button>
       </div>
