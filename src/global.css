@@ -104,4 +104,7 @@
   .btn-lg {
     @apply text-lg;
   }
+  .inp {
+    @apply rounded-sm p-2 border border-emerald-800 bg-emerald-950
+  }
 }

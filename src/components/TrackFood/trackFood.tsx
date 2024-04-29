@@ -127,7 +127,7 @@ export const MainTrackFood = component$(() => {
                   type="text" 
                   ref={myEats.refFood}
                   autoComplete={"off"}
-                  class="rounded-sm p-2 bg-emerald-800" 
+                  class="inp" 
                   value={myEats.store.eating.food} 
                   onFocus$={() => myEats.store.moveState("ingredients")}
                   onInput$={async (e,el) => await debounce(el.value)} 
@@ -137,12 +137,12 @@ export const MainTrackFood = component$(() => {
                   ref={myEats.refUnit}
                   autoComplete={"off"}
                   onFocus$={onFocusUnit}
-                  class="rounded-sm p-2 bg-emerald-800" 
+                  class="inp" 
                   value={myEats.store.eating.measurement} onInput$={(e,el) => myEats.store.bindEating("measurement", el.value)} 
                 />
                 <input id={"new-amount"} 
                   type="text" 
-                  class="rounded-sm p-2 bg-emerald-800"
+                  class="inp"
                   onFocus$={onFocusAmount}
                   ref={myEats.refAmount}
                   value={myEats.store.eating.amount} onInput$={(e,el) => myEats.store.bindEating("amount", el.value)} 
