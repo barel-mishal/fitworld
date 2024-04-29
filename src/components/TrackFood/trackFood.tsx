@@ -48,46 +48,47 @@ export const MainTrackFood = component$(() => {
       return ingredients.ingredients;
     });
 
-    const onKeyPressNewEat = $(async (e: KeyboardEvent) => {
-      const input = e.target as HTMLInputElement;
-      const parent = input.parentElement as HTMLFieldSetElement; // has three input
-      const childrens: [HTMLInputElement, HTMLInputElement, HTMLInputElement] = [
-        parent.children[0] as HTMLInputElement,
-        parent.children[1] as HTMLInputElement, 
-        parent.children[2] as HTMLInputElement
-      ];
-      const whoIsEmpty = childrens.find((inp) => !inp.value);
-      if (whoIsEmpty && e.key === "Enter") { 
-        whoIsEmpty.focus(); 
-      } else if (e.key === "Enter" && myEats.store.state === "amounts") {
-        if (!myEats.store.selectedFood || !myEats.store.eating.measurementId) return;
-        myEats.store.selectedFood.amount = parseFloat(myEats.store.eating.amount);
-        myEats.store.selectedFood.selectedMeasurement = myEats.store.eating.measurementId
-        const foodTransformed = transformEat.parse(myEats.store.selectedFood);
-        await myEats.store.addEat(foodTransformed);
-        await myEats.store.moveState("ingredients");
-        debounceReset("");
-        myEats.refFood.value?.focus();
-      } else if (e.key === "Enter") {
-        myEats.refFood.value?.focus();
-      } 
-    });
+
     const onPressArrowsKeys = $(async (e: KeyboardEvent) => {
       const ingredients = await resourceIngredients.value;
       const currentFood = myEats.store.eating.foodId;
+      if (!currentFood) return;
       const index = ingredients.findIndex((food) => food.id === currentFood);
-      if (e.key === "ArrowDown") {
+      if (myEats.store.state === "ingredients" && e.key === "ArrowDown") {
         if (ingredients.length === 0) return;
         const next = ingredients.at(index + 1);
         if (next) {
           myEats.store.bindEating("foodId", next.id);
         }
-      } else if (e.key === "ArrowUp") {
+      } else if (myEats.store.state === "ingredients" && e.key === "ArrowUp") {
         if (ingredients.length === 0) return;
         const next = ingredients.at(index - 1);
         if (next) {
           myEats.store.bindEating("foodId", next.id);
         }
+      } else if (myEats.store.state === "units" && e.key === "ArrowDown") {
+        if (!myEats.store.selectedFood) return;
+        const index = myEats.store.selectedFood.units.findIndex((unit) => unit.id === myEats.store.eating.measurementId);
+        const next = myEats.store.selectedFood.units.at(index + 1);
+        if (next) {
+          myEats.store.bindEating("measurementId", next.id);
+        }
+      } else if (myEats.store.state === "units" && e.key === "ArrowUp") {
+        if (!myEats.store.selectedFood) return;
+        console.log("unit", myEats.store.eating.measurementId, myEats.store.selectedFood.units)
+        const index = myEats.store.selectedFood.units.findIndex((unit) => unit.id === myEats.store.eating.measurementId);
+        const next = myEats.store.selectedFood.units.at(index - 1)
+        if (next) {
+          myEats.store.bindEating("measurementId", next.id);
+        }
+      } else if (myEats.store.state === "amounts" && e.key === "ArrowDown") {
+        const currentAmount = myEats.store.eating.amount;
+        const next = parseFloat(currentAmount) - 1;
+        myEats.store.bindEating("amount", next.toString());
+      } else if (myEats.store.state === "amounts" && e.key === "ArrowUp") {
+        const currentAmount = myEats.store.eating.amount;
+        const next = parseFloat(currentAmount) + 1;
+        myEats.store.bindEating("amount", next.toString());
       }
     });
 
@@ -99,7 +100,7 @@ export const MainTrackFood = component$(() => {
         myEats.refUnit.value?.focus();
     });
 
-    const onClickNext = $(() => {
+    const onClickNext = $(async () => {
       let message = "";
       const stats = myEats.store.stateStaps;
       const index = stats.indexOf(myEats.store.state);
@@ -114,13 +115,24 @@ export const MainTrackFood = component$(() => {
           message = "Please select a food";
           break;
         case "units":
+          const food = (await resourceIngredients.value).find((food) => food.id === myEats.store.eating.foodId);
+          if (!food) return;
+          myEats.store.selectedFood = food;
+          myEats.store.eating.food = food.name;
+          myEats.store.eating.measurementId = food.units[0].id;
           myEats.store.moveState("units");
           myEats.refUnit.value?.focus();
           message = "Please select a unit";
           break;
         case "amounts":
-          myEats.store.moveState("amounts");
-          myEats.refAmount.value?.focus();
+          if (!myEats.store.selectedFood || !myEats.store.eating.measurementId) return;
+          myEats.store.selectedFood.amount = parseFloat(myEats.store.eating.amount);
+          myEats.store.selectedFood.selectedMeasurement = myEats.store.eating.measurementId
+          const foodTransformed = transformEat.parse(myEats.store.selectedFood);
+          await myEats.store.addEat(foodTransformed);
+          await myEats.store.moveState("ingredients");
+          debounceReset("");
+          myEats.refFood.value?.focus();
           message = "Please select an amount";
           break;
         case "finish":
@@ -160,16 +172,16 @@ export const MainTrackFood = component$(() => {
       myEats.refFood.value?.focus();
     }, {strategy: "document-ready"});
 
-    useOn("keyup", $((e) => {
+    useOn("keydown", $(async (e) => {
       if (e.key === "Escape") {
         myEats.store.resetNewEat();
         myEats.refFood.value?.focus();
       } else if (e.key === "Enter") {
-        onClickNext();
+        await onClickNext();
       } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         onPressArrowsKeys(e);
       }
-    }), );
+    }));
 
   
     return (
@@ -186,7 +198,7 @@ export const MainTrackFood = component$(() => {
             </section>
             
             
-            <fieldset class="grid grid-cols-3 gap-3 " onKeyPress$={onKeyPressNewEat}>
+            <fieldset class="grid grid-cols-3 gap-3 ">
                 <input id={"new-food"}  
                   type="text" 
                   ref={myEats.refFood}
@@ -283,10 +295,12 @@ export const MainTrackFood = component$(() => {
                 </h5>
                 <ul class="grid gap-3">
                   {myEats.store.selectedFood.units.map((unit, index) => {
+                    console.log(unit.id === myEats.store.eating.measurementId)
                     return (
                       <li key={unit.id} class="grid  ">
                         <button 
-                          class="outline outline-emerald-200 px-6 py-2 rounded-sm flex gap-2 "
+                          data-active={`${unit.id === myEats.store.eating.measurementId}`}
+                          class="outline outline-emerald-200 px-6 py-2 rounded-sm flex gap-2 data-[active=true]:bg-rose-300"
                           onClick$={() => onClickUnit(unit, unit.id)}
                         >
                           <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
