@@ -1,4 +1,4 @@
-import { $, QRL, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { $, type QRL, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 import useDebouncer from "~/util/useDebouncer";
@@ -360,7 +360,7 @@ export function useTrackFood() {
     return ingredients.ingredients;
   });
 
-  
+
   const onClickNext = $(async () => {
     let message = "";
     const stats = store.stateStaps;
