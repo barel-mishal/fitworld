@@ -1,4 +1,4 @@
-import { $, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useOnDocument, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { $, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 import useDebouncer from "~/util/useDebouncer";
@@ -100,7 +100,7 @@ export const MainTrackFood = component$(() => {
         myEats.refUnit.value?.focus();
     });
 
-    const onClickNext = $(async () => {
+    const onClickNext = $(async (ingredients: Ingredient[]) => {
       let message = "";
       const stats = myEats.store.stateStaps;
       const index = stats.indexOf(myEats.store.state);
@@ -115,7 +115,7 @@ export const MainTrackFood = component$(() => {
           message = "Please select a food";
           break;
         case "units":
-          const food = (await resourceIngredients.value).find((food) => food.id === myEats.store.eating.foodId);
+          const food = ingredients.find((food) => food.id === myEats.store.eating.foodId);
           if (!food) return;
           myEats.store.selectedFood = food;
           myEats.store.eating.food = food.name;
@@ -177,7 +177,8 @@ export const MainTrackFood = component$(() => {
         myEats.store.resetNewEat();
         myEats.refFood.value?.focus();
       } else if (e.key === "Enter") {
-        await onClickNext();
+        const ingredients = await resourceIngredients.value;
+        await onClickNext(ingredients);
       } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         onPressArrowsKeys(e);
       }
@@ -295,7 +296,6 @@ export const MainTrackFood = component$(() => {
                 </h5>
                 <ul class="grid gap-3">
                   {myEats.store.selectedFood.units.map((unit, index) => {
-                    console.log(unit.id === myEats.store.eating.measurementId)
                     return (
                       <li key={unit.id} class="grid  ">
                         <button 
