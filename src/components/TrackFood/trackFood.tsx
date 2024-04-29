@@ -248,7 +248,7 @@ export const NextTrackFood = component$(() => {
     <>
       <div class="grid">
         <button 
-        onClick$={async () =>  myEats.refFood.value?.focus()}
+        onClick$={() =>  setTimeout(async () => await myEats.onClickNext(), 300)}
         class="btn-primary">
           NEXT
         </button>
