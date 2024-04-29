@@ -20,20 +20,23 @@ export const TrackFood = component$(() => {
 7. track nutrition if the person gets something good then he gets a point / treat
 */
 export const MainTrackFood = component$(() => {
-    const refFood = useSignal<HTMLInputElement>();
-    const refUnit = useSignal<HTMLInputElement>();
-    const refAmount = useSignal<HTMLInputElement>();
     const myEats = useContext(contextFoodTrack);
 
     const debounce = useDebouncer(
       $((value: string) => {
-        myEats.bindEating("food", value);
+        myEats.store.bindEating("food", value);
       }),
       300
     );
+    const debounceReset = useDebouncer(
+      $(() => {
+        myEats.store.resetNewEat();
+      }),
+      200
+    );
     
     const resourceIngredients = useResource$(async ({track, cleanup}) => {
-      const value = track(() => ({ isIngredientState: myEats.state, food: myEats.eating.food }));
+      const value = track(() => ({ isIngredientState: myEats.store.state, food: myEats.store.eating.food }));
       
       if (value.isIngredientState !== "ingredients") return [];      
       const controller = new AbortController();
@@ -43,7 +46,7 @@ export const MainTrackFood = component$(() => {
       return (await serverGetIngredients(controller.signal, options)).ingredients; 
     });
 
-    const onKeyPressNewEat = $((e: KeyboardEvent) => {
+    const onKeyPressNewEat = $(async (e: KeyboardEvent) => {
       const input = e.target as HTMLInputElement;
       const parent = input.parentElement as HTMLFieldSetElement; // has three input
       const childrens: [HTMLInputElement, HTMLInputElement, HTMLInputElement] = [
@@ -55,36 +58,81 @@ export const MainTrackFood = component$(() => {
       if (whoIsEmpty && e.key === "Enter") { 
         whoIsEmpty.focus(); 
       } else if (e.key === "Enter") {
-        if (!myEats.selectedFood || !myEats.eating.measurementId) return;
-        myEats.selectedFood.amount = parseFloat(myEats.eating.amount);
-        myEats.selectedFood.selectedMeasurement = myEats.eating.measurementId
-        const foodTransformed = transformEat.parse(myEats.selectedFood);
-        myEats.addEat(foodTransformed);
-        myEats.resetNewEat();
+        if (!myEats.store.selectedFood || !myEats.store.eating.measurementId) return;
+        myEats.store.selectedFood.amount = parseFloat(myEats.store.eating.amount);
+        myEats.store.selectedFood.selectedMeasurement = myEats.store.eating.measurementId
+        const foodTransformed = transformEat.parse(myEats.store.selectedFood);
+        await myEats.store.addEat(foodTransformed);
+        await myEats.store.moveState("ingredients");
+        debounceReset("");
       }
     });
 
     const onClickFood = $(async (food: Ingredient, foodId: string, ) => {
-        await myEats.bindEating("food", food.name);
-        await myEats.bindEating("foodId", foodId);
-        myEats.selectedFood = food;
-        myEats.state = "units";
-        refUnit.value?.focus();
+        await myEats.store.bindEating("food", food.name);
+        await myEats.store.bindEating("foodId", foodId);
+        myEats.store.selectedFood = food;
+        myEats.store.moveState("units");
+        myEats.refUnit.value?.focus();
     });
 
     const onClickUnit = $(async (unit: Ingredient["units"][number], unitId: string) => {
-      const u = myEats.selectedFood?.units_names[myEats.selectedFood.units.indexOf(unit)];
+      const u = myEats.store.selectedFood?.units_names[myEats.store.selectedFood.units.indexOf(unit)];
       const completeName = `${u} ${unit.weight} ${unit.unit}`;
-      await myEats.bindEating("measurement", completeName);
-      await myEats.bindEating("measurementId", unitId);
-      await myEats.bindEating("amount", "1");
-      myEats.state = "amounts";
-      refAmount.value?.focus();
+      await myEats.store.bindEating("measurement", completeName);
+      await myEats.store.bindEating("measurementId", unitId);
+      await myEats.store.bindEating("amount", "1");
+      myEats.store.moveState("amounts");
+      myEats.refAmount.value?.focus();
+    });
+
+    const onFocusAmount = $(() => {
+      myEats.store.moveState("amounts");
+    });
+    const onFocusUnit = $(() => {
+      myEats.store.moveState("units");
+    });
+
+    const onClickNext = $(() => {
+      let message = "";
+      const stats = myEats.store.stateStaps;
+      const index = stats.indexOf(myEats.store.state);
+      if (index === -1) return;
+      const nextIndex = index + 1;
+      if (nextIndex >= stats.length) return;
+      const goTo = stats[nextIndex];
+      switch (goTo) {
+        case "ingredients":
+          myEats.store.moveState("ingredients");
+          myEats.refFood.value?.focus();
+          message = "Please select a food";
+          break;
+        case "units":
+          myEats.store.moveState("units");
+          myEats.refUnit.value?.focus();
+          message = "Please select a unit";
+          break;
+        case "amounts":
+          myEats.store.moveState("amounts");
+          myEats.refAmount.value?.focus();
+          message = "Please select an amount";
+          break;
+        case "finish":
+          myEats.store.moveState("finish");
+          message = "Please finish";
+          break;
+        case "keepgoing":
+          myEats.store.moveState("keepgoing");
+          break;
+        default:
+          break;
+      }
+      return message;
     });
 
     // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(() => {
-      refFood.value?.focus();
+      myEats.refFood.value?.focus();
     }, {strategy: "document-ready"});
 
   
@@ -105,26 +153,27 @@ export const MainTrackFood = component$(() => {
             <fieldset class="grid grid-cols-3 gap-3 " onKeyPress$={onKeyPressNewEat}>
                 <input id={"new-food"}  
                   type="text" 
-                  ref={refFood}
+                  ref={myEats.refFood}
                   autoComplete={"off"}
                   class="rounded-sm p-2 bg-emerald-800" 
-                  value={myEats.eating.food} 
-                  onFocus$={() => myEats.state = "ingredients"}
+                  value={myEats.store.eating.food} 
+                  onFocus$={() => myEats.store.moveState("ingredients")}
                   onInput$={async (e,el) => await debounce(el.value)} 
                 />
                 <input id={"new-measurement"} 
                   type="text" 
-                  ref={refUnit}
+                  ref={myEats.refUnit}
                   autoComplete={"off"}
-                  onFocus$={() => {}}
+                  onFocus$={onFocusUnit}
                   class="rounded-sm p-2 bg-emerald-800" 
-                  value={myEats.eating.measurement} onInput$={(e,el) => myEats.bindEating("measurement", el.value)} 
+                  value={myEats.store.eating.measurement} onInput$={(e,el) => myEats.store.bindEating("measurement", el.value)} 
                 />
                 <input id={"new-amount"} 
                   type="text" 
-                  class="rounded-sm p-2 bg-emerald-800" 
-                  ref={refAmount}
-                  value={myEats.eating.amount} onInput$={(e,el) => myEats.bindEating("amount", el.value)} 
+                  class="rounded-sm p-2 bg-emerald-800"
+                  onFocus$={onFocusAmount}
+                  ref={myEats.refAmount}
+                  value={myEats.store.eating.amount} onInput$={(e,el) => myEats.store.bindEating("amount", el.value)} 
                 />
             </fieldset>
             
@@ -139,9 +188,9 @@ export const MainTrackFood = component$(() => {
                       <button 
                       class="outline outline-emerald-200  px-6 py-2 rounded-sm"
                       onClick$={() => {
-                        myEats.bindEating("food", "Water");
-                        refFood.value?.focus();
-                        myEats.state = "ingredients"
+                        myEats.store.bindEating("food", "Water");
+                        myEats.refFood.value?.focus();
+                        myEats.store.moveState("ingredients");
                       }}
                       >
                         Water
@@ -152,7 +201,7 @@ export const MainTrackFood = component$(() => {
                       <li key={food} class=" bg-emerald-950">
                         <button 
                         class="outline outline-emerald-200 px-6 py-2 rounded-sm" 
-                        onClick$={() => myEats.bindEating("food", food)} >
+                        onClick$={() => myEats.store.bindEating("food", food)} >
                           {food}
                         </button>
                       </li>
@@ -173,7 +222,7 @@ export const MainTrackFood = component$(() => {
                 return (
                   <>
                   <h5>
-                    <span>{value.length} Popular foods or search for</span> "<span>{myEats.eating.food}</span>" 
+                    <span>{value.length} Popular foods or search for</span> "<span>{myEats.store.eating.food}</span>" 
                   </h5>
                   {value.map((food) => {
                     return (
@@ -190,20 +239,20 @@ export const MainTrackFood = component$(() => {
               }} 
             />
 
-            {myEats.selectedFood && (
+            {myEats.store.selectedFood && (
               <>
                 <h5>
-                  {myEats.selectedFood.name}
+                  {myEats.store.selectedFood.name}
                 </h5>
                 <ul class="grid gap-3">
-                  {myEats.selectedFood.units.map((unit, index) => {
+                  {myEats.store.selectedFood.units.map((unit, index) => {
                     return (
                       <li key={unit.id} class="grid  ">
                         <button 
                           class="outline outline-emerald-200 px-6 py-2 rounded-sm flex gap-2 "
                           onClick$={() => onClickUnit(unit, unit.id)}
                         >
-                          <span>{myEats.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
+                          <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
                         </button>
                       </li>
                     )
@@ -263,9 +312,13 @@ export function useTrackFood() {
     foodId?: string,
     measurementId?: string,
   }
-  const myEats = useStore({
+  const refFood = useSignal<HTMLInputElement>();
+  const refUnit = useSignal<HTMLInputElement>();
+  const refAmount = useSignal<HTMLInputElement>();
+  const store = useStore({
     eats: [] as Eat[],
-    state: "idle" as "idle"| "loading" | "ingredients" | "units" | "amounts" | "finish",
+    state: "idle" as State,
+    stateStaps: ["ingredients", "units", "amounts", "keepgoing"],
     addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
       serverAddEat(eat).then((data) => {
         console.log(data);
@@ -286,18 +339,45 @@ export function useTrackFood() {
     bindEating: $(function(this: {eating: Eating}, key: keyof Eating, value: string) {
       this.eating[key] = value;
     }),
-    resetNewEat: $(function(this: {eating: Eating}) {
+    resetNewEat: $(function(this: {eating: Eating, selectedFood: Ingredient | undefined}) {
       this.eating = {
         amount: "",
         food: "",
         measurement: "",
+        measurementId: "",
+        foodId: "",
       }
+      this.selectedFood = undefined;
     }),
     remove: $(function(this: {eats: Eat[]}, id: string) {
       this.eats = this.eats.filter(eat => eat.id !== id);
-    })
+    }),
+    moveState: $(function(this: {
+      state: State, 
+      selectedFood: Ingredient | undefined, 
+      eating: {measurementId: string}}, 
+      state: State,
+    ) {
+      if (state === "ingredients") {
+        this.state = "ingredients";
+      } else if (state === "units" && this.selectedFood) {
+        this.state = "units";
+      } else if (state === "amounts" && this.selectedFood && this.eating.measurementId) {
+        this.state = "amounts";
+      } else if (state === "finish" && this.selectedFood) {
+        this.state = "finish";
+      } else if (state === "keepgoing" && this.selectedFood) {
+        this.state = "keepgoing";
+      }
+      return this.state;
+    }),
   });
-  return myEats;
+  return {store, refFood, refUnit, refAmount};
 }
 
 export const contextFoodTrack = createContextId<ReturnType<typeof useTrackFood>>("foodTrack");
+
+
+
+// shiftState
+type State = "idle" | "ingredients" | "units" | "amounts" | "finish" | "keepgoing";
