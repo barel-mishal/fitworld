@@ -57,7 +57,7 @@ export const MainTrackFood = component$(() => {
       const whoIsEmpty = childrens.find((inp) => !inp.value);
       if (whoIsEmpty && e.key === "Enter") { 
         whoIsEmpty.focus(); 
-      } else if (e.key === "Enter") {
+      } else if (e.key === "Enter" && myEats.store.state === "amounts") {
         if (!myEats.store.selectedFood || !myEats.store.eating.measurementId) return;
         myEats.store.selectedFood.amount = parseFloat(myEats.store.eating.amount);
         myEats.store.selectedFood.selectedMeasurement = myEats.store.eating.measurementId
@@ -66,6 +66,11 @@ export const MainTrackFood = component$(() => {
         await myEats.store.moveState("ingredients");
         debounceReset("");
         myEats.refFood.value?.focus();
+      } else if (e.key === "Enter") {
+        const message = onClickNext();
+        if (message) {
+          alert(message);
+        }
       }
     });
 
@@ -75,23 +80,6 @@ export const MainTrackFood = component$(() => {
         myEats.store.selectedFood = food;
         myEats.store.moveState("units");
         myEats.refUnit.value?.focus();
-    });
-
-    const onClickUnit = $(async (unit: Ingredient["units"][number], unitId: string) => {
-      const u = myEats.store.selectedFood?.units_names[myEats.store.selectedFood.units.indexOf(unit)];
-      const completeName = `${u} ${unit.weight} ${unit.unit}`;
-      await myEats.store.bindEating("measurement", completeName);
-      await myEats.store.bindEating("measurementId", unitId);
-      await myEats.store.bindEating("amount", "1");
-      myEats.store.moveState("amounts");
-      myEats.refAmount.value?.focus();
-    });
-
-    const onFocusAmount = $(() => {
-      myEats.store.moveState("amounts");
-    });
-    const onFocusUnit = $(() => {
-      myEats.store.moveState("units");
     });
 
     const onClickNext = $(() => {
@@ -130,6 +118,25 @@ export const MainTrackFood = component$(() => {
       }
       return message;
     });
+
+    const onClickUnit = $(async (unit: Ingredient["units"][number], unitId: string) => {
+      const u = myEats.store.selectedFood?.units_names[myEats.store.selectedFood.units.indexOf(unit)];
+      const completeName = `${u} ${unit.weight} ${unit.unit}`;
+      await myEats.store.bindEating("measurement", completeName);
+      await myEats.store.bindEating("measurementId", unitId);
+      await myEats.store.bindEating("amount", "1");
+      myEats.store.moveState("amounts");
+      myEats.refAmount.value?.focus();
+    });
+
+    const onFocusAmount = $(() => {
+      myEats.store.moveState("amounts");
+    });
+    const onFocusUnit = $(() => {
+      myEats.store.moveState("units");
+    });
+
+   
 
     // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(() => {
@@ -228,8 +235,8 @@ export const MainTrackFood = component$(() => {
                   {value.map((food) => {
                     return (
                       <button key={food.id} 
-                        data-active={myEats.store.eating.foodId === food.id}
-                        class="outline outline-emerald-200 px-6 py-2 rounded-sm text-left data-[active='true']:bg-teal-300"
+                        data-active={`${myEats.store.eating.foodId === food.id}`}
+                        class="outline outline-emerald-200 px-6 py-2 rounded-sm text-left data-[active=true]:bg-rose-300"
                         onClick$={async () => await onClickFood(food, food.id)}
                         >
                         {food.name}
