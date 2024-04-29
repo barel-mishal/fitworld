@@ -1,4 +1,4 @@
-import { $, Resource, Slot, component$, createContextId, useContext, useContextProvider, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { $, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useOnDocument, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 import useDebouncer from "~/util/useDebouncer";
@@ -43,7 +43,9 @@ export const MainTrackFood = component$(() => {
       cleanup(() => controller.abort());
 
       const options = { search: value.food, limit: 5 };
-      return (await serverGetIngredients(controller.signal, options)).ingredients; 
+      const ingredients = await serverGetIngredients(controller.signal, options);
+      myEats.store.eating.foodId = ingredients.ingredients[0].id;
+      return ingredients.ingredients;
     });
 
     const onKeyPressNewEat = $(async (e: KeyboardEvent) => {
@@ -67,9 +69,24 @@ export const MainTrackFood = component$(() => {
         debounceReset("");
         myEats.refFood.value?.focus();
       } else if (e.key === "Enter") {
-        const message = onClickNext();
-        if (message) {
-          alert(message);
+        myEats.refFood.value?.focus();
+      } 
+    });
+    const onPressArrowsKeys = $(async (e: KeyboardEvent) => {
+      const ingredients = await resourceIngredients.value;
+      const currentFood = myEats.store.eating.foodId;
+      const index = ingredients.findIndex((food) => food.id === currentFood);
+      if (e.key === "ArrowDown") {
+        if (ingredients.length === 0) return;
+        const next = ingredients.at(index + 1);
+        if (next) {
+          myEats.store.bindEating("foodId", next.id);
+        }
+      } else if (e.key === "ArrowUp") {
+        if (ingredients.length === 0) return;
+        const next = ingredients.at(index - 1);
+        if (next) {
+          myEats.store.bindEating("foodId", next.id);
         }
       }
     });
@@ -142,6 +159,17 @@ export const MainTrackFood = component$(() => {
     useVisibleTask$(() => {
       myEats.refFood.value?.focus();
     }, {strategy: "document-ready"});
+
+    useOn("keyup", $((e) => {
+      if (e.key === "Escape") {
+        myEats.store.resetNewEat();
+        myEats.refFood.value?.focus();
+      } else if (e.key === "Enter") {
+        onClickNext();
+      } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        onPressArrowsKeys(e);
+      }
+    }), );
 
   
     return (
