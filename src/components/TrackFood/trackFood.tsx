@@ -228,7 +228,8 @@ export const MainTrackFood = component$(() => {
                   {value.map((food) => {
                     return (
                       <button key={food.id} 
-                        class="outline outline-emerald-200 px-6 py-2 rounded-sm text-left" 
+                        data-active={myEats.store.eating.foodId === food.id}
+                        class="outline outline-emerald-200 px-6 py-2 rounded-sm text-left data-[active='true']:bg-teal-300"
                         onClick$={async () => await onClickFood(food, food.id)}
                         >
                         {food.name}
