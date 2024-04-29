@@ -200,7 +200,7 @@ export const MainTrackFood = component$(() => {
                       <button key={food.id} 
                         data-active={`${myEats.store.eating.foodId === food.id}`}
                         class="btn btn-data-active "
-                        onClick$={async () => await onClickFood(food)}
+                        onClick$={() => setTimeout(async () => await onClickFood(food), 300)}
                         >
                         {food.name}
                       </button>
@@ -223,7 +223,7 @@ export const MainTrackFood = component$(() => {
                         <button 
                           data-active={`${unit.id === myEats.store.eating.measurementId}`}
                           class="btn btn-data-active "
-                          onClick$={async () => await onClickUnit(unit)}
+                          onClick$={() => setTimeout(async () => await onClickUnit(unit), 300)}
                         >
                           <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
                         </button>
