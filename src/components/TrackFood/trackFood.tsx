@@ -158,7 +158,7 @@ export const MainTrackFood = component$(() => {
                     <li>
                       <button 
                       class="btn"
-                      onTransitionEnd$={async () => {
+                      onClick$={async () => {
                         myEats.store.bindEating("food", "Water");
                         myEats.refFood.value?.focus();
                         myEats.store.moveState("ingredients");
@@ -200,7 +200,7 @@ export const MainTrackFood = component$(() => {
                       <button key={food.id} 
                         data-active={`${myEats.store.eating.foodId === food.id}`}
                         class="btn btn-data-active "
-                        onTransitionEnd$={async () => await onClickFood(food)}
+                        onClick$={async () => await onClickFood(food)}
                         >
                         {food.name}
                       </button>
@@ -223,7 +223,7 @@ export const MainTrackFood = component$(() => {
                         <button 
                           data-active={`${unit.id === myEats.store.eating.measurementId}`}
                           class="btn btn-data-active "
-                          onTransitionEnd$={async () => await onClickUnit(unit)}
+                          onClick$={async () => await onClickUnit(unit)}
                         >
                           <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
                         </button>
@@ -248,7 +248,7 @@ export const NextTrackFood = component$(() => {
     <>
       <div class="grid">
         <button 
-        onTransitionEnd$={async () =>  myEats.refFood.value?.focus()}
+        onClick$={async () =>  myEats.refFood.value?.focus()}
         class="btn-primary">
           NEXT
         </button>
