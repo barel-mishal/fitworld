@@ -65,6 +65,7 @@ export const MainTrackFood = component$(() => {
         await myEats.store.addEat(foodTransformed);
         await myEats.store.moveState("ingredients");
         debounceReset("");
+        myEats.refFood.value?.focus();
       }
     });
 
