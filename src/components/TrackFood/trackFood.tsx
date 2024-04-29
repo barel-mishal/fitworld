@@ -2,6 +2,7 @@ import { $, type QRL, Resource, Slot, component$, createContextId, useContext, u
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 import useDebouncer from "~/util/useDebouncer";
+import { SchemaPositiveBiggerThanZero } from "~/util/types";
 
 
 export const TrackFood = component$(() => {
@@ -63,11 +64,11 @@ export const MainTrackFood = component$(() => {
       } else if (myEats.store.state === "amounts" && e.key === "ArrowDown") {
         const currentAmount = myEats.store.eating.amount;
         const next = parseFloat(currentAmount) - 1;
-        myEats.store.bindEating("amount", next.toString());
+        myEats.store.updateAmount(next.toString());
       } else if (myEats.store.state === "amounts" && e.key === "ArrowUp") {
         const currentAmount = myEats.store.eating.amount;
         const next = parseFloat(currentAmount) + 1;
-        myEats.store.bindEating("amount", next.toString());
+        myEats.store.updateAmount(next.toString());
       }
     });
 
@@ -144,7 +145,7 @@ export const MainTrackFood = component$(() => {
                   class="inp"
                   onFocus$={onFocusAmount}
                   ref={myEats.refAmount}
-                  value={myEats.store.eating.amount} onInput$={(e,el) => myEats.store.bindEating("amount", el.value)} 
+                  value={myEats.store.eating.amount} onInput$={(e,el) => myEats.store.updateAmount(el.value)} 
                 />
             </fieldset>
             
@@ -339,7 +340,8 @@ export function useTrackFood() {
       return completeName;
     }),
     updateAmount: $(function(this: {eating: Eating}, amount: string) {
-      this.eating.amount = amount;
+      const parsedValue = SchemaPositiveBiggerThanZero.safeParse(amount);
+      this.eating.amount =  parsedValue.success ? parsedValue.data : this.eating.amount;
     }),
   });
   const debounceReset = useDebouncer(
@@ -385,7 +387,7 @@ export function useTrackFood() {
         const unit = food.units[0];
         store.eating.measurementId = unit.id;
         store.eating.measurement = `${food.units_names[0]} ${unit.weight} ${unit.unit}`;
-        store.eating.amount = "1";
+        store.updateAmount("1")
         store.moveState("units");
         refUnit.value?.focus();
         message = "Please select a unit";
@@ -410,8 +412,9 @@ export function useTrackFood() {
           message = "Please finish";
           break;
       case "keepgoing":
-        store.moveState("keepgoing");
-        debounceReset("");
+        store.moveState("ingredients");
+        await debounceReset("");
+        refFood.value?.focus();
         break;
       default:
         break;
