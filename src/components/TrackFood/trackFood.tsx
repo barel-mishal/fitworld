@@ -100,7 +100,6 @@ export const MainTrackFood = component$(() => {
         myEats.store.resetNewEat();
         myEats.refFood.value?.focus();
       } else if (e.key === "Enter") {
-        console.log("Enter");
         await myEats.onClickNext();
       } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         onPressArrowsKeys(e);
@@ -249,7 +248,6 @@ export const NextTrackFood = component$(() => {
     <>
       <div class="grid">
         <button 
-        // onClick$={async () => {await myEats.onClickNext()}} 
         onTransitionEnd$={async () =>  myEats.refFood.value?.focus()}
         class="btn-primary">
           NEXT
@@ -269,8 +267,8 @@ export function useTrackFood() {
     measurementId?: string,
   }
   const debounceReset = useDebouncer(
-    $(() => {
-      store.resetNewEat();
+    $(async () => {
+      await store.resetNewEat();
     }),
     200
   );
