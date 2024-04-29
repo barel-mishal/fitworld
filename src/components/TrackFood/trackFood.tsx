@@ -100,6 +100,7 @@ export const MainTrackFood = component$(() => {
         myEats.store.resetNewEat();
         myEats.refFood.value?.focus();
       } else if (e.key === "Enter") {
+        console.log("Enter");
         await myEats.onClickNext();
       } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         onPressArrowsKeys(e);
@@ -364,11 +365,14 @@ export function useTrackFood() {
   const onClickNext = $(async () => {
     let message = "";
     const stats = store.stateStaps;
+    console.log(stats, store.state)
     const index = stats.indexOf(store.state);
     if (index === -1) return;
     const nextIndex = index + 1;
+    console.log(nextIndex, stats.length)
     if (nextIndex >= stats.length) return;
     const goTo = stats[nextIndex];
+    console.log(goTo, "units")
     switch (goTo) {
       case "ingredients":
         store.moveState("ingredients");
@@ -377,13 +381,16 @@ export function useTrackFood() {
         break;
       case "units":
         const food = (await resourceIngredients.value).find((food) => food.id === store.eating.foodId);
+        console.log({food});
         if (!food) return;
+
         store.selectedFood = food;
         store.eating.food = food.name;
         store.eating.measurementId = food.units[0].id;
         store.moveState("units");
         refUnit.value?.focus();
         message = "Please select a unit";
+        console.log("units", food.units);
         break;
       case "amounts":
         if (!store.selectedFood || !store.eating.measurementId) return;
