@@ -43,6 +43,14 @@ export type Ingredient = z.infer<typeof IngredientSchema>;
         const result = await db.query_raw<[Partial<Ingredient>[]]>(`
         IF $search != "" THEN 
           SELECT *, ->ingredient_measurements.* AS units, ->ingredient_measurements.*.out.name AS units_names FROM Ingredient WHERE name ~ $search LIMIT $limit
+        ELSE IF $mostPopular == true THEN 
+          SELECT food.*, food->ingredient_measurements.* AS units, food->ingredient_measurements.*.out.name AS units_names FROM ( 
+              SELECT count(food) AS count, measurement, food
+                FROM Eat
+                GROUP BY food, measurement
+                ORDER BY count DESC
+                LIMIT 7
+          ) 
         ELSE
           SELECT *, ->ingredient_measurements.* AS units, ->ingredient_measurements.*.out.name AS units_names FROM Ingredient LIMIT $limit
         END;

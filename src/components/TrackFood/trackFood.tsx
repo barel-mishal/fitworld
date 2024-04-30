@@ -4,7 +4,6 @@ import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_
 import useDebouncer from "~/util/useDebouncer";
 import { SchemaPositiveBiggerThanZero } from "~/util/types";
 import { cn } from "@qwik-ui/utils";
-import { useDocumentHead } from "@builder.io/qwik-city";
 import { PhFlag } from "../icons/icons";
 
 
@@ -158,7 +157,7 @@ export const MainTrackFood = component$(() => {
                     class="inp"
                     onFocus$={onFocusAmount}
                     ref={myEats.refAmount}
-                    value={myEats.store.eating.amount} onInput$={(e,el) => myEats.store.updateAmount(el.value)} 
+                    value={myEats.store.eating.amount} onInput$={async (e,el) => await myEats.store.updateAmount(el.value)} 
                   />
               </fieldset>
             </div>
@@ -295,13 +294,13 @@ export function useTrackFood() {
     state: "idle" as State,
     stateStaps: ["ingredients", "units", "amounts", "keepgoing"],
     addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
-      // if (!now.value) console.log("No date");
+      if (!now.value) console.log("No date");
       console.log(JSON.stringify(eat, null, 2));
-      // serverAddEat(eat).then((data) => {
+      serverAddEat(eat).then((data) => {
 
-      //   console.log(data);
-      // });
-      // this.eats = this.eats.concat([eat], this.eats);
+        console.log(data);
+      });
+      this.eats = this.eats.concat([eat], this.eats);
     }),
     selectedFood: undefined as undefined | Ingredient,
     bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {

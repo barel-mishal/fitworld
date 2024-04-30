@@ -85,5 +85,5 @@ export const SchemaAssessment = z.object({
 
 export type TypeSchemaAssessment = z.infer<typeof SchemaAssessment>;
 
-export const SchemaPositiveBiggerThanZero = z.string().pipe(z.coerce.number().int().positive().default(0)).transform((value) => value.toString());
+export const SchemaPositiveBiggerThanZero = z.string().pipe(z.coerce.number().min(0).default(0)).transform((value) => value.toString());
 
