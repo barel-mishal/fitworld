@@ -267,7 +267,7 @@ export const NextTrackFood = component$(() => {
           NEXT
         </button>
         <button 
-        onClick$={() =>  setTimeout(async () => await myEats.store.finish(myEats.store.eating.foodId), 300)}
+        onClick$={() =>  setTimeout(async () => await myEats.store.finish(), 300)}
         class="btn-gohst relative">
           <PhFlag class="fill-current text-emerald-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 active:rotate-6 transition-all ease-in-out" />
         </button>
@@ -394,7 +394,6 @@ export function useTrackFood() {
     const nextIndex = index + 1;
     if (nextIndex >= stats.length) return;
     const goTo = stats[nextIndex];
-    console.log(goTo);
     switch (goTo) {
       case "ingredients":
         store.moveState("ingredients");
