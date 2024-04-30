@@ -86,6 +86,9 @@
   .btn-primary {
     @apply bg-emerald-900 p-2 rounded-sm border-b-2 border-emerald-400 active:border-b-0 transition-all ease-in-out;
   }
+  .btn-gohst {
+    @apply bg-transparent text-emerald-900 px-6 py-2 rounded-sm border-b-2 border-transparent;
+  }
   .btn-data-active {
     @apply data-[active=true]:bg-emerald-900
   }

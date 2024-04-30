@@ -1,8 +1,11 @@
-import { $, type QRL, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { $, type QRL, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$, useOnDocument, useOnWindow } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 import useDebouncer from "~/util/useDebouncer";
 import { SchemaPositiveBiggerThanZero } from "~/util/types";
+import { cn } from "@qwik-ui/utils";
+import { useDocumentHead } from "@builder.io/qwik-city";
+import { PhFlag } from "../icons/icons";
 
 
 export const TrackFood = component$(() => {
@@ -103,6 +106,7 @@ export const MainTrackFood = component$(() => {
     // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(() => {
       myEats.refFood.value?.focus();
+      
     }, {strategy: "document-ready"});
 
     useOn("keydown", $(async (e) => {
@@ -182,7 +186,7 @@ export const MainTrackFood = component$(() => {
                     return (
                       <li key={food} class=" bg-emerald-950">
                         <button 
-                        class="btn " 
+                        class={cn("btn btn-data-active flex gap-1", "p-2 ")}
                         onClick$={() => myEats.store.bindEating("food", food)} >
                           {food}
                         </button>
@@ -210,7 +214,7 @@ export const MainTrackFood = component$(() => {
                     return (
                       <button key={food.id} 
                         data-active={`${myEats.store.eating.foodId === food.id}`}
-                        class="btn btn-data-active "
+                        class={cn("btn btn-data-active flex gap-1", "p-2 ")}
                         onClick$={() => setTimeout(async () => await onClickFood(food), 300)}
                         >
                         {food.name}
@@ -227,13 +231,13 @@ export const MainTrackFood = component$(() => {
                 <h5>
                   {myEats.store.selectedFood.name}
                 </h5>
-                <ul class="grid gap-3">
+                <ul class="flex flex-wrap gap-3">
                   {myEats.store.selectedFood.units.map((unit, index) => {
                     return (
-                      <li key={unit.id} class="grid btn-data-active ">
+                      <li key={unit.id} class=" ">
                         <button 
                           data-active={`${unit.id === myEats.store.eating.measurementId}`}
-                          class="btn btn-data-active "
+                          class={cn("btn btn-data-active flex gap-1", "p-2 ")}
                           onClick$={() => setTimeout(async () => await onClickUnit(unit), 300)}
                         >
                           <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
@@ -257,11 +261,16 @@ export const NextTrackFood = component$(() => {
 
   return (
     <>
-      <div class="grid">
+      <div class="grid grid-cols-[1fr,auto] gap-3">
         <button 
         onClick$={() =>  setTimeout(async () => await myEats.onClickNext(), 300)}
         class="btn-primary">
           NEXT
+        </button>
+        <button 
+        onClick$={() =>  setTimeout(async () => await myEats.store.finish(myEats.store.eating.foodId), 300)}
+        class="btn-gohst relative">
+          <PhFlag class="fill-current text-emerald-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 active:rotate-6 transition-all ease-in-out" />
         </button>
       </div>
     </>
