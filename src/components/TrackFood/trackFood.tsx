@@ -124,42 +124,43 @@ export const MainTrackFood = component$(() => {
           <div class="grid gap-3 sticky top-0 bg-emerald-950 z-50">
             
             
-            <section class="grid grid-cols-3 gap-3">
-              <label for="new-food" class="text-emerald-100">Food</label>
-              <label for="new-unit" class="text-emerald-100">Unit</label>
-              <label for="new-amount" class="text-emerald-100">Amount</label>
-            </section>
+            
+            <div class="sticky top-0 z-50 bg-emerald-950 pb-2">
+              <section class="grid grid-cols-3 gap-3">
+                <label for="new-food" class="text-emerald-100">Food</label>
+                <label for="new-unit" class="text-emerald-100">Unit</label>
+                <label for="new-amount" class="text-emerald-100">Amount</label>
+              </section>
+              <fieldset class="grid grid-cols-3 gap-3">
+                  <input id={"new-food"}  
+                    type="text" 
+                    ref={myEats.refFood}
+                    autoComplete={"off"}
+                    class="inp" 
+                    value={myEats.store.eating.food} 
+                    onFocus$={() => myEats.store.moveState("ingredients")}
+                    onInput$={async (e,el) => await debounce(el.value)} 
+                  />
+                  <input id={"new-measurement"} 
+                    type="text" 
+                    ref={myEats.refUnit}
+                    autoComplete={"off"}
+                    onFocus$={onFocusUnit}
+                    class="inp" 
+                    value={myEats.store.eating.measurement} onInput$={(e,el) => myEats.store.bindEating("measurement", el.value)} 
+                  />
+                  <input id={"new-amount"} 
+                    type="text" 
+                    class="inp"
+                    onFocus$={onFocusAmount}
+                    ref={myEats.refAmount}
+                    value={myEats.store.eating.amount} onInput$={(e,el) => myEats.store.updateAmount(el.value)} 
+                  />
+              </fieldset>
+            </div>
             
             
-            <fieldset class="grid grid-cols-3 gap-3 ">
-                <input id={"new-food"}  
-                  type="text" 
-                  ref={myEats.refFood}
-                  autoComplete={"off"}
-                  class="inp" 
-                  value={myEats.store.eating.food} 
-                  onFocus$={() => myEats.store.moveState("ingredients")}
-                  onInput$={async (e,el) => await debounce(el.value)} 
-                />
-                <input id={"new-measurement"} 
-                  type="text" 
-                  ref={myEats.refUnit}
-                  autoComplete={"off"}
-                  onFocus$={onFocusUnit}
-                  class="inp" 
-                  value={myEats.store.eating.measurement} onInput$={(e,el) => myEats.store.bindEating("measurement", el.value)} 
-                />
-                <input id={"new-amount"} 
-                  type="text" 
-                  class="inp"
-                  onFocus$={onFocusAmount}
-                  ref={myEats.refAmount}
-                  value={myEats.store.eating.amount} onInput$={(e,el) => myEats.store.updateAmount(el.value)} 
-                />
-            </fieldset>
-            
-            
-            <ul class="overflow-x-auto bg-emerald-950 z-50">
+            <ul class="overflow-x-auto bg-emerald-950">
               <li class="bg-emerald-950">
                 <h5>
                   Fast selections
