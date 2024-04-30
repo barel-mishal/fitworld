@@ -11,10 +11,9 @@ export default component$(() => {
   // אנרגיה, חלבון, מים, פיטנס
   // ניווט בין לידרבוארד למסך הראשי
   return (
-  
     <HeaderMainBottomNav 
     classMain='tw '
-    class="grid-rows-[40px,1fr,30px] pb-4 pt-2 px-2">
+    class="grid-rows-[40px,1fr,58px] pt-2 px-2">
       <div q:slot='header'>
         <TopNavBar />
       </div>
