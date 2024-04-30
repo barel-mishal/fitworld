@@ -41,20 +41,19 @@ export default component$(() => {
   });
 
   return (
-    <div class="grid h-full grid-rows-[auto,1fr]">
-      <h1 class="my-3 text-2xl font-bold [text-wrap:balance] ">What is your date of birth?</h1>
-      <fieldset class="grid grid-cols-[1fr,1fr,2.5fr] gap-3 place-self-center" title='birth-date' >
+    <div class="grid h-full grid-rows-[auto,1fr] ">
+      <h1 class="[text-wrap:balance] title">What is your date of birth?</h1>
+      <fieldset class="grid grid-cols-[1fr,1fr,2.5fr] gap-3 place-self-start pt-8" title='birth-date' >
         <legend class="sr-only">Date of Birth</legend>
         <div>
-          <label class="" for="day">Day</label>
+          <label class="info-title" for="day">Day</label>
           <input 
             
             ref={refDay}
             inputMode='numeric'
             value={sc.data.personalInformation.dateOfBirth?.day}
             class={cn(
-              "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-              "text-center text-xl"
+              "inp w-full text-2xl"
             )}
             placeholder='00' name="day"
             onInput$={(e,el) => {
@@ -66,14 +65,15 @@ export default component$(() => {
           />
         </div>
         <div>
-          <label class="" for="month">Month</label>
+          <label class="info-title" for="month">Month</label>
           <input 
             ref={refMonth}
             inputMode='numeric'
             value={sc.data.personalInformation.dateOfBirth?.month}
             class={cn(
-              "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-              "text-center text-xl"
+              // "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+              // "text-center text-xl"
+              "inp w-full text-2xl"
             )}
             placeholder='00' name='month'
             onInput$={(e,el) => {
@@ -86,14 +86,15 @@ export default component$(() => {
           />
         </div>
         <div>
-          <label class="" for="year">Year</label>
+          <label class="info-title" for="year">Year</label>
           <input 
             ref={refYear}
             inputMode='numeric'
             value={sc.data.personalInformation.dateOfBirth?.year}
             class={cn(
-              "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-              "text-center text-xl"
+              // "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+              // "text-center text-xl",
+              "inp w-full text-2xl"
             )}
             placeholder='0000' name='year'
             onInput$={(e,el) => {

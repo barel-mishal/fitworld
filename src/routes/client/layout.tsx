@@ -6,6 +6,8 @@ import { type ExtendSession } from '../plugin@auth';
 import { serverInitDatabase } from '../seedDatabase';
 import { type QueryResult, type RawQueryResult } from 'surrealdb.js/script/types';
 import { type Session } from '@auth/core/types';
+import { FormattedNumberSchema } from '~/util/formatNumber';
+import { convertWeightUnits } from '~/util/convertUnits';
 
 export const onRequest: RequestHandler = (event) => {
   const session: Session | null = event.sharedMap.get('session');
@@ -70,7 +72,8 @@ interface AssessmentStoreType {
       submit: QRL<(this: { isRunning: boolean; }, data: {value: number, _type: string, record: string}) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
       isRunning: boolean
     },
-  }
+  },
+  cahngeWeightUnit: QRL<(this: { data: AssessmentStoreType["data"] }, value: number, fromUnit: WeightGetter["type"], toUnit: WeightGetter["type"]) => void>
 } 
 
 
@@ -109,7 +112,15 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
         }),
         isRunning: false
       }
-    }
+    },
+    cahngeWeightUnit: $(async function(this: { data: AssessmentStoreType["data"] }, value: number, fromUnit: WeightGetter["type"], toUnit: WeightGetter["type"]) {
+      const converted = convertWeightUnits(value, fromUnit, toUnit);
+      const formatted = FormattedNumberSchema.safeParse(converted);
+      if (!formatted.success) throw new Error('Invalid number');
+      this.data.personalInformation.weight.value = formatted.data;
+      this.data.personalInformation.weight.type = toUnit;
+      
+    }),
 });
 
 

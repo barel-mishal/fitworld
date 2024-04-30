@@ -3,7 +3,6 @@ import { cn } from '@qwik-ui/utils';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../../layout';
 import { PopoverTrigger } from '@qwik-ui/headless';
-import { buttonVariants } from '~/components/ui/button/button';
 import { Popover } from '~/components/ui/popover/popover';
 import { convertHeightUnits } from '~/util/convertUnits';
 import { formatedNumber } from '~/util/formatNumber';
@@ -33,7 +32,7 @@ export default component$(() => {
   });
 
   return (
-    <div class="grid grid-cols-[1fr,auto] gap-4 w-full">
+    <div class="grid grid-cols-[1fr,auto] gap-4 w-full font-roundsans">
 
       <div class="grid max-w-sm items-center gap-1.5 ">
         <Label for="email-2" class="text-emerald-100">Height</Label>
@@ -48,7 +47,7 @@ export default component$(() => {
           const height = parseFloat(el.value);
           sc.data.personalInformation.height.value = height;
           }} class={cn(
-            "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+            "inp",
           )} 
           onFocus$={() => {
             isAvtive.value = true;
@@ -90,14 +89,14 @@ export const MyPopover = component$<HeightGetter>(() => {
         return "Imperial";
     }
   };
-  console.log(sc.data.personalInformation.height);
 
   return (
     <>
       <PopoverTrigger
         ref={triggerRef}
-        class={buttonVariants({ look: 'outline', class: "rounded-sm" })}
+        class={"btn"}
         popovertarget="unit-height-id"
+
       >
         <span>
           {sc.data.personalInformation.height.type.toUpperCase()}
@@ -105,7 +104,7 @@ export const MyPopover = component$<HeightGetter>(() => {
       </PopoverTrigger>
       <Popover
         flip={false}
-        class=""
+        class="bg-emerald-950 text-emerald-50 border border-emerald-800 rounded-base shadow-sm p-2 w-32 -translate-x-[24px] "
         gutter={4}
         ref={popoverRef}
         anchorRef={triggerRef}
@@ -114,20 +113,26 @@ export const MyPopover = component$<HeightGetter>(() => {
         id="unit-height-id"
 
       >
-        <div class="grid gap-4 w-auto">
-          <button onClick$={() => {
+        <div class="grid gap-4 w-auto ">
+          <button 
+          data-active={`${sc.data.personalInformation.height.type === "cm"}`}
+          class="btn btn-data-active" onClick$={() => {
             sc.data.personalInformation.height = {...sc.data.personalInformation.height, type: "cm", value: parseFloat(formatedNumber(convertHeightUnits(sc.data.personalInformation.height.value, sc.data.personalInformation.height.type, "cm")))};
           }}>
             <span>CM</span>
           </button>
 
-          <button onClick$={() => {
+          <button 
+          data-active={`${sc.data.personalInformation.height.type === "m"}`}
+          class="btn btn-data-active" onClick$={() => {
             sc.data.personalInformation.height = {...sc.data.personalInformation.height, type: "m", value: parseFloat(formatedNumber(convertHeightUnits(sc.data.personalInformation.height.value, sc.data.personalInformation.height.type, "m")))};
           }}>
             <span>M</span>
           </button>
 
-          <button onClick$={() => {
+          <button 
+          data-active={`${sc.data.personalInformation.height.type === "FT"}`}
+          class="btn btn-data-active" onClick$={() => {
             sc.data.personalInformation.height = {...sc.data.personalInformation.height, type: "FT", value: parseFloat(formatedNumber(convertHeightUnits(sc.data.personalInformation.height.value, sc.data.personalInformation.height.type, "FT")))};
           }}>
             <span>FT</span>

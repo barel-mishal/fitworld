@@ -2,6 +2,7 @@ import { component$, useVisibleTask$ } from '@builder.io/qwik';
 import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
 import { TopNavBar, BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { loadScript } from "@paypal/paypal-js";
+import Play from '~/components/playComponents/Play';
 
 
 export default component$(() => {
@@ -13,17 +14,19 @@ export default component$(() => {
   
     <HeaderMainBottomNav 
     classMain='tw '
-    class="grid-rows-[40px,1fr,30px]">
+    class="grid-rows-[40px,1fr,30px] pb-4 pt-2 px-2">
       <div q:slot='header'>
         <TopNavBar />
       </div>
       <div q:slot='main'>
-        dfdslkj
+        <Play  />
       </div>
       <div q:slot='footer' class=""><BottomNavBar flag={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} /></div>
     </HeaderMainBottomNav>
   );
 });
+
+
 
 
 export const Paypal = component$(() => {

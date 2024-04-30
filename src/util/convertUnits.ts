@@ -66,9 +66,11 @@ export function convertHeightUnits(value: number, fromUnit: string, toUnit: stri
       result = kilograms * kgToLb;
     } else if (toUnit === 'g') {
       result = kilograms * kgToG;
+      console.log("result", result);
     } else {
       throw new Error(`Invalid 'to' unit: ${toUnit}`);
     }
+
   
     return result;
   };

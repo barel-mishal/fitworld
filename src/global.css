@@ -108,6 +108,12 @@
     @apply text-lg;
   }
   .inp {
-    @apply rounded-sm p-2 border border-emerald-800 bg-emerald-950 focus-within:outline-emerald-700 focus-within:border-emerald-700
+    @apply rounded-sm p-2 border border-emerald-700 text-emerald-50 bg-emerald-900 focus-within:outline-emerald-700 focus-within:border-emerald-700
+  }
+  .title {
+    @apply text-emerald-100 text-3xl font-roundsans font-extrabold
+  }
+  .info-title {
+    @apply text-emerald-100 font-roundsans font-bold
   }
 }

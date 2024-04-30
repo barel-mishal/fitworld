@@ -105,15 +105,12 @@ export default component$(() => {
   return (
   
     <HeaderMainBottomNav >
-      <div q:slot='header' class=""><Button onClick$={prev} look={"ghost"} class={cn("text-emerald-200 p-0 active:bg-transparent hover:bg-transparent ", isFirst.value && "hidden")}><BsArrowLeft class="" style={{height: 30, width: 30}} /></Button></div>
-      <div q:slot='main' class=" h-full flex items-start"><Slot /></div>
-      <div q:slot='footer'><Button 
+      <div q:slot='header' class="mx-2"><Button onClick$={prev} look={"ghost"} class={cn("text-emerald-200 p-0 active:bg-transparent hover:bg-transparent ", isFirst.value && "hidden")}><BsArrowLeft class="" style={{height: 30, width: 30}} /></Button></div>
+      <div q:slot='main' class="mx-2 h-full flex items-start"><Slot /></div>
+      <div q:slot='footer' class="mx-2"><button 
         disabled={sc.settings.buttonDisabled} 
-        class="w-full" 
-        role={"button"} 
-        look={sc.settings.buttonStyle} 
-        size={"md"} 
-        onClick$={[merge, next]}> {sc.actions.mergeProfile.isRunning ? <FaUploadSolid /> : <p>CONTINUE</p>  } </Button></div>
+        class="w-full btn-primary text-orange-100  " 
+        onClick$={[merge, next]}> {sc.actions.mergeProfile.isRunning ? <FaUploadSolid /> : <p class="font-roundsans font-extrabold">CONTINUE</p>  } </button></div>
     </HeaderMainBottomNav>
   );
 });

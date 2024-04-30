@@ -3,7 +3,6 @@ import { cn } from '@qwik-ui/utils';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../../layout';
 import { PopoverTrigger } from '@qwik-ui/headless';
-import { buttonVariants } from '~/components/ui/button/button';
 import { Popover } from '~/components/ui/popover/popover';
 import { convertWeightUnits } from '~/util/convertUnits';
 import { formatedNumber } from '~/util/formatNumber';
@@ -33,9 +32,9 @@ export default component$(() => {
   };
 
   return (
-    <div class="grid grid-cols-[1fr,auto] gap-4 w-full">
+    <div class="grid grid-cols-[1fr,auto] gap-4 w-full font-roundsans">
 
-      <div class="grid max-w-sm items-center gap-1.5 ">
+      <div class="grid max-w-sm items-center gap-1.5 grid-rows-[auto,46px,auto] ">
         <Label for="email-2" class="text-emerald-100">Current Weight</Label>
         <input 
         ref={refWeight}
@@ -43,8 +42,10 @@ export default component$(() => {
           const height = parseFloat(el.value);
           sc.data.personalInformation.weight.value = height;
           }} class={cn(
-            "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-          )} value={inputHeightValue()}
+            "inp"
+            // "flex h-12 w-full rounded-base border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+          )} 
+          value={inputHeightValue()}
           onFocus$={() => {
             isAvtive.value = true;
           }}
@@ -55,7 +56,7 @@ export default component$(() => {
 
         <p class="text-sm text-emerald-200/70 h-5">The name shown by others in the application </p>
       </div>
-      <div class="grid max-w-sm items-center gap-1.5 ">
+      <div class="grid max-w-sm items-center gap-1.5 grid-rows-[auto,46px,auto] w-20 h-16">
         <Label for="email-2" class="text-emerald-100">Unit</Label>
         <MyPopover />
       </div>
@@ -81,7 +82,7 @@ export const MyPopover = component$(() => {
     <>
       <PopoverTrigger
         ref={triggerRef}
-        class={buttonVariants({ look: 'outline', class: "rounded-sm" })}
+        class={cn("btn")}
         popovertarget="current-weight"
       >
         <span>
@@ -90,7 +91,7 @@ export const MyPopover = component$(() => {
       </PopoverTrigger>
       <Popover
         flip={false}
-        class=""
+        class="-translate-x-[23px] bg-emerald-950 border border-emerald-800 text-emerald-50 "
         gutter={4}
         ref={popoverRef}
         anchorRef={triggerRef}
@@ -100,20 +101,35 @@ export const MyPopover = component$(() => {
 
       >
         <div class="grid gap-4 w-auto">
-          <button onClick$={() => {
-            sc.data.personalInformation.weight = {...sc.data.personalInformation.weight, type: "kg", value: parseFloat(formatedNumber(convertWeightUnits(sc.data.personalInformation.weight.value, sc.data.personalInformation.weight.type, "kg")))};
+          <button 
+          data-active={`${sc.data.personalInformation.weight.type === "kg"}`}
+          class="btn btn-data-active"
+          onClick$={async () => {
+            const weight = sc.data.personalInformation.weight.value;
+            const fromUnit = sc.data.personalInformation.weight.type;
+            await sc.cahngeWeightUnit( weight, fromUnit, "kg");
           }}>
             <span>KG</span>
           </button>
 
-          <button onClick$={() => {
-            sc.data.personalInformation.weight = {...sc.data.personalInformation.weight, type: "g", value: parseFloat(formatedNumber(convertWeightUnits(sc.data.personalInformation.weight.value, sc.data.personalInformation.weight.type, "g")))};
+          <button 
+          data-active={`${sc.data.personalInformation.weight.type === "g"}`}
+          class="btn btn-data-active"
+          onClick$={async () => {
+            const weight = sc.data.personalInformation.weight.value;
+            const fromUnit = sc.data.personalInformation.weight.type;
+            await sc.cahngeWeightUnit( weight, fromUnit, "g");
           }}>
             <span>G</span>
           </button>
 
-          <button onClick$={() => {
-            sc.data.personalInformation.weight = {...sc.data.personalInformation.weight, type: "lb", value: parseFloat(formatedNumber(convertWeightUnits(sc.data.personalInformation.weight.value, sc.data.personalInformation.weight.type, "lb")))};
+          <button 
+          data-active={`${sc.data.personalInformation.weight.type === "lb"}`}
+          class="btn btn-data-active"
+          onClick$={async () => {
+            const weight = sc.data.personalInformation.weight.value;
+            const fromUnit = sc.data.personalInformation.weight.type;
+            await sc.cahngeWeightUnit( weight, fromUnit, "lb");
           }}>
             <span>LB</span>
           </button>

@@ -40,7 +40,7 @@ type DivGameLayoutProps = PropsOf<"div"> & VariantProps<typeof buttonVariants> &
 export default component$<DivGameLayoutProps>((props) => {
   // Phone size screen is 380px wide 600px tall
   return (
-    <div class={cn("grid grid-rows-[40px,1fr,60px] h-screen text-emerald-50 p-3 bg-emerald-950", props.class)}>
+    <div class={cn("grid grid-rows-[40px,1fr,60px] h-screen text-emerald-50 p-1 bg-emerald-950", props.class)}>
       <div class="bg-emerald-950 content-center">
         <Slot name="header" />
       </div>
