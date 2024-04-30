@@ -226,7 +226,7 @@ export const MainTrackFood = component$(() => {
               }} 
             />
 
-            {myEats.store.selectedFood && (
+            {myEats.store.selectedFood && myEats.store.state === "units" && (
               <>
                 <h5>
                   {myEats.store.selectedFood.name}
@@ -279,6 +279,7 @@ export const NextTrackFood = component$(() => {
 
 
 export function useTrackFood() {
+  const now = useSignal<Date>();
   type Eating = {
     amount: string,
     food: string,
@@ -294,10 +295,13 @@ export function useTrackFood() {
     state: "idle" as State,
     stateStaps: ["ingredients", "units", "amounts", "keepgoing"],
     addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
-      serverAddEat(eat).then((data) => {
-        console.log(data);
-      });
-      this.eats = this.eats.concat([eat], this.eats);
+      // if (!now.value) console.log("No date");
+      console.log(JSON.stringify(eat, null, 2));
+      // serverAddEat(eat).then((data) => {
+
+      //   console.log(data);
+      // });
+      // this.eats = this.eats.concat([eat], this.eats);
     }),
     selectedFood: undefined as undefined | Ingredient,
     bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {
@@ -383,7 +387,6 @@ export function useTrackFood() {
     return ingredients.ingredients;
   });
 
-
   const onClickNext = $(async () => {
     let message = "";
     const stats = store.stateStaps;
@@ -392,6 +395,7 @@ export function useTrackFood() {
     const nextIndex = index + 1;
     if (nextIndex >= stats.length) return;
     const goTo = stats[nextIndex];
+    console.log(goTo);
     switch (goTo) {
       case "ingredients":
         store.moveState("ingredients");
@@ -410,7 +414,6 @@ export function useTrackFood() {
         store.moveState("units");
         refUnit.value?.focus();
         message = "Please select a unit";
-        console.log("units", food.units);
         break;
       case "amounts":
         if (refAmount.value !== document.activeElement) {
@@ -418,20 +421,21 @@ export function useTrackFood() {
           break;
         }
         if (!store.selectedFood || !store.eating.measurementId) return;
-        store.selectedFood.amount = parseFloat(store.eating.amount);
-        store.selectedFood.selectedMeasurement = store.eating.measurementId
-        const foodTransformed = transformEat.parse(store.selectedFood);
-        await store.addEat(foodTransformed);
         await store.moveState("keepgoing");
         refFood.value?.focus();
         message = "Please select an amount";
         break;
-        case "finish":
-          store.moveState("finish");
-          message = "Please finish";
-          break;
+      case "finish":
+        store.moveState("finish");
+        message = "Please finish";
+        break;
       case "keepgoing":
-        store.moveState("ingredients");
+        if (!store.selectedFood || !store.eating.measurementId) return;
+        store.selectedFood.amount = parseFloat(store.eating.amount);
+        store.selectedFood.selectedMeasurement = store.eating.measurementId
+        const foodTransformed = transformEat.parse(store.selectedFood);
+        await store.addEat(foodTransformed);
+        await store.moveState("ingredients");
         await debounceReset("");
         refFood.value?.focus();
         break;
@@ -440,6 +444,8 @@ export function useTrackFood() {
     }
     return message;
   });
+
+
 
 
   return {store, refFood, refUnit, refAmount, onClickNext, resourceIngredients};
