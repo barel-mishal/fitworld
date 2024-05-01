@@ -117,3 +117,17 @@
     @apply text-emerald-100 font-roundsans font-bold
   }
 }
+
+@layer utilities {
+  .card-wrapper {
+    @apply relative bg-gradient-to-b from-slate-700 to-slate-800 rounded-lg
+  }
+  .card-wrapper::before {
+    background: conic-gradient(
+      rgba(244, 114, 182, 0.4) 0deg,
+      rgba(192, 132, 252, 0.4) 0deg,
+      transparent 0deg,
+    );
+    @apply h-full w-full content-[''] absolute;
+  }
+}
