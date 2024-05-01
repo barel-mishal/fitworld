@@ -1,4 +1,4 @@
-import { $, type QRL, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$, useOnDocument, useOnWindow, useComputed$ } from "@builder.io/qwik";
+import { $, type QRL, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$, useComputed$ } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 import useDebouncer from "~/util/useDebouncer";
@@ -77,18 +77,6 @@ export const MainTrackFood = component$(() => {
 
     });
 
-    const onClickFood = $(async (food: Ingredient) => {
-        await myEats.store.updateIngredient(food);
-        myEats.store.moveState("units");
-        myEats.refUnit.value?.focus()
-    });
-
-    const onClickUnit = $(async (unit: Ingredient["units"][number]) => {
-      await myEats.store.updarteUnit(unit);
-      myEats.store.moveState("amounts");
-      myEats.refAmount.value?.focus();
-    });
-
     // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(() => {
       myEats.refFood.value?.focus();
@@ -117,59 +105,11 @@ export const MainTrackFood = component$(() => {
             <FieldsForNewEat />
 
             <FestSelections />
-            
-            
-            <Resource 
-              value={myEats.resourceIngredients} 
-              onResolved={(value) => {
-                if (value.length === 0) return (
-                  <>
-                  </>
-                );
-                return (
-                  <>
-                  <h5>
-                    <span>{value.length} Popular foods or search for</span> "<span>{myEats.store.eating.food}</span>" 
-                  </h5>
-                  {value.map((food) => {
-                    return (
-                      <button key={food.id} 
-                        data-active={`${myEats.store.eating.foodId === food.id}`}
-                        class={cn("btn btn-data-active flex gap-1", "p-2 ")}
-                        onClick$={() => setTimeout(async () => await onClickFood(food), 300)}
-                        >
-                        {food.name}
-                      </button>
-                    )
-                  })}
-                  </>
-                )
-              }} 
-            />
 
-            {myEats.store.selectedFood && myEats.store.state === "units" && (
-              <>
-                <h5>
-                  {myEats.store.selectedFood.name}
-                </h5>
-                <ul class="flex flex-wrap gap-3">
-                  {myEats.store.selectedFood.units.map((unit, index) => {
-                    return (
-                      <li key={unit.id} class=" ">
-                        <button 
-                          data-active={`${unit.id === myEats.store.eating.measurementId}`}
-                          class={cn("btn btn-data-active flex gap-1", "p-2 ")}
-                          onClick$={() => setTimeout(async () => await onClickUnit(unit), 300)}
-                        >
-                          <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
-                        </button>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </>
-            
-            )}
+            <ShowSearchResults />
+
+            <DisplayFoodUnits />
+
           </div>
 
         </div>
@@ -228,9 +168,46 @@ export const FieldsForNewEat = component$(() => {
 </div>
 });
 
+export const ShowSearchResults = component$(() => {
+  const myEats = useContext(contextFoodTrack);
+  const onClickFood = $(async (food: Ingredient) => {
+    await myEats.store.updateIngredient(food);
+    myEats.store.moveState("units");
+    myEats.refUnit.value?.focus()
+});
+
+  return  <Resource 
+  value={myEats.resourceIngredients} 
+  onResolved={(value) => {
+    if (value.length === 0) return (
+      <>
+      </>
+    );
+    return (
+        <>
+        <h5>
+          <span>{value.length} Popular foods or search for</span> "<span>{myEats.store.eating.food}</span>" 
+        </h5>
+        {value.map((food) => {
+          return (
+            <button key={food.id} 
+              data-active={`${myEats.store.eating.foodId === food.id}`}
+              class={cn("btn btn-data-active flex gap-1", "p-2 ")}
+              onClick$={() => setTimeout(async () => await onClickFood(food), 300)}
+              >
+              {food.name}
+            </button>
+          )
+        })}
+        </>
+      )
+    }} 
+  />
+});  
+
 export const FestSelections = component$(() => {
   const myEats = useContext(contextFoodTrack);
-  
+
   return <ul class="overflow-x-auto bg-emerald-950">
   <li class="bg-emerald-950">
     <h5>
@@ -286,7 +263,6 @@ export const NextTrackFood = component$(() => {
     </>
   )
 });
-
 
 export function useTrackFood() {
   const now = useSignal<Date>();
@@ -376,6 +352,9 @@ export function useTrackFood() {
       const parsedValue = SchemaPositiveBiggerThanZero.safeParse(amount);
       this.eating.amount =  parsedValue.success ? parsedValue.data : this.eating.amount;
     }),
+    finish: $(async function(this: {eats: Eat[]}) {
+      return
+    }),  
   });
   const debounceReset = useDebouncer(
     $(async () => {
@@ -464,9 +443,42 @@ export function useTrackFood() {
   return {store, refFood, refUnit, refAmount, onClickNext, resourceIngredients, disableFinishButton};
 }
 
+export const DisplayFoodUnits = component$(() => {
+  const myEats = useContext(contextFoodTrack);
+  const onClickUnit = $(async (unit: Ingredient["units"][number]) => {
+    await myEats.store.updarteUnit(unit);
+    myEats.store.moveState("amounts");
+    myEats.refAmount.value?.focus();
+  });
+
+  return             <>
+  {myEats.store.selectedFood && myEats.store.state === "units" && (
+    <>
+      <h5>
+        {myEats.store.selectedFood.name}
+      </h5>
+      <ul class="flex flex-wrap gap-3">
+        {myEats.store.selectedFood.units.map((unit, index) => {
+          return (
+            <li key={unit.id} class=" ">
+              <button 
+                data-active={`${unit.id === myEats.store.eating.measurementId}`}
+                class={cn("btn btn-data-active flex gap-1", "p-2 ")}
+                onClick$={() => setTimeout(async () => await onClickUnit(unit), 300)}
+              >
+                <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
+              </button>
+            </li>
+          )
+        })}
+      </ul>
+    </>
+  
+  )}
+  </>
+}); 
+
 export const contextFoodTrack = createContextId<ReturnType<typeof useTrackFood>>("foodTrack");
-
-
 
 // shiftState
 type State = "idle" | "ingredients" | "units" | "amounts" | "finish" | "keepgoing";
