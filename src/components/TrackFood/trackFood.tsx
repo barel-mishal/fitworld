@@ -239,7 +239,7 @@ export const FestSelections = component$(() => {
 }); 
 
 export const NextTrackFood = component$(() => {
-  const isConfrim = useSignal(true);
+  const isConfrim = useSignal(false);
   const myEats = useContext(contextFoodTrack);
 
   return (
@@ -307,12 +307,14 @@ export function useTrackFood() {
     stateStaps: ["ingredients", "units", "amounts", "keepgoing"],
     addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
       if (!now.value) console.log("No date");
-      console.log(JSON.stringify(eat, null, 2));
-      serverAddEat(eat).then((data) => {
-
-        console.log(data);
-      });
       this.eats = this.eats.concat([eat], this.eats);
+      serverAddEat(eat).then((data) => {
+        console.log(data);
+      }).catch((error) => {
+        console.log(error);
+      }).finally(() => {
+        console.log("finally");
+      });
     }),
     selectedFood: undefined as undefined | Ingredient,
     bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {
