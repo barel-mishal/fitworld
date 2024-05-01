@@ -14,11 +14,7 @@ export const TrackFood = component$(() => {
 });
 
 /*
-2. get all food groups from database to application on typing
-3. selecting from foods within database and insert them into id
-4. selecting all the unit from within this unit appropetly
 5. ui bwllow all food as list of items
-6. when using selected foods 
 7. track nutrition if the person gets something good then he gets a point / treat
 */
 export const MainTrackFood = component$(() => {
@@ -242,23 +238,52 @@ export const FestSelections = component$(() => {
 }); 
 
 export const NextTrackFood = component$(() => {
+  const isConfrim = useSignal(true);
   const myEats = useContext(contextFoodTrack);
 
   return (
     <>
-      <div class="grid grid-cols-[1fr,auto] gap-3">
-        <button 
-        onClick$={() =>  setTimeout(async () => await myEats.onClickNext(), 300)}
-        class="btn-primary">
-          NEXT
-        </button>
-        <button 
-        disabled={myEats.disableFinishButton.value}
-        onClick$={() =>  setTimeout(async () => await myEats.store.finish(), 300)}
-        class="btn-gohst relative">
-          <PhFlag class="fill-current text-emerald-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 active:rotate-6 transition-all ease-in-out" />
-        </button>
-      </div>
+      {
+      !isConfrim.value &&
+        <div class="grid grid-cols-[1fr,auto] gap-3">
+        
+          <button 
+          onClick$={() =>  setTimeout(async () => await myEats.onClickNext(), 300)}
+          class="btn-primary">
+            NEXT
+          </button>
+          
+          <button 
+          disabled={myEats.disableFinishButton.value}
+          onClick$={() => isConfrim.value = !isConfrim.value}
+          class="btn-gohst relative">
+            <PhFlag class={cn(
+              "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 active:rotate-6 transition-all ease-in-out",
+              !myEats.disableFinishButton.value ? "fill-emerald-100" : "fill-emerald-800"
+              
+              )} />
+          </button>
+        </div>
+        }
+        {
+          isConfrim.value &&
+          <div class="grid grid-cols-[auto,1fr] gap-2">
+            <button 
+              onClick$={() =>  setTimeout(async () => await myEats.store.finish(), 300)}
+              class="btn-gohst text-emerald-700">
+                Add More Product
+            </button>
+            <button 
+              onClick$={() =>  setTimeout(async () => await myEats.store.finish(), 300)}
+              class="btn-primary flex items-center gap-2 justify-center ">
+                <PhFlag class={cn(
+              " transform active:rotate-6 transition-all ease-in-out scale-75",
+              "fill-emerald-100"
+              )} />
+                <p>Finish</p>
+            </button>
+          </div>
+        }
     </>
   )
 });
