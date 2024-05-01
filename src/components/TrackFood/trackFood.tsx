@@ -116,40 +116,7 @@ export const MainTrackFood = component$(() => {
             
             <FieldsForNewEat />
 
-            
-            
-            <ul class="overflow-x-auto bg-emerald-950">
-              <li class="bg-emerald-950">
-                <h5>
-                  Fast selections
-                </h5>
-                <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1 bg-emerald-950">
-                    <li>
-                      <button 
-                      class="btn"
-                      onClick$={async () => {
-                        myEats.store.bindEating("food", "Water");
-                        myEats.refFood.value?.focus();
-                        myEats.store.moveState("ingredients");
-                      }}
-                      >
-                        Water
-                      </button>
-                    </li>
-                  {[].map((food) => {
-                    return (
-                      <li key={food} class=" bg-emerald-950">
-                        <button 
-                        class={cn("btn btn-data-active flex gap-1", "p-2 ")}
-                        onClick$={() => myEats.store.bindEating("food", food)} >
-                          {food}
-                        </button>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </li>
-            </ul>
+            <FestSelections />
             
             
             <Resource 
@@ -260,6 +227,43 @@ export const FieldsForNewEat = component$(() => {
   </fieldset>
 </div>
 });
+
+export const FestSelections = component$(() => {
+  const myEats = useContext(contextFoodTrack);
+  
+  return <ul class="overflow-x-auto bg-emerald-950">
+  <li class="bg-emerald-950">
+    <h5>
+      Fast selections
+    </h5>
+    <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1 bg-emerald-950">
+        <li>
+          <button 
+          class="btn"
+          onClick$={async () => {
+            myEats.store.bindEating("food", "Water");
+            myEats.refFood.value?.focus();
+            myEats.store.moveState("ingredients");
+          }}
+          >
+            Water
+          </button>
+        </li>
+      {[].map((food) => {
+        return (
+          <li key={food} class=" bg-emerald-950">
+            <button 
+            class={cn("btn btn-data-active flex gap-1", "p-2 ")}
+            onClick$={() => myEats.store.bindEating("food", food)} >
+              {food}
+            </button>
+          </li>
+        )
+      })}
+    </ul>
+  </li>
+</ul>
+}); 
 
 export const NextTrackFood = component$(() => {
   const myEats = useContext(contextFoodTrack);
