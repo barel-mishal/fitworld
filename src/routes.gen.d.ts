@@ -22,7 +22,6 @@ export type AppRoutes =
   | "/client/Assessment/personalInformation/gender/"
   | "/client/Assessment/personalInformation/height/"
   | "/client/Assessment/personalInformation/name/"
-  | "/client/eats/"
   | "/content/"
   | "/dashboard/"
   | "/dashboard/feed/"
@@ -54,7 +53,6 @@ export interface AppRouteMap {
   "/client/Assessment/personalInformation/gender/": {};
   "/client/Assessment/personalInformation/height/": {};
   "/client/Assessment/personalInformation/name/": {};
-  "/client/eats/": {};
   "/content/": {};
   "/dashboard/": {};
   "/dashboard/feed/": {};
@@ -99,7 +97,6 @@ export interface AppRouteParamsFunction {
     params?: {},
   ): string;
   (route: "/client/Assessment/personalInformation/name/", params?: {}): string;
-  (route: "/client/eats/", params?: {}): string;
   (route: "/content/", params?: {}): string;
   (route: "/dashboard/", params?: {}): string;
   (route: "/dashboard/feed/", params?: {}): string;
@@ -132,7 +129,6 @@ export type AppLinkProps =
   | { route: "/client/Assessment/personalInformation/gender/" }
   | { route: "/client/Assessment/personalInformation/height/" }
   | { route: "/client/Assessment/personalInformation/name/" }
-  | { route: "/client/eats/" }
   | { route: "/content/" }
   | { route: "/dashboard/" }
   | { route: "/dashboard/feed/" }

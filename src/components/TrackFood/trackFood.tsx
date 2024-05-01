@@ -5,7 +5,7 @@ import useDebouncer from "~/util/useDebouncer";
 import { SchemaPositiveBiggerThanZero } from "~/util/types";
 import { cn } from "@qwik-ui/utils";
 import { PhFlag } from "../icons/icons";
-import { AppLink } from "~/routes.config";
+import { AppLinkGlobal } from "~/routes.config";
 
 
 export const TrackFood = component$(() => {
@@ -246,7 +246,7 @@ export const NextTrackFood = component$(() => {
         <div class="grid grid-cols-[1fr,auto] gap-3">
         
           <button 
-          onClick$={() =>  setTimeout(async () => await myEats.onClickNext(), 300)}
+          onClick$={() => setTimeout(async () => await myEats.onClickNext(), 300)}
           class="btn-primary">
             NEXT
           </button>
@@ -271,15 +271,16 @@ export const NextTrackFood = component$(() => {
               class="btn-gohst text-emerald-700">
                 Add More Product
             </button>
-            <AppLink 
-              route="/client/(main)/track/finish/"
+            <AppLinkGlobal 
+              route="/client/(main)/track/finish/"     
+              
               class="btn-primary flex items-center gap-2 justify-center ">
                 <PhFlag class={cn(
               " transform active:rotate-6 transition-all ease-in-out scale-75",
               "fill-emerald-100"
               )} />
                 <p>Finish</p>
-            </AppLink>
+            </AppLinkGlobal>
           </div>
         }
     </>
@@ -305,13 +306,16 @@ export function useTrackFood() {
     addEat: $(function(this: {eats: Eat[]}, eat:  Eat) {
       if (!now.value) console.log("No date");
       this.eats = this.eats.concat([eat], this.eats);
-      serverAddEat(eat).then((data) => {
-        console.log(data);
+      serverAddEat(eat).then(async (data) => {
+        const eat = "eat" in data ? data.eat : undefined;
+        if (!eat) return;
+        
       }).catch((error) => {
         console.log(error);
       }).finally(() => {
         console.log("finally");
       });
+      console.log(this.eats)
     }),
     selectedFood: undefined as undefined | Ingredient,
     bindValue: $(function(this: {eats: Eat[]}, key: keyof Eat, value: string, id: string) {

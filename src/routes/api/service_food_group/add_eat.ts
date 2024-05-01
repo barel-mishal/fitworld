@@ -29,7 +29,7 @@ export const serverAddEat = server$(async function(options: Eat) {
         if (!parsed.success) {
           console.error(parsed.error);
           return {
-            parsed
+            error: parsed.error
           }
         }
         const session = this.sharedMap.get("session") as ExtendSession;
@@ -39,8 +39,15 @@ export const serverAddEat = server$(async function(options: Eat) {
 
         const result = await db.create<Eat>(`Eat`, options);
         const parsedResult = EatSchema.array().safeParse(result);
-      
-        return parsedResult
+        if (!parsedResult.success) {
+          console.error(parsedResult.error);
+          return {
+            error: parsedResult.error
+          }
+        }
+        return {
+          eat: parsedResult.data
+        }
     } catch (error) {
         console.error(error);
         return {
