@@ -12,11 +12,6 @@ const Play = component$(() => {
 
     return (
         <div class="flex flex-col items-center">
-            <div class="h-96 w-96 grid place-content-center card-wrapper">
-                <div class="card-content">
-                    <div>sdlfkj</div>
-                </div>
-            </div>
             <div class="grid grid-cols-3 w-1/2 bg-orange-900 h-80 border-b border-orange-600">
                 <p class="text-emerald-100 text-2xl font-roundsans font-extrabold place-self-center text-center h-full w-full border-r border-orange-800">
                     <span class=""></span>
@@ -56,3 +51,11 @@ const Play = component$(() => {
 });
 
 export default Play;
+
+export const animetion = component$(() => {
+    return  <div class="h-96 w-96 grid place-content-center card-wrapper">
+    <div class="card-content">
+        <div>sdlfkj</div>
+    </div>
+</div>
+});
