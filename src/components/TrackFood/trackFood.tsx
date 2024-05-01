@@ -101,7 +101,6 @@ export const MainTrackFood = component$(() => {
           
           <div class="grid gap-3 sticky top-0 bg-emerald-950 z-50">
             
-            
             <FieldsForNewEat />
 
             <FestSelections />
