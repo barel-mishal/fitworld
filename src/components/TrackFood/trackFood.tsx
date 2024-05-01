@@ -20,9 +20,6 @@ export const TrackFood = component$(() => {
 */
 export const MainTrackFood = component$(() => {
     const myEats = useContext(contextFoodTrack);
-
-
-
     const onPressArrowsKeys = $(async (e: KeyboardEvent) => {
       const ingredients = await myEats.resourceIngredients.value;
       const currentFood = myEats.store.eating.foodId;
