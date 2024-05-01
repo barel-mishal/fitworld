@@ -5,6 +5,7 @@ import useDebouncer from "~/util/useDebouncer";
 import { SchemaPositiveBiggerThanZero } from "~/util/types";
 import { cn } from "@qwik-ui/utils";
 import { PhFlag } from "../icons/icons";
+import { AppLink } from "~/routes.config";
 
 
 export const TrackFood = component$(() => {
@@ -238,7 +239,7 @@ export const FestSelections = component$(() => {
 }); 
 
 export const NextTrackFood = component$(() => {
-  const isConfrim = useSignal(true);
+  const isConfrim = useSignal(false);
   const myEats = useContext(contextFoodTrack);
 
   return (
@@ -268,11 +269,11 @@ export const NextTrackFood = component$(() => {
         {
           isConfrim.value &&
           <div class="grid grid-cols-[auto,1fr] gap-2">
-            <button 
-              onClick$={() =>  setTimeout(async () => await myEats.store.finish(), 300)}
+            <AppLink 
+              route="/client/(main)/track/finish/"
               class="btn-gohst text-emerald-700">
                 Add More Product
-            </button>
+            </AppLink>
             <button 
               onClick$={() =>  setTimeout(async () => await myEats.store.finish(), 300)}
               class="btn-primary flex items-center gap-2 justify-center ">
