@@ -1,4 +1,4 @@
-import { $, type QRL, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$, useOnDocument, useOnWindow } from "@builder.io/qwik";
+import { $, type QRL, Resource, Slot, component$, createContextId, useContext, useContextProvider, useOn, useResource$, useSignal, useStore, useVisibleTask$, useOnDocument, useOnWindow, useComputed$ } from "@builder.io/qwik";
 import { type Ingredient, serverGetIngredients } from "~/routes/api/service_food_group/get_food_groups";
 import { type Eat, transformEat, serverAddEat } from "~/routes/api/service_food_group/add_eat";
 import useDebouncer from "~/util/useDebouncer";
@@ -10,7 +10,6 @@ import { PhFlag } from "../icons/icons";
 export const TrackFood = component$(() => {
   const myEats = useTrackFood();
   useContextProvider(contextFoodTrack, myEats);
-
   return <Slot />;
 });
 
@@ -25,12 +24,7 @@ export const TrackFood = component$(() => {
 export const MainTrackFood = component$(() => {
     const myEats = useContext(contextFoodTrack);
 
-    const debounce = useDebouncer(
-      $((value: string) => {
-        myEats.store.bindEating("food", value);
-      }),
-      300
-    );
+
 
     const onPressArrowsKeys = $(async (e: KeyboardEvent) => {
       const ingredients = await myEats.resourceIngredients.value;
@@ -95,13 +89,6 @@ export const MainTrackFood = component$(() => {
       myEats.refAmount.value?.focus();
     });
 
-    const onFocusAmount = $(() => {
-      myEats.store.moveState("amounts");
-    });
-    const onFocusUnit = $(() => {
-      myEats.store.moveState("units");
-    });
-
     // eslint-disable-next-line qwik/no-use-visible-task
     useVisibleTask$(() => {
       myEats.refFood.value?.focus();
@@ -127,40 +114,8 @@ export const MainTrackFood = component$(() => {
           <div class="grid gap-3 sticky top-0 bg-emerald-950 z-50">
             
             
-            
-            <div class="sticky top-0 z-50 bg-emerald-950 pb-2">
-              <section class="grid grid-cols-3 gap-3">
-                <label for="new-food" class="text-emerald-100">Food</label>
-                <label for="new-unit" class="text-emerald-100">Unit</label>
-                <label for="new-amount" class="text-emerald-100">Amount</label>
-              </section>
-              <fieldset class="grid grid-cols-3 gap-3">
-                  <input id={"new-food"}  
-                    type="text" 
-                    ref={myEats.refFood}
-                    autoComplete={"off"}
-                    class="inp" 
-                    value={myEats.store.eating.food} 
-                    onFocus$={() => myEats.store.moveState("ingredients")}
-                    onInput$={async (e,el) => await debounce(el.value)} 
-                  />
-                  <input id={"new-measurement"} 
-                    type="text" 
-                    ref={myEats.refUnit}
-                    autoComplete={"off"}
-                    onFocus$={onFocusUnit}
-                    class="inp" 
-                    value={myEats.store.eating.measurement} onInput$={(e,el) => myEats.store.bindEating("measurement", el.value)} 
-                  />
-                  <input id={"new-amount"} 
-                    type="text" 
-                    class="inp"
-                    onFocus$={onFocusAmount}
-                    ref={myEats.refAmount}
-                    value={myEats.store.eating.amount} onInput$={async (e,el) => await myEats.store.updateAmount(el.value)} 
-                  />
-              </fieldset>
-            </div>
+            <FieldsForNewEat />
+
             
             
             <ul class="overflow-x-auto bg-emerald-950">
@@ -253,7 +208,58 @@ export const MainTrackFood = component$(() => {
         </div>
       </>
     )
+});
+
+export const FieldsForNewEat = component$(() => {
+  const myEats = useContext(contextFoodTrack);
+
+  const onFocusAmount = $(() => {
+    myEats.store.moveState("amounts");
   });
+  const onFocusUnit = $(() => {
+    myEats.store.moveState("units");
+  });
+
+  const debounce = useDebouncer(
+    $((value: string) => {
+      myEats.store.bindEating("food", value);
+    }),
+    300
+  );
+  return <div class="sticky top-0 z-50 bg-emerald-950 pb-2">
+  <section class="grid grid-cols-3 gap-3">
+    <label for="new-food" class="text-emerald-100">Food</label>
+    <label for="new-unit" class="text-emerald-100">Unit</label>
+    <label for="new-amount" class="text-emerald-100">Amount</label>
+  </section>
+  <fieldset class="grid grid-cols-3 gap-3">
+      <input id={"new-food"}  
+        type="text" 
+        ref={myEats.refFood}
+        autoComplete={"off"}
+        class="inp" 
+        value={myEats.store.eating.food} 
+        onFocus$={() => myEats.store.moveState("ingredients")}
+        onInput$={async (e,el) => await debounce(el.value)} 
+      />
+      <input id={"new-measurement"} 
+        type="text" 
+        ref={myEats.refUnit}
+        autoComplete={"off"}
+        onFocus$={onFocusUnit}
+        class="inp" 
+        value={myEats.store.eating.measurement} onInput$={(e,el) => myEats.store.bindEating("measurement", el.value)} 
+      />
+      <input id={"new-amount"} 
+        type="text" 
+        class="inp"
+        onFocus$={onFocusAmount}
+        ref={myEats.refAmount}
+        value={myEats.store.eating.amount} onInput$={async (e,el) => await myEats.store.updateAmount(el.value)} 
+      />
+  </fieldset>
+</div>
+});
 
 export const NextTrackFood = component$(() => {
   const myEats = useContext(contextFoodTrack);
@@ -267,6 +273,7 @@ export const NextTrackFood = component$(() => {
           NEXT
         </button>
         <button 
+        disabled={myEats.disableFinishButton.value}
         onClick$={() =>  setTimeout(async () => await myEats.store.finish(), 300)}
         class="btn-gohst relative">
           <PhFlag class="fill-current text-emerald-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 active:rotate-6 transition-all ease-in-out" />
@@ -373,6 +380,10 @@ export function useTrackFood() {
     200
   );
 
+  const disableFinishButton = useComputed$(() => {
+    return store.eats.length === 0;
+  });
+
   const resourceIngredients = useResource$(async ({track, cleanup}) => {
     const value = track(() => ({ isIngredientState: store.state, food: store.eating.food }));
     
@@ -446,7 +457,7 @@ export function useTrackFood() {
 
 
 
-  return {store, refFood, refUnit, refAmount, onClickNext, resourceIngredients};
+  return {store, refFood, refUnit, refAmount, onClickNext, resourceIngredients, disableFinishButton};
 }
 
 export const contextFoodTrack = createContextId<ReturnType<typeof useTrackFood>>("foodTrack");
