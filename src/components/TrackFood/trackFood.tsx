@@ -239,7 +239,7 @@ export const FestSelections = component$(() => {
 }); 
 
 export const NextTrackFood = component$(() => {
-  const isConfrim = useSignal(false);
+  const isConfrim = useSignal(true);
   const myEats = useContext(contextFoodTrack);
 
   return (
@@ -269,20 +269,20 @@ export const NextTrackFood = component$(() => {
         {
           isConfrim.value &&
           <div class="grid grid-cols-[auto,1fr] gap-2">
-            <AppLink 
-              route="/client/(main)/track/finish/"
+            <button 
+              onClick$={() => isConfrim.value = !isConfrim.value}
               class="btn-gohst text-emerald-700">
                 Add More Product
-            </AppLink>
-            <button 
-              onClick$={() =>  setTimeout(async () => await myEats.store.finish(), 300)}
+            </button>
+            <AppLink 
+              route="/client/(main)/track/finish/"
               class="btn-primary flex items-center gap-2 justify-center ">
                 <PhFlag class={cn(
               " transform active:rotate-6 transition-all ease-in-out scale-75",
               "fill-emerald-100"
               )} />
                 <p>Finish</p>
-            </button>
+            </AppLink>
           </div>
         }
     </>
