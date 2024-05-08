@@ -21,7 +21,7 @@ export const appUrl = untypedAppUrl as AppRouteParamsFunction;
 export function AppLink(props: AppLinkProps & QwikIntrinsicElements["a"]) {
   return (
     <a
-      href={(appUrl as (route: string, props: any, prefix: string) => string)(
+      href={(appUrl as (route: string, props: any, prefix: string) => string) (
         props.route,
         props,
         "param:",
@@ -32,6 +32,7 @@ export function AppLink(props: AppLinkProps & QwikIntrinsicElements["a"]) {
     </a>
   );
 }
+
 export function AppLinkGlobal(props: AppLinkProps & QwikIntrinsicElements["a"]) {
   return (
     <Link

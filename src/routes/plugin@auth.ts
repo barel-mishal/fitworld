@@ -7,16 +7,23 @@ import { type Session } from "@auth/core/types";
 
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   serverAuth$(({ env }) => {
+     console.log("\n\n1 before Surreal\n\n")
     const db = new Surreal();
-    db.connect("http://0.0.0.0:8000/rpc", { 
+    db.connect("http://localhost:8000/rpc", { 
       database: "database", 
       namespace: "namespace", 
       auth: { 
         username: "root", 
-        password: "root" 
+        password: "root",
       } 
-    });
-    db.use({ namespace: "namespace", database: "database" });
+    })
+    .then((data) => console.log("Connected to SurrealDB", data))
+    .catch((error) => console.error("Error connecting to SurrealDB", error));
+
+    db.use({ namespace: "namespace", database: "database" })
+    .then((data) => console.log("Using namespace and database", data))
+    .catch((error) => console.error("Error using namespace and database", error));
+    console.log("\n\n1.5 before Surreal\n\n")
 
     return {
     secret: env.get("AUTH_SECRET"),
@@ -62,8 +69,11 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
           namespace: "namespace", 
           pass: connection.token.providerId,
         });
+        console.log("pass", connection.token.providerId, token)
+
         // Get user profile
         const profile = await db.query<[[SchemaProfileType]]>("SELECT * FROM profile WHERE userId = $auth.id");
+        console.log(profile)
         // Return session with database token for to authenticate with database and profile
         return {...connection.session, database: { token, profile: profile[0][0] }} ;
       },

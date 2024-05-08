@@ -137,7 +137,7 @@ export const useLoaderAssessmentData = routeLoader$(async function({sharedMap}) 
   const db = await serverInitDatabase();
   await db.authenticate(session.database.token);
   type CustomQueryResult = [null, null, [Partial<HeightGetter>], null, null, [Partial<WeightGetter>]];
-
+  // TODO: Fix first signin the return is empty array...
   const height = await db.query_raw<CustomQueryResult>(`
   -- LATEST height record
   LET $latestHeight = SELECT * FROM height ORDER BY created_at DESC LIMIT 1;
