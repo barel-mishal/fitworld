@@ -272,9 +272,10 @@ export const NextTrackFood = component$(() => {
                 Add More Product
             </button>
             <AppLinkGlobal 
+              
               route="/client/(main)/track/finish/"     
               
-              class="btn-primary flex items-center gap-2 justify-center ">
+              class={["btn-primary flex items-center gap-2 justify-center ", myEats.disableFinishButton.value && "pointer-events-none"]}>
                 <PhFlag class={cn(
               " transform active:rotate-6 transition-all ease-in-out scale-75",
               "fill-emerald-100"
@@ -356,7 +357,7 @@ export function useTrackFood() {
         this.state = "units";
       } else if (state === "amounts" && this.selectedFood && this.eating.measurementId) {
         this.state = "amounts";
-      } else if (state === "finish" && this.selectedFood) {
+      } else if (state === "finish" && !this.selectedFood) {
         this.state = "finish";
       } else if (state === "keepgoing" && this.selectedFood) {
         this.state = "keepgoing";
@@ -382,7 +383,7 @@ export function useTrackFood() {
     }),
     finish: $(async function(this: {eats: Eat[]}) {
       return
-    }),  
+    }), 
   });
   const debounceReset = useDebouncer(
     $(async () => {
@@ -391,17 +392,17 @@ export function useTrackFood() {
     200
   );
 
-  const disableFinishButton = useComputed$(() => {
-    return store.eats.length === 0;
+  const disableFinishButton = useComputed$(async () => {
+    const isFinishAllow = await store.moveState("finish") === "finish";
+    const eatsFilled = store.eats.length > 0;
+    return !isFinishAllow || !eatsFilled;
   });
 
   const resourceIngredients = useResource$(async ({track, cleanup}) => {
     const value = track(() => ({ isIngredientState: store.state, food: store.eating.food }));
-    
-    if (value.isIngredientState !== "ingredients") return [];      
+    if (!["ingredients", "finish"].includes(value.isIngredientState)) return [];      
     const controller = new AbortController();
     cleanup(() => controller.abort());
-
     const options = { search: value.food, limit: 5 };
     const ingredients = await serverGetIngredients(controller.signal, options);
     store.eating.foodId = ingredients.ingredients[0].id;
@@ -494,7 +495,8 @@ export const DisplayFoodUnits = component$(() => {
                 class={cn("btn btn-data-active flex gap-1", "p-2 ")}
                 onClick$={() => setTimeout(async () => await onClickUnit(unit), 300)}
               >
-                <span>{myEats.store.selectedFood?.units_names[index]}</span><span>{unit.weight}</span><span>{unit.unit}</span>
+                <span>{myEats.store.selectedFood?.units_names[index]}</span>
+                <span>{unit.weight}</span><span>{unit.unit}</span>
               </button>
             </li>
           )
