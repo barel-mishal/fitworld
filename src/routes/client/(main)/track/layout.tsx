@@ -4,8 +4,6 @@ import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMai
 import { PhArrowBendUpLeft } from '~/components/icons/icons';
 import { AppLink } from '~/routes.config';
 
-
-
 export default component$(() => {
   return (
     <TrackFood  >
