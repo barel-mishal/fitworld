@@ -15,12 +15,12 @@ export default component$(() => {
             <p class="tracking-wider font-bold flex gap-2 items-center"><PhArrowBendUpLeft class="fill-rose-300" /><span class="text-rose-50">End Eating Tracking Seesion</span></p>
           </AppLink>
         </div>
-          <div q:slot='main' class="px-2">
-            <Slot />
-          </div>
-          <div q:slot='footer' class="px-4">
-            <NextTrackFood />
-          </div>
+        <div q:slot='main' class="px-2">
+          <Slot />
+        </div>
+        <div q:slot='footer' class="px-4">
+          <NextTrackFood />
+        </div>
       </HeaderMainBottomNav>
     </TrackFood>
   );

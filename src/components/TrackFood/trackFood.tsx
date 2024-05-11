@@ -78,6 +78,7 @@ export const MainTrackFood = component$(() => {
     }, {strategy: "document-ready"});
 
     useOn("keydown", $(async (e) => {
+      console.log(e.key)
       if (e.key === "Escape") {
         myEats.store.resetNewEat();
         myEats.refFood.value?.focus();
@@ -273,8 +274,7 @@ export const NextTrackFood = component$(() => {
             </button>
             <AppLinkGlobal 
               
-              route="/client/(main)/track/finish/"     
-              
+              route="/client/(main)/track/finish/" 
               class={["btn-primary flex items-center gap-2 justify-center ", myEats.disableFinishButton.value && "pointer-events-none"]}>
                 <PhFlag class={cn(
               " transform active:rotate-6 transition-all ease-in-out scale-75",
@@ -345,9 +345,10 @@ export function useTrackFood() {
     remove: $(function(this: {eats: Eat[]}, id: string) {
       this.eats = this.eats.filter(eat => eat.id !== id);
     }),
-    moveState: $(function(this: {
+    moveState: $(async function(this: {
       state: State, 
       selectedFood: Ingredient | undefined, 
+      allowFinish: QRL<() => boolean>,
       eating: {measurementId: string}}, 
       state: State,
     ) {
@@ -357,12 +358,18 @@ export function useTrackFood() {
         this.state = "units";
       } else if (state === "amounts" && this.selectedFood && this.eating.measurementId) {
         this.state = "amounts";
-      } else if (state === "finish" && !this.selectedFood) {
+      } else if (state === "finish" && await this.allowFinish()) {
         this.state = "finish";
       } else if (state === "keepgoing" && this.selectedFood) {
         this.state = "keepgoing";
       }
       return this.state;
+    }),
+    allowFinish: $(function(this: {state: State, selectedFood: Ingredient | undefined}) {
+      if (!this.selectedFood) {
+        return true;
+      }
+      return false;
     }),
     updateIngredient: $(function(this: {selectedFood: Ingredient, eating: Eating}, food: Ingredient) {
       this.selectedFood = food;
@@ -393,9 +400,9 @@ export function useTrackFood() {
   );
 
   const disableFinishButton = useComputed$(async () => {
-    const isFinishAllow = await store.moveState("finish") === "finish";
+    const isFinishAllow = await store.allowFinish();
     const eatsFilled = store.eats.length > 0;
-    return !isFinishAllow || !eatsFilled;
+    return !(isFinishAllow && eatsFilled);
   });
 
   const resourceIngredients = useResource$(async ({track, cleanup}) => {
@@ -480,7 +487,7 @@ export const DisplayFoodUnits = component$(() => {
     myEats.refAmount.value?.focus();
   });
 
-  return             <>
+  return <>
   {myEats.store.selectedFood && myEats.store.state === "units" && (
     <>
       <h5>
