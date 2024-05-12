@@ -1,27 +1,100 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useComputed$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { ModalLogout } from '~/components/gamelayouts/modals/ModalLogout';
+import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
   const signout = useAuthSignout();
+  const computeDateFormat = useComputed$(() => {
+    const dateRaw = auth?.expires!;
+    const intrlazetionDatetimeApi = new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' });
+    const date = new Date(dateRaw);
+
+    return intrlazetionDatetimeApi.format(date)
+  });
   return (
-  <div class={cn("grid grid-rows-[1fr,30px] h-screen text-emerald-50 p-3 bg-emerald-950")}>
-    <div class={cn("bg-emerald-950 overflow-y-auto")}>
-        <div >
-          <Settings />
-          <div>
-            <ModalLogout name={auth?.user?.name ?? "B"} signout={signout} />
-          </div>
-        </div>
-    </div>
-    <div class="bg-emerald-950 content-center">
-      <div q:slot='footer' class=""><BottomNavBar user={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} /></div>
-    </div>
+  <div class={cn("grid gap-3 place-content-start overflow-y-scroll h-screen text-emerald-50 bg-emerald-950 font-roundsans  pb-12")}>
+    <UserPhoto />
+    <UserTitle name={auth?.user?.name!} email={auth?.user?.email!} joind={computeDateFormat.value} />
+    <UserProgress />
+    <UserShares />
+    <UserWeeklyProgress />
+
+
   </div>
   );
+});
+
+export const UserPhoto = component$(() => {
+
+  return <section class="w-screen">
+    <label for="photo" class="block text-sm font-medium leading-6 text-gray-900 sr-only">Photo</label>
+    <div class="grid grid-cols-[1fr,auto,1fr] bg-emerald-900 gap-x-3 relative px-2.5 py-2.5">
+      <button type="button" class="col-start-2 border-emerald-100 border-4 rounded-full border-dashed text-sm font-semibold text-gray-900 shadow-sm ">
+        <svg class="h-[150px] w-[150px] text-emerald-700" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+  </section>
+});  
+
+export const UserTitle = component$<{name: string, email: string, joind: string}>((props) => {
+  return  <section class="px-3">
+    <h1 class="text-2xl text-emerald-50 pb-2">{props.name}</h1>
+    <p class="text-xs text-emerald-300 flex gap-2 items-center"><span>{props.email}</span><svg width={6} height={6} fill='rgb(110 231 183 / 0.5)'><circle r={3} cx={3} cy={3}   /></svg><span>Joind: {props.joind}</span></p>
+  </section>
+});  
+
+export const UserProgress = component$(() => {
+
+  return <section class="px-3 grid grid-flow-col gap-4 place-content-start">
+      <div class="">
+        <PhFooPeinapple class="w-8 h-8" viewBox='160 0 800 800' />
+        <label for="" class="text-xs text-emerald-300/70">Lavel</label>
+      </div>
+      <div class="place-content-end">
+        <h3>3</h3>
+        <label for="" class="text-xs text-emerald-300/70">Following</label>
+      </div>
+      <div class="place-content-end">
+        <h3>3</h3>
+        <label for="" class="text-xs text-emerald-300/70">Followers</label>
+      </div>
+    </section>
+});
+
+export const UserShares = component$(() => {
+
+  return <section class="px-3">
+    <div class="grid grid-cols-[1fr,auto] py-2 gap-3">
+      <button class="btn">
+        <h3 class="text-emerald-400 font-bold flex gap-2">
+          <PhPersonCirclePlus class="w-6 h-6 fill-emerald-400" />
+          <span>Add Friend with email</span>
+        </h3>
+      </button>
+      <button class="btn">
+        <PhShare class="w-6 h-6 fill-emerald-400" />
+      </button>
+    </div>
+  </section>
+});
+
+export const UserWeeklyProgress = component$(() => {
+
+  return <section class="px-3 grid gap-3">
+    <h3 class="text-emerald-50 text-xl font-bold flex gap-2">Weekly Progress</h3>
+    <div class="grid grid-cols-[1fr,1fr] gap-3 border border-emerald-700/50 rounded-xl p-3">
+      <p class="text-emerald-400/80"><span>This week</span><span>200 XP</span></p>
+      <p class="text-emerald-400/80"><span>Last week</span><span>500 XP</span></p>
+      <div class="h-96"></div>
+    </div>
+
+    </section>
 });
 
 export const Settings = component$(() => {
@@ -55,7 +128,7 @@ export const Settings = component$(() => {
         <div class="col-span-full">
           <label for="photo" class="block text-sm font-medium leading-6 text-emerald-100">Photo</label>
           <div class="mt-2 flex items-center gap-x-3">
-            <svg class="h-12 w-12 text-emerald-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg class=" w-12 text-emerald-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
             </svg>
             <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-emerald-100 shadow-sm ring-1 ring-inset ring-emerald-300 hover:bg-gray-50">Change</button>
