@@ -88,13 +88,50 @@ export const UserWeeklyProgress = component$(() => {
 
   return <section class="px-3 grid gap-3">
     <h3 class="text-emerald-50 text-xl font-bold flex gap-2">Weekly Progress</h3>
-    <div class="grid grid-cols-[1fr,1fr] gap-3 border border-emerald-700/50 rounded-xl p-3">
+    <div class="grid gap-3 border border-emerald-700/50 rounded-xl p-3">
       <p class="text-emerald-400/80"><span>This week</span><span>200 XP</span></p>
       <p class="text-emerald-400/80"><span>Last week</span><span>500 XP</span></p>
-      <div class="h-96"></div>
+      <div class="h-96">
+        <UserChartProgress />
+      </div>
     </div>
 
     </section>
+});
+
+export const UserChartProgress = component$(() => {
+
+  return <div class="grid">
+    <svg class="w-full" preserveAspectRatio='' viewBox="0 0 500 200">
+  
+  <polyline
+     fill="none"
+     stroke="#0074d9"
+     stroke-width="4"
+     points="
+       00,00
+       20,60
+       40,80
+       60,20
+       80,80
+       100,80
+       120,60
+       140,100
+       160,90
+       180,80
+       200, 110
+       220, 10
+       240, 70
+       260, 100
+       280, 100
+       300, 40
+     "
+     transform='translate(0, 200) scale(1, -1)'
+   />
+  
+</svg>
+    </div>
+    
 });
 
 export const Settings = component$(() => {
