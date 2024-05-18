@@ -1,9 +1,10 @@
-import { component$, useComputed$ } from '@builder.io/qwik';
+import { $, QRL, component$, useComputed$ } from '@builder.io/qwik';
+import { server$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
-import { ModalLogout } from '~/components/gamelayouts/modals/ModalLogout';
 import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
-import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
+import { createUploadthing, UploadThingError } from "uploadthing/server";
+
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
@@ -30,6 +31,10 @@ export default component$(() => {
 
 export const UserPhoto = component$(() => {
 
+  const onUploadComplete$ = $(async (files: File[]) => {
+    console.log("files", files);
+  });
+
   return <section class="w-screen">
     <label for="photo" class="block text-sm font-medium leading-6 text-gray-900 sr-only">Photo</label>
     <div class="grid grid-cols-[1fr,auto,1fr] bg-emerald-900 gap-x-3 relative px-2.5 py-2.5">
@@ -38,6 +43,12 @@ export const UserPhoto = component$(() => {
           <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
         </svg>
       </button>
+      <UploadButton
+        endpoint="imageUploader"
+        onUploadComplete$={onUploadComplete$}
+        labelId='photo'
+      />
+
     </div>
   </section>
 });  
@@ -325,4 +336,45 @@ export const Settings = component$(() => {
       </div>
     </form>
 </div>
+});
+
+export const UploadButton = component$<{endpoint: string, onUploadComplete$: QRL<(files: File[]) => void>, labelId: string}>((props) => {
+
+  const handleChange = $(async (event: Event) => {
+    const files = (event.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      // Notify about the upload completion
+      await props.onUploadComplete$(Array.from(files));
+  
+      // Create a new FormData object and append the file
+      const formData = new FormData();
+      formData.append("file", files[0]);
+  
+      try {
+        // Send the POST request with the FormData object
+        const response = await fetch("/api/service_food_group", {
+          method: "POST",
+          body: formData,
+        });
+
+  
+        // Check if the response is successful
+        if (!response.ok) {
+          // Handle error response
+          console.error("Error uploading file", await response.text());
+        } else {
+          // Handle success response
+          console.log("File uploaded successfully", await response.json());
+        }
+      } catch (error) {
+        // Handle any network errors
+        console.error("Network error", error);
+      }
+    }
+  });
+  
+  return <>
+    <input type="file" id="photo" name={props.labelId} accept="image/*" class="sr-only" onChange$={handleChange} />
+    <label for={props.labelId} class="block text-sm font-medium leading-6 text-gray-900">Photo</label>
+  </>
 });
