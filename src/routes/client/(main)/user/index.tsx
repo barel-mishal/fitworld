@@ -1,16 +1,14 @@
-import { $, QRL, component$, useComputed$ } from '@builder.io/qwik';
-import { server$ } from '@builder.io/qwik-city';
+import { $, type QRL, component$, useComputed$ } from '@builder.io/qwik';
 import { cn } from '@qwik-ui/utils';
 import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
-import { createUploadthing, UploadThingError } from "uploadthing/server";
 
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
   const signout = useAuthSignout();
   const computeDateFormat = useComputed$(() => {
-    const dateRaw = auth?.expires!;
+    const dateRaw = auth?.expires ?? "";
     const intrlazetionDatetimeApi = new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' });
     const date = new Date(dateRaw);
 
@@ -19,7 +17,7 @@ export default component$(() => {
   return (
   <div class={cn("grid gap-3 place-content-start overflow-y-scroll h-screen text-emerald-50 bg-emerald-950 font-roundsans  pb-12")}>
     <UserPhoto />
-    <UserTitle name={auth?.user?.name!} email={auth?.user?.email!} joind={computeDateFormat.value} />
+    <UserTitle name={auth?.user?.name ?? ""} email={auth?.user?.email ?? ""} joind={computeDateFormat.value} />
     <UserProgress />
     <UserShares />
     <UserWeeklyProgress />
@@ -32,8 +30,41 @@ export default component$(() => {
 export const UserPhoto = component$(() => {
 
   const onUploadComplete$ = $(async (files: File[]) => {
-    console.log("files", files);
-  });
+        // Create a new FormData object and append the file
+        const formData = new FormData();
+        formData.append("file", files[0]);
+        formData.append("name", "photo");
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          console.log(e.target?.result);
+        }
+    
+        try {
+          // Send the POST request with the FormData object
+          const response = await fetch("/api/service_food_group", {
+            method: "POST",
+            body: formData,
+            headers: {
+              // Send the file type in the request headers
+              "Content-Type": files[0].type,
+            }
+          });
+  
+          // Check if the response is successful
+          if (!response.ok) {
+            // Handle error response
+            console.error("Error uploading file", await response.text());
+          } else {
+            // Handle success response
+            console.log("File uploaded successfully", await response.json());
+          }
+        } catch (error) {
+          // Handle any network errors
+          console.error("Network error", error);
+        }
+      });
 
   return <section class="w-screen">
     <label for="photo" class="block text-sm font-medium leading-6 text-gray-900 sr-only">Photo</label>
@@ -345,31 +376,6 @@ export const UploadButton = component$<{endpoint: string, onUploadComplete$: QRL
     if (files && files.length > 0) {
       // Notify about the upload completion
       await props.onUploadComplete$(Array.from(files));
-  
-      // Create a new FormData object and append the file
-      const formData = new FormData();
-      formData.append("file", files[0]);
-  
-      try {
-        // Send the POST request with the FormData object
-        const response = await fetch("/api/service_food_group", {
-          method: "POST",
-          body: formData,
-        });
-
-  
-        // Check if the response is successful
-        if (!response.ok) {
-          // Handle error response
-          console.error("Error uploading file", await response.text());
-        } else {
-          // Handle success response
-          console.log("File uploaded successfully", await response.json());
-        }
-      } catch (error) {
-        // Handle any network errors
-        console.error("Network error", error);
-      }
     }
   });
   
