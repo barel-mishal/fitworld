@@ -32,10 +32,10 @@ export default component$(() => {
   });
 
   return (
-    <div class="grid grid-cols-[1fr,auto] gap-4 w-full font-roundsans">
+    <div class="grid grid-cols-[1fr,auto] gap-4 w-full info-title tracking-wide">
 
       <div class="grid max-w-sm items-center gap-1.5 ">
-        <Label for="email-2" class="text-emerald-100">Height</Label>
+        <Label for="email-2" class="text-emerald-100 [text-wrap:balance]">Height</Label>
         <input 
         ref={refHeight}
         

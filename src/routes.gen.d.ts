@@ -4,7 +4,6 @@
 
 export type AppRoutes =
   | "/"
-  | "/api/service_food_group/"
   | "/auth/new-user/"
   | "/auth/signin/"
   | "/auth/signout/"
@@ -16,6 +15,7 @@ export type AppRoutes =
   | "/client/(main)/track/finish/"
   | "/client/(main)/user/"
   | "/client/Assessment/"
+  | "/client/Assessment/activity-level/"
   | "/client/Assessment/lifestyleFactors/"
   | "/client/Assessment/personalInformation/"
   | "/client/Assessment/personalInformation/DateofBirth/"
@@ -37,7 +37,6 @@ export type AppRoutes =
 
 export interface AppRouteMap {
   "/": {};
-  "/api/service_food_group/": {};
   "/auth/new-user/": {};
   "/auth/signin/": {};
   "/auth/signout/": {};
@@ -49,6 +48,7 @@ export interface AppRouteMap {
   "/client/(main)/track/finish/": {};
   "/client/(main)/user/": {};
   "/client/Assessment/": {};
+  "/client/Assessment/activity-level/": {};
   "/client/Assessment/lifestyleFactors/": {};
   "/client/Assessment/personalInformation/": {};
   "/client/Assessment/personalInformation/DateofBirth/": {};
@@ -71,7 +71,6 @@ export interface AppRouteMap {
 
 export interface AppRouteParamsFunction {
   (route: "/", params?: {}): string;
-  (route: "/api/service_food_group/", params?: {}): string;
   (route: "/auth/new-user/", params?: {}): string;
   (route: "/auth/signin/", params?: {}): string;
   (route: "/auth/signout/", params?: {}): string;
@@ -83,6 +82,7 @@ export interface AppRouteParamsFunction {
   (route: "/client/(main)/track/finish/", params?: {}): string;
   (route: "/client/(main)/user/", params?: {}): string;
   (route: "/client/Assessment/", params?: {}): string;
+  (route: "/client/Assessment/activity-level/", params?: {}): string;
   (route: "/client/Assessment/lifestyleFactors/", params?: {}): string;
   (route: "/client/Assessment/personalInformation/", params?: {}): string;
   (
@@ -117,7 +117,6 @@ export interface AppRouteParamsFunction {
 
 export type AppLinkProps =
   | { route: "/" }
-  | { route: "/api/service_food_group/" }
   | { route: "/auth/new-user/" }
   | { route: "/auth/signin/" }
   | { route: "/auth/signout/" }
@@ -129,6 +128,7 @@ export type AppLinkProps =
   | { route: "/client/(main)/track/finish/" }
   | { route: "/client/(main)/user/" }
   | { route: "/client/Assessment/" }
+  | { route: "/client/Assessment/activity-level/" }
   | { route: "/client/Assessment/lifestyleFactors/" }
   | { route: "/client/Assessment/personalInformation/" }
   | { route: "/client/Assessment/personalInformation/DateofBirth/" }
