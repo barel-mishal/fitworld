@@ -6,12 +6,11 @@ import { type ReturnTypeSession, useAuthSession, useAuthSignout } from '~/routes
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
-  const signout = useAuthSignout();
+  const signOut = useAuthSignout();
   const computeDateFormat = useComputed$(() => {
     const dateRaw = auth?.expires ?? "";
     const intrlazetionDatetimeApi = new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' });
     const date = new Date(dateRaw);
-
     return intrlazetionDatetimeApi.format(date)
   });
   return (
@@ -21,6 +20,7 @@ export default component$(() => {
     <UserProgress />
     <UserShares />
     <UserWeeklyProgress />
+    <button onClick$={() => signOut.submit({ callbackUrl: '/signedout' })}>Sign Out</button>;
 
 
   </div>
@@ -30,41 +30,33 @@ export default component$(() => {
 export const UserPhoto = component$(() => {
 
   const onUploadComplete$ = $(async (files: File[]) => {
-        // Create a new FormData object and append the file
-        const formData = new FormData();
-        formData.append("file", files[0]);
-        formData.append("name", "photo");
-
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-          console.log(e.target?.result);
-        }
-    
-        try {
-          // Send the POST request with the FormData object
-          const response = await fetch("/api/service_food_group", {
-            method: "POST",
-            body: formData,
-            headers: {
-              // Send the file type in the request headers
-              "Content-Type": files[0].type,
-            }
-          });
-  
-          // Check if the response is successful
-          if (!response.ok) {
-            // Handle error response
-            console.error("Error uploading file", await response.text());
-          } else {
-            // Handle success response
-            console.log("File uploaded successfully", await response.json());
-          }
-        } catch (error) {
-          // Handle any network errors
-          console.error("Network error", error);
-        }
+    if (files.length > 0) {
+      // Create a new FormData object and append the file
+      const formData = new FormData();
+      files.forEach((file) => {
+        formData.append(file.name, file);
       });
+  
+      fetch('/api/service_food_group', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }
+      })
+      .then(response => {
+        if (response.headers.get('Content-Type') === 'application/json') {
+          return response.json();
+        }
+        return response.text();
+      })
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+    
+    }
+});
+  
 
   return <section class="w-screen">
     <label for="photo" class="block text-sm font-medium leading-6 text-gray-900 sr-only">Photo</label>

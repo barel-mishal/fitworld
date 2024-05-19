@@ -5,15 +5,16 @@ import { type ExtendSession } from '~/routes/plugin@auth';
 
 
 
-export const onPost: RequestHandler = async ({ json, request, parseBody, sharedMap,  }) => {
-    const session = await sharedMap.get("session") as ExtendSession | undefined;
+export const onPost: RequestHandler = async (props) => {
+    const session = await props.sharedMap.get("session") as ExtendSession | undefined;
     if (!session) {
       throw new Error("No session found");
     }
+    const body = await props.parseBody();
 
-    const body = await parseBody();
 
-    console.log(JSON.stringify(Array.from(request.headers.values()), null, 2));
+    console.log('body', body);
+
  
-    json(200, { message: 'Upload complete' });
+    props.json(200, { message: 'Upload complete' });
 };
