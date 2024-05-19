@@ -4,7 +4,6 @@
 
 export type AppRoutes =
   | "/"
-  | "/api/service_food_group/"
   | "/auth/new-user/"
   | "/auth/signin/"
   | "/auth/signout/"
@@ -37,7 +36,6 @@ export type AppRoutes =
 
 export interface AppRouteMap {
   "/": {};
-  "/api/service_food_group/": {};
   "/auth/new-user/": {};
   "/auth/signin/": {};
   "/auth/signout/": {};
@@ -71,7 +69,6 @@ export interface AppRouteMap {
 
 export interface AppRouteParamsFunction {
   (route: "/", params?: {}): string;
-  (route: "/api/service_food_group/", params?: {}): string;
   (route: "/auth/new-user/", params?: {}): string;
   (route: "/auth/signin/", params?: {}): string;
   (route: "/auth/signout/", params?: {}): string;
@@ -117,7 +114,6 @@ export interface AppRouteParamsFunction {
 
 export type AppLinkProps =
   | { route: "/" }
-  | { route: "/api/service_food_group/" }
   | { route: "/auth/new-user/" }
   | { route: "/auth/signin/" }
   | { route: "/auth/signout/" }
