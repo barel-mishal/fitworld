@@ -15,6 +15,7 @@ export type AppRoutes =
   | "/client/(main)/track/finish/"
   | "/client/(main)/user/"
   | "/client/Assessment/"
+  | "/client/Assessment/activity-level/"
   | "/client/Assessment/lifestyleFactors/"
   | "/client/Assessment/personalInformation/"
   | "/client/Assessment/personalInformation/DateofBirth/"
@@ -47,6 +48,7 @@ export interface AppRouteMap {
   "/client/(main)/track/finish/": {};
   "/client/(main)/user/": {};
   "/client/Assessment/": {};
+  "/client/Assessment/activity-level/": {};
   "/client/Assessment/lifestyleFactors/": {};
   "/client/Assessment/personalInformation/": {};
   "/client/Assessment/personalInformation/DateofBirth/": {};
@@ -80,6 +82,7 @@ export interface AppRouteParamsFunction {
   (route: "/client/(main)/track/finish/", params?: {}): string;
   (route: "/client/(main)/user/", params?: {}): string;
   (route: "/client/Assessment/", params?: {}): string;
+  (route: "/client/Assessment/activity-level/", params?: {}): string;
   (route: "/client/Assessment/lifestyleFactors/", params?: {}): string;
   (route: "/client/Assessment/personalInformation/", params?: {}): string;
   (
@@ -125,6 +128,7 @@ export type AppLinkProps =
   | { route: "/client/(main)/track/finish/" }
   | { route: "/client/(main)/user/" }
   | { route: "/client/Assessment/" }
+  | { route: "/client/Assessment/activity-level/" }
   | { route: "/client/Assessment/lifestyleFactors/" }
   | { route: "/client/Assessment/personalInformation/" }
   | { route: "/client/Assessment/personalInformation/DateofBirth/" }

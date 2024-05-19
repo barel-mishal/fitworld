@@ -24,7 +24,8 @@ export default component$(() => {
     "/client/Assessment/personalInformation/gender/",
     "/client/Assessment/personalInformation/height/",
     "/client/Assessment/personalInformation/current-weight/",
-    "/client/play/" as "/client/(main)/play/"
+    "/client/Assessment/activity-level/",
+    "/client/play/" as "/client/(main)/play/",
   ];
 
   
@@ -57,7 +58,7 @@ export default component$(() => {
     const route = location.url.pathname as RoutesLiteralAssessment;
     const actions: Record<RoutesLiteralAssessment, () => unknown> = {
       "/client/Assessment/personalInformation/name/": () => {
-        sc.actions.mergeProfile.submit({ field: "name", value: sc.data.personalInformation.name })
+        sc.actions.mergeProfile.submit({ field: "name", value: sc.data.personalInformation.name });
       },
       "/client/Assessment/personalInformation/DateofBirth/": () => {
         if (!sc.data.personalInformation.dateOfBirth) return;
@@ -66,35 +67,39 @@ export default component$(() => {
       },
       '/client/Assessment/personalInformation/gender/': function (): unknown {
         sc.actions.mergeProfile.submit({ field: "gender", value: sc.data.personalInformation.gender });
-        return 
+        return;
       },
       '/client/Assessment/': function (): unknown {
-        return 
+        return;
       },
       '/client/Assessment/lifestyleFactors/': function (): unknown {
         throw new Error('Function not implemented.');
       },
       '/client/Assessment/personalInformation/': function (): unknown {
-        return
+        return;
       },
       '/client/Assessment/personalInformation/current-weight/': async function () {
-        await sc.actions.mergeWeight.submit({ 
-          value: sc.data.personalInformation.weight.value, 
-          _type: sc.data.personalInformation.weight.type, 
-          record: sc.data.personalInformation.weight.id 
+        await sc.actions.mergeWeight.submit({
+          value: sc.data.personalInformation.weight.value,
+          _type: sc.data.personalInformation.weight.type,
+          record: sc.data.personalInformation.weight.id
         });
-        return
+        return;
       },
       '/client/Assessment/personalInformation/height/': async function () {
-        await sc.actions.mergeHeight.submit({ 
-          value: sc.data.personalInformation.height.value, 
-          _type: sc.data.personalInformation.height.type, 
-          record: sc.data.personalInformation.height.id 
+        await sc.actions.mergeHeight.submit({
+          value: sc.data.personalInformation.height.value,
+          _type: sc.data.personalInformation.height.type,
+          record: sc.data.personalInformation.height.id
         });
-        return
+        return;
       },
       '/client/(main)/play/': function (): unknown {
         throw new Error('Function not implemented.');
+      },
+      '/client/Assessment/activity-level/': function (): unknown {
+        sc.actions.mergeProfile.submit({ field: "activity_level", value: sc.data.lifeStyle.activityLevel });
+        return;
       }
     }
     const result = await actions[route]();

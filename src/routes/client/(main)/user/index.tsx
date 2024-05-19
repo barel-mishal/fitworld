@@ -2,7 +2,7 @@ import { Fragment, component$, useComputed$, useSignal } from '@builder.io/qwik'
 import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
-import { type ReturnTypeSession, useAuthSession, useAuthSignout, ExtendSession } from '~/routes/plugin@auth';
+import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
 
 

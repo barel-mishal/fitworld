@@ -13,7 +13,6 @@ export const onRequest: RequestHandler = (event) => {
   const session: Session | null = event.sharedMap.get('session');
   const isSignedIn = session && new Date(session.expires) > new Date();
   if (!isSignedIn) {
-    console.log("redirecting")
     throw event.redirect(302, `/auth/signin`);
   }
 };
@@ -49,7 +48,7 @@ interface LifeStyle {
   goals: string[];
 }
 
-interface AssessmentStoreType {
+export interface AssessmentStoreType {
   settings: { buttonStyle: "outline" | "link" | "primary" | "secondary" | "alert" | "ghost" | null | undefined,
   buttonDisabled: boolean
 },
@@ -71,7 +70,7 @@ interface AssessmentStoreType {
     mergeHeight: {
       submit: QRL<(this: { isRunning: boolean; }, data: {value: number, _type: string, record: string}) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
       isRunning: boolean
-    },
+    }
   },
   cahngeWeightUnit: QRL<(this: { data: AssessmentStoreType["data"] }, value: number, fromUnit: WeightGetter["type"], toUnit: WeightGetter["type"]) => void>
 } 
@@ -92,26 +91,26 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
     }),
     actions: {
       mergeProfile: {
-        submit: $(async function(this: { isRunning: boolean }, data: {field: string, value: string | Date | number}) {
+        submit: $(async function (this: { isRunning: boolean; }, data: { field: string; value: string | Date | number; }) {
           const result = await serverMergeProfile(data);
           return result;
         }),
         isRunning: false
       },
       mergeWeight: {
-        submit: $(async function(this: { isRunning: boolean }, data: {value: number, _type: string, record: string}) {
+        submit: $(async function (this: { isRunning: boolean; }, data: { value: number; _type: string; record: string; }) {
           const result = await serverMergeWeight(data);
           return result;
         }),
         isRunning: false
       },
       mergeHeight: {
-        submit: $(async function(this: { isRunning: boolean }, data: {value: number, _type: string, record: string}) {
+        submit: $(async function (this: { isRunning: boolean; }, data: { value: number; _type: string; record: string; }) {
           const result = await serverMergeHeight(data);
           return result;
         }),
         isRunning: false
-      }
+      },
     },
     cahngeWeightUnit: $(async function(this: { data: AssessmentStoreType["data"] }, value: number, fromUnit: WeightGetter["type"], toUnit: WeightGetter["type"]) {
       const converted = convertWeightUnits(value, fromUnit, toUnit);
