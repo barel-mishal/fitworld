@@ -1,27 +1,132 @@
-import { component$ } from '@builder.io/qwik';
+import { Fragment, component$, useComputed$, useSignal } from '@builder.io/qwik';
+import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
-import { ModalLogout } from '~/components/gamelayouts/modals/ModalLogout';
-import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
-import { type ReturnTypeSession, useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
+import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
+import { type ReturnTypeSession, useAuthSession, useAuthSignout, ExtendSession } from '~/routes/plugin@auth';
+import { serverInitDatabase } from '~/routes/seedDatabase';
+
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
-  const signout = useAuthSignout();
+  const signOut = useAuthSignout();
+  const computeDateFormat = useComputed$(() => {
+    const dateRaw = auth?.expires ?? "";
+    const intrlazetionDatetimeApi = new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' });
+    const date = new Date(dateRaw);
+    return intrlazetionDatetimeApi.format(date)
+  });
   return (
-  <div class={cn("grid grid-rows-[1fr,30px] h-screen text-emerald-50 p-3 bg-emerald-950")}>
-    <div class={cn("bg-emerald-950 overflow-y-auto")}>
-        <div >
-          <Settings />
-          <div>
-            <ModalLogout name={auth?.user?.name ?? "B"} signout={signout} />
-          </div>
-        </div>
-    </div>
-    <div class="bg-emerald-950 content-center">
-      <div q:slot='footer' class=""><BottomNavBar user={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} /></div>
-    </div>
+  <div class={cn("grid gap-3 place-content-start overflow-y-scroll h-screen text-emerald-50 bg-emerald-950 font-roundsans  pb-12")}>
+    <UserPhoto />
+    <UserTitle name={auth?.user?.name ?? ""} email={auth?.user?.email ?? ""} joind={computeDateFormat.value} />
+    <UserProgress />
+    <UserShares />
+    <UserWeeklyProgress />
+    <button onClick$={() => signOut.submit({ callbackUrl: '/signedout' })}>Sign Out</button>;
+
+
   </div>
   );
+}); 
+
+export const UserPhoto = component$(() => {
+  
+  return <section class="w-screen">
+    <label for="photo" class="block text-sm font-medium leading-6 text-gray-900 sr-only">Photo</label>
+      <UpalodFile/>
+  </section>
+});  
+
+export const UserTitle = component$<{name: string, email: string, joind: string}>((props) => {
+  return  <section class="px-3">
+    <h1 class="text-2xl text-emerald-50 pb-2">{props.name}</h1>
+    <p class="text-xs text-emerald-300 flex gap-2 items-center"><span>{props.email}</span><svg width={6} height={6} fill='rgb(110 231 183 / 0.5)'><circle r={3} cx={3} cy={3}   /></svg><span>Joind: {props.joind}</span></p>
+  </section>
+});  
+
+export const UserProgress = component$(() => {
+
+  return <section class="px-3 grid grid-flow-col gap-4 place-content-start">
+      <div class="">
+        <PhFooPeinapple class="w-8 h-8" viewBox='160 0 800 800' />
+        <label for="" class="text-xs text-emerald-300/70">Lavel</label>
+      </div>
+      <div class="place-content-end">
+        <h3>3</h3>
+        <label for="" class="text-xs text-emerald-300/70">Following</label>
+      </div>
+      <div class="place-content-end">
+        <h3>3</h3>
+        <label for="" class="text-xs text-emerald-300/70">Followers</label>
+      </div>
+    </section>
+});
+
+export const UserShares = component$(() => {
+
+  return <section class="px-3">
+    <div class="grid grid-cols-[1fr,auto] py-2 gap-3">
+      <button class="btn">
+        <h3 class="text-emerald-400 font-bold flex gap-2">
+          <PhPersonCirclePlus class="w-6 h-6 fill-emerald-400" />
+          <span>Add Friend with email</span>
+        </h3>
+      </button>
+      <button class="btn">
+        <PhShare class="w-6 h-6 fill-emerald-400" />
+      </button>
+    </div>
+  </section>
+});
+
+export const UserWeeklyProgress = component$(() => {
+
+  return <section class="px-3 grid gap-3">
+    <h3 class="text-emerald-50 text-xl font-bold flex gap-2">Weekly Progress</h3>
+    <div class="grid gap-3 border border-emerald-700/50 rounded-xl p-3">
+      <p class="text-emerald-400/80"><span>This week</span><span>200 XP</span></p>
+      <p class="text-emerald-400/80"><span>Last week</span><span>500 XP</span></p>
+      <div class="h-96">
+        <UserChartProgress />
+      </div>
+    </div>
+
+    </section>
+});
+
+export const UserChartProgress = component$(() => {
+
+  return <div class="grid">
+    <svg class="w-full" preserveAspectRatio='' viewBox="0 0 500 200">
+  
+  <polyline
+     fill="none"
+     stroke="#0074d9"
+     stroke-width="4"
+     points="
+       00,00
+       20,60
+       40,80
+       60,20
+       80,80
+       100,80
+       120,60
+       140,100
+       160,90
+       180,80
+       200, 110
+       220, 10
+       240, 70
+       260, 100
+       280, 100
+       300, 40
+     "
+     transform='translate(0, 200) scale(1, -1)'
+   />
+  
+</svg>
+    </div>
+    
 });
 
 export const Settings = component$(() => {
@@ -55,7 +160,7 @@ export const Settings = component$(() => {
         <div class="col-span-full">
           <label for="photo" class="block text-sm font-medium leading-6 text-emerald-100">Photo</label>
           <div class="mt-2 flex items-center gap-x-3">
-            <svg class="h-12 w-12 text-emerald-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg class=" w-12 text-emerald-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
             </svg>
             <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-emerald-100 shadow-sm ring-1 ring-inset ring-emerald-300 hover:bg-gray-50">Change</button>
@@ -216,3 +321,163 @@ export const Settings = component$(() => {
     </form>
 </div>
 });
+
+export const useUpload = routeAction$(
+  async ({ file }, event) => {
+    const session = event.sharedMap.get("session") as ExtendSession | undefined;
+    if (!session || !session.user) {
+      throw event.redirect(304, "/signin");
+    }
+    const formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD_NAME);
+    formdata.append(
+      "upload_preset",
+      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+    );
+
+    const endpoint =
+      "https://api.cloudinary.com/v1_1/" +
+      import.meta.env.VITE_CLOUDINARY_CLOUD_NAME +
+      "/auto/upload";
+
+    const res = await fetch(endpoint, {
+      body: formdata,
+      method: "post",
+    });
+
+    const data = await res.json();
+
+    const db = await serverInitDatabase();
+    await db.authenticate(session.database.token);
+
+    try {
+      console.log({data})
+      const result = await db.create<Asset>("asset", {...data, asset_name: "profile_photo"});
+      console.log({result});
+      if (result.length === 0) {
+        console.log("An error occured uploading image to database")
+        return {
+          success: false,
+          error: "An error occured uploading image to database",
+        }
+      }
+      await db.merge("profile", {image: result[0].secure_url});
+      return {
+        url: data.secure_url,
+        assetId: result[0].id,
+        success: true,
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        return {
+          success: false,
+          error: error.message,
+        }
+      }
+      return {
+        success: false,
+        error: "An error occured",
+      }
+    }
+  },
+
+  zod$({
+    file: z.instanceof(Blob),
+  })
+);
+export const UpalodFile = component$(() => {
+  const auth = useAuthSession().value as ReturnTypeSession | null;
+  const fileRef = useSignal<HTMLInputElement>();
+  const action = useUpload();
+
+  return (
+    <div class="max-w-md mx-auto">
+      <article class="bg-emerald-800 py-4 px-6  rounded-lg">
+        <Form action={action} class="grid grid-cols-1 gap-4">
+          <input
+            accept="image/*"
+            hidden
+            ref={fileRef}
+            type="file"
+            id="file"
+            name="file"
+          />
+
+          <button
+            type="button"
+            class="flex flex-col space-y-3 items-center border border-dashed h-80 justify-center rounded-lg"
+            onClick$={() => fileRef.value?.click()}
+          >
+            {action.isRunning ? (
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-10 h-10 animate-spin"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
+              </div>
+            ) : (
+              <>
+                <div>
+                  {action.value?.success || auth?.database.profile.image  ? <Fragment key={"google"}>
+                  <img src={action.value?.url || auth?.database.profile.image} alt={"photo"} width={180} height={180} />
+                  </Fragment> : <Fragment>
+                      <PhPersonCirclePlus class="w-12 h-12 fill-emerald-300" />
+                      <span>Choose image</span>
+                    </Fragment>
+                    }
+                </div>
+
+                
+              </>
+            )}
+          </button>
+
+          <button
+            class="btn disabled:opacity-50 disabled:cursor-not-allowed"
+            type="submit"
+            disabled={action.isRunning}
+          >
+            {action.isRunning ? "Uploading..." : "Upload"}
+          </button>
+        </Form>
+      </article>
+    </div>
+
+  );
+});
+
+interface Asset {
+  user_id: string; // Assuming user_id is a string that references the user table
+  asset_id: string;
+  public_id: string;
+  version: number;
+  version_id: string;
+  signature: string;
+  width: number;
+  height: number;
+  format: string;
+  resource_type: string;
+  created_at: Date;
+  tags: string[];
+  bytes: number;
+  type: string;
+  etag: string;
+  placeholder: boolean;
+  url: string;
+  secure_url: string;
+  folder: string;
+  existing: boolean;
+  original_filename: string;
+  [key: string]: unknown;
+}

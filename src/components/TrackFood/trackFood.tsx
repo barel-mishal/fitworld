@@ -60,7 +60,6 @@ export const MainTrackFood = component$(() => {
         const next = parseFloat(currentAmount) + 1;
         myEats.store.updateAmount(next.toString());
       }
-
       // if currnt ingredient that is active is true and is not in view then scroll to it
       const activeElement = document.querySelector("[data-active='true']");
       if (!activeElement) return;
@@ -68,7 +67,6 @@ export const MainTrackFood = component$(() => {
       if (rect.top < 0 || rect.bottom > window.innerHeight - 100) {
         activeElement.scrollIntoView({behavior: "smooth"});
       }
-
     });
 
     // eslint-disable-next-line qwik/no-use-visible-task

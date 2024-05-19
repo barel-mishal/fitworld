@@ -8,7 +8,8 @@ export type SchemaProfileType = {
   userId: string;
   name: string;
   email: string;
-  picture: string;
+  image: string;
+
   nickname: string;
   dateOfBirth: string;
   gender: "female" | "male" | "";
