@@ -1,7 +1,9 @@
-import { $, type QRL, component$, useComputed$ } from '@builder.io/qwik';
+import { Fragment, component$, useComputed$, useSignal } from '@builder.io/qwik';
+import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
-import { type ReturnTypeSession, useAuthSession, useAuthSignout } from '~/routes/plugin@auth';
+import { type ReturnTypeSession, useAuthSession, useAuthSignout, ExtendSession } from '~/routes/plugin@auth';
+import { serverInitDatabase } from '~/routes/seedDatabase';
 
 
 export default component$(() => {
@@ -25,54 +27,13 @@ export default component$(() => {
 
   </div>
   );
-});
+}); 
 
 export const UserPhoto = component$(() => {
-
-  const onUploadComplete$ = $(async (files: File[]) => {
-    if (files.length > 0) {
-      // Create a new FormData object and append the file
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append(file.name, file);
-      });
   
-      fetch('/api/service_food_group', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }
-      })
-      .then(response => {
-        if (response.headers.get('Content-Type') === 'application/json') {
-          return response.json();
-        }
-        return response.text();
-      })
-      .then(data => console.log(data))
-      .catch(error => console.error('Error:', error));
-    
-    }
-});
-  
-
   return <section class="w-screen">
     <label for="photo" class="block text-sm font-medium leading-6 text-gray-900 sr-only">Photo</label>
-    <div class="grid grid-cols-[1fr,auto,1fr] bg-emerald-900 gap-x-3 relative px-2.5 py-2.5">
-      <button type="button" class="col-start-2 border-emerald-100 border-4 rounded-full border-dashed text-sm font-semibold text-gray-900 shadow-sm ">
-        <svg class="h-[150px] w-[150px] text-emerald-700" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
-        </svg>
-      </button>
-      <UploadButton
-        endpoint="imageUploader"
-        onUploadComplete$={onUploadComplete$}
-        labelId='photo'
-      />
-
-    </div>
+      <UpalodFile/>
   </section>
 });  
 
@@ -361,18 +322,162 @@ export const Settings = component$(() => {
 </div>
 });
 
-export const UploadButton = component$<{endpoint: string, onUploadComplete$: QRL<(files: File[]) => void>, labelId: string}>((props) => {
-
-  const handleChange = $(async (event: Event) => {
-    const files = (event.target as HTMLInputElement).files;
-    if (files && files.length > 0) {
-      // Notify about the upload completion
-      await props.onUploadComplete$(Array.from(files));
+export const useUpload = routeAction$(
+  async ({ file }, event) => {
+    const session = event.sharedMap.get("session") as ExtendSession | undefined;
+    if (!session || !session.user) {
+      throw event.redirect(304, "/signin");
     }
-  });
-  
-  return <>
-    <input type="file" id="photo" name={props.labelId} accept="image/*" class="sr-only" onChange$={handleChange} />
-    <label for={props.labelId} class="block text-sm font-medium leading-6 text-gray-900">Photo</label>
-  </>
+    const formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD_NAME);
+    formdata.append(
+      "upload_preset",
+      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+    );
+
+    const endpoint =
+      "https://api.cloudinary.com/v1_1/" +
+      import.meta.env.VITE_CLOUDINARY_CLOUD_NAME +
+      "/auto/upload";
+
+    const res = await fetch(endpoint, {
+      body: formdata,
+      method: "post",
+    });
+
+    const data = await res.json();
+
+    const db = await serverInitDatabase();
+    await db.authenticate(session.database.token);
+
+    try {
+      console.log({data})
+      const result = await db.create<Asset>("asset", {...data, asset_name: "profile_photo"});
+      console.log({result});
+      if (result.length === 0) {
+        console.log("An error occured uploading image to database")
+        return {
+          success: false,
+          error: "An error occured uploading image to database",
+        }
+      }
+      await db.merge("profile", {image: result[0].secure_url});
+      return {
+        url: data.secure_url,
+        assetId: result[0].id,
+        success: true,
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        return {
+          success: false,
+          error: error.message,
+        }
+      }
+      return {
+        success: false,
+        error: "An error occured",
+      }
+    }
+  },
+
+  zod$({
+    file: z.instanceof(Blob),
+  })
+);
+export const UpalodFile = component$(() => {
+  const auth = useAuthSession().value as ReturnTypeSession | null;
+  const fileRef = useSignal<HTMLInputElement>();
+  const action = useUpload();
+
+  return (
+    <div class="max-w-md mx-auto">
+      <article class="bg-emerald-800 py-4 px-6  rounded-lg">
+        <Form action={action} class="grid grid-cols-1 gap-4">
+          <input
+            accept="image/*"
+            hidden
+            ref={fileRef}
+            type="file"
+            id="file"
+            name="file"
+          />
+
+          <button
+            type="button"
+            class="flex flex-col space-y-3 items-center border border-dashed h-80 justify-center rounded-lg"
+            onClick$={() => fileRef.value?.click()}
+          >
+            {action.isRunning ? (
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-10 h-10 animate-spin"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
+              </div>
+            ) : (
+              <>
+                <div>
+                  {action.value?.success || auth?.database.profile.image  ? <Fragment key={"google"}>
+                  <img src={action.value?.url || auth?.database.profile.image} alt={"photo"} width={180} height={180} />
+                  </Fragment> : <Fragment>
+                      <PhPersonCirclePlus class="w-12 h-12 fill-emerald-300" />
+                      <span>Choose image</span>
+                    </Fragment>
+                    }
+                </div>
+
+                
+              </>
+            )}
+          </button>
+
+          <button
+            class="btn disabled:opacity-50 disabled:cursor-not-allowed"
+            type="submit"
+            disabled={action.isRunning}
+          >
+            {action.isRunning ? "Uploading..." : "Upload"}
+          </button>
+        </Form>
+      </article>
+    </div>
+
+  );
 });
+
+interface Asset {
+  user_id: string; // Assuming user_id is a string that references the user table
+  asset_id: string;
+  public_id: string;
+  version: number;
+  version_id: string;
+  signature: string;
+  width: number;
+  height: number;
+  format: string;
+  resource_type: string;
+  created_at: Date;
+  tags: string[];
+  bytes: number;
+  type: string;
+  etag: string;
+  placeholder: boolean;
+  url: string;
+  secure_url: string;
+  folder: string;
+  existing: boolean;
+  original_filename: string;
+  [key: string]: unknown;
+}
