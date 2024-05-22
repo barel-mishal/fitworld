@@ -198,9 +198,7 @@ const Play = component$(() => {
                     </span>
                     <p class="small-title">Let's Start Do Challenges</p>
                 </div>
-            </section>
-
-
+            </section> 
         </div>
     )
 });

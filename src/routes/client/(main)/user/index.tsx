@@ -1,7 +1,9 @@
 import { Fragment, component$, useComputed$, useSignal } from '@builder.io/qwik';
 import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
+import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
 import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
+import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
 
@@ -16,16 +18,19 @@ export default component$(() => {
     return intrlazetionDatetimeApi.format(date)
   });
   return (
-  <div class={cn("grid gap-3 place-content-start overflow-y-scroll h-screen text-gray-50 bg-gray-950 font-roundsans  pb-12")}>
-    <UserPhoto />
-    <UserTitle name={auth?.user?.name ?? ""} email={auth?.user?.email ?? ""} joind={computeDateFormat.value} />
-    <UserProgress />
-    <UserShares />
-    <UserWeeklyProgress />
-    <button onClick$={() => signOut.submit({ callbackUrl: '/signedout' })}>Sign Out</button>;
-
-
-  </div>
+    <div class="grid grid-rows-[1fr,60px] bg-gray-950 overflow-y-scroll h-screen ">
+        <div class={cn("grid gap-3  place-content-start text-gray-50 bg-gray-950 font-roundsans pb-12 overflow-y-auto")}>
+          <UserPhoto />
+          <UserTitle name={auth?.user?.name ?? ""} email={auth?.user?.email ?? ""} joind={computeDateFormat.value} />
+          <UserProgress />
+          <UserShares />
+          <UserWeeklyProgress />
+          <button onClick$={() => signOut.submit({ callbackUrl: '/signedout' })}>Sign Out</button>;
+        </div>
+        <div>
+          <BottomNavBar  user={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200 "}} />
+        </div>
+    </div>
   );
 }); 
 

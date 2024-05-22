@@ -20,7 +20,9 @@ export default component$(() => {
       <div q:slot='main'>
         <Play  />
       </div>
-      <div q:slot='footer' class=""><BottomNavBar flag={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} /></div>
+      <div q:slot='footer' class="">
+        <BottomNavBar flag={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200"}} />
+      </div>
     </HeaderMainBottomNav>
   );
 });
