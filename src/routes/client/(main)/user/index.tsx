@@ -1,10 +1,11 @@
-import { Fragment, component$, useComputed$, useSignal } from '@builder.io/qwik';
+import { $, Fragment, component$, createContextId, useComputed$, useContext, useContextProvider, useOn, useOnDocument, useSignal, useStore } from '@builder.io/qwik';
 import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
+import { MergeProfileArgsTypes, serverMergeProfile } from '~/routes/service/server-user-personal-info';
 
 
 
@@ -17,11 +18,17 @@ export default component$(() => {
     const date = new Date(dateRaw);
     return intrlazetionDatetimeApi.format(date)
   });
+
+  if (!auth) {
+    return <div>Loading...</div>
+  }
+  const update = useUpdateProfile(auth?.database.profile);
+  useContextProvider(contextUpdateProfile, update)
   return (
     <div class="grid grid-rows-[1fr,60px] bg-gray-950 overflow-y-scroll h-screen ">
         <div class={cn("grid gap-3  place-content-start text-gray-50 bg-gray-950 font-roundsans pb-12 overflow-y-auto")}>
           <UserPhoto />
-          <UserTitle name={auth?.user?.name ?? ""} email={auth?.user?.email ?? ""} joind={computeDateFormat.value} />
+          <UserTitle email={auth?.user?.email ?? ""} joind={computeDateFormat.value} />
           <UserProgress />
           <UserShares />
           <OverView />
@@ -76,9 +83,23 @@ export const UserPhoto = component$(() => {
   </section>
 });  
 
-export const UserTitle = component$<{name: string, email: string, joind: string}>((props) => {
-  return  <section class="px-3">
-    <h1 class="text-2xl text-gray-50 pb-2">{props.name}</h1>
+export const UserTitle = component$<{email: string, joind: string}>((props) => {
+  const sectionRef = useSignal<HTMLDivElement>();
+  const profile = useContext(contextUpdateProfile);
+  const name = useSignal(profile.store.profile.name);
+
+  useOnDocument('click', $((e) => {
+    if (profile.store.isEditProfile !== "" && sectionRef.value && !sectionRef.value.contains(e.target as Node)) {
+      profile.store.isEditProfile = "";
+    }
+  }));
+  return  <section class="px-3" ref={sectionRef}>
+    {profile.store.isEditProfile ? <>
+    <input class="inp" type="text" bind:value={name} />
+    <button onClick$={() => profile.store.updateUser('person', [{field: "name", value: name.value}])} class="btn">Save</button>
+    </> : <>
+    <h1 class="text-2xl text-gray-50 pb-2" onClick$={() => profile.store.isEditProfile = "name"}>{profile.store.profile.name}</h1>
+    </>}
     <p class="text-xs text-gray-300 flex gap-2 items-center"><span>{props.email}</span><svg width={6} height={6} fill='rgb(110 231 183 / 0.5)'><circle r={3} cx={3} cy={3}   /></svg><span>Joind: {props.joind}</span></p>
   </section>
 });  
@@ -521,3 +542,31 @@ interface Asset {
   original_filename: string;
   [key: string]: unknown;
 }
+
+
+export const useUpdateProfile = (profile: ExtendSession["database"]["profile"]) => {
+  const store = useStore({
+    profile,
+    updateUser: $(function (this: {profile: ExtendSession["database"]["profile"], isEditProfile: ""}, field: "person" | "height" | "weight", data: MergeProfileArgsTypes) {
+      const d = {
+        person: async () => {
+          const result = await serverMergeProfile(...data);
+          this.profile.name = result.merge[0].name;
+          this.isEditProfile = "";
+        },
+        height: () => {},
+        weight: () => {},
+      }
+
+      return d[field]()
+    }),
+    isEditProfile: "" as keyof ExtendSession["database"]["profile"] | "",
+  })
+  return {
+    store
+  }
+}
+
+export type UseUpdateProfile = ReturnType<typeof useUpdateProfile>;
+
+export const contextUpdateProfile = createContextId<UseUpdateProfile>("update-profile")

@@ -44,18 +44,20 @@ interface UserProfile {
     [key: string]: string | string[] | Date;
 }
 
-export const serverMergeProfile = server$(async function(data: {field: keyof UserProfile, value: string | number | Date | string[]}) {
+export const serverMergeProfile = server$(async function(data: {field: keyof UserProfile, value: string | Date | string[]}) {
     const session: ExtendSession | null = this.sharedMap.get('session');
     const id = session?.database.profile.id;
     if (!id) throw new Error('No profile id');
     const token = session.database.token;
     const db = await serverInitDatabase();
     await db.authenticate(token);
-    const merge = await db.merge(id, { [data.field]: data.value });
+    const merge = await db.merge<UserProfile>(id, { [data.field]: data.value });
     return {
       merge
     }
   });
+
+  export type MergeProfileArgsTypes = Parameters<typeof serverMergeProfile>;
 
   export type MergeProfileType = ReturnType<typeof serverMergeProfile>;
   
