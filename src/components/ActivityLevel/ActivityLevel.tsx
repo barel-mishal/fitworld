@@ -23,7 +23,7 @@ export const ActivityLevel = component$<ActivityLevelProps>((props) => {
         {activityLevels.map((level) => (
           <label
             class={` transition-all duration-200 ease-in inp ${
-              props.value.data.lifeStyle.activityLevel === level ? 'bg-emerald-700' : 'bg-emerald-900'
+              props.value.data.lifeStyle.activityLevel === level ? 'bg-gray-700' : 'bg-gray-900'
             }`}
             for={`${id}-activity-${level}`}
             key={level}

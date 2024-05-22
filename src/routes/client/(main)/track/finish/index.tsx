@@ -14,8 +14,8 @@ export default component$(() => {
   });
   return (
     <div class="grid grid-rows-2 p-4 gap-3 min-h-96 ">
-      <button onClick$={onClickEditSelections} class="underline text-emerald-200 p-2 [text-wrap:balance] rounded-lg text-2xl">Edit Selections</button>
-      <button onClick$={onClickCommitEating} class="bg-emerald-600 p-2 [text-wrap:balance] rounded-lg text-2xl">Yap! that what I have eated</button>
+      <button onClick$={onClickEditSelections} class="underline text-gray-200 p-2 [text-wrap:balance] rounded-lg text-2xl">Edit Selections</button>
+      <button onClick$={onClickCommitEating} class="bg-gray-600 p-2 [text-wrap:balance] rounded-lg text-2xl">Yap! that what I have eated</button>
     </div>
   );
 });

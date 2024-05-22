@@ -206,7 +206,6 @@ export const serverMergeProfile = server$(async function(data) {
 export type MergeProfileType = ReturnType<typeof serverMergeProfile>;
 
 export const serverMergeWeight = server$(async function(data: {value: number, _type: string, record: string}) {
-  
   const session: ExtendSession | null = this.sharedMap.get('session');
   const token = session?.database.token
   if (!token) throw new Error('No token');
@@ -220,7 +219,6 @@ export const serverMergeWeight = server$(async function(data: {value: number, _t
     CREATE weight SET value = $value, type = $_type
   END;
   `, data);
-  console.log('merge', JSON.stringify(merge), data);
   return {
     merge
   }

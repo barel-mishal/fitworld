@@ -81,16 +81,16 @@
 /* apply tailwind classes */
 @layer components {
   .btn {
-    @apply border-b-4 border border-emerald-700 px-6 py-2 rounded-sm active:border-b transition-all ease-in-out;
+    @apply border-b-4 border border-gray-700 px-6 py-2 rounded-sm active:border-b transition-all ease-in-out;
   }
   .btn-primary {
-    @apply bg-emerald-900 p-2 rounded-sm border-b-2 border-emerald-400 active:border-b-0 transition-all ease-in-out;
+    @apply bg-gray-900 p-2 rounded-sm border-b-2 border-gray-400 active:border-b-0 transition-all ease-in-out;
   }
   .btn-gohst {
-    @apply bg-transparent text-emerald-900 px-6 py-2 rounded-sm border-b-2 border-transparent;
+    @apply bg-transparent text-gray-900 px-6 py-2 rounded-sm border-b-2 border-transparent;
   }
   .btn-data-active {
-    @apply data-[active=true]:bg-emerald-900
+    @apply data-[active=true]:bg-gray-900
   }
   .btn-secondary {
     @apply bg-secondary text-secondary-foreground;
@@ -108,13 +108,16 @@
     @apply text-lg;
   }
   .inp {
-    @apply rounded-sm p-2 border border-emerald-700 text-emerald-50 bg-emerald-900 focus-within:outline-emerald-700 focus-within:border-emerald-700
+    @apply rounded-sm p-2 border border-gray-700 text-gray-50 bg-gray-900 focus-within:outline-gray-700 focus-within:border-gray-700
   }
   .title {
-    @apply text-emerald-100 text-3xl font-roundsans font-extrabold
+    @apply text-gray-100 text-3xl font-roundsans font-extrabold
+  }
+  .small-title {
+    @apply text-gray-100 text-xl font-roundsans font-extrabold
   }
   .info-title {
-    @apply text-emerald-100 font-roundsans font-bold
+    @apply text-gray-100 font-roundsans font-bold
   }
 }
 

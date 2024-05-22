@@ -108,7 +108,7 @@ export default component$(() => {
         </div>
       </fieldset>
       <div class="grid place-self-start">
-        <p class={[ERROR_MESSAGE === age.value ? "text-rose-300" : "text-emerald-200"]}>
+        <p class={[ERROR_MESSAGE === age.value ? "text-rose-300" : "text-gray-200"]}>
           {age.value}
         </p>
       </div>

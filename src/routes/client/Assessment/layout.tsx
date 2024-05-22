@@ -110,7 +110,7 @@ export default component$(() => {
   return (
   
     <HeaderMainBottomNav >
-      <div q:slot='header' class="mx-2"><Button onClick$={prev} look={"ghost"} class={cn("text-emerald-200 p-0 active:bg-transparent hover:bg-transparent ", isFirst.value && "hidden")}><BsArrowLeft class="" style={{height: 30, width: 30}} /></Button></div>
+      <div q:slot='header' class="mx-2"><Button onClick$={prev} look={"ghost"} class={cn("text-gray-200 p-0 active:bg-transparent hover:bg-transparent ", isFirst.value && "hidden")}><BsArrowLeft class="" style={{height: 30, width: 30}} /></Button></div>
       <div q:slot='main' class="mx-2 h-full flex items-start"><Slot /></div>
       <div q:slot='footer' class="mx-2"><button 
         disabled={sc.settings.buttonDisabled} 

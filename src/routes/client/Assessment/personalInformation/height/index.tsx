@@ -35,7 +35,7 @@ export default component$(() => {
     <div class="grid grid-cols-[1fr,auto] gap-4 w-full info-title tracking-wide">
 
       <div class="grid max-w-sm items-center gap-1.5 ">
-        <Label for="email-2" class="text-emerald-100 [text-wrap:balance]">Height</Label>
+        <Label for="email-2" class="text-gray-100 [text-wrap:balance]">Height</Label>
         <input 
         ref={refHeight}
         
@@ -58,10 +58,10 @@ export default component$(() => {
           value={inputHeightValue.value}
         />
 
-        <p class="text-sm text-emerald-200/70 h-5">The name shown by others in the application </p>
+        <p class="text-sm text-gray-200/70 h-5">The name shown by others in the application </p>
       </div>
       <div class="grid max-w-sm items-center gap-1.5 ">
-        <Label for="email-2" class="text-emerald-100">Unit</Label>
+        <Label for="email-2" class="text-gray-100">Unit</Label>
         <MyPopover height={sc.data.personalInformation.height} />
       </div>
 
@@ -104,7 +104,7 @@ export const MyPopover = component$<HeightGetter>(() => {
       </PopoverTrigger>
       <Popover
         flip={false}
-        class="bg-emerald-950 text-emerald-50 border border-emerald-800 rounded-base shadow-sm p-2 w-32 -translate-x-[24px] "
+        class="bg-gray-950 text-gray-50 border border-gray-800 rounded-base shadow-sm p-2 w-32 -translate-x-[24px] "
         gutter={4}
         ref={popoverRef}
         anchorRef={triggerRef}
@@ -140,7 +140,7 @@ export const MyPopover = component$<HeightGetter>(() => {
 
         </div>
       </Popover>
-      <p class="text-sm text-emerald-200/70 h-5">{getHeightUnit()}</p>
+      <p class="text-sm text-gray-200/70 h-5">{getHeightUnit()}</p>
     </>
   );
 });

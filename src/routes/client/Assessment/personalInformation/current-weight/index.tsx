@@ -35,7 +35,7 @@ export default component$(() => {
     <div class="grid grid-cols-[1fr,auto] gap-4 w-full font-roundsans">
 
       <div class="grid max-w-sm items-center gap-1.5 grid-rows-[auto,46px,auto] ">
-        <Label for="email-2" class="text-emerald-100">Current Weight</Label>
+        <Label for="email-2" class="text-gray-100">Current Weight</Label>
         <input 
         ref={refWeight}
         type="Height" id="Height" placeholder={computeHeight.value.toString()} onInput$={async (e,el) => {
@@ -54,10 +54,10 @@ export default component$(() => {
           }}
         />
 
-        <p class="text-sm text-emerald-200/70 h-5">The name shown by others in the application </p>
+        <p class="text-sm text-gray-200/70 h-5">The name shown by others in the application </p>
       </div>
       <div class="grid max-w-sm items-center gap-1.5 grid-rows-[auto,46px,auto] w-20 h-16">
-        <Label for="email-2" class="text-emerald-100">Unit</Label>
+        <Label for="email-2" class="text-gray-100">Unit</Label>
         <MyPopover />
       </div>
     </div>
@@ -91,7 +91,7 @@ export const MyPopover = component$(() => {
       </PopoverTrigger>
       <Popover
         flip={false}
-        class="-translate-x-[23px] bg-emerald-950 border border-emerald-800 text-emerald-50 "
+        class="-translate-x-[23px] bg-gray-950 border border-gray-800 text-gray-50 "
         gutter={4}
         ref={popoverRef}
         anchorRef={triggerRef}
@@ -136,7 +136,7 @@ export const MyPopover = component$(() => {
 
         </div>
       </Popover>
-      <p class="text-sm text-emerald-200/70 h-5">{getWeightUnitSystem()}</p>
+      <p class="text-sm text-gray-200/70 h-5">{getWeightUnitSystem()}</p>
     </>
   );
 });

@@ -92,7 +92,7 @@ export const MainTrackFood = component$(() => {
       <>
         <div class="flex flex-col justify-between">
           
-          <div class="grid gap-3 sticky top-0 bg-emerald-950 z-50">
+          <div class="grid gap-3 sticky top-0 bg-gray-950 z-50">
             
             <FieldsForNewEat />
 
@@ -125,11 +125,11 @@ export const FieldsForNewEat = component$(() => {
     }),
     300
   );
-  return <div class="sticky top-0 z-50 bg-emerald-950 pb-2">
+  return <div class="sticky top-0 z-50 bg-gray-950 pb-2">
   <section class="grid grid-cols-3 gap-3">
-    <label for="new-food" class="text-emerald-100">Food</label>
-    <label for="new-unit" class="text-emerald-100">Unit</label>
-    <label for="new-amount" class="text-emerald-100">Amount</label>
+    <label for="new-food" class="text-gray-100">Food</label>
+    <label for="new-unit" class="text-gray-100">Unit</label>
+    <label for="new-amount" class="text-gray-100">Amount</label>
   </section>
   <fieldset class="grid grid-cols-3 gap-3">
       <input id={"new-food"}  
@@ -200,12 +200,12 @@ export const ShowSearchResults = component$(() => {
 export const FestSelections = component$(() => {
   const myEats = useContext(contextFoodTrack);
 
-  return <ul class="overflow-x-auto bg-emerald-950">
-  <li class="bg-emerald-950">
+  return <ul class="overflow-x-auto bg-gray-950">
+  <li class="bg-gray-950">
     <h5>
       Fast selections
     </h5>
-    <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1 bg-emerald-950">
+    <ul class="flex flex-wrap-0 gap-4 overflow-x-auto py-2 px-1 bg-gray-950">
         <li>
           <button 
           class="btn"
@@ -220,7 +220,7 @@ export const FestSelections = component$(() => {
         </li>
       {[].map((food) => {
         return (
-          <li key={food} class=" bg-emerald-950">
+          <li key={food} class=" bg-gray-950">
             <button 
             class={cn("btn btn-data-active flex gap-1", "p-2 ")}
             onClick$={() => myEats.store.bindEating("food", food)} >
@@ -256,7 +256,7 @@ export const NextTrackFood = component$(() => {
           class="btn-gohst relative">
             <PhFlag class={cn(
               "absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 active:rotate-6 transition-all ease-in-out",
-              !myEats.disableFinishButton.value ? "fill-emerald-100" : "fill-emerald-800"
+              !myEats.disableFinishButton.value ? "fill-gray-100" : "fill-gray-800"
               
               )} />
           </button>
@@ -267,7 +267,7 @@ export const NextTrackFood = component$(() => {
           <div class="grid grid-cols-[auto,1fr] gap-2">
             <button 
               onClick$={() => isConfrim.value = !isConfrim.value}
-              class="btn-gohst text-emerald-700">
+              class="btn-gohst text-gray-700">
                 Add More Product
             </button>
             <AppLinkGlobal 
@@ -276,7 +276,7 @@ export const NextTrackFood = component$(() => {
               class={["btn-primary flex items-center gap-2 justify-center ", myEats.disableFinishButton.value && "pointer-events-none"]}>
                 <PhFlag class={cn(
               " transform active:rotate-6 transition-all ease-in-out scale-75",
-              "fill-emerald-100"
+              "fill-gray-100"
               )} />
                 <p>Finish</p>
             </AppLinkGlobal>
