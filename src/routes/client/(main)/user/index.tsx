@@ -7,6 +7,7 @@ import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSess
 import { serverInitDatabase } from '~/routes/seedDatabase';
 
 
+
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
   const signOut = useAuthSignout();
@@ -424,6 +425,7 @@ export const useUpload = routeAction$(
     file: z.instanceof(Blob),
   })
 );
+
 export const UpalodFile = component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
   const fileRef = useSignal<HTMLInputElement>();

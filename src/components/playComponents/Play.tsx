@@ -53,7 +53,7 @@ const Play = component$(() => {
             </section>
             <section class="grid grid-cols-12 gap-3 pb-14">
                 <div class="p-4 bg-purple-600  rounded-xl col-span-12 border-b-4 border-purple-900 sticky top-0 ">
-                    <h1 class="text-secondary/50">SECTION 1 UNIT 3</h1>
+                    <h1 class="text-xs text-green-950/70">SECTION 1 UNIT 3</h1>
                     <p class="small-title">Macronutrients and Health</p>
                 </div>
                 <div class="col-start-3 col-span-4 row-span-1  ">
@@ -99,7 +99,7 @@ const Play = component$(() => {
             </section>
             <section class="grid grid-cols-12 gap-3 pb-14">
                 <div class="p-4 bg-indigo-600  rounded-xl col-span-12 border-b-4 border-indigo-900 sticky top-0 ">
-                    <h1 class="text-secondary/50">SECTION 1 UNIT 4</h1>
+                    <h1 class="text-xs text-green-950/70">SECTION 1 UNIT 4</h1>
                     <p class="small-title">Build your training program</p>
                 </div>
                 <div class="col-start-3 col-span-4 row-span-1  ">
@@ -145,7 +145,7 @@ const Play = component$(() => {
             </section>
             <section class="grid grid-cols-12 gap-3 pb-14">
                 <div class="p-4 bg-rose-600  rounded-xl col-span-12 border-b-4 border-rose-900 sticky top-0  ">
-                    <h1 class="text-secondary/50">SECTION 1 UNIT 2</h1>
+                    <h1 class="text-xs text-green-950/70">SECTION 1 UNIT 2</h1>
                     <p class="small-title">Let's Start Do Challenges</p>
                 </div>
                 <div class="col-start-3 col-span-4 row-span-1  ">
