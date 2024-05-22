@@ -1,7 +1,6 @@
 import { Fragment, component$, useComputed$, useSignal } from '@builder.io/qwik';
 import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
-import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMainBottomNav';
 import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
@@ -24,8 +23,9 @@ export default component$(() => {
           <UserTitle name={auth?.user?.name ?? ""} email={auth?.user?.email ?? ""} joind={computeDateFormat.value} />
           <UserProgress />
           <UserShares />
+          <OverView />
           <UserWeeklyProgress />
-          <button onClick$={() => signOut.submit({ callbackUrl: '/signedout' })}>Sign Out</button>;
+          <button onClick$={() => signOut.submit({ callbackUrl: '/signedout' })} class="border-red-700 m-2 p-3 border-2 rounded-lg text-red-700 ">Sign Out</button>
         </div>
         <div>
           <BottomNavBar  user={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200 "}} />
@@ -33,6 +33,39 @@ export default component$(() => {
     </div>
   );
 }); 
+
+export const OverView = component$(() => {
+
+  return <section class="px-3">
+    <div class="grid gap-3">
+      <h3 class="text-gray-50 text-xl font-bold">Overview</h3>
+      <div class="grid gap-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div class="grid gap-2 p-3 border-4 border-gray-800 rounded-md">
+            <p class="text-gray-50 small-title ">30</p>
+            <p class="text-gray-300/70 text-xs">Total XP</p>
+          </div>
+          <div class="grid gap-2 p-3 border-4 border-gray-800 rounded-md">
+            <p class="text-gray-50 small-title ">180 cm</p>
+            <p class="text-gray-300/70 text-xs">Day Streak</p>
+          </div>
+          <div class="grid gap-2 p-3 border-4 border-gray-800 rounded-md">
+            <p class="text-gray-50 small-title ">70 kg</p>
+            <p class="text-gray-300/70 text-xs">Top 3 finishes</p>
+          </div>
+          <div class="grid gap-2 p-3 border-4 border-gray-800 rounded-md">
+            <p class="text-gray-50 small-title ">22</p>
+            <p class="text-gray-300/70 text-xs">Level</p>
+          </div>
+        </div>
+        <div class="grid gap-3">
+          <p class="text-gray-50 small-title ">Lose weight</p>
+          <p class="text-gray-300/70">Goal</p>
+        </div>
+      </div>
+    </div>
+  </section>
+});
 
 export const UserPhoto = component$(() => {
   
@@ -398,7 +431,7 @@ export const UpalodFile = component$(() => {
 
   return (
     <div class="max-w-md mx-auto">
-      <article class="bg-gray-800 py-4 px-6  rounded-lg">
+      <article class="bg-gray-800 py-4 px-6  rounded-b-lg">
         <Form action={action} class="grid grid-cols-1 gap-4">
           <input
             accept="image/*"
