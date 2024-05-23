@@ -472,8 +472,8 @@ export const UpalodFile = component$(() => {
   const action = useUpload();
 
   return (
-    <div class="max-w-md mx-auto">
-      <article class="bg-gray-800 py-4 px-6  rounded-b-lg">
+    <div class="">
+      <article class="bg-gray-800 py-4 px-6 rounded-b-lg">
         <Form action={action} class="grid grid-cols-1 gap-4">
           <input
             accept="image/*"
