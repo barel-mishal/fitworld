@@ -32,7 +32,7 @@ export default component$(() => {
           <UserShares />
           <OverView />
           <UserWeeklyProgress />
-          <button onClick$={() => signOut.submit({ callbackUrl: '/signedout' })} class="border-red-700 m-2 p-3 border-2 rounded-lg text-red-700 ">Sign Out</button>
+          <button onMouseDown$={() => signOut.submit({ callbackUrl: '/signedout' })} class="border-red-700 m-2 p-3 border-2 rounded-lg text-red-700 ">Sign Out</button>
         </div>
         <div>
           <BottomNavBar  user={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200 "}} />
@@ -100,9 +100,9 @@ export const UserTitle = component$<{email: string, joind: string}>((props) => {
   return  <section class="px-3" ref={sectionRef}>
     {profile.store.isEditProfile ? <>
     <input class="inp" type="text" bind:value={name} />
-    <button onClick$={() => profile.store.updateUser({field: 'person', data: [{field: "name", value: name.value}]})} class="btn">Save</button>
+    <button onMouseDown$={() => profile.store.updateUser({field: 'person', data: [{field: "name", value: name.value}]})} class="btn">Save</button>
     </> : <>
-    <h1 class="text-2xl text-gray-50 pb-2" onClick$={() => profile.store.isEditProfile = "name"}>{profile.store.person.name}</h1>
+    <h1 class="text-2xl text-gray-50 pb-2" onMouseDown$={() => profile.store.isEditProfile = "name"}>{profile.store.person.name}</h1>
     </>}
     <p class="text-xs text-gray-300 flex gap-2 items-center"><span>{props.email}</span><svg width={6} height={6} class="fill-current"><circle r={3} cx={3} cy={3}   /></svg><span>Joind: {props.joind}</span></p>
   </section>
@@ -487,7 +487,7 @@ export const UpalodFile = component$(() => {
           <button
             type="button"
             class="flex flex-col space-y-3 items-center border border-dashed h-80 justify-center rounded-lg"
-            onClick$={() => fileRef.value?.click()}
+            onMouseDown$={() => fileRef.value?.click()}
           >
             {action.isRunning ? (
               <div>
