@@ -24,6 +24,8 @@ export const serverMergeHeight = server$(async function(data: {value: number, _t
       merge
     }
   });
+
+export type MergeHeightArgsType = Parameters<typeof serverMergeHeight>;
   
 export type MergeHeightType = ReturnType<typeof serverMergeHeight>;
 
@@ -79,5 +81,7 @@ export const serverMergeProfile = server$(async function(data: {field: keyof Use
       merge
     }
   });
+
+export type MergeWeightArgsType = Parameters<typeof serverMergeWeight>;
   
   export type MergeWeightType = ReturnType<typeof serverMergeWeight>;

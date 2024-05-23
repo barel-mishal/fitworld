@@ -5,7 +5,7 @@ import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
-import { MergeProfileArgsTypes, serverMergeProfile } from '~/routes/service/server-user-personal-info';
+import { MergeHeightArgsType, MergeProfileArgsTypes, MergeWeightArgsType, serverMergeHeight, serverMergeProfile, serverMergeWeight } from '~/routes/service/server-user-personal-info';
 
 
 
@@ -96,7 +96,7 @@ export const UserTitle = component$<{email: string, joind: string}>((props) => {
   return  <section class="px-3" ref={sectionRef}>
     {profile.store.isEditProfile ? <>
     <input class="inp" type="text" bind:value={name} />
-    <button onClick$={() => profile.store.updateUser('person', [{field: "name", value: name.value}])} class="btn">Save</button>
+    <button onClick$={() => profile.store.updateUser({field: 'person', data: [{field: "name", value: name.value}]})} class="btn">Save</button>
     </> : <>
     <h1 class="text-2xl text-gray-50 pb-2" onClick$={() => profile.store.isEditProfile = "name"}>{profile.store.profile.name}</h1>
     </>}
@@ -544,21 +544,39 @@ interface Asset {
 }
 
 
+
+type UpdateUserStore = {
+  field: "person",
+  data: MergeProfileArgsTypes
+} | {
+  field: "height",
+  data: MergeHeightArgsType
+} | {
+  field: "weight",
+  data: MergeWeightArgsType
+}
+
 export const useUpdateProfile = (profile: ExtendSession["database"]["profile"]) => {
   const store = useStore({
     profile,
-    updateUser: $(function (this: {profile: ExtendSession["database"]["profile"], isEditProfile: ""}, field: "person" | "height" | "weight", data: MergeProfileArgsTypes) {
-      const d = {
-        person: async () => {
-          const result = await serverMergeProfile(...data);
-          this.profile.name = result.merge[0].name;
+    updateUser: $(async function (this: {profile: ExtendSession["database"]["profile"], isEditProfile: ""}, update: UpdateUserStore) {
+      const result = {error: "", success: false};
+      switch (update.field) {
+        case "person":
+          const profileR = await serverMergeProfile(...update.data);
+          this.profile.name = profileR.merge[0].name;
           this.isEditProfile = "";
-        },
-        height: () => {},
-        weight: () => {},
+          break;
+        case "height":
+          const heightR = await serverMergeHeight(...update.data);
+          break;
+        case "weight":
+          const weightR = await serverMergeWeight(...update.data);
+          
+          break;
       }
 
-      return d[field]()
+      return result
     }),
     isEditProfile: "" as keyof ExtendSession["database"]["profile"] | "",
   })
