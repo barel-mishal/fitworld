@@ -517,8 +517,6 @@ export const UpalodFile = component$(() => {
                     </Fragment>
                     }
                 </div>
-
-                
               </>
             )}
           </button>
