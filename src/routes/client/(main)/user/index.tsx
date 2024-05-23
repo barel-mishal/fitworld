@@ -67,16 +67,16 @@ export const OverView = component$(() => {
             <p class="text-gray-50 small-title ">22</p>
             <p class="text-gray-300/70 text-xs">Level</p>
           </div>
-          <div class="grid gap-2 p-3 border-4 border-purple-800 rounded-md">
+          <button class="text-left grid gap-2 p-3 border-4 border-purple-800 rounded-md">
             <p class="text-purple-50 small-title ">{profile.store.person.weight.value}<span>{profile.store.person.weight.type}</span> </p>
             <p class="text-purple-300/70 text-xs">Current Weight</p>
-            <PhPlus class="col-start-2 row-start-1 fill-current row-span-2 place-self-center" />
-          </div>
-          <div class="grid gap-2 p-3 border-4 border-purple-800 rounded-md">
+            <PhPlus class="col-start-2 row-start-1 fill-current row-span-2 place-self-end" />
+          </button>
+          <button class="text-left grid gap-2 p-3 border-4 border-purple-800 rounded-md">
             <p class="text-purple-50 small-title ">{profile.store.person.height.value}<span>{profile.store.person.height.type}</span> </p>
             <p class="text-purple-300/70 text-xs">Current Height</p>
-            <PhPlus class="col-start-2 row-start-1 fill-current row-span-2 place-self-center" />
-          </div>
+            <PhPlus class="col-start-2 row-start-1 fill-current row-span-2 place-self-end" />
+          </button>
         </div>
       </div>
     </div>
