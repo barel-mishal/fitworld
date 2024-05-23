@@ -1,6 +1,4 @@
-import { type Signal, component$, useSignal } from "@builder.io/qwik";
-import { Modal, ModalContent, ModalFooter, ModalHeader, ModalTrigger, ModalWrapper } from "../../ui/modal/modal";
-import { Button } from "../../ui/button/button";
+import { type Signal, component$ } from "@builder.io/qwik";
 
 import { type ResolvedOption } from '@qwik-ui/headless';
 import {
@@ -15,49 +13,8 @@ import {
 } from "~/components/ui/combobox/combobox"
 import { LuCheck } from '@qwikest/icons/lucide';
 
-interface PublishProps {
-    id: string;
-    name: string;
-}
 
-export const PublishModal = component$<PublishProps>((props) => {
-    const selectedOptionIndexSig = useSignal<number>(-1);
-    const objectExample = [
-        { testValue: 'pubilsh', testLabel: 'Pubilsh', disabled: false },
-        { testValue: 'draft', testLabel: 'Draft', disabled: false },
-    ];
-    return (
-        <ModalWrapper>
-            <ModalTrigger>
-                <Button class={""} >
-                    <p>Publish</p>
-                </Button>
-            </ModalTrigger>
-            <Modal >
-                <ModalHeader class={"min-w-[300px]"}>
-                    <p class="text-sm font-light">
-                        Change Visibility
-                    </p>
-                    <h2 class="text-lg font-bold">{props.name}</h2>
-                </ModalHeader>
-                    
-                <ModalContent>
-                    <div class="grid gap-4 py-4">
-                        <div class="grid grid-cols-4 items-center gap-4">
-                        <ComboboxPublish objectExample={objectExample} selectedOptionIndexSig={selectedOptionIndexSig} />
-                        </div>
-                    </div>
-                </ModalContent>
-                <ModalFooter>
-                        <Button onClick$={() => {
-                          
-                        }}>Submit</Button>
-                </ModalFooter>
-                    
-            </Modal>
-        </ModalWrapper>
-    );
-});
+
 
 type MyData = {
     testValue: string;

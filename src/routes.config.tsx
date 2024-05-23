@@ -33,6 +33,7 @@ export function AppLink(props: AppLinkProps & QwikIntrinsicElements["a"]) {
   );
 }
 
+
 export function AppLinkGlobal(props: AppLinkProps & QwikIntrinsicElements["a"]) {
   return (
     <Link

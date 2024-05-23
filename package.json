@@ -69,6 +69,7 @@
     "apexcharts": "^3.49.1",
     "class-variance-authority": "^0.7.0",
     "isomorphic-dompurify": "^2.11.0",
+    "lru-cache": "^10.2.2",
     "marked": "^12.0.2",
     "surrealdb.js": "^0.11.0",
     "uploadthing": "^6.10.4"

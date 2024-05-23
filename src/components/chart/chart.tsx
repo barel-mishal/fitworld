@@ -1,5 +1,6 @@
-import { NoSerialize, component$, noSerialize, useSignal, useVisibleTask$, Signal } from '@builder.io/qwik';
-import ApexCharts, { ApexOptions } from 'apexcharts';
+import { type NoSerialize, component$, noSerialize, useSignal, useVisibleTask$, type Signal } from '@builder.io/qwik';
+import ApexCharts from 'apexcharts';
+import { ApexOptions } from 'apexcharts';
 
 import { LuBarChart } from '@qwikest/icons/lucide';
 import { fillMissingDates, getDateFormatter } from './utils';

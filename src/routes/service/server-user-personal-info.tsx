@@ -1,9 +1,6 @@
 import { server$ } from "@builder.io/qwik-city";
-import { TimeSeriesData, type ExtendSession } from "../plugin@auth";
+import { type TimeSeriesData, type ExtendSession } from "../plugin@auth";
 import { serverInitDatabase } from "../seedDatabase";
-
-
-
 
 export const serverMergeHeight = server$(async function(data: {value: number, _type: string, record: string}) {
     const session: ExtendSession | null = this.sharedMap.get('session');

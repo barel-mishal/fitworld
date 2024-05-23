@@ -1,14 +1,12 @@
-import { $, Fragment, component$, createContextId, useComputed$, useContext, useContextProvider, useOn, useOnDocument, useSignal, useStore } from '@builder.io/qwik';
+import { $, Fragment, component$, createContextId, useComputed$, useContext, useContextProvider, useOnDocument, useSignal, useStore } from '@builder.io/qwik';
 import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
-import { BsClipboardPulse, BsPatchPlusFill, BsPlus } from '@qwikest/icons/bootstrap';
-import { LuHeartPulse } from '@qwikest/icons/lucide';
 import { Chart } from '~/components/chart/chart';
 import { PhFooPeinapple, PhPersonCirclePlus, PhPlus, PhShare } from '~/components/icons/icons';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
-import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession, TimeSeriesData } from '~/routes/plugin@auth';
+import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession, type TimeSeriesData } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
-import { MergeHeightArgsType, MergeProfileArgsTypes, MergeWeightArgsType, serverMergeHeight, serverMergeProfile, serverMergeWeight } from '~/routes/service/server-user-personal-info';
+import { type MergeHeightArgsType, type MergeProfileArgsTypes, type MergeWeightArgsType, serverMergeHeight, serverMergeProfile, serverMergeWeight } from '~/routes/service/server-user-personal-info';
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
@@ -23,13 +21,13 @@ export default component$(() => {
   if (!auth) {
     return <div>Loading...</div>
   }
-  const update = useUpdateProfile(auth?.database.profile, auth?.database.person);
+  const update = useUpdateProfile(auth.database.profile, auth.database.person);
   useContextProvider(contextUpdateProfile, update)
   return (
     <div class="grid grid-rows-[1fr,60px] bg-gray-950 overflow-y-scroll h-screen ">
         <div class={cn("grid gap-3  place-content-start text-gray-50 bg-gray-950 font-roundsans pb-12 overflow-y-auto")}>
           <UserPhoto />
-          <UserTitle email={auth?.user?.email ?? ""} joind={computeDateFormat.value} />
+          <UserTitle email={auth.user?.email ?? ""} joind={computeDateFormat.value} />
           <UserProgress />
           <UserShares />
           <OverView />

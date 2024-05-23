@@ -2,9 +2,8 @@ import { $, type QRL, Slot, component$, createContextId, useContextProvider, use
 import { type RequestHandler, routeLoader$ } from '@builder.io/qwik-city';
 
 import { type TypeSchemaAssessment, type RoutesLiteral, SchemaAssessment } from '~/util/types';
-import { type ExtendSession } from '../plugin@auth';
+import { type TimeSeriesData, type ExtendSession } from '../plugin@auth';
 import { serverInitDatabase } from '../seedDatabase';
-import { type QueryResult, type RawQueryResult } from 'surrealdb.js/script/types';
 import { type Session } from '@auth/core/types';
 import { FormattedNumberSchema } from '~/util/formatNumber';
 import { convertWeightUnits } from '~/util/convertUnits';
@@ -63,15 +62,15 @@ export interface AssessmentStoreType {
   onInputHeight$: QRL<(value: number) => void>,
   actions: {
     mergeProfile: {
-      submit: QRL<(this: { isRunning: boolean; }, data: {field: string, value: string | Date | number}) => MergeProfileType>
+      submit: QRL<(this: { isRunning: boolean; }, data: { field: string; value:  string | string[] | Date; }) => MergeProfileType>
       isRunning: boolean
     },
     mergeWeight: {
-      submit: QRL<(this: { isRunning: boolean; }, data: {value: number, _type: string, record: string}) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
+      submit: QRL<(this: { isRunning: boolean; }, data: {value: number, _type: string, record: string}) => Promise<{ merge: [TimeSeriesData]; }>>;
       isRunning: boolean
     },
     mergeHeight: {
-      submit: QRL<(this: { isRunning: boolean; }, data: {value: number, _type: string, record: string}) => Promise<{ merge: QueryResult<RawQueryResult>[]; }>>;
+      submit: QRL<(this: { isRunning: boolean; }, data: {value: number, _type: string, record: string}) => Promise<{ merge: [TimeSeriesData]; }>>;
       isRunning: boolean
     }
   },
@@ -93,7 +92,7 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
     }),
     actions: {
       mergeProfile: {
-        submit: $(async function (this: { isRunning: boolean; }, data: { field: string; value: string | Date | number; }) {
+        submit: $(async function (this: { isRunning: boolean; }, data: { field: string; value:  string | string[] | Date; }) {
           const result = await serverMergeProfile(data);
           return result;
         }),

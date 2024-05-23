@@ -1,4 +1,4 @@
-import { ChartData } from "./chart";
+import { type ChartData } from "./chart";
 
 export function getDateFormatter(daysDuration: number): (value: Date | string) => string {
   if (daysDuration === 1) {
