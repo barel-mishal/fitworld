@@ -1,5 +1,5 @@
 import { server$ } from "@builder.io/qwik-city";
-import { type ExtendSession } from "../plugin@auth";
+import { TimeSeriesData, type ExtendSession } from "../plugin@auth";
 import { serverInitDatabase } from "../seedDatabase";
 
 
@@ -12,14 +12,14 @@ export const serverMergeHeight = server$(async function(data: {value: number, _t
     const db = await serverInitDatabase();
     await db.authenticate(token);
     // const merge = await db.merge(id, { [data.field]: data.value });
-    const merge = await db.query_raw(`
+    const merge = await db.query<[TimeSeriesData]>(`
     IF type::is::record($record, 'height') THEN
       UPDATE $record SET value = $value, type = $_type
     ELSE
       CREATE height SET value = $value, type = $_type
     END;
     `, data);
-    console.log('merge', JSON.stringify(merge), data);
+
     return {
       merge
     }
@@ -70,7 +70,7 @@ export const serverMergeProfile = server$(async function(data: {field: keyof Use
     const db = await serverInitDatabase();
     await db.authenticate(token);
     // const merge = await db.merge(id, { [data.field]: data.value });
-    const merge = await db.query_raw(`
+    const merge = await db.query<[TimeSeriesData]>(`
     IF type::is::record($record, 'weight') THEN
       UPDATE $record SET value = $value, type = $_type
     ELSE

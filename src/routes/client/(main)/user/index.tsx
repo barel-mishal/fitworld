@@ -4,11 +4,9 @@ import { cn } from '@qwik-ui/utils';
 import { Chart } from '~/components/chart/chart';
 import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
-import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
+import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession, TimeSeriesData } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
 import { MergeHeightArgsType, MergeProfileArgsTypes, MergeWeightArgsType, serverMergeHeight, serverMergeProfile, serverMergeWeight } from '~/routes/service/server-user-personal-info';
-
-
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
@@ -23,7 +21,7 @@ export default component$(() => {
   if (!auth) {
     return <div>Loading...</div>
   }
-  const update = useUpdateProfile(auth?.database.profile);
+  const update = useUpdateProfile(auth?.database.profile, auth?.database.person);
   useContextProvider(contextUpdateProfile, update)
   return (
     <div class="grid grid-rows-[1fr,60px] bg-gray-950 overflow-y-scroll h-screen ">
@@ -44,6 +42,7 @@ export default component$(() => {
 }); 
 
 export const OverView = component$(() => {
+  const profile = useContext(contextUpdateProfile);
 
   return <section class="px-3">
     <div class="grid gap-3">
@@ -66,10 +65,14 @@ export const OverView = component$(() => {
             <p class="text-gray-50 small-title ">22</p>
             <p class="text-gray-300/70 text-xs">Level</p>
           </div>
-        </div>
-        <div class="grid gap-3">
-          <p class="text-gray-50 small-title ">Lose weight</p>
-          <p class="text-gray-300/70">Goal</p>
+          <div class="grid gap-2 p-3 border-4 border-gray-800 rounded-md">
+            <p class="text-gray-50 small-title ">{profile.store.person.weight.value}<span>{profile.store.person.weight.type}</span> </p>
+            <p class="text-gray-300/70 text-xs">Current Weight</p>
+          </div>
+          <div class="grid gap-2 p-3 border-4 border-gray-800 rounded-md">
+            <p class="text-gray-50 small-title ">{profile.store.person.height.value}<span>{profile.store.person.height.type}</span> </p>
+            <p class="text-gray-300/70 text-xs">Current Height</p>
+          </div>
         </div>
       </div>
     </div>
@@ -87,7 +90,7 @@ export const UserPhoto = component$(() => {
 export const UserTitle = component$<{email: string, joind: string}>((props) => {
   const sectionRef = useSignal<HTMLDivElement>();
   const profile = useContext(contextUpdateProfile);
-  const name = useSignal(profile.store.profile.name);
+  const name = useSignal(profile.store.person.name);
 
   useOnDocument('click', $((e) => {
     if (profile.store.isEditProfile !== "" && sectionRef.value && !sectionRef.value.contains(e.target as Node)) {
@@ -99,9 +102,9 @@ export const UserTitle = component$<{email: string, joind: string}>((props) => {
     <input class="inp" type="text" bind:value={name} />
     <button onClick$={() => profile.store.updateUser({field: 'person', data: [{field: "name", value: name.value}]})} class="btn">Save</button>
     </> : <>
-    <h1 class="text-2xl text-gray-50 pb-2" onClick$={() => profile.store.isEditProfile = "name"}>{profile.store.profile.name}</h1>
+    <h1 class="text-2xl text-gray-50 pb-2" onClick$={() => profile.store.isEditProfile = "name"}>{profile.store.person.name}</h1>
     </>}
-    <p class="text-xs text-gray-300 flex gap-2 items-center"><span>{props.email}</span><svg width={6} height={6} fill='rgb(110 231 183 / 0.5)'><circle r={3} cx={3} cy={3}   /></svg><span>Joind: {props.joind}</span></p>
+    <p class="text-xs text-gray-300 flex gap-2 items-center"><span>{props.email}</span><svg width={6} height={6} class="fill-current"><circle r={3} cx={3} cy={3}   /></svg><span>Joind: {props.joind}</span></p>
   </section>
 });  
 
@@ -572,23 +575,26 @@ type UpdateUserStore = {
   data: MergeWeightArgsType
 }
 
-export const useUpdateProfile = (profile: ExtendSession["database"]["profile"]) => {
+export const useUpdateProfile = (profile: ExtendSession["database"]["profile"], person: ExtendSession["database"]["person"]) => {
   const store = useStore({
-    profile,
-    updateUser: $(async function (this: {profile: ExtendSession["database"]["profile"], isEditProfile: ""}, update: UpdateUserStore) {
+    person: {...profile, ...person},
+    updateUser: $(async function (this: {person: ExtendSession["database"]["profile"] & {weight: TimeSeriesData, height: TimeSeriesData}, isEditProfile: ""}, update: UpdateUserStore) {
       const result = {error: "", success: false};
       switch (update.field) {
         case "person":
           const profileR = await serverMergeProfile(...update.data);
-          this.profile.name = profileR.merge[0].name;
+          this.person.name = profileR.merge[0].name;
           this.isEditProfile = "";
           break;
         case "height":
           const heightR = await serverMergeHeight(...update.data);
+          this.isEditProfile = "";
+          this.person.height = heightR.merge[0];
           break;
         case "weight":
           const weightR = await serverMergeWeight(...update.data);
-          
+          this.isEditProfile = "";
+          this.person.weight = weightR.merge[0];
           break;
       }
 

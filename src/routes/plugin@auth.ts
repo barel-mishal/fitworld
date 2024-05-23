@@ -70,10 +70,18 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
         // console.log("pass", connection.token.providerId, token)
 
         // Get user profile
-        const profile = await db.query<[[SchemaProfileType]]>("SELECT * FROM profile WHERE userId = $auth.id");
+        // TODO: change schema so the weight and height are the most updated. 
+        const data = await db.query<[[SchemaProfileType], [TimeSeriesData], [TimeSeriesData]]>(`
+        SELECT * FROM profile;
+        SELECT * FROM weight;
+        SELECT * FROM height;
+        `);
+        const profile = data[0][0];
+        const weight = data[1][0];
+        const height = data[2][0];
         // console.log(profile)
         // Return session with database token for to authenticate with database and profile
-        return {...connection.session, database: { token, profile: profile[0][0] }} ;
+        return {...connection.session, database: { token, profile: profile, person: {weight, height} }} ;
       },
 
     },
@@ -91,10 +99,15 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
 
 export type ReturnTypeSignout = ReturnType<typeof useAuthSignout>;
 export type ReturnTypeSignin = ReturnType<typeof useAuthSignin>;
-export type ExtendSession = Session & { database: { token: string, profile: SchemaProfileType } };
-export type ReturnTypeSession = ReturnType<typeof useAuthSession>["value"] & { database: { token: string, profile: SchemaProfileType } };
+export type ExtendSession = Session & { database: { token: string, profile: SchemaProfileType, person: {weight: TimeSeriesData, height: TimeSeriesData} } };
+export type ReturnTypeSession = ReturnType<typeof useAuthSession>["value"] & { database: { token: string, profile: SchemaProfileType, person: {weight: TimeSeriesData, height: TimeSeriesData} } };
 
-  /*
+export type TimeSeriesData = {
+  type: string;
+  value: number;
+  updateAt: string;
+}
+/*
 
 authorization result {
   "user": {
