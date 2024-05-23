@@ -1,6 +1,7 @@
 import { $, Fragment, component$, createContextId, useComputed$, useContext, useContextProvider, useOn, useOnDocument, useSignal, useStore } from '@builder.io/qwik';
 import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
+import { Chart } from '~/components/chart/chart';
 import { PhFooPeinapple, PhPersonCirclePlus, PhShare } from '~/components/icons/icons';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
@@ -140,14 +141,29 @@ export const UserShares = component$(() => {
 });
 
 export const UserWeeklyProgress = component$(() => {
+  const exampleData: { day: string; count: string }[] = [
+    { day: formatDate(new Date(2024, 4, 20)), count: "10" }, // May 20, 2024
+    { day: formatDate(new Date(2024, 4, 21)), count: "15" }, // May 21, 2024
+    { day: formatDate(new Date(2024, 4, 22)), count: "7" },  // May 22, 2024
+    { day: formatDate(new Date(2024, 4, 23)), count: "20" }, // May 23, 2024
+    { day: formatDate(new Date(2024, 4, 24)), count: "25" }, // May 24, 2024
+    { day: formatDate(new Date(2024, 4, 25)), count: "5" },  // May 25, 2024
+    { day: formatDate(new Date(2024, 4, 26)), count: "8" },   // May 26, 2024
+    { day: formatDate(new Date(2024, 4, 27)), count: "8" },   // May 27, 2024
+    { day: formatDate(new Date(2024, 4, 28)), count: "8" },   // May 28, 2024
+    { day: formatDate(new Date(2024, 4, 29)), count: "8" },   // May 29, 2024
+    { day: formatDate(new Date(2024, 4, 30)), count: "8" },   // May 30, 2024
+  ];
+  
 
   return <section class="px-3 grid gap-3">
     <h3 class="text-gray-50 text-xl font-bold flex gap-2">Weekly Progress</h3>
     <div class="grid gap-3 border border-gray-700/50 rounded-xl p-3">
       <p class="text-gray-400/80"><span>This week</span><span>200 XP</span></p>
       <p class="text-gray-400/80"><span>Last week</span><span>500 XP</span></p>
-      <div class="h-96">
-        <UserChartProgress />
+      <div class="">
+        {/* <UserChartProgress /> */}
+        <Chart daysDuration={30} initialData={exampleData} />
       </div>
     </div>
 
@@ -588,3 +604,10 @@ export const useUpdateProfile = (profile: ExtendSession["database"]["profile"]) 
 export type UseUpdateProfile = ReturnType<typeof useUpdateProfile>;
 
 export const contextUpdateProfile = createContextId<UseUpdateProfile>("update-profile")
+
+function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
