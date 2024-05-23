@@ -1,8 +1,8 @@
-import { $, Fragment, component$, createContextId, useComputed$, useContext, useContextProvider, useOnDocument, useSignal, useStore } from '@builder.io/qwik';
+import { $, Fragment, component$, createContextId, useComputed$, useContext, useContextProvider, useOnDocument, useSignal, useStore, useVisibleTask$ } from '@builder.io/qwik';
 import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { Chart } from '~/components/chart/chart';
-import { PhFooPeinapple, PhPersonCirclePlus, PhPlus, PhShare } from '~/components/icons/icons';
+import { PhClose, PhFooPeinapple, PhPersonCirclePlus, PhPlus, PhShare } from '~/components/icons/icons';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession, type TimeSeriesData } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
@@ -24,7 +24,7 @@ export default component$(() => {
   const update = useUpdateProfile(auth.database.profile, auth.database.person);
   useContextProvider(contextUpdateProfile, update)
   return (
-    <div class="grid grid-rows-[1fr,60px] bg-gray-950 overflow-y-scroll h-screen ">
+    <div class="grid grid-rows-[1fr,55px] bg-gray-950 overflow-y-scroll h-screen ">
         <div class={cn("grid gap-3  place-content-start text-gray-50 bg-gray-950 font-roundsans pb-12 overflow-y-auto")}>
           <UserPhoto />
           <UserTitle email={auth.user?.email ?? ""} joind={computeDateFormat.value} />
@@ -35,7 +35,7 @@ export default component$(() => {
           <button onMouseDown$={() => signOut.submit({ callbackUrl: '/signedout' })} class="border-red-700 m-2 p-3 border-2 rounded-lg text-red-700 ">Sign Out</button>
         </div>
         <div>
-          <BottomNavBar  user={{class: "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200 "}} />
+          <BottomNavBar  user={{class: "--tw bg-sky-300/20 p-1 m-2 rounded-md outline-2 outline outline-indigo-200 "}} />
         </div>
     </div>
   );
@@ -67,13 +67,13 @@ export const OverView = component$(() => {
           </div>
           <button class="text-left grid gap-2 p-3 border-4 border-purple-800 rounded-md">
             <p class="text-purple-50 small-title ">{profile.store.person.weight.value}<span>{profile.store.person.weight.type}</span> </p>
-            <p class="text-purple-300/70 text-xs">Current Weight</p>
-            <PhPlus class="col-start-2 row-start-1 fill-current row-span-2 place-self-end" />
+            <p class="text-purple-300/70 text-xs">Weight</p>
+            <PhPlus class="col-start-2 row-start-1 w-5 h-5 fill-purple-300/70 row-span-2 place-self-end" />
           </button>
           <button class="text-left grid gap-2 p-3 border-4 border-purple-800 rounded-md">
             <p class="text-purple-50 small-title ">{profile.store.person.height.value}<span>{profile.store.person.height.type}</span> </p>
-            <p class="text-purple-300/70 text-xs">Current Height</p>
-            <PhPlus class="col-start-2 row-start-1 fill-current row-span-2 place-self-end" />
+            <p class="text-purple-300/70 text-xs">Height</p>
+            <PhPlus class="col-start-2 row-start-1 w-5 h-5 fill-purple-300/70 row-span-2 place-self-end" />
           </button>
         </div>
       </div>
@@ -562,8 +562,6 @@ interface Asset {
   [key: string]: unknown;
 }
 
-
-
 type UpdateUserStore = {
   field: "person",
   data: MergeProfileArgsTypes
@@ -616,4 +614,16 @@ function formatDate(date: Date): string {
   const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
+}
+
+
+const convertToDateTimeLocalString = (date: Date) => {
+  // https://stackoverflow.com/questions/28760254/assign-javascript-date-to-html5-datetime-local-input
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:00`;
 }

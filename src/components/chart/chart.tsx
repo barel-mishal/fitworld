@@ -22,6 +22,7 @@ export const Chart = component$((props: ClicksChartProps) => {
   const totalClicks = useSignal(props.initialData.reduce((acc, { count }) => acc + parseInt(count, 10), 0));
   const chartDescription = useSignal('7 days');
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async ({ track }) => {
     track(() => props.daysDuration);
 
