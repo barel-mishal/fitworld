@@ -3,7 +3,7 @@ import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMai
 import { TopNavBar, BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { loadScript } from "@paypal/paypal-js";
 import Play from '~/components/playComponents/Play';
-import { ExtendSession, useAuthSession } from '~/routes/plugin@auth';
+import { type ExtendSession, useAuthSession } from '~/routes/plugin@auth';
 
 
 export default component$(() => {

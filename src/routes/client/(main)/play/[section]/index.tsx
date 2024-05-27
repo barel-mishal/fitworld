@@ -5,7 +5,7 @@ export default component$(() => {
   const loc = useLocation();
   return (
     <div>
-      New route works.
+      New route works. {loc.params.section} {loc.params.unit}
     </div>
   );
 });

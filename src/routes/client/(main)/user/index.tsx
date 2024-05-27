@@ -7,7 +7,7 @@ import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
 import { formatDate } from './util';
-import { MergeProfileArgsTypes, MergeHeightArgsType, MergeWeightArgsType, serverMergeProfile, serverMergeHeight, serverMergeWeight } from '~/routes/service/server-user-personal-info';
+import { type MergeProfileArgsTypes, MergeHeightArgsType, MergeWeightArgsType, serverMergeProfile, serverMergeHeight, serverMergeWeight } from '~/routes/service/server-user-personal-info';
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
@@ -67,12 +67,12 @@ export const OverView = component$(() => {
             <p class="text-gray-300/70 text-xs">Level</p>
           </div>
           <button class="text-left grid gap-2 p-3 border-4 border-purple-800 rounded-md">
-            <p class="text-purple-50 small-title ">{profile.store.profile?.latest_weight_kg}<span>kg</span> </p>
+            <p class="text-purple-50 small-title ">{profile.store.profile.latest_weight_kg}<span>kg</span> </p>
             <p class="text-purple-300/70 text-xs">Weight</p>
             <PhPlus class="col-start-2 row-start-1 w-5 h-5 fill-purple-300/70 row-span-2 place-self-end" />
           </button>
           <button class="text-left grid gap-2 p-3 border-4 border-purple-800 rounded-md">
-            <p class="text-purple-50 small-title ">{profile.store.profile?.latest_height_cm}<span>cm</span> </p>
+            <p class="text-purple-50 small-title ">{profile.store.profile.latest_height_cm}<span>cm</span> </p>
             <p class="text-purple-300/70 text-xs">Height</p>
             <PhPlus class="col-start-2 row-start-1 w-5 h-5 fill-purple-300/70 row-span-2 place-self-end" />
           </button>

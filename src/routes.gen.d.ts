@@ -12,6 +12,9 @@ export type AppRoutes =
   | "/client/"
   | "/client/(main)/leaderBoard/"
   | "/client/(main)/play/"
+  | "/client/(main)/play/[section]/"
+  | "/client/(main)/play/[section]/[unit]/"
+  | "/client/(main)/play/finish/"
   | "/client/(main)/track/"
   | "/client/(main)/track/finish/"
   | "/client/(main)/user/"
@@ -46,6 +49,9 @@ export interface AppRouteMap {
   "/client/": {};
   "/client/(main)/leaderBoard/": {};
   "/client/(main)/play/": {};
+  "/client/(main)/play/[section]/": { section: string };
+  "/client/(main)/play/[section]/[unit]/": { section: string; unit: string };
+  "/client/(main)/play/finish/": {};
   "/client/(main)/track/": {};
   "/client/(main)/track/finish/": {};
   "/client/(main)/user/": {};
@@ -81,6 +87,15 @@ export interface AppRouteParamsFunction {
   (route: "/client/", params?: {}): string;
   (route: "/client/(main)/leaderBoard/", params?: {}): string;
   (route: "/client/(main)/play/", params?: {}): string;
+  (
+    route: "/client/(main)/play/[section]/",
+    params: { section: string },
+  ): string;
+  (
+    route: "/client/(main)/play/[section]/[unit]/",
+    params: { section: string; unit: string },
+  ): string;
+  (route: "/client/(main)/play/finish/", params?: {}): string;
   (route: "/client/(main)/track/", params?: {}): string;
   (route: "/client/(main)/track/finish/", params?: {}): string;
   (route: "/client/(main)/user/", params?: {}): string;
@@ -128,6 +143,13 @@ export type AppLinkProps =
   | { route: "/client/" }
   | { route: "/client/(main)/leaderBoard/" }
   | { route: "/client/(main)/play/" }
+  | { route: "/client/(main)/play/[section]/"; "param:section": string }
+  | {
+      route: "/client/(main)/play/[section]/[unit]/";
+      "param:section": string;
+      "param:unit": string;
+    }
+  | { route: "/client/(main)/play/finish/" }
   | { route: "/client/(main)/track/" }
   | { route: "/client/(main)/track/finish/" }
   | { route: "/client/(main)/user/" }

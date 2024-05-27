@@ -1,4 +1,4 @@
-import { PropsOf, component$ } from "@builder.io/qwik";
+import { type PropsOf, component$ } from "@builder.io/qwik";
 import { PhFooPeinapple, PhMagnify, PhStar } from "../icons/icons";
 
 const Play = component$(() => {
