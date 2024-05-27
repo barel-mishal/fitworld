@@ -1,13 +1,10 @@
 import { PropsOf, component$ } from "@builder.io/qwik";
 import { PhFooPeinapple, PhMagnify, PhStar } from "../icons/icons";
-import sections from "./data";
 
 const Play = component$(() => {
 
     return (
         <div class="flex flex-col">
-            <RenderGamePath />
-
             <section class="grid grid-cols-12 gap-5 pb-14">
                 <TitleGame title="SECTION 1 UNIT 1" subTitle="The Importence Of Nutrition" element={{class: "p-4 bg-green-600  rounded-xl col-span-12 border-b-4 border-green-900 sticky top-0"}}/>
                 <div class="col-start-3 col-span-4 row-span-1  ">
@@ -223,22 +220,4 @@ export const TitleGame = component$<TitleGameProps>((props) => {
 
 
 
-export const RenderGamePath = component$(() => {
-
-       return <>
-          {sections.map((section, index) => (
-            <section key={index} class="grid grid-cols-12 gap-5 pb-14">
-              <TitleGame title={section.title} subTitle={section.subTitle} element={{ class: section.titleClass }} />
-              {section.buttons.map((button, btnIndex) => (
-                <div key={btnIndex} class={button.class}>
-                  <button class={button.buttonClass}>
-                    {button.icon}
-                  </button>
-                </div>
-              ))}
-            </section>
-          ))}
-        </>
-}
-);
 
