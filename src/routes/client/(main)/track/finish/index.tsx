@@ -6,7 +6,6 @@ export default component$(() => {
   const loc = useLocation();
   const onClickEditSelections = $(() => {
     const urlPathname = new URLSearchParams(loc.url.pathname);
-    console.log(urlPathname.toString());
     nav(`/construction?prev=${urlPathname.toString()}`, {replaceState: true, forceReload: true})
   });
   const onClickCommitEating = $(() => {

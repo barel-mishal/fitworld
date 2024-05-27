@@ -27,7 +27,6 @@ export default component$(() => {
         <button
         onClick$={async () => {
 
-          console.log('seed database');
         }}>Signin</button>
       </div>
     </div>
@@ -48,27 +47,3 @@ export const serverInitDatabase = server$(async () => {
   db.use({ namespace: "namespace", database: "database" });
   return db;
 });
-export const serverTestSigninToDatabase = server$(async () => {
-  const db = await serverInitDatabase();
-  console.log('Show Namespace \n', await db.query('INFO FOR NS;'));
-  console.log('\n\nShow Database \n', await db.query('INFO FOR DB;'));
-  console.log('\n\nShow Users \n',  await db.query('SELECT * FROM user;'));
-  // console.log('\n\nCreate User \n', await db.query('CREATE user SET pass = crypto::argon2::generate($pass);', { pass: '123' }));
-  // console.log("\n\nSignup \n", await db.signup({ scope: "account", database: "database", namespace: "namespace", pass: '123892' }));
-  // console.log("\n\nSignup \n", await db.signup({ scope: "account", database: "database", namespace: "namespace", pass: '12389', roles: ['admin'] }));
-  console.log('\n\nSignin \n', await db.signin({
-    pass: '123',
-    password: "root",
-    username: "root",
-    database: "database",
-    namespace: "namespace",
-    scope: "account"
-  }));
-
-  console.log('\n\nShow User \n', await db.query('SELECT * FROM user;'));
-
-});
-
-
-
-

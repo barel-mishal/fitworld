@@ -79,7 +79,6 @@ export interface AssessmentStoreType {
 
 export const useAssessmentStore = (data: TypeSchemaAssessment) => {
   // TODO: finish form https://claude.ai/chat/bcc02085-d35f-4ffd-ad5a-09c7737c3208
-
   const assessmentStore = useStore<AssessmentStoreType>({ 
     settings: { 
       buttonStyle: "outline", 
@@ -140,16 +139,16 @@ export const useLoaderAssessmentData = routeLoader$(async function({sharedMap}) 
   // TODO: Fix first signin the return is empty array...
   const height = await db.query_raw<CustomQueryResult>(`
   -- LATEST height record
-  LET $latestHeight = SELECT * FROM height ORDER BY created_at DESC LIMIT 1;
-  LET $length = array::len($latestHeight);
+  LET $latestHeight = SELECT * FROM height ORDER BY createdAt DESC LIMIT 1;
+  LET $lengthHeight = array::len($latestHeight);
   
-  IF $length = 0 THEN
-  ( CREATE height )
+  IF $lengthHeight = 0 THEN
+    ( CREATE height )
   ELSE 
-  ( $latestHeight )
+    ( $latestHeight )
   END; 
 
-  LET $weight = SELECT * FROM weight ORDER BY created_at DESC LIMIT 1;
+  LET $weight = SELECT * FROM weight ORDER BY createdAt DESC LIMIT 1;
   LET $lengthWeight = array::len($weight);
   
   IF $lengthWeight = 0 THEN
@@ -160,7 +159,7 @@ export const useLoaderAssessmentData = routeLoader$(async function({sharedMap}) 
   `);
   if (height[2].status === "ERR") throw new Error('Error fetching height');
   if (height[5].status === "ERR") throw new Error('No height record found');
-  const parsed = SchemaAssessment.parse({
+  const heightData = {
     personalInformation: {
       gender: session.database.profile.gender || "",
       name: session.database.profile.name || "",
@@ -170,10 +169,11 @@ export const useLoaderAssessmentData = routeLoader$(async function({sharedMap}) 
     },
     lifeStyle: {
       occupation: "",
-      activityLevel: "",
-      goals: ["", "", ""]
+      activityLevel: session.database.profile.activity_level || "",
+      goals: session.database.profile.goals || ["", "", ""]
     }
-  }) as {personalInformation: PersonalInformation, lifeStyle: LifeStyle};
+  }
+  const parsed = SchemaAssessment.parse(heightData) as {personalInformation: PersonalInformation, lifeStyle: LifeStyle};
   return parsed
 })
 

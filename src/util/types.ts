@@ -3,19 +3,41 @@ import { type AppLinkProps } from "~/routes.gen";
 
 export type RoutesLiteral = AppLinkProps["route"];
 
-export type SchemaProfileType = {
-  id?: string;
-  userId: string;
-  name: string;
-  email: string;
-  image: string;
+export const NumberOrString = z.string().or(z.number());
+export const profileSchema = z.object({
+  about: z.string(),
+  activity_level: z.enum( ['Sedentary', 'Lightly active', 'Moderately active', 'Very active', 'Extra active', ""]),
+  createdAt: z.string().datetime(),
+  dateOfBirth: z.string().datetime(),
+  email: z.string().email().or(z.string().optional()),
+  gender: z.enum(['male', 'female', '']),
+  goals: z.array(z.any()), // Assuming goals can be an array of any type, adjust as needed
+  id: z.string().regex(/^profile:[a-z0-9]+$/),
+  image: z.string().url().or(z.string().optional()),
+  latest_height_cm: z.string().or(z.number()).optional(), // Assuming it's a string representation of a number
+  latest_weight_kg: z.string().or(z.number()).optional(), // Assuming it's a string representation of a number
+  name: z.string(),
+  nickname: z.string(),
+  updateAt: z.string().datetime(),
+  userId: z.string().regex(/^user:[a-z0-9]+$/)
+});
 
-  nickname: string;
-  dateOfBirth: string;
-  gender: "female" | "male" | "";
-  createdAt: string;
-  updateAt: string;
-};
+export const addonsProfileEnergySchema = z.object({
+  energy: z.object({
+    TEE: z.string().or(z.number()),
+    TEE_RDA: z.object({ heigh: NumberOrString, low: NumberOrString }),
+    bmi: NumberOrString,
+    constant: NumberOrString,
+    ideal_weight: z.object({
+      message: z.string(),
+      value: NumberOrString
+    }),
+    normaliz_weight: NumberOrString,
+    userId: z.string().regex(/^user:[a-z0-9]+$/)
+  })
+}).merge(profileSchema);
+
+export type SchemaProfileType = z.infer<typeof addonsProfileEnergySchema>;
 
 export type SchemaUserType = {
   id?: string;

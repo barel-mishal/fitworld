@@ -72,6 +72,6 @@
     "lru-cache": "^10.2.2",
     "marked": "^12.0.2",
     "surrealdb.js": "^0.11.0",
-    "uploadthing": "^6.10.4"
+    "uploadthing": "^6.12.0"
   }
 }

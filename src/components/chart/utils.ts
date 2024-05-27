@@ -35,17 +35,17 @@ export function fillMissingDates(data: { day: string; count: string }[], duratio
     // Cover a full day, adding missing hours if needed
     startDate.setHours(endDate.getHours() - 24, 0, 0, 0);
     fillHours(startDate, endDate, data, filledData);
-    console.log('fillHours');
+    
   } else if (durationDays === 7 || durationDays === 30) {
     // Cover each day for a week or a month
     startDate.setDate(endDate.getDate() - durationDays + 1);
     fillDays(startDate, endDate, data, filledData);
-    console.log('fillDays');
+    
   } else if (durationDays === 365) {
     // Cover each week for a year
     startDate.setFullYear(endDate.getFullYear() - 1);
     fillWeeks(startDate, endDate, data, filledData);
-    console.log('fillWeeks');
+   
   }
 
   return filledData;
@@ -71,9 +71,7 @@ function fillHours(startDate: Date, endDate: Date, data: { day: string; count: s
 
 function fillDays(startDate: Date, endDate: Date, data: { day: string; count: string }[], filledData: ChartData) {
   for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-    console.log(data[0].day.slice(0, 10), d.toISOString().slice(0, 10));
     const entry = data.find((entry) => entry.day.slice(0, 10) === d.toISOString().slice(0, 10));
-    console.log(entry);
     if (entry) {
       filledData.push({ x: new Date(entry.day), y: parseInt(entry.count, 10) });
     } else {

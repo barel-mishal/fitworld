@@ -3,14 +3,27 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { PhDNA, PhDrop, PhFlag, PhHeart, PhLightning, PhNotepad, PhRanking, PhUser } from "~/components/icons/icons";
 import { AppLink } from "~/routes.config";
 
-export const TopNavBar = component$(() => {
+interface TopNavBarProps {
+  streak: number;
+  water: number;
+  heart: number;
+  dna: number | string;
+  prev?: {
+    streak: number;
+    water: number;
+    heart: number;
+    dna: number;
+  };
+}
+
+export const TopNavBar = component$<TopNavBarProps>((props) => {
 
     return (
       <ul class="grid grid-cols-4">
-        <li class="grid grid-cols-2 items-center"><PhLightning class="fill-yellow-500 h-8 w-8 " /><p class="text-xs">300</p></li>
-        <li class="grid grid-cols-2 items-center"><PhDrop      class="fill-sky-500 h-8 w-8"     /><p class="text-xs">200</p></li>
-        <li class="grid grid-cols-2 items-center"><PhHeart     class="fill-rose-500 h-8 w-8 "   /><p class="text-xs">400</p></li>
-        <li class="grid grid-cols-2 items-center"><PhDNA       class="fill-green-500 h-8 w-8 "  /><p class="text-xs">210</p></li>
+        <li class="grid grid-cols-2 items-center"><PhLightning class="fill-yellow-500 h-8 w-8 " /><p class="text-xs">{props.streak}</p></li>
+        <li class="grid grid-cols-2 items-center"><PhDrop      class="fill-sky-500 h-8 w-8"     /><p class="text-xs">{props.water}</p></li>
+        <li class="grid grid-cols-2 items-center"><PhHeart     class="fill-rose-500 h-8 w-8 "   /><p class="text-xs">{props.heart}</p></li>
+        <li class="grid grid-cols-2 items-center"><PhDNA       class="fill-green-500 h-8 w-8 "  /><p class="text-xs">{props.dna}</p></li>
       </ul>
     )
   });

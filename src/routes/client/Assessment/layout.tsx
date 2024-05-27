@@ -103,7 +103,7 @@ export default component$(() => {
       }
     }
     const result = await actions[route]();
-    console.log("result", result);
+    return result;
   });
 
   // Phone size screen is 380px wide 600px tall

@@ -1,10 +1,10 @@
-import { $, Fragment, Slot, component$, createContextId, useComputed$, useContext, useContextProvider, useOnDocument, useSignal, useStore } from '@builder.io/qwik';
+import { $, Fragment, component$, createContextId, useComputed$, useContext, useContextProvider, useOnDocument, useSignal, useStore } from '@builder.io/qwik';
 import { Form, routeAction$, z, zod$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { Chart } from '~/components/chart/chart';
 import { PhFooPeinapple, PhPersonCirclePlus, PhPlus, PhShare } from '~/components/icons/icons';
 import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
-import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession, TimeSeriesData } from '~/routes/plugin@auth';
+import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
 import { formatDate } from './util';
 import { MergeProfileArgsTypes, MergeHeightArgsType, MergeWeightArgsType, serverMergeProfile, serverMergeHeight, serverMergeWeight } from '~/routes/service/server-user-personal-info';
@@ -22,13 +22,13 @@ export default component$(() => {
   if (!auth) {
     return <div>Loading...</div>
   }
-  const profile = useUpdateProfile(auth.database.profile, auth.database.person);
+  const profile = useUpdateProfile(auth.database.profile);
   useContextProvider(contextUpdateProfile, profile);
   return (
     <div class="grid grid-rows-[1fr,55px] bg-gray-950 overflow-y-scroll h-screen ">
         <div class={cn("grid gap-3  place-content-start text-gray-50 bg-gray-950 font-roundsans pb-12 overflow-y-auto")}>
           <UserPhoto />
-          <UserTitle email={profile.store.person.email ?? ""} joind={computeDateFormat.value} />
+          <UserTitle email={profile.store.profile.email ?? ""} joind={computeDateFormat.value} />
           <UserProgress />
           <UserShares />
           <OverView />
@@ -67,12 +67,12 @@ export const OverView = component$(() => {
             <p class="text-gray-300/70 text-xs">Level</p>
           </div>
           <button class="text-left grid gap-2 p-3 border-4 border-purple-800 rounded-md">
-            <p class="text-purple-50 small-title ">{profile.store.person.weight.value}<span>{profile.store.person.weight.type}</span> </p>
+            <p class="text-purple-50 small-title ">{profile.store.profile?.latest_weight_kg}<span>kg</span> </p>
             <p class="text-purple-300/70 text-xs">Weight</p>
             <PhPlus class="col-start-2 row-start-1 w-5 h-5 fill-purple-300/70 row-span-2 place-self-end" />
           </button>
           <button class="text-left grid gap-2 p-3 border-4 border-purple-800 rounded-md">
-            <p class="text-purple-50 small-title ">{profile.store.person.height.value}<span>{profile.store.person.height.type}</span> </p>
+            <p class="text-purple-50 small-title ">{profile.store.profile?.latest_height_cm}<span>cm</span> </p>
             <p class="text-purple-300/70 text-xs">Height</p>
             <PhPlus class="col-start-2 row-start-1 w-5 h-5 fill-purple-300/70 row-span-2 place-self-end" />
           </button>
@@ -93,7 +93,7 @@ export const UserPhoto = component$(() => {
 export const UserTitle = component$<{email: string, joind: string}>((props) => {
   const sectionRef = useSignal<HTMLDivElement>();
   const profile = useContext(contextUpdateProfile);
-  const name = useSignal(profile.store.person.name);
+  const name = useSignal(profile.store.profile.name);
 
   useOnDocument('click', $((e) => {
     if (profile.store.isEditProfile !== "" && sectionRef.value && !sectionRef.value.contains(e.target as Node)) {
@@ -105,7 +105,7 @@ export const UserTitle = component$<{email: string, joind: string}>((props) => {
     <input class="inp" type="text" bind:value={name} />
     <button onMouseDown$={() => profile.store.updateUser({field: 'person', data: [{field: "name", value: name.value}]})} class="btn">Save</button>
     </> : <>
-    <h1 class="text-2xl text-gray-50 pb-2" onMouseDown$={() => profile.store.isEditProfile = "name"}>{profile.store.person.name}</h1>
+    <h1 class="text-2xl text-gray-50 pb-2" onMouseDown$={() => profile.store.isEditProfile = "name"}>{profile.store.profile.name}</h1>
     </>}
     <p class="text-xs text-gray-300 flex gap-2 items-center"><span>{props.email}</span><svg width={6} height={6} class="fill-current"><circle r={3} cx={3} cy={3}   /></svg><span>Joind: {props.joind}</span></p>
   </section>
@@ -205,9 +205,7 @@ export const useUpload = routeAction$(
     await db.authenticate(session.database.token);
 
     try {
-      console.log({data})
       const result = await db.create<Asset>("asset", {...data, asset_name: "profile_photo"});
-      console.log({result});
       if (result.length === 0) {
         console.log("An error occured uploading image to database")
         return {
@@ -345,26 +343,26 @@ type UpdateUserStore = {
   data: MergeWeightArgsType
 }
 
-export const useUpdateProfile = (profile: ExtendSession["database"]["profile"], person: ExtendSession["database"]["person"]) => {
+export const useUpdateProfile = (profile: ExtendSession["database"]["profile"]) => {
   const store = useStore({
-    person: {...profile, ...person},
-    updateUser: $(async function (this: {person: ExtendSession["database"]["profile"] & {weight: TimeSeriesData, height: TimeSeriesData}, isEditProfile: ""}, update: UpdateUserStore) {
+    profile,
+    updateUser: $(async function (this: {profile: ExtendSession["database"]["profile"], isEditProfile: ""}, update: UpdateUserStore) {
       const result = {error: "", success: false};
       switch (update.field) {
         case "person":
           const profileR = await serverMergeProfile(...update.data);
-          this.person.name = profileR.merge[0].name;
+          this.profile.name = profileR.merge[0].name;
           this.isEditProfile = "";
           break;
         case "height":
           const heightR = await serverMergeHeight(...update.data);
           this.isEditProfile = "";
-          this.person.height = heightR.merge[0];
+          this.profile.latest_height_cm = heightR.merge[0].value;
           break;
         case "weight":
           const weightR = await serverMergeWeight(...update.data);
           this.isEditProfile = "";
-          this.person.weight = weightR.merge[0];
+          this.profile.latest_weight_kg = weightR.merge[0].value;
           break;
       }
       return result

@@ -88,7 +88,6 @@ export const BentoGrid = component$(() => {
       htmlString += `</div>`;
 
       navigator.clipboard.writeText(htmlString).then(() => {
-        console.log('Copied to clipboard');
       }).catch(err => {
         console.error('Error copying to clipboard: ', err);
       });

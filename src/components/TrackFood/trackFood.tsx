@@ -76,7 +76,6 @@ export const MainTrackFood = component$(() => {
     }, {strategy: "document-ready"});
 
     useOn("keydown", $(async (e) => {
-      console.log(e.key)
       if (e.key === "Escape") {
         myEats.store.resetNewEat();
         myEats.refFood.value?.focus();

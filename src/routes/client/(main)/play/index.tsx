@@ -3,9 +3,12 @@ import HeaderMainBottomNav from '~/components/gamelayouts/smallScreens/headerMai
 import { TopNavBar, BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { loadScript } from "@paypal/paypal-js";
 import Play from '~/components/playComponents/Play';
+import { ExtendSession, useAuthSession } from '~/routes/plugin@auth';
 
 
 export default component$(() => {
+  const auth = useAuthSession().value as ExtendSession | undefined;
+  console.log(auth);
   
   // Phone size screen is 380px wide 600px tall
   // אנרגיה, חלבון, מים, פיטנס
@@ -15,7 +18,12 @@ export default component$(() => {
     classMain='tw '
     class="grid-rows-[40px,1fr,58px] pt-2 px-2">
       <div q:slot='header'>
-        <TopNavBar />
+        <TopNavBar 
+          streak={0}
+          water={0}
+          heart={0}
+          dna={auth?.database.profile.energy.TEE || 0}
+        />
       </div>
       <div q:slot='main'>
         <Play  />

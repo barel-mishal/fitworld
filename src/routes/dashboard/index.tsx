@@ -42,9 +42,8 @@ export default component$(() => {
     <div class="">
       {sc.value?.user?.name}
       <Button onClick$={async () => {
-        const data = await serverLoader();
-        console.log(data);
-        
+        // const data = await serverLoader();
+        // console.log(data);        
       }}>home</Button>
     </div>
   );

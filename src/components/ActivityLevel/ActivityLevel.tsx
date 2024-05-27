@@ -9,7 +9,6 @@ interface ActivityLevelProps {
 export const ActivityLevel = component$<ActivityLevelProps>((props) => {
   const activityLevels = ['Sedentary', 'Lightly active', 'Moderately active', 'Very active', 'Extra active'];
   const id = useId();
-
   const handleActivityLevelChange = $(async (event: Event) => {
     const target = event.target as HTMLInputElement;
     props.value.data.lifeStyle.activityLevel = target.value;
