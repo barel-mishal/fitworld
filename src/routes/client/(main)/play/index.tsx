@@ -4,6 +4,7 @@ import { TopNavBar, BottomNavBar } from '~/components/layout_blocks/NavBar/Navs'
 import { loadScript } from "@paypal/paypal-js";
 import Play from '~/components/playComponents/Play';
 import { type ExtendSession, useAuthSession } from '~/routes/plugin@auth';
+import { formatNumber } from '~/util/twoDecimalPoints';
 
 
 export default component$(() => {
@@ -22,7 +23,7 @@ export default component$(() => {
           streak={0}
           water={0}
           heart={0}
-          dna={auth?.database.profile.energy.TEE || 0}
+          dna={formatNumber(auth?.database.profile.energy.TEE ?? 0)}
         />
       </div>
       <div q:slot='main'>

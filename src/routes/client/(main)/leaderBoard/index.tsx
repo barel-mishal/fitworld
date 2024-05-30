@@ -4,12 +4,7 @@ import { TopNavBar, BottomNavBar } from '~/components/layout_blocks/NavBar/Navs'
 import { AppLink } from '~/routes.config';
 
 export default component$(() => {
-  
-  // Phone size screen is 380px wide 600px tall
-  // אנרגיה, חלבון, מים, פיטנס
-  // ניווט בין לידרבוארד למסך הראשי
   return (
-  
     <HeaderMainBottomNav 
     classMain='tw '
     class="grid-rows-[40px,1fr,30px]">
