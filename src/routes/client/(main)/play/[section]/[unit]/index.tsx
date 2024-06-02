@@ -1,4 +1,4 @@
-import { $, Fragment, QRL, Signal, component$, useComputed$, useSignal, useStore, useTask$ } from '@builder.io/qwik';
+import { $, Fragment, type QRL, component$, useComputed$, useStore, useTask$ } from '@builder.io/qwik';
 import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
@@ -28,24 +28,39 @@ export const useLoaderQuestioner = routeLoader$(function () {
 
 type CountStore = {
   step: "intro" | "content" | "conclusion" | "questions";
-  onSttepChange: QRL<() => void>;
+  onStepChange: QRL<() => void>;
 };
 
 
 export default component$(() => {
-
   const game = useStore<CountStore>({
     step: "intro",  
-    onSttepChange: $(function(this: CountStore) {
-      if (this.step === "intro") {
-        this.step = "content";
-      } else if (this.step === "content") {
-        this.step = "conclusion";
-      } else if (this.step === "conclusion") {
-        this.step = "questions";
-      }
+    onStepChange: $(function(this: CountStore) {
+      const goto = {
+        intro: "content",
+        content: "conclusion",
+        conclusion: "questions",
+        questions: "intro"
+      } as const;
+      this.step = goto[this.step];
     })
-  })
+  });
+
+  const computedProgress = useComputed$(() => {
+    if (game.step === "intro") {
+      return 0;
+    }
+    if (game.step === "content") {
+      return 33;
+    }
+    if (game.step === "conclusion") {
+      return 66;
+    }
+    if (game.step === "questions") {
+      return 100;
+    }
+    return 0
+  });
   const computedBtnState = useComputed$(() => {
     if (game.step === "questions") {
       return "disabled";
@@ -65,7 +80,7 @@ export default component$(() => {
       <div q:slot='header' class=" grid grid-cols-[auto,1fr,auto] gap-3 content-center items-center p-2 text-gray-400">
         <PhClose class="w-6 h-6 fill-gray-700" />
         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-          <div class="bg-blue-600 h-2.5 rounded-full" style="width: 45%"></div>
+          <div class="bg-blue-600 h-2.5 rounded-full" style={`width: ${computedProgress.value}%`}></div>
         </div>
         <PhHeart class="w-6 h-6 fill-rose-600" />
       </div>
@@ -91,14 +106,16 @@ export default component$(() => {
         {
         game.step === "questions" && <Fragment key={"questions"}>
           <h1 class="text-2xl mb-3">Questions</h1>
-          <p class="text-xl text-gray-400">{loadedQuestioner.value.steps.questions[0].question}</p>
+          <p class="text-xl text-gray-400">{loadedQuestioner.value.steps.questions.map(i => {
+            return i.question;
+          })}</p>
         </Fragment>
         }
 
 
       </div>
       <div q:slot='footer' class="grid pb-6 p-2">
-        <button class="btn disabled:bg-gray-800 disabled:border-gray-800 " disabled={computedBtnState.value === "disabled"} onClick$={() => game.onSttepChange()}>
+        <button class="btn disabled:bg-gray-800 disabled:border-gray-800 " disabled={computedBtnState.value === "disabled"} onClick$={() => game.onStepChange()}>
           Continue
         </button>
       </div>
