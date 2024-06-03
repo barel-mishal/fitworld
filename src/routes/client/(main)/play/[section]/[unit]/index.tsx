@@ -2,9 +2,11 @@ import { $, Fragment, type QRL, component$, useComputed$, useStore, useVisibleTa
 import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
+import { AppLinkGlobal } from '~/routes.config';
 
 type StepTextType = {
   type: "text";
+  title: string;
   text: string;
   next: keyof AnyStepType;
 }
@@ -12,6 +14,7 @@ type StepTextType = {
 type StepMultipleChoiceType = {
   type: "multiple-choice";
   question: string;
+  title: string;
   options: string[];
   correctAnswer: number;
   answer: number | undefined;
@@ -51,21 +54,25 @@ export const useLoaderQuestioner = routeLoader$(function () {
 
   const steps: AnyStepType = {
     intro: {
+      title: "Introduction",
       type: "text",
       text: stepsData.intro,
       next: "content"
     },
     content: {
+      title: "Content",
       type: "text",
       text: stepsData.content,
       next: "conclusion"
     },
     conclusion: {
+      title: "Conclusion",
       type: "text",
       text: stepsData.conclusion,
       next: "question1"
     },
     question1: {
+      title: "Question 1",
       type: "multiple-choice",
       question: questions.q1.question,
       options: questions.q1.options,
@@ -74,6 +81,7 @@ export const useLoaderQuestioner = routeLoader$(function () {
       next: "finish"
     },
     question2: {
+      title: "Question 2",
       type: "multiple-choice",
       question: "", // Placeholder for another question if needed
       options: [],
@@ -181,7 +189,9 @@ export default component$(() => {
   return (
     <div class={cn("grid grid-rows-[40px,1fr,60px] gap-3 h-screen text-gray-50  bg-gray-950 font-roundsans tracking-wide overflow-y-auto")}>
       <div q:slot='header' class=" grid grid-cols-[auto,1fr,auto] gap-3 content-center items-center p-2 text-gray-400">
-        <PhClose class="w-6 h-6 fill-gray-700" />
+        <AppLinkGlobal route='/client/(main)/play/'>
+          <PhClose class="w-6 h-6 fill-gray-700" />
+        </AppLinkGlobal>
         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
           <div class="bg-blue-600 h-2.5 rounded-full" style={`width: ${computedProgress.value}%`}></div>
         </div>
@@ -194,9 +204,11 @@ export default component$(() => {
               text={currentStep.value.text}
               title={game.step as string}
               id={game.step as string}
+
             />
           ) : currentStep.value.type === "multiple-choice" ? (
             <RenderLearningTypeQuestion
+              title={currentStep.value.title}
               question={currentStep.value.question}
               options={currentStep.value.options}
               correctAnswer={currentStep.value.correctAnswer}
@@ -222,11 +234,7 @@ export default component$(() => {
 
 
 
-export interface RenderLearningTypeTextProps {
-  text: string;
-  title: string;
-  id: string;
-}
+export interface RenderLearningTypeTextProps extends Omit<StepTextType, "type" | "next"> {id: string;}
 
 export const RenderLearningTypeText = component$<RenderLearningTypeTextProps>((props) => {
 
@@ -238,11 +246,7 @@ export const RenderLearningTypeText = component$<RenderLearningTypeTextProps>((p
   )
 });
 
-export interface RenderLearningTypeQuestionProps {
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  answer: number | undefined;
+export interface RenderLearningTypeQuestionProps extends Omit<StepMultipleChoiceType, "type" | "next"> {
   id: string;
   store: CountStore;
 }
