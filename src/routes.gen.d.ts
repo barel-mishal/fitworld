@@ -25,6 +25,7 @@ export type AppRoutes =
   | "/client/Assessment/personalInformation/DateofBirth/"
   | "/client/Assessment/personalInformation/current-weight/"
   | "/client/Assessment/personalInformation/gender/"
+  | "/client/Assessment/personalInformation/goals/"
   | "/client/Assessment/personalInformation/height/"
   | "/client/Assessment/personalInformation/name/"
   | "/construction/"
@@ -62,6 +63,7 @@ export interface AppRouteMap {
   "/client/Assessment/personalInformation/DateofBirth/": {};
   "/client/Assessment/personalInformation/current-weight/": {};
   "/client/Assessment/personalInformation/gender/": {};
+  "/client/Assessment/personalInformation/goals/": {};
   "/client/Assessment/personalInformation/height/": {};
   "/client/Assessment/personalInformation/name/": {};
   "/construction/": {};
@@ -115,6 +117,7 @@ export interface AppRouteParamsFunction {
     route: "/client/Assessment/personalInformation/gender/",
     params?: {},
   ): string;
+  (route: "/client/Assessment/personalInformation/goals/", params?: {}): string;
   (
     route: "/client/Assessment/personalInformation/height/",
     params?: {},
@@ -160,6 +163,7 @@ export type AppLinkProps =
   | { route: "/client/Assessment/personalInformation/DateofBirth/" }
   | { route: "/client/Assessment/personalInformation/current-weight/" }
   | { route: "/client/Assessment/personalInformation/gender/" }
+  | { route: "/client/Assessment/personalInformation/goals/" }
   | { route: "/client/Assessment/personalInformation/height/" }
   | { route: "/client/Assessment/personalInformation/name/" }
   | { route: "/construction/" }
