@@ -92,6 +92,10 @@ export const useLoaderQuestioner = routeLoader$(function () {
 type CountStore = {
   step: keyof AnyStepType;
   onStepChange: QRL<() => void>;
+  changeAnswer: QRL<(answer: string) => void>;
+  answers: {
+    [key: keyof AnyStepType]: string;
+  }
 };
 
 
@@ -109,7 +113,15 @@ export default component$(() => {
         case "finish":
           break;
       }
-    })
+    }),
+    changeAnswer: $(function(this: CountStore, answer: string) {
+      const current = loadedQuestioner.value[this.step];
+      if (current.type !== "multiple-choice") {
+        return;
+      }
+      this.answers[this.step] = answer;
+    }),
+    answers: {}
   });
 
   
@@ -190,6 +202,7 @@ export default component$(() => {
               correctAnswer={currentStep.value.correctAnswer}
               answer={currentStep.value.answer}
               id={game.step as string}
+              store={game}
             />
           ) : (
             <div>Finish</div>
@@ -231,6 +244,7 @@ export interface RenderLearningTypeQuestionProps {
   correctAnswer: number;
   answer: number | undefined;
   id: string;
+  store: CountStore;
 }
 
 export const RenderLearningTypeQuestion = component$<RenderLearningTypeQuestionProps>((props) => {
@@ -239,14 +253,31 @@ export const RenderLearningTypeQuestion = component$<RenderLearningTypeQuestionP
     <Fragment key={props.id}>
       <h1 class="text-2xl mb-3">{props.id}</h1>
       <p class="text-xl text-gray-400">{props.question}</p>
-      <fieldset>
-        <legend class="text-xl text-gray-400">Choose an option:</legend>
-        <div class="grid grid-cols-1 gap-2">
-          {props.options.map((option, index) => (
-            <div class="flex items center gap-2" key={index}>
-              <input type="radio" id={`option${index}`} name="option" value={index} checked={props.answer === index} />
-              <label for={`option${index}`}>{option}</label>
-            </div>
+      <fieldset
+        onChange$={(e) => {
+          const target = e.target as HTMLInputElement;
+          props.store.changeAnswer(target.value);
+          console.log(target.value);
+        }}
+        class="mt-4"
+      >
+        <legend class="text-xl text-gray-400 pb-4">Choose an option:</legend>
+        <div class="grid grid-cols-1 gap-4">
+          {props.options.map((option) => (
+            <label key={option} class="flex items-center cursor-pointer">
+              <input
+                type="radio"
+                name="question"
+                checked={option === props.store.answers[props.store.step]}
+                value={option}
+                class="peer hidden"
+              />
+              <span
+                class="ml-2 text-gray-50 p-3 border-gray-50 border-2 sm:w-auto w-full peer-checked:border-blue-200 rounded-md peer-checked:bg-blue-950 peer-checked:text-blue-200 peer-checked:font-bold duration-300 transition-all ease-in-out"
+              >
+                {option}
+              </span>
+            </label>
           ))}
         </div>
       </fieldset>
