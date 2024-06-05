@@ -33,7 +33,7 @@ export const serverUserSteps = server$(async function(data: {unit: number, secti
         index: 0,
         section: data.section,
         unit: data.unit,
-        userId: "default-user-id",
+        userId: session.database.profile.userId,
         metadata: {
             title: "Introduction",
             text: stepsData.intro,
@@ -49,13 +49,13 @@ export const serverUserSteps = server$(async function(data: {unit: number, secti
             type: "step_text",
             text: stepsData.content,
         },
-        userId: "default-user-id",
+        userId: session.database.profile.userId,
       },
       {
         index: 2,
         section: data.section,
         unit: data.unit,
-        userId: "default-user-id",
+        userId: session.database.profile.userId,
         metadata: {
             title: "Conclusion",
             type: "step_text",
@@ -66,7 +66,7 @@ export const serverUserSteps = server$(async function(data: {unit: number, secti
         index: 3,
         section: data.section,
         unit: data.unit,
-        userId: "default-user-id",
+        userId: session.database.profile.userId,
         metadata: {
             title: "Question 1",
             type: "step_multiple_choice",
@@ -80,7 +80,7 @@ export const serverUserSteps = server$(async function(data: {unit: number, secti
         index: 4,
         section: data.section,
         unit: data.unit,
-        userId: "default-user-id",
+        userId: session.database.profile.userId,
         metadata: {
             title: "Question 2",
             type: "step_multiple_choice",
@@ -94,7 +94,7 @@ export const serverUserSteps = server$(async function(data: {unit: number, secti
         index: 5,
         section: data.section,
         unit: data.unit,
-        userId: "default-user-id",
+        userId: session.database.profile.userId,
         metadata:  {
             type: "step_finish"
         }
