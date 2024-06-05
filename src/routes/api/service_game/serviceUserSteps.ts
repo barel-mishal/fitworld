@@ -1,9 +1,9 @@
+
 import { server$ } from "@builder.io/qwik-city";
 import { type ExtendSession } from "~/routes/plugin@auth";
-import { serverInitDatabase } from "~/routes/seedDatabase";
 import { type AnyStepType } from "./types";
 
-export const serverUserAddStep = server$(async function(data: {unit: number, section: number, index: number}) {
+export const serverUserSteps = server$(async function(data: {unit: number, section: number, index: number}) {
     const session: ExtendSession | null = this.sharedMap.get('session');
     const token = session?.database.token
     if (!token) throw new Error('No token');
@@ -64,11 +64,8 @@ export const serverUserAddStep = server$(async function(data: {unit: number, sec
         type: "finish",
       }
     ];
-    const db = await serverInitDatabase();
-    await db.authenticate(token);
 
-    console.log(data);
-    console.log(steps);
+    console.log("data", data);
 
     return {
       steps
