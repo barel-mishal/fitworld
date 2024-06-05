@@ -100,6 +100,9 @@ export default component$(() => {
       '/client/Assessment/activity-level/': function (): unknown {
         sc.actions.mergeProfile.submit({ field: "activity_level", value: sc.data.lifeStyle.activityLevel });
         return;
+      },
+      '/client/Assessment/personalInformation/goals/': function (): unknown {
+        throw new Error('Function not implemented.');
       }
     }
     const result = await actions[route]();

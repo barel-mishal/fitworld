@@ -2,10 +2,9 @@ import { component$, useContext, useSignal, useComputed$ } from '@builder.io/qwi
 import { cn } from '@qwik-ui/utils';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../../layout';
-import { PopoverTrigger } from '@qwik-ui/headless';
-import { Popover } from '~/components/ui/popover/popover';
 import { convertWeightUnits } from '~/util/convertUnits';
 import { formatedNumber } from '~/util/formatNumber';
+import { Popover } from '@qwik-ui/headless';
 
 
 
@@ -80,23 +79,19 @@ export const MyPopover = component$(() => {
 
   return (
     <>
-      <PopoverTrigger
+      <Popover.Trigger 
         ref={triggerRef}
         class={cn("btn")}
         popovertarget="current-weight"
-      >
+        >
         <span>
           {sc.data.personalInformation.weight.type.toUpperCase()}
         </span>
-      </PopoverTrigger>
-      <Popover
-        flip={false}
+        </Popover.Trigger>
+      <Popover.Panel
+        
         class="-translate-x-[23px] bg-gray-950 border border-gray-800 text-gray-50 "
-        gutter={4}
         ref={popoverRef}
-        anchorRef={triggerRef}
-        floating={true}
-        placement="bottom"
         id="current-weight"
 
       >
@@ -135,7 +130,7 @@ export const MyPopover = component$(() => {
           </button>
 
         </div>
-      </Popover>
+      </Popover.Panel>
       <p class="text-sm text-gray-200/70 h-5">{getWeightUnitSystem()}</p>
     </>
   );

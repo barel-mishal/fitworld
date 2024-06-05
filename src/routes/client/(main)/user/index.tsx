@@ -7,7 +7,7 @@ import { BottomNavBar } from '~/components/layout_blocks/NavBar/Navs';
 import { type ReturnTypeSession, useAuthSession, useAuthSignout, type ExtendSession } from '~/routes/plugin@auth';
 import { serverInitDatabase } from '~/routes/seedDatabase';
 import { formatDate } from './util';
-import { type MergeProfileArgsTypes, MergeHeightArgsType, MergeWeightArgsType, serverMergeProfile, serverMergeHeight, serverMergeWeight } from '~/routes/service_user_info/server-user-personal-info';
+import { type MergeHeightArgsType, type MergeProfileArgsTypes, type MergeWeightArgsType, serverMergeHeight, serverMergeProfile, serverMergeWeight } from '~/routes/api/service_user_info/server-user-personal-info';
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;

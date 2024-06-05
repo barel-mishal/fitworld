@@ -3,35 +3,9 @@ import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
 import { AppLinkGlobal } from '~/routes.config';
-
-type StepTextType = {
-  type: "text";
-  title: string;
-  text: string;
-  next: keyof AnyStepType;
-}
-
-type StepMultipleChoiceType = {
-  type: "multiple-choice";
-  question: string;
-  title: string;
-  options: string[];
-  correctAnswer: number;
-  answer: number | undefined;
-  next: keyof AnyStepType;
-}
-
-type StepFinishType = {
-  type: "finish";
-}
-
-type AnyStepType = {
-  [key: string]: StepTextType | StepMultipleChoiceType | StepFinishType;
-} 
+import { type AnyStepType, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/serviceUserAddStep';
 
 export const useLoaderQuestioner = routeLoader$(function () {
-
-
   const questions = {
     q1: {
       type: "multiple-choice",
@@ -52,57 +26,52 @@ export const useLoaderQuestioner = routeLoader$(function () {
     conclusion: "By focusing on nutrition, you’re investing in a healthier, happier future. Let’s dive into a few questions to help solidify your understanding of these benefits."
   };
 
-  const steps: AnyStepType = {
-    intro: {
+  const steps: AnyStepType = [
+    {
       title: "Introduction",
       type: "text",
       text: stepsData.intro,
-      next: "content"
     },
-    content: {
+    {
       title: "Content",
       type: "text",
       text: stepsData.content,
-      next: "conclusion"
     },
-    conclusion: {
+     {
       title: "Conclusion",
       type: "text",
       text: stepsData.conclusion,
-      next: "question1"
     },
-    question1: {
+    {
       title: "Question 1",
       type: "multiple-choice",
       question: questions.q1.question,
       options: questions.q1.options,
       correctAnswer: questions.q1.correctAnswer,
       answer: questions.q1.answer,
-      next: "finish"
     },
-    question2: {
+    {
       title: "Question 2",
       type: "multiple-choice",
       question: "", // Placeholder for another question if needed
       options: [],
       correctAnswer: 0,
       answer: undefined,
-      next: "finish"
     },
-    finish: {
+    {
       type: "finish",
     }
-  };
+  ];
 
   return steps;
 });
 
 type CountStore = {
-  step: keyof AnyStepType;
+  step: number;
   onStepChange: QRL<() => void>;
   changeAnswer: QRL<(answer: string) => void>;
   answers: {
-    [key: keyof AnyStepType]: string;
+    [key: string]: string;
   }
 };
 
@@ -110,13 +79,14 @@ type CountStore = {
 export default component$(() => {
   const loadedQuestioner = useLoaderQuestioner();
   const game = useStore<CountStore>({
-    step: "intro",  
+    step: 0,  
     onStepChange: $(function(this: CountStore) {
-      const current = loadedQuestioner.value[this.step];
-      switch (current.type) {
+      const current = loadedQuestioner.value.at(0);
+
+      switch (current?.type) {
         case "text":
         case "multiple-choice":
-          this.step = current.next;
+          this.step = this.step + 1;
           break;
         case "finish":
           break;
@@ -127,7 +97,7 @@ export default component$(() => {
       if (current.type !== "multiple-choice") {
         return;
       }
-      this.answers[this.step] = answer;
+      this.answers[current.title] = answer;
     }),
     answers: {}
   });
@@ -136,22 +106,11 @@ export default component$(() => {
   const computedProgress = useComputed$(() => {
     
     function countTotalSteps(steps: AnyStepType): number {
-      let count = 0;
-      for (const key in steps) {
-        if (steps[key as keyof AnyStepType].type !== "finish") {
-          count++;
-        }
-      }
-      return count;
+      return steps.length;
     }
   
-    function countRemainingSteps(currentStep: keyof AnyStepType, steps: AnyStepType): number {
-      const step = steps[currentStep];
-      if (step.type === "finish") {
-        return 0;
-      }
-      const nextStep = step.next;
-      return 1 + countRemainingSteps(nextStep, steps);
+    function countRemainingSteps(currentStep: number, steps: AnyStepType): number {
+      return steps.length - currentStep;
     }
     const totalSteps = countTotalSteps(loadedQuestioner.value);
     const remainingSteps = countRemainingSteps(game.step, loadedQuestioner.value);
@@ -202,8 +161,8 @@ export default component$(() => {
           currentStep.value.type === "text" ? (
             <RenderLearningTypeText
               text={currentStep.value.text}
-              title={game.step as string}
-              id={game.step as string}
+              title={currentStep.value.title}
+              id={`${game.step}`}
 
             />
           ) : currentStep.value.type === "multiple-choice" ? (
@@ -213,7 +172,7 @@ export default component$(() => {
               options={currentStep.value.options}
               correctAnswer={currentStep.value.correctAnswer}
               answer={currentStep.value.answer}
-              id={game.step as string}
+              id={`${game.step}`}
               store={game}
             />
           ) : (
@@ -272,7 +231,7 @@ export const RenderLearningTypeQuestion = component$<RenderLearningTypeQuestionP
               <input
                 type="radio"
                 name="question"
-                checked={option === props.store.answers[props.store.step]}
+                checked={option === props.store.answers[props.id]}
                 value={option}
                 class="peer hidden"
               />

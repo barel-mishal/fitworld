@@ -2,10 +2,9 @@ import { component$, useContext, useSignal, useComputed$ } from '@builder.io/qwi
 import { cn } from '@qwik-ui/utils';
 import { Label } from '~/components/ui/label/label';
 import { contextAssessmentStore } from '../../../layout';
-import { PopoverTrigger } from '@qwik-ui/headless';
-import { Popover } from '~/components/ui/popover/popover';
 import { convertHeightUnits } from '~/util/convertUnits';
 import { formatedNumber } from '~/util/formatNumber';
+import { Popover } from '@qwik-ui/headless';
 
 
 
@@ -92,7 +91,7 @@ export const MyPopover = component$<HeightGetter>(() => {
 
   return (
     <>
-      <PopoverTrigger
+      <Popover.Trigger
         ref={triggerRef}
         class={"btn"}
         popovertarget="unit-height-id"
@@ -101,17 +100,11 @@ export const MyPopover = component$<HeightGetter>(() => {
         <span>
           {sc.data.personalInformation.height.type.toUpperCase()}
         </span>
-      </PopoverTrigger>
-      <Popover
-        flip={false}
+      </Popover.Trigger>
+      <Popover.Panel
         class="bg-gray-950 text-gray-50 border border-gray-800 rounded-base shadow-sm p-2 w-32 -translate-x-[24px] "
-        gutter={4}
         ref={popoverRef}
-        anchorRef={triggerRef}
-        floating={true}
-        placement="bottom"
         id="unit-height-id"
-
       >
         <div class="grid gap-4 w-auto ">
           <button 
@@ -139,7 +132,7 @@ export const MyPopover = component$<HeightGetter>(() => {
           </button>
 
         </div>
-      </Popover>
+      </Popover.Panel>
       <p class="text-sm text-gray-200/70 h-5">{getHeightUnit()}</p>
     </>
   );
