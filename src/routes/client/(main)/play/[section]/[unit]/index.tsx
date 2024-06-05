@@ -29,7 +29,6 @@ export default component$(() => {
     step: 0,
     onStepChange: $(function(this: CountStore) {
       const current = loadedQuestioner.value.at(this.step);
-
       switch (current?.metadata.type) {
         case "step_text":
         case "step_multiple_choice":
@@ -47,10 +46,11 @@ export default component$(() => {
       this.answers[current.metadata.title] = answer;
 
       current.metadata.answer = current.metadata.options.indexOf(answer);
-      
+
       await serverUpdateUserStep(current);
 
     }),
+    // TODO: this code below is running on the client each time the there is change. Fix this.
     answers: loadedQuestioner.value.reduce((acc, curr) => {
       if (curr.metadata.type === "step_multiple_choice" && curr.metadata.answer !== undefined) {
         acc[curr.metadata.title] = curr.metadata.options[curr.metadata.answer];
@@ -119,7 +119,7 @@ export default component$(() => {
             <RenderLearningTypeText
               text={currentStep.value.metadata.text}
               title={currentStep.value.metadata.title}
-              id={`${game.step}`}
+              id={`${currentStep.value.id}`}
 
             />
           ) : currentStep.value.metadata.type === "step_multiple_choice" ? (
@@ -129,7 +129,7 @@ export default component$(() => {
               options={currentStep.value.metadata.options}
               correctAnswer={currentStep.value.metadata.correctAnswer}
               answer={currentStep.value.metadata.answer}
-              id={`${game.step}`}
+              id={`${currentStep.value.id}`}
               store={game}
             />
           ) : (
@@ -171,7 +171,7 @@ export const RenderLearningTypeQuestion = component$<RenderLearningTypeQuestionP
 
   return (
     <Fragment key={props.id}>
-      <h1 class="text-2xl mb-3">{props.id}</h1>
+      <h1 class="text-2xl mb-3">{props.title}</h1>
       <p class="text-xl text-gray-400">{props.question}</p>
       <fieldset
         onChange$={(e) => {
@@ -187,7 +187,7 @@ export const RenderLearningTypeQuestion = component$<RenderLearningTypeQuestionP
               <input
                 type="radio"
                 name="question"
-                checked={option === props.store.answers[props.id]}
+                checked={option === props.store.answers[props.title]}
                 value={option}
                 class="peer hidden"
               />

@@ -16,6 +16,8 @@ export const serverUserSteps = server$(async function(data: {unit: number, secti
         unit: data.unit,
         section: data.section
     });
+
+    console.log(JSON.stringify(steps[0], null, 2));
     
     return {
       steps: steps[0]
@@ -35,7 +37,6 @@ export const serverUpdateUserStep = server$(async function(data: Step) {
     if (!recordId) throw new Error('No record id');
 
     const updated = await db.update(recordId, data);
-    console.log("UPDATED", updated);
 
     return {
         step: updated
