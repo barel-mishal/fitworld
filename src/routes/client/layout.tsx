@@ -7,7 +7,7 @@ import { serverInitDatabase } from '../seedDatabase';
 import { type Session } from '@auth/core/types';
 import { FormattedNumberSchema } from '~/util/formatNumber';
 import { convertWeightUnits } from '~/util/convertUnits';
-import { type MergeProfileType, serverMergeHeight, serverMergeProfile, serverMergeWeight } from '../service/server-user-personal-info';
+import { type MergeProfileType, serverMergeHeight, serverMergeProfile, serverMergeWeight } from '../api/service_user_info/server-user-personal-info';
 
 export const onRequest: RequestHandler = (event) => {
   const session: Session | null = event.sharedMap.get('session');

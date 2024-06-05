@@ -9,7 +9,7 @@ import { formatNumber } from '~/util/twoDecimalPoints';
 
 export default component$(() => {
   const auth = useAuthSession().value as ExtendSession | undefined;
-  console.log(auth);
+  console.log(auth?.database.profile.energy);
   return (
     <HeaderMainBottomNav 
     classMain='tw '

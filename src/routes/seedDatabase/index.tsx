@@ -20,8 +20,6 @@ export default component$(() => {
     <div>
       <h1>Seed Database</h1>
       <p>Seed the database with initial data</p>
-
-
       <div>
         <h1>Table users</h1>
         <button
