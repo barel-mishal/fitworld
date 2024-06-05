@@ -80,7 +80,6 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
         // Return session with database token for to authenticate with database and profile
         return {...connection.session, database: { token, profile: profile }} ;
       },
-
     },
     pages: {
       signIn: '/auth/signin',
