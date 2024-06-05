@@ -4,7 +4,7 @@ import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
 import { AppLinkGlobal } from '~/routes.config';
 import { serverUserAddStep } from '~/routes/api/service_game/serviceUserAddStep';
-import { type AnyStepType, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/types';
+import { type Step, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/types';
 
 export const useLoaderQuestioner = routeLoader$(async function () {
 
@@ -30,8 +30,8 @@ export default component$(() => {
     onStepChange: $(function(this: CountStore) {
       const current = loadedQuestioner.value.at(this.step);
 
-      switch (current?.type) {
-        case "text":
+      switch (current?.metadata.type) {
+        case "step_text":
         case "step_multiple_choice":
           this.step = this.step + 1;
           break;
@@ -41,10 +41,10 @@ export default component$(() => {
     }),
     changeAnswer: $(function(this: CountStore, answer: string) {
       const current = loadedQuestioner.value[this.step];
-      if (current.type !== "step_multiple_choice") {
+      if (current.metadata.type !== "step_multiple_choice") {
         return;
       }
-      this.answers[current.title] = answer;
+      this.answers[current.metadata.title] = answer;
     }),
     answers: {}
   });
@@ -52,11 +52,11 @@ export default component$(() => {
   
   const computedProgress = useComputed$(() => {
     
-    function countTotalSteps(steps: AnyStepType): number {
+    function countTotalSteps(steps: Step[]): number {
       return steps.length;
     }
   
-    function countRemainingSteps(currentStep: number, steps: AnyStepType): number {
+    function countRemainingSteps(currentStep: number, steps: Step[]): number {
       return steps.length - currentStep;
     }
     const totalSteps = countTotalSteps(loadedQuestioner.value);
@@ -105,20 +105,20 @@ export default component$(() => {
       </div>
       <div q:slot='main' class="p-2 overflow-y-auto h-full bg-gray-950">
         {
-          currentStep.value.type === "text" ? (
+          currentStep.value.metadata.type === "step_text" ? (
             <RenderLearningTypeText
-              text={currentStep.value.text}
-              title={currentStep.value.title}
+              text={currentStep.value.metadata.text}
+              title={currentStep.value.metadata.title}
               id={`${game.step}`}
 
             />
-          ) : currentStep.value.type === "step_multiple_choice" ? (
+          ) : currentStep.value.metadata.type === "step_multiple_choice" ? (
             <RenderLearningTypeQuestion
-              title={currentStep.value.title}
-              question={currentStep.value.question}
-              options={currentStep.value.options}
-              correctAnswer={currentStep.value.correctAnswer}
-              answer={currentStep.value.answer}
+              title={currentStep.value.metadata.title}
+              question={currentStep.value.metadata.question}
+              options={currentStep.value.metadata.options}
+              correctAnswer={currentStep.value.metadata.correctAnswer}
+              answer={currentStep.value.metadata.answer}
               id={`${game.step}`}
               store={game}
             />

@@ -1,38 +1,58 @@
 import { z } from 'zod';
 
-// Define the schema for StepTextType
-const StepTextSchema = z.object({
-  type: z.literal('text'),
-  title: z.string(),
-  text: z.string(),
+export const StepTextSchema = z.object({
+    type: z.literal('step_text'),
+    title: z.string(),
+    text: z.string(),
+});
+export const StepMultipleChoiceSchema = z.object({
+    type: z.literal('step_multiple_choice'),
+    title: z.string(),
+    question: z.string(),
+    options: z.array(z.string()),
+    correctAnswer: z.number(),
+    answer: z.number().optional(),
+});
+export const StepFinishSchema = z.object({
+    type: z.literal('step_finish'),
 });
 
-// Define the schema for StepMultipleChoiceType
-const StepMultipleChoiceSchema = z.object({
-  type: z.literal('step_multiple_choice'),
-  question: z.string(),
-  title: z.string(),
-  options: z.array(z.string()),
-  correctAnswer: z.number(),
-  answer: z.union([z.number(), z.undefined()]),
-});
 
-// Define the schema for StepFinishType
-const StepFinishSchema = z.object({
-  type: z.literal('step_finish'),
-});
-
-// Union schema for AnyStepType
-const AnyStepTypeSchema = z.union([
-  StepTextSchema,
-  StepMultipleChoiceSchema,
-  StepFinishSchema,
+const MetadataSchema = z.union([
+    z.object({
+        type: z.literal('step_text'),
+        title: z.string(),
+        text: z.string(),
+    }),
+    z.object({
+        type: z.literal('step_multiple_choice'),
+        title: z.string(),
+        question: z.string(),
+        options: z.array(z.string()),
+        correctAnswer: z.number(),
+        answer: z.number().optional(),
+    }),
+    z.object({
+        type: z.literal('step_finish'),
+    }),
 ]);
 
-// Example of using AnyStepType schema
-const ExampleAnyStep = z.array(AnyStepTypeSchema);
+// Define the steps schema
+const StepSchema = z.object({
+  userId: z.string().uuid().default(() => "default-user-id"), // assuming default-user-id is replaced by actual auth id in the application
+  unit: z.number().int(),
+  index: z.number().int(),
+  section: z.number().int(),
+  metadata: MetadataSchema,
+});
 
+export { StepSchema };
+
+
+
+// Example of using AnyStepType schema
 export type StepTextType = z.infer<typeof StepTextSchema>;
 export type StepMultipleChoiceType = z.infer<typeof StepMultipleChoiceSchema>;
 export type StepFinishType = z.infer<typeof StepFinishSchema>;
-export type AnyStepType = z.infer<typeof ExampleAnyStep>;
+export type StepMetadata = z.infer<typeof MetadataSchema>;
+export type Step = z.infer<typeof StepSchema>;
