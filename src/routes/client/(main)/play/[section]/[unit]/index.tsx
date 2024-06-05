@@ -32,16 +32,16 @@ export default component$(() => {
 
       switch (current?.type) {
         case "text":
-        case "multiple-choice":
+        case "step_multiple_choice":
           this.step = this.step + 1;
           break;
-        case "finish":
+        case "step_finish":
           break;
       }
     }),
     changeAnswer: $(function(this: CountStore, answer: string) {
       const current = loadedQuestioner.value[this.step];
-      if (current.type !== "multiple-choice") {
+      if (current.type !== "step_multiple_choice") {
         return;
       }
       this.answers[current.title] = answer;
@@ -112,7 +112,7 @@ export default component$(() => {
               id={`${game.step}`}
 
             />
-          ) : currentStep.value.type === "multiple-choice" ? (
+          ) : currentStep.value.type === "step_multiple_choice" ? (
             <RenderLearningTypeQuestion
               title={currentStep.value.title}
               question={currentStep.value.question}

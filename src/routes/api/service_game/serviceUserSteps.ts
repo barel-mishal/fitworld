@@ -10,7 +10,7 @@ export const serverUserSteps = server$(async function(data: {unit: number, secti
     // nutrition unit, section, index
     const questions = {
       q1: {
-        type: "multiple-choice",
+        type: "step_multiple_choice",
         question: "What are the immediate benefits of understanding good nutrition?",
         options: ["Improved mental clarity", "Boosted energy levels", "Promoted long-term health", "All of the above"],
         correctAnswer: 3,
@@ -46,7 +46,7 @@ export const serverUserSteps = server$(async function(data: {unit: number, secti
       },
       {
         title: "Question 1",
-        type: "multiple-choice",
+        type: "step_multiple_choice",
         question: questions.q1.question,
         options: questions.q1.options,
         correctAnswer: questions.q1.correctAnswer,
@@ -54,14 +54,14 @@ export const serverUserSteps = server$(async function(data: {unit: number, secti
       },
       {
         title: "Question 2",
-        type: "multiple-choice",
+        type: "step_multiple_choice",
         question: "", // Placeholder for another question if needed
         options: [],
         correctAnswer: 0,
         answer: undefined,
       },
       {
-        type: "finish",
+        type: "step_finish",
       }
     ];
 

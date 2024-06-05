@@ -9,7 +9,7 @@ const StepTextSchema = z.object({
 
 // Define the schema for StepMultipleChoiceType
 const StepMultipleChoiceSchema = z.object({
-  type: z.literal('multiple-choice'),
+  type: z.literal('step_multiple_choice'),
   question: z.string(),
   title: z.string(),
   options: z.array(z.string()),
@@ -19,7 +19,7 @@ const StepMultipleChoiceSchema = z.object({
 
 // Define the schema for StepFinishType
 const StepFinishSchema = z.object({
-  type: z.literal('finish'),
+  type: z.literal('step_finish'),
 });
 
 // Union schema for AnyStepType

@@ -12,8 +12,9 @@ export const serverUserAddStep = server$(async function(data: {unit: number, sec
     const db = await serverInitDatabase();
     await db.authenticate(token);
 
-    console.log(data);
-    console.log(steps);
+    const step = (await steps).steps.at(3)!;
+    const go = await db.create(step.type, step);
+    console.log("GOOGLE", go);
 
     return {
       steps: (await steps).steps
