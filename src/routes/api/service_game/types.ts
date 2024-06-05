@@ -39,6 +39,7 @@ const MetadataSchema = z.union([
 
 // Define the steps schema
 const StepSchema = z.object({
+    id: z.string().optional(),
   userId: z.string(), // assuming default-user-id is replaced by actual auth id in the application
   unit: z.number().int(),
   index: z.number().int(),

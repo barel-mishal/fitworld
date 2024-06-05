@@ -3,7 +3,7 @@ import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
 import { AppLinkGlobal } from '~/routes.config';
-import { serverUserSteps } from '~/routes/api/service_game/serviceUserSteps';
+import { serverUpdateUserStep, serverUserSteps } from '~/routes/api/service_game/serviceUserSteps';
 import { type Step, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/types';
 
 export const useLoaderQuestioner = routeLoader$(async function () {
@@ -39,14 +39,24 @@ export default component$(() => {
           break;
       }
     }),
-    changeAnswer: $(function(this: CountStore, answer: string) {
+    changeAnswer: $(async  function(this: CountStore, answer: string) {
       const current = loadedQuestioner.value[this.step];
       if (current.metadata.type !== "step_multiple_choice") {
         return;
       }
       this.answers[current.metadata.title] = answer;
+
+      current.metadata.answer = current.metadata.options.indexOf(answer);
+      
+      await serverUpdateUserStep(current);
+
     }),
-    answers: {}
+    answers: loadedQuestioner.value.reduce((acc, curr) => {
+      if (curr.metadata.type === "step_multiple_choice" && curr.metadata.answer !== undefined) {
+        acc[curr.metadata.title] = curr.metadata.options[curr.metadata.answer];
+      }
+      return acc;
+    }, {} as Record<string, string>),
   });
 
   
@@ -167,7 +177,6 @@ export const RenderLearningTypeQuestion = component$<RenderLearningTypeQuestionP
         onChange$={(e) => {
           const target = e.target as HTMLInputElement;
           props.store.changeAnswer(target.value);
-          console.log(target.value);
         }}
         class="mt-4"
       >
