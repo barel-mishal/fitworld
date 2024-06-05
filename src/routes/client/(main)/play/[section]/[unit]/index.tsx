@@ -3,12 +3,12 @@ import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
 import { AppLinkGlobal } from '~/routes.config';
-import { serverUserAddStep } from '~/routes/api/service_game/serviceUserAddStep';
+import { serverUserSteps } from '~/routes/api/service_game/serviceUserSteps';
 import { type Step, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/types';
 
 export const useLoaderQuestioner = routeLoader$(async function () {
 
-  const steps = await serverUserAddStep({ unit: 1, section: 1, index: 1 });
+  const steps = await serverUserSteps({ unit: 1, section: 1, index: 1 });
 
   return steps.steps;
 });

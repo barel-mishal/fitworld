@@ -30,7 +30,7 @@ const MetadataSchema = z.union([
         question: z.string(),
         options: z.array(z.string()),
         correctAnswer: z.number(),
-        answer: z.number().optional(),
+        answer: z.optional(z.number()),
     }),
     z.object({
         type: z.literal('step_finish'),
