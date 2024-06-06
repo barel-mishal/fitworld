@@ -10,8 +10,7 @@ export default component$(() => {
     
   })
   return (
-    <div>
-      
+    <div>    
       <button onClick$={handleStepChange}>CLICK ME</button>
       New route works. {loc.params.section} {loc.params.unit}
     </div>
