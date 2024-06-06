@@ -38,8 +38,27 @@ export const serverGPTCreateSteps = server$(async function(data: {unit: number, 
 
       return completion.choices[0].message.content;
     }
+
+    try {
+      main()
+    } catch (error) {
+      return {
+        steps: [
+          {
+            userId: token,
+            unit: data.unit,
+            section: data.section,
+            index: data.index,
+            metadata: {
+              type: 'step_text',
+              title: 'step_text',
+              text: "Error",
+            }
+          }
+        ]
+      }
+    }
     
-    main()
 
     return {
       steps: [
