@@ -3,7 +3,6 @@ import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
 import { AppLinkGlobal } from '~/routes.config';
-import { serverUserAddStep } from '~/routes/api/service_game/serviceUserAddStep';
 import { serverUpdateUserStep, serverUserSteps } from '~/routes/api/service_game/serviceUserSteps';
 import { type Step, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/types';
 
@@ -105,8 +104,6 @@ export default component$(() => {
   });
   return (
     <div class={cn("grid grid-rows-[40px,1fr,60px] gap-3 h-screen text-gray-50  bg-gray-950 font-roundsans tracking-wide overflow-y-auto")}>
-
-      <button onClick$={async () => await serverUserAddStep({index: 0, unit: 0, section: 0})}>CLICK ME</button>
       <div q:slot='header' class=" grid grid-cols-[auto,1fr,auto] gap-3 content-center items-center p-2 text-gray-400">
         <AppLinkGlobal route='/client/(main)/play/'>
           <PhClose class="w-6 h-6 fill-gray-700" />

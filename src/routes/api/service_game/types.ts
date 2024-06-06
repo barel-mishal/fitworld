@@ -57,3 +57,4 @@ export type StepMultipleChoiceType = z.infer<typeof StepMultipleChoiceSchema>;
 export type StepFinishType = z.infer<typeof StepFinishSchema>;
 export type StepMetadata = z.infer<typeof MetadataSchema>;
 export type Step = z.infer<typeof StepSchema>;
+
