@@ -8,7 +8,7 @@ import { sanitizeString } from "~/util/isTextOfUserName";
 
 
 export const serverGPTCreateSteps = server$(
-  async function(data: {unit: number, section: number, index: number, step: number}) {
+  async function(data: StepText) {
     const session: ExtendSession | null = this.sharedMap.get('session');
     const token = session?.database.token
     if (!token) throw new Error('No token');
