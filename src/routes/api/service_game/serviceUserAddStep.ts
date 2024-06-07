@@ -5,6 +5,7 @@ import { validateAndProcessJson } from "./types";
 import {OpenAI} from "openai";
 import { type StepText, serverPrompts } from "./serviceGPTPrompts";
 import { sanitizeString } from "~/util/isTextOfUserName";
+import { serverGPTSTexts } from "./serviceGPTResult";
 
 
 export const serverGPTCreateSteps = server$(
@@ -12,7 +13,9 @@ export const serverGPTCreateSteps = server$(
     const session: ExtendSession | null = this.sharedMap.get('session');
     const token = session?.database.token
     if (!token) throw new Error('No token');
-
+    const gptResult = await serverGPTSTexts();
+    return gptResult[data.unit === 1 ? "section 1 unit 1" : data.unit === 2 ? "section 1 unit 2" : "section 1 unit 3"]
+    // TODO: Implement GPT-4 API when I can control the price
     const openai = new OpenAI();
 
     const gpt = await serverPrompts(sanitizeString(session.user?.name || "User"), data)
@@ -26,9 +29,6 @@ export const serverGPTCreateSteps = server$(
       
       return completion;
     }
-
-
-    
     try {
       const gptResponse = await main();
       
@@ -55,8 +55,8 @@ export const serverUserAddStep = server$(async function(data: StepText) {
     const db = await serverInitDatabase();
     await db.authenticate(token);
 
-    return {
-      steps: steps.steps
-    }
+    await db.insert("steps", steps)
+
+    return {};
   }
 );
