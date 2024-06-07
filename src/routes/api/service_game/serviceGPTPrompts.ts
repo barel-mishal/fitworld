@@ -1,7 +1,13 @@
 import { server$ } from "@builder.io/qwik-city"
 import type OpenAI from "openai"
 
-export interface StepText {unit: number, section: number, index: number, step: number, titleSection: string}
+export interface StepText {
+  unit: number, 
+  section: number, 
+  index: number, 
+  step: number, 
+  titleSection: string
+}
 
 export const serverPrompts = server$(async function(userName: string, data: StepText) {
 
@@ -160,4 +166,4 @@ Output as JSON format:`, name: userName}]
     return {
         prompt
     }
-})
+});

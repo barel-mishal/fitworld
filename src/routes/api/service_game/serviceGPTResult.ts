@@ -385,8 +385,6 @@ export const serverGPTSTexts = server$(async function() {
                 },
             }
         ]
-    }
-
-
+    };
     return gptResult;
 });
