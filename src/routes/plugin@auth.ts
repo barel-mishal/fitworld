@@ -67,7 +67,6 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
           namespace: "namespace", 
           pass: connection.token.providerId,
         });
-        // console.log("pass", connection.token.providerId, token)
 
         // Get user profile
         // TODO: change schema so the weight and height are the most updated. 

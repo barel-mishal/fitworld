@@ -34,7 +34,7 @@ export default component$(() => {
 
 export const serverInitDatabase = server$(async () => {
   const db = new Surreal();
-  db.connect("http://0.0.0.0:8000/rpc", { 
+  await db.connect("http://0.0.0.0:8000/rpc", { 
     database: "database", 
     namespace: "namespace", 
     auth: { 
@@ -42,6 +42,6 @@ export const serverInitDatabase = server$(async () => {
       password: "root" 
     } 
   });
-  db.use({ namespace: "namespace", database: "database" });
+  await db.use({ namespace: "namespace", database: "database" });
   return db;
 });

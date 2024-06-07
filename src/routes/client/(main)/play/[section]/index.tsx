@@ -6,8 +6,8 @@ export default component$(() => {
   const loc = useLocation();
   const handleStepChange = $(async () => {
     try {
-      const result = await serverUserAddStep({index: 0, unit: 0, section: 0});
-      console.log(result);
+      const result = await serverUserAddStep({index: 0, unit: 0, section: 0, step: 0});
+      console.log({result});
     } catch (error) {
       console.log(error); 
     }

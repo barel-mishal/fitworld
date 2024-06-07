@@ -9,7 +9,6 @@ import { formatNumber } from '~/util/twoDecimalPoints';
 
 export default component$(() => {
   const auth = useAuthSession().value as ExtendSession | undefined;
-  console.log(auth?.database.profile.energy);
   return (
     <HeaderMainBottomNav 
     classMain='tw '
@@ -43,13 +42,14 @@ export const Paypal = component$(() => {
         if (!paypal || !paypal.Buttons) {
           return
         }
-        const pay = paypal.Buttons({})
-              .render("#your-container-element")
+        paypal.Buttons({})
+              .render("#your-container-element").then(() => {
+                  console.log("PayPal Buttons rendered");
+              })
               .catch((error) => {
                   console.error("failed to render the PayPal Buttons", error);
               });
         
-        console.log(pay);
 
         return paypal
       })
