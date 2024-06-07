@@ -11,7 +11,7 @@ export default component$(() => {
     } catch (error) {
       console.log(error); 
     }
-  })
+  });
   return (
     <div>    
       <button onClick$={async () => await handleStepChange("The Importence Of Nutrition")}>CLICK ME</button>
