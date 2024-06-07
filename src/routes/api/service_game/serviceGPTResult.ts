@@ -1,8 +1,10 @@
 import { server$ } from "@builder.io/qwik-city";
 import { type Step } from "./types";
 
+export type StepKey = `section ${number} unit ${number}`;
+
 export const serverGPTSTexts = server$(async function() {
-    const gptResult: Record<string, Step[]> = {
+    const gptResult: Record<StepKey, Step[]> = {
         "section 1 unit 1": [
             {
                 unit: 1,

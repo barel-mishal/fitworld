@@ -2,6 +2,7 @@ import { type PropsOf, component$, $ } from "@builder.io/qwik";
 import { PhFooPeinapple, PhStar } from "../icons/icons";
 import { serverUserAddStep } from "~/routes/api/service_game/serviceUserAddStep";
 import { AppLink } from "~/routes.config";
+import { type StepKey } from "~/routes/api/service_game/serviceGPTResult";
 
 const Play = component$(() => {
 
@@ -232,7 +233,7 @@ interface TitleGameProps {
     title: string;
     subTitle: string;
     element: PropsOf<'div'>;
-    params: `section ${number} unit ${number}`;
+    params: StepKey;
 }
 export const TitleGame = component$<TitleGameProps>((props) => {
 
