@@ -152,7 +152,8 @@ Output as JSON format: {
 }
 ]
 }
-`}, {role: "user", content: `
+`}, 
+{role: "user", content: `
 Input: Section ${data.section}, Unit ${data.unit} step ${data.step} - The importance of nutrition:: 
 Output as JSON format:`, name: userName}]
 
