@@ -14,7 +14,7 @@ export default component$(() => {
 
 // todo: update a notes
 export const onPut: RequestHandler = async (requestEvent) => { 
-  console.log("edit", await requestEvent.parseBody())
+  console.log("edit", await requestEvent.parseBody());
 }
 
 export const factoryFetch = async (method: "DELETE" | "PUT" | "POST", id: string | undefined) => {
