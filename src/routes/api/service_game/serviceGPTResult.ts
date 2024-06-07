@@ -6,7 +6,6 @@ export const serverGPTSTexts = server$(async function() {
     return {
         "section 1 unit 1": [
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 1,
                 section: 1,
@@ -17,7 +16,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 2,
                 section: 1,
@@ -28,7 +26,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 3,
                 section: 1,
@@ -39,7 +36,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 4,
                 section: 1,
@@ -50,7 +46,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 5,
                 section: 1,
@@ -61,7 +56,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 6,
                 section: 2,
@@ -72,7 +66,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 7,
                 section: 2,
@@ -83,7 +76,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 8,
                 section: 2,
@@ -94,7 +86,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 9,
                 section: 3,
@@ -105,7 +96,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 10,
                 section: 3,
@@ -116,7 +106,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 11,
                 section: 3,
@@ -127,7 +116,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 12,
                 section: 4,
@@ -141,7 +129,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 13,
                 section: 4,
@@ -155,7 +142,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 14,
                 section: 4,
@@ -169,7 +155,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 15,
                 section: 4,
@@ -183,7 +168,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 1,
                 index: 16,
                 section: 5,
@@ -194,7 +178,6 @@ export const serverGPTSTexts = server$(async function() {
         ],
         "section 1 unit 2": [
             {
-                userId: 'default-user-id',
                 unit: 2,
                 index: 1,
                 section: 1,
@@ -205,7 +188,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 2,
                 index: 2,
                 section: 1,
@@ -216,7 +198,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 2,
                 index: 3,
                 section: 1,
@@ -227,7 +208,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 2,
                 index: 4,
                 section: 1,
@@ -238,7 +218,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 2,
                 index: 5,
                 section: 1,
@@ -251,7 +230,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 2,
                 index: 6,
                 section: 1,
@@ -264,7 +242,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 2,
                 index: 7,
                 section: 1,
@@ -277,7 +254,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 2,
                 index: 8,
                 section: 1,
@@ -290,7 +266,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                userId: 'default-user-id',
                 unit: 2,
                 index: 9,
                 section: 1,
@@ -299,6 +274,117 @@ export const serverGPTSTexts = server$(async function() {
                 }
             }
         ],
-        "section 1 unit 3": []
+        "section 1 unit 3": [
+            {
+                unit: 3,
+                index: 0,
+                section: 0,
+                metadata: {
+                    type: 'step_text',
+                    title: 'Common Nutritional Deficiencies and Their Symptoms',
+                    text: `
+        Nutritional deficiencies occur when the body does not get enough essential nutrients from the diet. Some common deficiencies include iron, vitamin D, and calcium. Understanding these deficiencies and their symptoms can help you take proactive steps to maintain your health.
+        
+        Iron Deficiency: Iron is crucial for producing hemoglobin, a protein in red blood cells that carries oxygen throughout the body. A lack of iron can lead to anemia, characterized by fatigue, weakness, and pale skin. You might also experience shortness of breath and dizziness.
+        
+        Vitamin D Deficiency: Vitamin D is essential for bone health as it helps the body absorb calcium. Symptoms of deficiency include bone pain, muscle weakness, and an increased risk of fractures. Long-term deficiency can lead to conditions like osteoporosis.
+        
+        Calcium Deficiency: Calcium is vital for strong bones and teeth, muscle function, and nerve signaling. A deficiency can result in muscle cramps, spasms, and tingling in the fingers. Over time, it can cause bone density loss, leading to osteoporosis.
+        `
+                }
+            },
+            {
+                unit: 3,
+                index: 1,
+                section: 0,
+                metadata: {
+                    type: 'step_text',
+                    title: 'Strategies to Prevent and Address Deficiencies',
+                    text: `
+        Preventing and addressing nutritional deficiencies involves incorporating nutrient-rich foods into your diet and, when necessary, considering supplements. Here are some strategies to help you maintain adequate nutrient levels.
+        
+        Nutrient-Rich Foods: To prevent iron deficiency, include foods like lean meats, beans, spinach, and fortified cereals in your diet. For vitamin D, consider fatty fish like salmon, fortified dairy products, and exposure to sunlight. To boost calcium intake, consume dairy products, leafy greens, and fortified plant-based milks.
+        
+        Supplements: If dietary sources are insufficient, supplements can help fill the gap. However, it's essential to use supplements safely and under the guidance of a healthcare professional. Over-supplementation can lead to adverse effects, so it's crucial to follow recommended dosages.
+        
+        Professional Guidance: Consulting with healthcare professionals, such as a registered dietitian or doctor, can provide personalized advice tailored to your specific needs. They can help identify deficiencies through blood tests and recommend appropriate dietary changes or supplements.
+        `
+                }
+            },
+            {
+                unit: 3,
+                index: 2,
+                section: 0,
+                metadata: {
+                    type: 'step_text',
+                    title: 'Incorporating Nutrient-Rich Foods into Your Diet',
+                    text: `
+        Ensuring your diet is rich in essential nutrients doesn't have to be complicated. Here are practical tips for incorporating nutrient-dense foods into your daily meals.
+        
+        Examples of Nutrient-Dense Foods: Include a variety of nutrient-rich foods such as fish, nuts, seeds, vegetables, and fruits. For instance, adding spinach to your salads, snacking on almonds, and incorporating salmon into your dinner can significantly boost your nutrient intake.
+        
+        Creating Balanced Meals: Aim to create meals that include a balance of macronutrients (carbohydrates, proteins, and fats) and micronutrients (vitamins and minerals). For example, a balanced breakfast might include oatmeal topped with berries and nuts, paired with a glass of fortified plant-based milk.
+        
+        Practical Tips: Plan your meals ahead of time to ensure you include a variety of nutrient-dense foods. Experiment with new recipes that feature nutrient-rich ingredients, and make small, gradual changes to your diet to make it more sustainable.
+        `
+                }
+            },
+            {
+                unit: 3,
+                index: 3,
+                section: 0,
+                metadata: {
+                    type: 'step_multiple_choice',
+                    title: 'Question 1',
+                    question: 'Which of the following is a common symptom of iron deficiency?',
+                    options: ['Weight gain', 'Fatigue', 'Improved memory', 'Clear skin'],
+                    correctAnswer: 1
+                }
+            },
+            {
+                unit: 3,
+                index: 4,
+                section: 0,
+                metadata: {
+                    type: 'step_multiple_choice',
+                    title: 'Question 2',
+                    question: 'Which food is a good source of vitamin D?',
+                    options: ['Apples', 'Carrots', 'Salmon', 'Bread'],
+                    correctAnswer: 2
+                }
+            },
+            {
+                unit: 3,
+                index: 5,
+                section: 0,
+                metadata: {
+                    type: 'step_multiple_choice',
+                    title: 'Question 3',
+                    question: 'What is a recommended strategy to prevent calcium deficiency?',
+                    options: ['Eating more red meat', 'Increasing water intake', 'Consuming more dairy products', 'Reducing fruit consumption'],
+                    correctAnswer: 2
+                }
+            },
+            {
+                unit: 3,
+                index: 6,
+                section: 0,
+                metadata: {
+                    type: 'step_multiple_choice',
+                    title: 'Question 4',
+                    question: 'Who should you consult for personalized advice on nutritional deficiencies?',
+                    options: ['A friend', 'A healthcare professional', 'A fitness trainer', 'An online forum'],
+                    correctAnswer: 1
+                }
+            },
+            {
+                unit: 3,
+                index: 7,
+                section: 0,
+                metadata: {
+                    type: 'step_finish'
+                }
+            }
+        ]
     }
 });
