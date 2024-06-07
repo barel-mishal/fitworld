@@ -6,7 +6,6 @@ export const serverGPTSTexts = server$(async function() {
     return {
         "section 1 unit 1": [
             {
-                id: '1',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 1,
@@ -18,7 +17,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '2',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 2,
@@ -30,7 +28,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '3',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 3,
@@ -42,7 +39,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '4',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 4,
@@ -54,7 +50,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '5',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 5,
@@ -66,7 +61,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '6',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 6,
@@ -78,7 +72,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '7',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 7,
@@ -90,7 +83,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '8',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 8,
@@ -102,7 +94,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '9',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 9,
@@ -114,7 +105,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '10',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 10,
@@ -126,7 +116,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '11',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 11,
@@ -138,7 +127,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '12',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 12,
@@ -153,7 +141,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '13',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 13,
@@ -168,7 +155,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '14',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 14,
@@ -183,7 +169,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '15',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 15,
@@ -198,7 +183,6 @@ export const serverGPTSTexts = server$(async function() {
                 }
             },
             {
-                id: '16',
                 userId: 'default-user-id',
                 unit: 1,
                 index: 16,
@@ -207,6 +191,114 @@ export const serverGPTSTexts = server$(async function() {
                     type: 'step_finish',
                 }
             },
-        ]
+        ],
+        "section 1 unit 2": [
+            {
+                userId: 'default-user-id',
+                unit: 2,
+                index: 1,
+                section: 1,
+                metadata: {
+                    type: 'step_text',
+                    title: 'The Role of Balanced Diets in Health',
+                    text: 'A balanced diet is essential for maintaining overall health and well-being. It provides the body with the necessary nutrients to function optimally and helps prevent various health issues. This article explores the benefits of a balanced diet, the impact of diet on energy levels and mental clarity, and the relationship between diet and chronic diseases.'
+                }
+            },
+            {
+                userId: 'default-user-id',
+                unit: 2,
+                index: 2,
+                section: 1,
+                metadata: {
+                    type: 'step_text',
+                    title: 'Benefits of a Balanced Diet',
+                    text: 'A balanced diet offers numerous benefits, including: Improved physical health, Enhanced mental clarity and focus, Reduced risk of chronic diseases, Better weight management.'
+                }
+            },
+            {
+                userId: 'default-user-id',
+                unit: 2,
+                index: 3,
+                section: 1,
+                metadata: {
+                    type: 'step_text',
+                    title: 'Impact of Diet on Energy Levels and Mental Clarity',
+                    text: 'Your diet significantly influences your energy levels and mental clarity. Here\'s how: Macronutrients and Energy Production: Carbohydrates, proteins, and fats are the primary sources of energy for the body. Carbohydrates are the body\'s preferred energy source, while proteins and fats provide sustained energy and support various bodily functions. Vitamins and Minerals in Cognitive Function: Micronutrients like B vitamins, iron, and magnesium play crucial roles in brain function. They help produce neurotransmitters, support nerve health, and maintain cognitive performance. Hydration for Energy and Mental Performance: Staying hydrated is essential for maintaining energy levels and cognitive function. Dehydration can lead to fatigue, difficulty concentrating, and impaired mental performance.'
+                }
+            },
+            {
+                userId: 'default-user-id',
+                unit: 2,
+                index: 4,
+                section: 1,
+                metadata: {
+                    type: 'step_text',
+                    title: 'Relationship Between Diet and Chronic Diseases',
+                    text: 'A balanced diet is a key factor in preventing and managing chronic diseases. Here\'s how diet affects some common conditions: Heart Disease: Diets high in saturated fats, trans fats, and cholesterol can increase the risk of heart disease. Conversely, diets rich in fruits, vegetables, whole grains, and healthy fats can lower this risk by improving cholesterol levels and reducing inflammation. Type 2 Diabetes: High intake of processed sugars and refined carbohydrates can lead to insulin resistance and type 2 diabetes. A balanced diet that includes complex carbohydrates, fiber, and healthy fats can help regulate blood sugar levels and reduce the risk of diabetes. Cancer Prevention: Certain dietary patterns, such as high consumption of red and processed meats, have been linked to an increased risk of cancer. Diets rich in antioxidants, fiber, and phytonutrients from fruits, vegetables, and whole grains can help protect against cancer. Hypertension: High sodium intake is a major contributor to hypertension (high blood pressure). A balanced diet that emphasizes potassium-rich foods, such as fruits and vegetables, and limits sodium can help manage and prevent hypertension.'
+                }
+            },
+            {
+                userId: 'default-user-id',
+                unit: 2,
+                index: 5,
+                section: 1,
+                metadata: {
+                    type: 'step_multiple_choice',
+                    title: 'Quiz Question 1',
+                    question: 'What is one of the benefits of a balanced diet?',
+                    options: ['Improved physical health', 'Increased stress levels', 'Decreased energy levels', 'Higher risk of chronic diseases'],
+                    correctAnswer: 0
+                }
+            },
+            {
+                userId: 'default-user-id',
+                unit: 2,
+                index: 6,
+                section: 1,
+                metadata: {
+                    type: 'step_multiple_choice',
+                    title: 'Quiz Question 2',
+                    question: 'How do macronutrients influence energy production?',
+                    options: ['They reduce the body\'s need for energy', 'They play a crucial role in providing energy', 'They have no impact on energy levels', 'They only affect mental clarity'],
+                    correctAnswer: 1
+                }
+            },
+            {
+                userId: 'default-user-id',
+                unit: 2,
+                index: 7,
+                section: 1,
+                metadata: {
+                    type: 'step_multiple_choice',
+                    title: 'Quiz Question 3',
+                    question: 'Which of the following is a dietary factor in the development of type 2 diabetes?',
+                    options: ['High intake of processed sugars', 'High intake of vitamins', 'Low protein consumption', 'Balanced diet'],
+                    correctAnswer: 0
+                }
+            },
+            {
+                userId: 'default-user-id',
+                unit: 2,
+                index: 8,
+                section: 1,
+                metadata: {
+                    type: 'step_multiple_choice',
+                    title: 'Quiz Question 4',
+                    question: 'Why is hydration important for energy and mental performance?',
+                    options: ['It decreases mental clarity', 'It has no effect on energy levels', 'It is essential for maintaining cognitive function and energy', 'It only affects physical health'],
+                    correctAnswer: 2
+                }
+            },
+            {
+                userId: 'default-user-id',
+                unit: 2,
+                index: 9,
+                section: 1,
+                metadata: {
+                    type: 'step_finish'
+                }
+            }
+        ],
+        "section 1 unit 3": []
     }
 });
