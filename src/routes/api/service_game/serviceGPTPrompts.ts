@@ -6,7 +6,7 @@ export interface StepText {
   section: number, 
   index: number, 
   step: number, 
-  titleSection: string
+  titleSection: string,
 }
 
 export const serverPrompts = server$(async function(userName: string, data: StepText) {

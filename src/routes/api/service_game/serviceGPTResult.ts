@@ -59,7 +59,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 6,
-                section: 2,
+                section: 1,
                 metadata: {
                     type: 'step_text',
                     title: 'Importance of Micronutrients (Vitamins and Minerals)',
@@ -69,7 +69,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 7,
-                section: 2,
+                section: 1,
                 metadata: {
                     type: 'step_text',
                     title: 'Vitamins',
@@ -79,7 +79,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 8,
-                section: 2,
+                section: 1,
                 metadata: {
                     type: 'step_text',
                     title: 'Minerals',
@@ -89,7 +89,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 9,
-                section: 3,
+                section: 1,
                 metadata: {
                     type: 'step_text',
                     title: 'Daily Nutritional Requirements',
@@ -99,7 +99,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 10,
-                section: 3,
+                section: 1,
                 metadata: {
                     type: 'step_text',
                     title: 'Dietary Reference Intakes (DRIs)',
@@ -109,7 +109,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 11,
-                section: 3,
+                section: 1,
                 metadata: {
                     type: 'step_text',
                     title: 'Balanced Diet',
@@ -119,7 +119,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 12,
-                section: 4,
+                section: 1,
                 metadata: {
                     type: 'step_multiple_choice',
                     title: 'Question 1',
@@ -132,7 +132,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 13,
-                section: 4,
+                section: 1,
                 metadata: {
                     type: 'step_multiple_choice',
                     title: 'Question 2',
@@ -145,7 +145,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 14,
-                section: 4,
+                section: 1,
                 metadata: {
                     type: 'step_multiple_choice',
                     title: 'Question 3',
@@ -158,7 +158,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 15,
-                section: 4,
+                section: 1,
                 metadata: {
                     type: 'step_multiple_choice',
                     title: 'Question 4',
@@ -171,7 +171,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 1,
                 index: 16,
-                section: 5,
+                section: 1,
                 metadata: {
                     type: 'step_finish',
                 },
@@ -279,7 +279,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 3,
                 index: 0,
-                section: 0,
+                section: 1,
                 metadata: {
                     type: 'step_text',
                     title: 'Common Nutritional Deficiencies and Their Symptoms',
@@ -297,7 +297,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 3,
                 index: 1,
-                section: 0,
+                section: 1,
                 metadata: {
                     type: 'step_text',
                     title: 'Strategies to Prevent and Address Deficiencies',
@@ -315,7 +315,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 3,
                 index: 2,
-                section: 0,
+                section: 1,
                 metadata: {
                     type: 'step_text',
                     title: 'Incorporating Nutrient-Rich Foods into Your Diet',
@@ -333,7 +333,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 3,
                 index: 3,
-                section: 0,
+                section: 1,
                 metadata: {
                     type: 'step_multiple_choice',
                     title: 'Question 1',
@@ -345,7 +345,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 3,
                 index: 4,
-                section: 0,
+                section: 1,
                 metadata: {
                     type: 'step_multiple_choice',
                     title: 'Question 2',
@@ -357,7 +357,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 3,
                 index: 5,
-                section: 0,
+                section: 1,
                 metadata: {
                     type: 'step_multiple_choice',
                     title: 'Question 3',
@@ -369,7 +369,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 3,
                 index: 6,
-                section: 0,
+                section: 1,
                 metadata: {
                     type: 'step_multiple_choice',
                     title: 'Question 4',
@@ -381,7 +381,7 @@ export const serverGPTSTexts = server$(async function() {
             {
                 unit: 3,
                 index: 7,
-                section: 0,
+                section: 1,
                 metadata: {
                     type: 'step_finish'
                 },
