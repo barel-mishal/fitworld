@@ -1,18 +1,22 @@
-import { server$ } from "@builder.io/qwik-city"
-import type OpenAI from "openai"
+import { server$ } from "@builder.io/qwik-city";
+import type OpenAI from "openai";
 
 export interface StepText {
-  unit: number, 
-  section: number, 
-  index: number, 
-  step: number, 
-  titleSection: string,
+  unit: number;
+  section: number;
+  index: number;
+  step: number;
+  titleSection: string;
 }
 
-export const serverPrompts = server$(async function(userName: string, data: StepText) {
-
-    const prompt:  OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
-        {role: "system", content: `
+export const serverPrompts = server$(async function (
+  userName: string,
+  data: StepText,
+) {
+  const prompt: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+    {
+      role: "system",
+      content: `
 You are helpfull Edecational AI about nutrition and fitness. 
 Your task is to create structured educational materailes called steps. 
 Each step is part of a section, unit and step repsent also the difficulty 
@@ -158,12 +162,18 @@ Output as JSON format: {
 }
 ]
 }
-`}, 
-{role: "user", content: `
+`,
+    },
+    {
+      role: "user",
+      content: `
 Input: Section ${data.section}, Unit ${data.unit} step ${data.step} - The importance of nutrition:: 
-Output as JSON format:`, name: userName}]
+Output as JSON format:`,
+      name: userName,
+    },
+  ];
 
-    return {
-        prompt
-    }
+  return {
+    prompt,
+  };
 });

@@ -1,21 +1,21 @@
-import { component$, useSignal } from '@builder.io/qwik';
-import { Combobox, type ResolvedOption } from '@qwik-ui/headless';
-import { LuCheck } from '@qwikest/icons/lucide';
+import { component$, useSignal } from "@builder.io/qwik";
+import { Combobox, type ResolvedOption } from "@qwik-ui/headless";
+import { LuCheck } from "@qwikest/icons/lucide";
 
 export default component$(() => {
   const selectedOptionIndexSig = useSignal<number>(-1);
 
   const objectExample = [
-    { testValue: 'alice', testLabel: 'Alice', disabled: true },
-    { testValue: 'joana', testLabel: 'Joana', disabled: true },
-    { testValue: 'malcolm', testLabel: 'Malcolm', disabled: false },
-    { testValue: 'zack', testLabel: 'Zack', disabled: true },
-    { testValue: 'brian', testLabel: 'Brian', disabled: false },
-    { testValue: 'ryan', testLabel: 'Ryan', disabled: false },
-    { testValue: 'joe', testLabel: 'Joe', disabled: false },
-    { testValue: 'randy', testLabel: 'Randy', disabled: false },
-    { testValue: 'david', testLabel: 'David', disabled: true },
-    { testValue: 'joseph', testLabel: 'Joseph', disabled: false },
+    { testValue: "alice", testLabel: "Alice", disabled: true },
+    { testValue: "joana", testLabel: "Joana", disabled: true },
+    { testValue: "malcolm", testLabel: "Malcolm", disabled: false },
+    { testValue: "zack", testLabel: "Zack", disabled: true },
+    { testValue: "brian", testLabel: "Brian", disabled: false },
+    { testValue: "ryan", testLabel: "Ryan", disabled: false },
+    { testValue: "joe", testLabel: "Joe", disabled: false },
+    { testValue: "randy", testLabel: "Randy", disabled: false },
+    { testValue: "david", testLabel: "David", disabled: true },
+    { testValue: "joseph", testLabel: "Joseph", disabled: false },
   ];
 
   type MyData = {

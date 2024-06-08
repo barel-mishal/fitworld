@@ -81,16 +81,16 @@
 /* apply tailwind classes */
 @layer components {
   .btn {
-    @apply border-b-4 border border-gray-700 px-6 py-2 rounded-sm active:border-b transition-all ease-in-out disabled:bg-gray-800 disabled:border-gray-800 disabled:text-gray-500;
+    @apply rounded-sm border border-b-4 border-gray-700 px-6 py-2 transition-all ease-in-out active:border-b disabled:border-gray-800 disabled:bg-gray-800 disabled:text-gray-500;
   }
   .btn-primary {
-    @apply bg-gray-900 p-2 rounded-sm border-b-2 border-gray-400 active:border-b-0 transition-all ease-in-out;
+    @apply rounded-sm border-b-2 border-gray-400 bg-gray-900 p-2 transition-all ease-in-out active:border-b-0;
   }
   .btn-gohst {
-    @apply bg-transparent text-gray-900 px-6 py-2 rounded-sm border-b-2 border-transparent;
+    @apply rounded-sm border-b-2 border-transparent bg-transparent px-6 py-2 text-gray-900;
   }
   .btn-data-active {
-    @apply data-[active=true]:bg-gray-900
+    @apply data-[active=true]:bg-gray-900;
   }
   .btn-secondary {
     @apply bg-secondary text-secondary-foreground;
@@ -108,29 +108,29 @@
     @apply text-lg;
   }
   .inp {
-    @apply rounded-sm p-2 border border-gray-700 text-gray-50 bg-gray-900 focus-within:outline-gray-800 focus-within:border-gray-800;
+    @apply rounded-sm border border-gray-700 bg-gray-900 p-2 text-gray-50 focus-within:border-gray-800 focus-within:outline-gray-800;
   }
   .title {
-    @apply text-gray-100 text-3xl font-roundsans font-extrabold
+    @apply font-roundsans text-3xl font-extrabold text-gray-100;
   }
   .small-title {
-    @apply text-gray-100 text-xl font-roundsans font-extrabold
+    @apply font-roundsans text-xl font-extrabold text-gray-100;
   }
   .info-title {
-    @apply text-gray-100 font-roundsans font-bold
+    @apply font-roundsans font-bold text-gray-100;
   }
 }
 
 @layer utilities {
   .card-wrapper {
-    @apply relative bg-gradient-to-b from-slate-700 to-slate-800 rounded-lg
+    @apply relative rounded-lg bg-gradient-to-b from-slate-700 to-slate-800;
   }
   .card-wrapper::before {
     background: conic-gradient(
       rgba(244, 114, 182, 0.4) 0deg,
       rgba(192, 132, 252, 0.4) 0deg,
-      transparent 0deg,
+      transparent 0deg
     );
-    @apply h-full w-full content-[''] absolute;
+    @apply absolute h-full w-full content-[''];
   }
 }

@@ -1,8 +1,6 @@
 import { component$, Slot } from "@builder.io/qwik";
 import type { RequestHandler } from "@builder.io/qwik-city";
 
-
-
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // console.log('sharedMap', sharedMap.get('session'));
   // Control caching for this request for best performance and to reduce hosting costs:

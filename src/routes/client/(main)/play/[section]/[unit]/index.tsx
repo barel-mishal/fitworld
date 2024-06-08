@@ -1,14 +1,29 @@
-import { $, Fragment, type QRL, component$, useComputed$, useStore } from '@builder.io/qwik';
-import { routeLoader$, useNavigate } from '@builder.io/qwik-city';
-import { cn } from '@qwik-ui/utils';
-import CloseModal from '~/components/Modals/CloseModal/CloseModal';
-import { PhClose, PhHeart } from '~/components/icons/icons';
-import { type AppRoutes } from '~/routes.gen';
-import { serverRemoveUserStep, serverUpdateUserStep, serverUserAddStep } from '~/routes/api/service_game/serviceUserAddStep';
-import { type Step, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/types';
+import {
+  $,
+  Fragment,
+  type QRL,
+  component$,
+  useComputed$,
+  useStore,
+} from "@builder.io/qwik";
+import { routeLoader$, useNavigate } from "@builder.io/qwik-city";
+import { cn } from "@qwik-ui/utils";
+import CloseModal from "~/components/Modals/CloseModal/CloseModal";
+import { PhHeart } from "~/components/icons/icons";
+import { type AppRoutes } from "~/routes.gen";
+import {
+  serverRemoveUserStep,
+  serverUpdateUserStep,
+  serverUserAddStep,
+} from "~/routes/api/service_game/serviceUserAddStep";
+import {
+  type Step,
+  type StepMultipleChoiceType,
+  type StepTextType,
+} from "~/routes/api/service_game/types";
 
 export const useLoaderQuestioner = routeLoader$(async function (event) {
-  const params = event.params as { section: string, unit: string };
+  const params = event.params as { section: string; unit: string };
   const steps = await serverUserAddStep({
     unit: parseInt(params.unit),
     section: parseInt(params.section),
@@ -22,123 +37,138 @@ type CountStore = {
   changeAnswer: QRL<(answer: string) => void>;
   answers: {
     [key: string]: string;
-  }
+  };
 };
-
 
 export default component$(() => {
   const loadedQuestioner = useLoaderQuestioner().value;
-  if (!loadedQuestioner || !loadedQuestioner.success || !loadedQuestioner.value) {
+  if (
+    !loadedQuestioner ||
+    !loadedQuestioner.success ||
+    !loadedQuestioner.value
+  ) {
     return <div>Error</div>;
   }
 
   const g = useEducationalGameQuestioner(loadedQuestioner.value);
   return (
-    <div class={cn("grid grid-rows-[40px,1fr,60px] gap-3 h-screen text-gray-50  bg-gray-950 font-roundsans tracking-wide overflow-y-auto")}>
-      <div q:slot='header' class=" grid grid-cols-[auto,1fr,auto] gap-3 content-center items-center p-2 text-gray-400">
-        <button onClick$={g.handelClose}>
-          <PhClose class="w-6 h-6 fill-gray-700" />
-        </button>
-        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-          <div class="bg-blue-600 h-2.5 rounded-full" style={`width: ${g.computedProgress.value}%`}></div>
-        </div>
-        <PhHeart class="w-6 h-6 fill-rose-600" />
-      </div>
-      <div q:slot='main' class="p-2 overflow-y-auto h-full bg-gray-950">
-        {
-          g.currentStep.value.metadata.type === "step_text" ? (
-            <RenderLearningTypeText
-              text={g.currentStep.value.metadata.text}
-              title={g.currentStep.value.metadata.title}
-              id={`${g.currentStep.value.id}`}
+    <div
+      class={cn(
+        "grid h-screen grid-rows-[40px,1fr,60px] gap-3 overflow-y-auto bg-gray-950 font-roundsans tracking-wide text-gray-50",
+      )}
+    >
+      <div
+        q:slot="header"
+        class="grid grid-cols-[auto,1fr,auto] content-center items-center gap-3 p-2 text-gray-400"
+      >
+        <CloseModal />
+        {/* <button onClick$={g.handelClose}>
 
-            />
-          ) : g.currentStep.value.metadata.type === "step_multiple_choice" ? (
-            <RenderLearningTypeQuestion
-              title={g.currentStep.value.metadata.title}
-              question={g.currentStep.value.metadata.question}
-              options={g.currentStep.value.metadata.options}
-              correctAnswer={g.currentStep.value.metadata.correctAnswer}
-              answer={g.currentStep.value.metadata.answer}
-              id={`${g.currentStep.value.id}`}
-              store={g.game}
-            />
-          ) : (
-            <div>Finish</div>
-          )
-        }
+          <PhClose class="h-6 w-6 fill-gray-700" />
+        </button> */}
+        <div class="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
+          <div
+            class="h-2.5 rounded-full bg-blue-600"
+            style={`width: ${g.computedProgress.value}%`}
+          ></div>
+        </div>
+        <PhHeart class="h-6 w-6 fill-rose-600" />
       </div>
-      <div q:slot='footer' class="grid pb-6 p-2">
-        <button class="btn disabled:bg-gray-800 disabled:border-gray-800 " disabled={g.computedBtnState.value === "disabled"} onClick$={() => g.game.onStepChange()}>
+      <div q:slot="main" class="h-full overflow-y-auto bg-gray-950 p-2">
+        {g.currentStep.value.metadata.type === "step_text" ? (
+          <RenderLearningTypeText
+            text={g.currentStep.value.metadata.text}
+            title={g.currentStep.value.metadata.title}
+            id={`${g.currentStep.value.id}`}
+          />
+        ) : g.currentStep.value.metadata.type === "step_multiple_choice" ? (
+          <RenderLearningTypeQuestion
+            title={g.currentStep.value.metadata.title}
+            question={g.currentStep.value.metadata.question}
+            options={g.currentStep.value.metadata.options}
+            correctAnswer={g.currentStep.value.metadata.correctAnswer}
+            answer={g.currentStep.value.metadata.answer}
+            id={`${g.currentStep.value.id}`}
+            store={g.game}
+          />
+        ) : (
+          <div>Finish</div>
+        )}
+      </div>
+      <div q:slot="footer" class="grid p-2 pb-6">
+        <button
+          class="btn disabled:border-gray-800 disabled:bg-gray-800"
+          disabled={g.computedBtnState.value === "disabled"}
+          onClick$={() => g.game.onStepChange()}
+        >
           Continue
         </button>
       </div>
-      <CloseModal />
-  </div>
+    </div>
   );
 });
 
+export interface RenderLearningTypeTextProps
+  extends Omit<StepTextType, "type" | "next"> {
+  id: string;
+}
 
+export const RenderLearningTypeText = component$<RenderLearningTypeTextProps>(
+  (props) => {
+    return (
+      <Fragment key={props.id}>
+        <h1 class="mb-3 text-2xl">{props.title}</h1>
+        <p class="text-xl text-gray-400">{props.text}</p>
+      </Fragment>
+    );
+  },
+);
 
-export interface RenderLearningTypeTextProps extends Omit<StepTextType, "type" | "next"> {id: string;}
-
-export const RenderLearningTypeText = component$<RenderLearningTypeTextProps>((props) => {
-
-  return (
-    <Fragment key={props.id}>
-      <h1 class="text-2xl mb-3">{props.title}</h1>
-      <p class="text-xl text-gray-400">{props.text}</p>
-    </Fragment>
-  )
-});
-
-export interface RenderLearningTypeQuestionProps extends Omit<StepMultipleChoiceType, "type" | "next"> {
+export interface RenderLearningTypeQuestionProps
+  extends Omit<StepMultipleChoiceType, "type" | "next"> {
   id: string;
   store: CountStore;
 }
 
-export const RenderLearningTypeQuestion = component$<RenderLearningTypeQuestionProps>((props) => {
-
-  return (
-    <Fragment key={props.id}>
-      <h1 class="text-2xl mb-3">{props.title}</h1>
-      <p class="text-xl text-gray-400">{props.question}</p>
-      <fieldset
-        onChange$={(e) => {
-          const target = e.target as HTMLInputElement;
-          props.store.changeAnswer(target.value);
-        }}
-        class="mt-4"
-      >
-        <legend class="text-xl text-gray-400 pb-4">Choose an option:</legend>
-        <div class="grid grid-cols-1 gap-4">
-          {props.options.map((option) => (
-            <label key={option} class="flex items-center cursor-pointer">
-              <input
-                type="radio"
-                name="question"
-                checked={option === props.store.answers[props.title]}
-                value={option}
-                class="peer hidden"
-              />
-              <span
-                class="ml-2 text-gray-50 p-3 border-gray-50 border-2 sm:w-auto w-full peer-checked:border-blue-200 rounded-md peer-checked:bg-blue-950 peer-checked:text-blue-200 peer-checked:font-bold duration-300 transition-all ease-in-out"
-              >
-                {option}
-              </span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-    </Fragment>
-  )
-});
+export const RenderLearningTypeQuestion =
+  component$<RenderLearningTypeQuestionProps>((props) => {
+    return (
+      <Fragment key={props.id}>
+        <h1 class="mb-3 text-2xl">{props.title}</h1>
+        <p class="text-xl text-gray-400">{props.question}</p>
+        <fieldset
+          onChange$={(e) => {
+            const target = e.target as HTMLInputElement;
+            props.store.changeAnswer(target.value);
+          }}
+          class="mt-4"
+        >
+          <legend class="pb-4 text-xl text-gray-400">Choose an option:</legend>
+          <div class="grid grid-cols-1 gap-4">
+            {props.options.map((option) => (
+              <label key={option} class="flex cursor-pointer items-center">
+                <input
+                  type="radio"
+                  name="question"
+                  checked={option === props.store.answers[props.title]}
+                  value={option}
+                  class="peer hidden"
+                />
+                <span class="ml-2 w-full rounded-md border-2 border-gray-50 p-3 text-gray-50 transition-all duration-300 ease-in-out peer-checked:border-blue-200 peer-checked:bg-blue-950 peer-checked:font-bold peer-checked:text-blue-200 sm:w-auto">
+                  {option}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </Fragment>
+    );
+  });
 
 export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
-
   const game = useStore<CountStore>({
     step: 0,
-    onStepChange: $(function(this: CountStore) {
+    onStepChange: $(function (this: CountStore) {
       const current = loadedQuestioner.at(this.step);
       switch (current?.metadata.type) {
         case "step_text":
@@ -149,7 +179,7 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
           break;
       }
     }),
-    changeAnswer: $(async  function(this: CountStore, answer: string) {
+    changeAnswer: $(async function (this: CountStore, answer: string) {
       const current = loadedQuestioner[this.step];
       if (current.metadata.type !== "step_multiple_choice") {
         return;
@@ -159,40 +189,44 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
       current.metadata.answer = current.metadata.options.indexOf(answer);
 
       await serverUpdateUserStep(current);
-
     }),
     // TODO: this code below is running on the client each time the there is change. Fix this.
-    answers: loadedQuestioner.reduce((acc, curr) => {
-      if (curr.metadata.type === "step_multiple_choice" && curr.metadata.answer !== undefined) {
-        acc[curr.metadata.title] = curr.metadata.options[curr.metadata.answer];
-      }
-      return acc;
-    }, {} as Record<string, string>),
+    answers: loadedQuestioner.reduce(
+      (acc, curr) => {
+        if (
+          curr.metadata.type === "step_multiple_choice" &&
+          curr.metadata.answer !== undefined
+        ) {
+          acc[curr.metadata.title] =
+            curr.metadata.options[curr.metadata.answer];
+        }
+        return acc;
+      },
+      {} as Record<string, string>,
+    ),
   });
 
-  
   const computedProgress = useComputed$(() => {
-    
     function countTotalSteps(steps: Step[]): number {
       return steps.length;
     }
-  
+
     function countRemainingSteps(currentStep: number, steps: Step[]): number {
       return steps.length - currentStep;
     }
     const totalSteps = countTotalSteps(loadedQuestioner);
     const remainingSteps = countRemainingSteps(game.step, loadedQuestioner);
     const completedSteps = totalSteps - remainingSteps;
-  
+
     return (completedSteps / totalSteps) * 100;
   });
-  
+
   const computedBtnState = useComputed$(() => {
     return "enabled";
   });
 
   const currentStep = useComputed$(() => {
-    return loadedQuestioner[game.step]
+    return loadedQuestioner[game.step];
   });
 
   const nav = useNavigate();
@@ -201,15 +235,14 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
     const result = await serverRemoveUserStep(currentStep.value);
     if (!result.success) return;
     const pathy: AppRoutes = "/client/play/" as "/client/(main)/play/";
-    nav(pathy, {forceReload: true});
+    nav(pathy, { forceReload: true });
   });
-
 
   return {
     game,
     computedProgress,
     computedBtnState,
     currentStep,
-    handelClose
-  }
-}
+    handelClose,
+  };
+};

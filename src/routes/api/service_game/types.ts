@@ -1,40 +1,39 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const StepTextSchema = z.object({
-    type: z.literal('step_text'),
-    title: z.string(),
-    text: z.string(),
+  type: z.literal("step_text"),
+  title: z.string(),
+  text: z.string(),
 });
 export const StepMultipleChoiceSchema = z.object({
-    type: z.literal('step_multiple_choice'),
+  type: z.literal("step_multiple_choice"),
+  title: z.string(),
+  question: z.string(),
+  options: z.array(z.string()),
+  correctAnswer: z.number(),
+  answer: z.number().optional(),
+});
+export const StepFinishSchema = z.object({
+  type: z.literal("step_finish"),
+});
+
+const MetadataSchema = z.union([
+  z.object({
+    type: z.literal("step_text"),
+    title: z.string(),
+    text: z.string(),
+  }),
+  z.object({
+    type: z.literal("step_multiple_choice"),
     title: z.string(),
     question: z.string(),
     options: z.array(z.string()),
     correctAnswer: z.number(),
-    answer: z.number().optional(),
-});
-export const StepFinishSchema = z.object({
-    type: z.literal('step_finish'),
-});
-
-
-const MetadataSchema = z.union([
-    z.object({
-        type: z.literal('step_text'),
-        title: z.string(),
-        text: z.string(),
-    }),
-    z.object({
-        type: z.literal('step_multiple_choice'),
-        title: z.string(),
-        question: z.string(),
-        options: z.array(z.string()),
-        correctAnswer: z.number(),
-        answer: z.optional(z.number()),
-    }),
-    z.object({
-        type: z.literal('step_finish'),
-    }),
+    answer: z.optional(z.number()),
+  }),
+  z.object({
+    type: z.literal("step_finish"),
+  }),
 ]);
 
 // Define the steps schema
@@ -49,7 +48,6 @@ const StepSchema = z.object({
 
 export { StepSchema };
 
-
 // Example of using AnyStepType schema
 export type StepTextType = z.infer<typeof StepTextSchema>;
 export type StepMultipleChoiceType = z.infer<typeof StepMultipleChoiceSchema>;
@@ -57,25 +55,25 @@ export type StepFinishType = z.infer<typeof StepFinishSchema>;
 export type StepMetadata = z.infer<typeof MetadataSchema>;
 export type Step = z.infer<typeof StepSchema>;
 
-
-
 // Function to validate and process the JSON string
 export function validateAndProcessJson(jsonString: string) {
-    try {
-      // Parse the JSON string
-      const parsedJson = JSON.parse(jsonString);
-      
-      // Validate the parsed JSON
-      const result = z.object({steps: StepSchema.partial().array()}).parse(parsedJson);
-      
-      // Perform some action if valid
-      return result;
-      // You can add more actions here as needed
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        console.error("Validation failed:", error.errors);
-      } else {
-        console.error("Failed to parse JSON:", error);
-      }
+  try {
+    // Parse the JSON string
+    const parsedJson = JSON.parse(jsonString);
+
+    // Validate the parsed JSON
+    const result = z
+      .object({ steps: StepSchema.partial().array() })
+      .parse(parsedJson);
+
+    // Perform some action if valid
+    return result;
+    // You can add more actions here as needed
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error("Validation failed:", error.errors);
+    } else {
+      console.error("Failed to parse JSON:", error);
     }
   }
+}

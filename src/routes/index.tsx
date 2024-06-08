@@ -1,9 +1,13 @@
 import { type Session } from "@auth/core/types";
 import { component$ } from "@builder.io/qwik";
-import { Link, type DocumentHead, type RequestHandler } from "@builder.io/qwik-city";
+import {
+  Link,
+  type DocumentHead,
+  type RequestHandler,
+} from "@builder.io/qwik-city";
 
 export const onRequest: RequestHandler = (event) => {
-  const session: Session | null = event.sharedMap.get('session');
+  const session: Session | null = event.sharedMap.get("session");
   const isSignedIn = session && new Date(session.expires) > new Date();
   if (isSignedIn) {
     throw event.redirect(302, `/client/play`);
@@ -11,7 +15,6 @@ export const onRequest: RequestHandler = (event) => {
 };
 
 export default component$(() => {
-
   return (
     <>
       <div>Home</div>

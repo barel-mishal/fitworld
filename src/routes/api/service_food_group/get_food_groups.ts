@@ -1,7 +1,7 @@
 import { server$ } from "@builder.io/qwik-city";
 import { serverInitDatabase } from "~/routes/seedDatabase";
 
-import { z } from 'zod';
+import { z } from "zod";
 
 const UnitSchema = z.object({
   hebrew_unit: z.string(),
@@ -31,16 +31,19 @@ export const IngredientSchema = z.object({
 
 export type Ingredient = z.infer<typeof IngredientSchema>;
 
-  interface ServerGetIngredientsOptions {
-    limit?: number;
-    search?: string;
-    [key: string]: string | number | undefined;
-  }
-  export const serverGetIngredients = server$(async function(options: ServerGetIngredientsOptions) {
-      try {
-        const db = await serverInitDatabase();
-        await db.use({ namespace: "namespace", database: "database" });
-        const result = await db.query_raw<[Partial<Ingredient>[]]>(`
+interface ServerGetIngredientsOptions {
+  limit?: number;
+  search?: string;
+  [key: string]: string | number | undefined;
+}
+export const serverGetIngredients = server$(async function (
+  options: ServerGetIngredientsOptions,
+) {
+  try {
+    const db = await serverInitDatabase();
+    await db.use({ namespace: "namespace", database: "database" });
+    const result = await db.query_raw<[Partial<Ingredient>[]]>(
+      `
         IF $search != "" THEN 
           SELECT *, ->ingredient_measurements.* AS units, ->ingredient_measurements.*.out.name AS units_names FROM Ingredient WHERE name ~ $search LIMIT $limit
         ELSE IF $mostPopular == true THEN 
@@ -54,22 +57,24 @@ export type Ingredient = z.infer<typeof IngredientSchema>;
         ELSE
           SELECT *, ->ingredient_measurements.* AS units, ->ingredient_measurements.*.out.name AS units_names FROM Ingredient LIMIT $limit
         END;
-        `, options);
-        if (result[0].status === "ERR") return {ingredients: []}
-        const ingredients = IngredientSchema.array().safeParse(result[0].result);
-        if (!ingredients.success) {
-          console.error(ingredients.error);
-          return {
-            ingredients: []
-          }
-        }
-        return {
-          ingredients: ingredients.data
-        } 
-      } catch (error) {
-        console.error(error);
-        return {
-          ingredients: []
-        }
-      }
-  });
+        `,
+      options,
+    );
+    if (result[0].status === "ERR") return { ingredients: [] };
+    const ingredients = IngredientSchema.array().safeParse(result[0].result);
+    if (!ingredients.success) {
+      console.error(ingredients.error);
+      return {
+        ingredients: [],
+      };
+    }
+    return {
+      ingredients: ingredients.data,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      ingredients: [],
+    };
+  }
+});

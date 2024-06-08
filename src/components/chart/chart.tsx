@@ -1,9 +1,16 @@
-import { type NoSerialize, component$, noSerialize, useSignal, useVisibleTask$, type Signal } from '@builder.io/qwik';
-import ApexCharts from 'apexcharts';
-import type { ApexOptions } from 'apexcharts';
+import {
+  type NoSerialize,
+  component$,
+  noSerialize,
+  useSignal,
+  useVisibleTask$,
+  type Signal,
+} from "@builder.io/qwik";
+import ApexCharts from "apexcharts";
+import type { ApexOptions } from "apexcharts";
 
-import { LuBarChart } from '@qwikest/icons/lucide';
-import { fillMissingDates, getDateFormatter } from './utils';
+import { LuBarChart } from "@qwikest/icons/lucide";
+import { fillMissingDates, getDateFormatter } from "./utils";
 
 interface ClicksChartProps {
   daysDuration: number;
@@ -19,8 +26,10 @@ export const Chart = component$((props: ClicksChartProps) => {
   const chartRef = useSignal<HTMLDivElement>();
   const chartInstance = useSignal<NoSerialize<ApexCharts> | null>(null);
   const isInitialized = useSignal(false);
-  const totalClicks = useSignal(props.initialData.reduce((acc, { count }) => acc + parseInt(count, 10), 0));
-  const chartDescription = useSignal('7 days');
+  const totalClicks = useSignal(
+    props.initialData.reduce((acc, { count }) => acc + parseInt(count, 10), 0),
+  );
+  const chartDescription = useSignal("7 days");
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(async ({ track }) => {
@@ -28,37 +37,43 @@ export const Chart = component$((props: ClicksChartProps) => {
 
     const data: { clicksOverTime: { day: string; count: string }[] } = {
       clicksOverTime: props.initialData,
-    }
-    const filledData = fillMissingDates(data.clicksOverTime, props.daysDuration);
+    };
+    const filledData = fillMissingDates(
+      data.clicksOverTime,
+      props.daysDuration,
+    );
     const formatter = getDateFormatter(props.daysDuration);
-    totalClicks.value = data.clicksOverTime.reduce((acc, { count }) => acc + parseInt(count, 10), 0);
+    totalClicks.value = data.clicksOverTime.reduce(
+      (acc, { count }) => acc + parseInt(count, 10),
+      0,
+    );
     updateChartDescription(chartDescription, props.daysDuration);
     if (!chartInstance.value) {
       const options: ApexOptions = {
         chart: {
-          type: 'area',
-          height: '350px',
+          type: "area",
+          height: "350px",
           toolbar: { show: false },
-          background: 'transparent',
+          background: "transparent",
         },
-        series: [{ name: 'Clicks', data: filledData }],
+        series: [{ name: "Clicks", data: filledData }],
         xaxis: {
-          type: 'datetime',
+          type: "datetime",
           labels: {
             rotate: -45,
             formatter,
           },
         },
         yaxis: {
-          title: { text: 'Clicks' },
+          title: { text: "Clicks" },
           min: 0,
           forceNiceScale: true,
         },
-        tooltip: { x: { format: 'dd MMM yyyy HH:mm' } },
+        tooltip: { x: { format: "dd MMM yyyy HH:mm" } },
         dataLabels: { enabled: false },
         grid: {
           show: true,
-          borderColor: '#374151',
+          borderColor: "#374151",
           strokeDashArray: 5,
           xaxis: {
             lines: {
@@ -71,19 +86,21 @@ export const Chart = component$((props: ClicksChartProps) => {
             },
           },
         },
-        theme: { mode: 'dark', palette: 'palette1' },
+        theme: { mode: "dark", palette: "palette1" },
       };
 
       // Ensure the chartRef is available before rendering the chart
       if (chartRef.value) {
-        chartInstance.value = noSerialize(new ApexCharts(chartRef.value, options));
+        chartInstance.value = noSerialize(
+          new ApexCharts(chartRef.value, options),
+        );
         await chartInstance.value!.render();
-        window.addEventListener('theme-toggled', (ev) => {
+        window.addEventListener("theme-toggled", (ev) => {
           const theme = (ev as CustomEvent).detail.theme;
           chartInstance.value!.updateOptions({
-            theme: { mode: theme, palette: 'palette1' },
+            theme: { mode: theme, palette: "palette1" },
             grid: {
-              borderColor: '#374151',
+              borderColor: "#374151",
             },
           });
         });
@@ -99,18 +116,18 @@ export const Chart = component$((props: ClicksChartProps) => {
 
   return (
     <>
-      <div class="w-full bg-white rounded-lg shadow dark:bg-slate-800 p-4 md:p-6">
+      <div class="w-full rounded-lg bg-white p-4 shadow md:p-6 dark:bg-slate-800">
         <div class="flex justify-between">
           <div>
             <div class="flex items-center gap-1 text-gray-700 dark:text-gray-200">
-              <LuBarChart class="w-8 h-8" />
-              <h5 class="leading-none text-3xl font-bold">{totalClicks}</h5>
+              <LuBarChart class="h-8 w-8" />
+              <h5 class="text-3xl font-bold leading-none">{totalClicks}</h5>
             </div>
             <p class="text-base font-normal text-gray-500 dark:text-gray-400">{`Clicks for the last ${chartDescription.value}`}</p>
           </div>
         </div>
         {!isInitialized.value ? (
-          <div class="flex items-center justify-center min-h-[365px]">
+          <div class="flex min-h-[365px] items-center justify-center">
             <span class="loading loading-spinner loading-lg" />
           </div>
         ) : null}
@@ -120,20 +137,22 @@ export const Chart = component$((props: ClicksChartProps) => {
   );
 });
 
-const updateChartDescription = (chartDescription: Signal<string>, daysDuration: number) => {
+const updateChartDescription = (
+  chartDescription: Signal<string>,
+  daysDuration: number,
+) => {
   switch (daysDuration) {
     case 1:
-      chartDescription.value = '24 hours';
+      chartDescription.value = "24 hours";
       break;
     case 30:
-      chartDescription.value = '30 days';
+      chartDescription.value = "30 days";
       break;
     case 365:
-      chartDescription.value = 'year';
+      chartDescription.value = "year";
       break;
     default:
-      chartDescription.value = '7 days';
+      chartDescription.value = "7 days";
       break;
   }
 };
-
