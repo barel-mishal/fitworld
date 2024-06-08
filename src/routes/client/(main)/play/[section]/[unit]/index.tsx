@@ -1,5 +1,5 @@
-import { $, Fragment, type QRL, component$, useComputed$, useStore, useVisibleTask$ } from '@builder.io/qwik';
-import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
+import { $, Fragment, type QRL, component$, useComputed$, useStore } from '@builder.io/qwik';
+import { routeLoader$ } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
 import { AppLinkGlobal } from '~/routes.config';
@@ -88,25 +88,6 @@ export default component$(() => {
 
   const currentStep = useComputed$(() => {
     return loadedQuestioner.value[game.step]
-  });
-  const loc = useLocation();
-  const nav = useNavigate();
-
-  // eslint-disable-next-line qwik/no-use-visible-task
-  useVisibleTask$(({ track }) => {
-    const stp = track(() => game.step);
-    
-    // Create a new URLSearchParams object from the current search params
-    const searchParams = new URLSearchParams(loc.url.search);
-
-    // Set or update the search parameter
-    searchParams.set('step', stp.toString());
-
-    // Construct the new URL with updated search parameters
-    const newUrl = `${loc.url.pathname}?${searchParams.toString()}`;
-
-    // Navigate to the new URL
-    nav(newUrl, { replaceState: false });
   });
   return (
     <div class={cn("grid grid-rows-[40px,1fr,60px] gap-3 h-screen text-gray-50  bg-gray-950 font-roundsans tracking-wide overflow-y-auto")}>
