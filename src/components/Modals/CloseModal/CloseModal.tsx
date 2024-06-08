@@ -9,11 +9,10 @@ import { PhClose, PhFooPeinapple } from "~/components/icons/icons";
 
 export default component$(() => {
   const refRoot = useSignal<HTMLDivElement>();
-  const show = useSignal<boolean>(true);
+  const show = useSignal<boolean>(false);
 
   const onClickOpen = $(() => (show.value = !show.value));
   const onClickOutside = $((even: Event) => {
-    console.log("click");
     const isClickOutside =
       refRoot.value && !refRoot.value.contains(even.target as Node);
     if (isClickOutside && show.value) {
