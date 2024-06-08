@@ -3,14 +3,16 @@ import { routeLoader$, useLocation, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
 import { AppLinkGlobal } from '~/routes.config';
-import { serverUpdateUserStep, serverUserSteps } from '~/routes/api/service_game/serviceUserSteps';
+import { serverUpdateUserStep, serverUserAddStep } from '~/routes/api/service_game/serviceUserAddStep';
 import { type Step, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/types';
 
-export const useLoaderQuestioner = routeLoader$(async function () {
-
-  const steps = await serverUserSteps({ unit: 1, section: 1, index: 1 });
-
-  return steps.steps;
+export const useLoaderQuestioner = routeLoader$(async function (event) {
+  const params = event.params as { section: string, unit: string };
+  const steps = await serverUserAddStep({
+    unit: parseInt(params.unit),
+    section: parseInt(params.section),
+  });
+  return steps;
 });
 
 type CountStore = {
@@ -24,11 +26,15 @@ type CountStore = {
 
 
 export default component$(() => {
-  const loadedQuestioner = useLoaderQuestioner();
+  const loadedQuestioner = useLoaderQuestioner().value;
+  if (!loadedQuestioner || !loadedQuestioner.success || !loadedQuestioner.value) {
+    return <div>Error</div>;
+  }
+
   const game = useStore<CountStore>({
     step: 0,
     onStepChange: $(function(this: CountStore) {
-      const current = loadedQuestioner.value.at(this.step);
+      const current = loadedQuestioner.value?.at(this.step);
       switch (current?.metadata.type) {
         case "step_text":
         case "step_multiple_choice":

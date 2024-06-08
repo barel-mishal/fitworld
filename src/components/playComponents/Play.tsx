@@ -28,9 +28,16 @@ const Play = component$(() => {
                     element={{class: "p-4 bg-green-600 rounded-xl col-span-12 border-b-4 border-green-900 sticky top-0"}} 
                 />
                 <div class="col-start-3 col-span-4 row-span-1  ">
-                    <button onClick$={async () => await handleStepChange("The Importance Of Nutrition", 1, 1, 1)} class="w-full h-16 p-4 border-b-4 border-green-900 bg-green-600 rounded-full text-green-50 grid place-content-center active:border-b transition-all ease-in-out">
+                    {/* <button onClick$={async () => await handleStepChange("The Importance Of Nutrition", 1, 1, 1)} class="w-full h-16 p-4 border-b-4 border-green-900 bg-green-600 rounded-full text-green-50 grid place-content-center active:border-b transition-all ease-in-out">
                         <PhStar class="w-8 h-8 fill-current"/>
-                    </button>
+                    </button> */}
+                    <AppLink 
+                        route="/client/(main)/play/[section]/[unit]/" 
+                        param:unit={"1"} param:section="1" 
+                        class="w-full h-16 p-4 border-b-4 border-green-900 bg-green-600 rounded-full text-green-50 grid place-content-center active:border-b transition-all ease-in-out"
+                    >
+                        <PhStar class="w-8 h-8 fill-current"/>
+                    </AppLink>
                 </div>
                 <div class="col-span-4 row-span-1 col-start-5 ">
                     <button onClick$={async () => await handleStepChange("The Importance Of Nutrition", 1, 1, 2)} class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center">
