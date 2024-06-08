@@ -1,37 +1,49 @@
 {
   "version": "6.0",
-  "nxVersion": "18.2.4",
+  "nxVersion": "19.1.2",
   "deps": {
     "@builder.io/qwik-labs": "github:BuilderIo/qwik-labs-build#main",
+    "@paypal/paypal-js": "^8.0.5",
     "@qwikest/icons": "^0.0.13",
-    "@tailwindcss/typography": "^0.5.12",
+    "@shopify/draggable": "^1.1.3",
+    "@tailwindcss/typography": "^0.5.13",
+    "apexcharts": "^3.49.1",
     "class-variance-authority": "^0.7.0",
-    "isomorphic-dompurify": "^2.7.0",
-    "marked": "^12.0.1",
+    "install": "^0.13.0",
+    "isomorphic-dompurify": "^2.11.0",
+    "lru-cache": "^10.2.2",
+    "marked": "^12.0.2",
+    "openai": "^4.49.0",
     "surrealdb.js": "^0.11.0",
+    "uploadthing": "^6.12.0",
     "@auth/core": "^0.13.0",
-    "@builder.io/qwik": "^1.5.2",
+    "@builder.io/qwik": "^1.5.5",
     "@builder.io/qwik-auth": "^0.1.3",
-    "@builder.io/qwik-city": "^1.5.2",
-    "@qwik-ui/headless": "^0.3.5",
-    "@qwik-ui/styled": "^0.0.5",
+    "@builder.io/qwik-city": "^1.5.5",
+    "@qwik-ui/headless": "^0.4.3",
+    "@qwik-ui/styled": "^0.1.0",
     "@qwik-ui/utils": "^0.2.1",
-    "@types/eslint": "^8.56.5",
-    "@types/node": "^20.12.7",
-    "@typescript-eslint/eslint-plugin": "^7.6.0",
-    "@typescript-eslint/parser": "^7.6.0",
+    "@types/compression": "^1.7.2",
+    "@types/eslint": "^8.56.10",
+    "@types/express": "^4.17.19",
+    "@types/node": "^20.14.1",
+    "@typescript-eslint/eslint-plugin": "^7.12.0",
+    "@typescript-eslint/parser": "^7.11.0",
     "autoprefixer": "^10.4.14",
+    "compression": "^1.7.4",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
-    "eslint-plugin-qwik": "^1.5.2",
-    "nx": "^18.2.4",
+    "eslint-plugin-qwik": "^1.5.5",
+    "express": "4.19.2",
+    "nx": "^19.1.2",
     "postcss": "^8.4.31",
-    "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.5.4",
+    "prettier": "^3.3.0",
+    "prettier-plugin-tailwindcss": "^0.6.1",
     "qwik-ui": "^0.1.0",
-    "tailwindcss": "^3.4.3",
+    "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
-    "undici": "^6.12.0",
-    "vite": "^5.1.4",
+    "undici": "^6.18.2",
+    "vite": "^5.2.12",
     "vite-tsconfig-paths": "^4.2.1"
   },
   "pathMappings": {
@@ -81,23 +93,24 @@
         },
         {
           "file": "README.md",
-          "hash": "3671737319822462740"
+          "hash": "820981941220229964"
+        },
+        {
+          "file": "adapters/express/vite.config.ts",
+          "hash": "13607159864454915369"
+        },
+        {
+          "file": "history.txt",
+          "hash": "14367146395061154331"
         },
         {
           "file": "package-lock.json",
-          "hash": "7595506463227068156"
+          "hash": "14947018616644649994"
         },
         {
           "file": "package.json",
-          "hash": "11510544029061299597",
+          "hash": "7691429425798525275",
           "deps": [
-            "npm:@builder.io/qwik-labs",
-            "npm:@qwikest/icons",
-            "npm:@tailwindcss/typography",
-            "npm:class-variance-authority",
-            "npm:isomorphic-dompurify",
-            "npm:marked",
-            "npm:surrealdb.js",
             "npm:@auth/core",
             "npm:@builder.io/qwik",
             "npm:@builder.io/qwik-auth",
@@ -105,13 +118,18 @@
             "npm:@qwik-ui/headless",
             "npm:@qwik-ui/styled",
             "npm:@qwik-ui/utils",
+            "npm:@types/compression",
             "npm:@types/eslint",
+            "npm:@types/express",
             "npm:@types/node",
             "npm:@typescript-eslint/eslint-plugin",
             "npm:@typescript-eslint/parser",
             "npm:autoprefixer",
+            "npm:compression",
+            "npm:dotenv",
             "npm:eslint",
             "npm:eslint-plugin-qwik",
+            "npm:express",
             "npm:nx",
             "npm:postcss",
             "npm:prettier",
@@ -121,7 +139,20 @@
             "npm:typescript",
             "npm:undici",
             "npm:vite",
-            "npm:vite-tsconfig-paths"
+            "npm:vite-tsconfig-paths",
+            "npm:@paypal/paypal-js",
+            "npm:@qwikest/icons",
+            "npm:@shopify/draggable",
+            "npm:@tailwindcss/typography",
+            "npm:apexcharts",
+            "npm:class-variance-authority",
+            "npm:install",
+            "npm:isomorphic-dompurify",
+            "npm:lru-cache",
+            "npm:marked",
+            "npm:openai",
+            "npm:surrealdb.js",
+            "npm:uploadthing"
           ]
         },
         {
@@ -130,11 +161,19 @@
         },
         {
           "file": "public/favicon.svg",
+          "hash": "5046894356132339361"
+        },
+        {
+          "file": "public/favicon2.svg",
           "hash": "446107399934622830"
         },
         {
+          "file": "public/json_foodit_ingredients.json",
+          "hash": "8704664892925710685"
+        },
+        {
           "file": "public/manifest.json",
-          "hash": "12573047294351719872"
+          "hash": "9861025138619883145"
         },
         {
           "file": "public/robots.txt",
@@ -149,20 +188,64 @@
           "hash": "10416806155929584384"
         },
         {
+          "file": "src/components/ActivityLevel/ActivityLevel.tsx",
+          "hash": "2787449920766875257"
+        },
+        {
+          "file": "src/components/BentoGrid/BentoGrid.tsx",
+          "hash": "3818055893188912810"
+        },
+        {
+          "file": "src/components/DragAndDropExample/DragAndDropExample.tsx",
+          "hash": "3244421341483603138"
+        },
+        {
           "file": "src/components/HookComponent/NavLink.tsx",
           "hash": "8980389299613920095"
         },
         {
+          "file": "src/components/Modals/CloseModal/CloseModal.tsx",
+          "hash": "3328431567958105911"
+        },
+        {
+          "file": "src/components/Sortable/Sortable.tsx",
+          "hash": "2420694060078173667"
+        },
+        {
+          "file": "src/components/TrackFood/trackFood.tsx",
+          "hash": "11825926760951434578"
+        },
+        {
+          "file": "src/components/chart/chart.tsx",
+          "hash": "18004161722916587599"
+        },
+        {
+          "file": "src/components/chart/utils.ts",
+          "hash": "4506927552188860120"
+        },
+        {
+          "file": "src/components/draggable/draggable.tsx",
+          "hash": "2071547343347844817"
+        },
+        {
+          "file": "src/components/gamelayouts/modals/ModalLogout.tsx",
+          "hash": "2629926412940773357"
+        },
+        {
           "file": "src/components/gamelayouts/smallScreens/headerMainBottomNav.tsx",
-          "hash": "17776379036468594692"
+          "hash": "10626205271728596985"
+        },
+        {
+          "file": "src/components/icons/icons.tsx",
+          "hash": "6166756122410045950"
+        },
+        {
+          "file": "src/components/layout_blocks/NavBar/Navs.tsx",
+          "hash": "16745303841313864081"
         },
         {
           "file": "src/components/layout_blocks/dashboard_layout_components/dashboard.tsx",
-          "hash": "6896580277863357049"
-        },
-        {
-          "file": "src/components/layout_blocks/dashboard_layout_components/dashboardModal.tsx",
-          "hash": "18235399213986936937"
+          "hash": "10232469760691095748"
         },
         {
           "file": "src/components/layout_blocks/notes_layout_components/NoteComp.tsx",
@@ -174,7 +257,7 @@
         },
         {
           "file": "src/components/layout_blocks/notes_layout_components/PublishModal.tsx",
-          "hash": "5491317668853935215"
+          "hash": "12250630070865086753"
         },
         {
           "file": "src/components/layout_blocks/notes_layout_components/SideBarNotes.tsx",
@@ -185,16 +268,24 @@
           "hash": "16402727492826579404"
         },
         {
+          "file": "src/components/playComponents/Play.tsx",
+          "hash": "6593969425946399501"
+        },
+        {
+          "file": "src/components/playComponents/data.tsx",
+          "hash": "3244421341483603138"
+        },
+        {
           "file": "src/components/router-head/router-head.tsx",
           "hash": "11243044365060691416"
         },
         {
           "file": "src/components/ui/button/button.tsx",
-          "hash": "7448554404522399794"
+          "hash": "12086229233632952826"
         },
         {
           "file": "src/components/ui/combobox/combobox.tsx",
-          "hash": "9751988013010651914"
+          "hash": "11098782389142700549"
         },
         {
           "file": "src/components/ui/input/input.tsx",
@@ -206,7 +297,11 @@
         },
         {
           "file": "src/components/ui/modal/modal.tsx",
-          "hash": "7199405005343027892"
+          "hash": "11369094645781793252"
+        },
+        {
+          "file": "src/components/ui/popover/popover.tsx",
+          "hash": "8971291583465020153"
         },
         {
           "file": "src/components/ui/textarea/textarea.tsx",
@@ -215,6 +310,10 @@
         {
           "file": "src/entry.dev.tsx",
           "hash": "15859778472158270085"
+        },
+        {
+          "file": "src/entry.express.tsx",
+          "hash": "17376403192672411014"
         },
         {
           "file": "src/entry.preview.tsx",
@@ -226,7 +325,7 @@
         },
         {
           "file": "src/global.css",
-          "hash": "13791595967450366972"
+          "hash": "5895216025970503903"
         },
         {
           "file": "src/root.tsx",
@@ -234,15 +333,43 @@
         },
         {
           "file": "src/routes.config.tsx",
-          "hash": "5505912692135557049"
+          "hash": "10109768583214747442"
         },
         {
           "file": "src/routes.gen.d.ts",
-          "hash": "1236916931792584787"
+          "hash": "13015680179277664776"
         },
         {
           "file": "src/routes/api/service.ts",
-          "hash": "3402660439137197936"
+          "hash": "8527859182336466572"
+        },
+        {
+          "file": "src/routes/api/service_food_group/add_eat.ts",
+          "hash": "6213827949398451296"
+        },
+        {
+          "file": "src/routes/api/service_food_group/get_food_groups.ts",
+          "hash": "2357155384892757123"
+        },
+        {
+          "file": "src/routes/api/service_game/serviceGPTPrompts.ts",
+          "hash": "6678160339405763240"
+        },
+        {
+          "file": "src/routes/api/service_game/serviceGPTResult.ts",
+          "hash": "4879505774869959769"
+        },
+        {
+          "file": "src/routes/api/service_game/serviceUserAddStep.ts",
+          "hash": "8722629435474568932"
+        },
+        {
+          "file": "src/routes/api/service_game/types.ts",
+          "hash": "13383135643748024224"
+        },
+        {
+          "file": "src/routes/api/service_user_info/server-user-personal-info.tsx",
+          "hash": "11280013198625411719"
         },
         {
           "file": "src/routes/auth/new-user/index.tsx",
@@ -250,51 +377,115 @@
         },
         {
           "file": "src/routes/auth/signin/index.tsx",
-          "hash": "14748185150084664256"
+          "hash": "11105553824837774448"
         },
         {
           "file": "src/routes/auth/signout/index.tsx",
-          "hash": "17962003148789612286"
+          "hash": "16072506689906997609"
         },
         {
           "file": "src/routes/auth/verify-request/index.tsx",
           "hash": "6807563380828099913"
         },
         {
+          "file": "src/routes/bento/index.tsx",
+          "hash": "10370386927591561081"
+        },
+        {
+          "file": "src/routes/client/(main)/leaderBoard/index.tsx",
+          "hash": "13694147222600310989"
+        },
+        {
+          "file": "src/routes/client/(main)/play/[section]/[unit]/index.tsx",
+          "hash": "32127692881320514"
+        },
+        {
+          "file": "src/routes/client/(main)/play/[section]/index.tsx",
+          "hash": "14547862474941094959"
+        },
+        {
+          "file": "src/routes/client/(main)/play/finish/index.tsx",
+          "hash": "13171075497970633183"
+        },
+        {
+          "file": "src/routes/client/(main)/play/index.tsx",
+          "hash": "9071416922933269820"
+        },
+        {
+          "file": "src/routes/client/(main)/track/finish/index.tsx",
+          "hash": "12391861315620698780"
+        },
+        {
+          "file": "src/routes/client/(main)/track/index.tsx",
+          "hash": "10368614169018457897"
+        },
+        {
+          "file": "src/routes/client/(main)/track/layout.tsx",
+          "hash": "3339612452616867356"
+        },
+        {
+          "file": "src/routes/client/(main)/user/index.tsx",
+          "hash": "5602162918541771734"
+        },
+        {
+          "file": "src/routes/client/(main)/user/util.ts",
+          "hash": "522798680353143947"
+        },
+        {
+          "file": "src/routes/client/Assessment/activity-level/index.tsx",
+          "hash": "11363900151851516838"
+        },
+        {
           "file": "src/routes/client/Assessment/index.tsx",
-          "hash": "486011912907405312"
+          "hash": "620478752808645798"
         },
         {
           "file": "src/routes/client/Assessment/layout.tsx",
-          "hash": "16137128271735230265"
+          "hash": "18416282794110246089"
         },
         {
-          "file": "src/routes/client/Assessment/personalInformation/DateofBirth/index.tsx",
-          "hash": "678876499786441656"
-        },
-        {
-          "file": "src/routes/client/Assessment/personalInformation/current-weight/index.tsx",
+          "file": "src/routes/client/Assessment/lifestyleFactors/index.tsx",
           "hash": "6807563380828099913"
         },
         {
+          "file": "src/routes/client/Assessment/personalInformation/DateofBirth/index.tsx",
+          "hash": "3199294034375922396"
+        },
+        {
+          "file": "src/routes/client/Assessment/personalInformation/current-weight/index.tsx",
+          "hash": "695580753694569839"
+        },
+        {
           "file": "src/routes/client/Assessment/personalInformation/gender/index.tsx",
-          "hash": "7723144770359603007"
+          "hash": "14209223733748961655"
+        },
+        {
+          "file": "src/routes/client/Assessment/personalInformation/goals/index.tsx",
+          "hash": "1140176540114885741"
         },
         {
           "file": "src/routes/client/Assessment/personalInformation/height/index.tsx",
-          "hash": "1515854167727996095"
+          "hash": "6792618764377137539"
         },
         {
           "file": "src/routes/client/Assessment/personalInformation/index.tsx",
-          "hash": "6568871765042760283"
+          "hash": "15023913833873505256"
         },
         {
           "file": "src/routes/client/Assessment/personalInformation/name/index.tsx",
-          "hash": "7643368941305942563"
+          "hash": "17157852475640553966"
         },
         {
           "file": "src/routes/client/index.tsx",
-          "hash": "8559771626362308078"
+          "hash": "14794060580374143423"
+        },
+        {
+          "file": "src/routes/client/layout.tsx",
+          "hash": "8070580509106408810"
+        },
+        {
+          "file": "src/routes/construction/index.tsx",
+          "hash": "11302696725462663494"
         },
         {
           "file": "src/routes/content/index.tsx",
@@ -306,11 +497,11 @@
         },
         {
           "file": "src/routes/dashboard/index.tsx",
-          "hash": "1545108751340964045"
+          "hash": "15608345741903510830"
         },
         {
           "file": "src/routes/dashboard/layout.tsx",
-          "hash": "10235792060041586535"
+          "hash": "13832805890584343812"
         },
         {
           "file": "src/routes/dashboard/notes/[id]/index.tsx",
@@ -318,7 +509,7 @@
         },
         {
           "file": "src/routes/dashboard/notes/index.tsx",
-          "hash": "12147891814914559186"
+          "hash": "7575921090884184530"
         },
         {
           "file": "src/routes/dashboard/notes/new/index.tsx",
@@ -338,35 +529,63 @@
         },
         {
           "file": "src/routes/index.tsx",
-          "hash": "6005286210379959363"
+          "hash": "13116969914959257110"
         },
         {
           "file": "src/routes/layout.tsx",
-          "hash": "17418011656502051241"
+          "hash": "13239055847306594679"
         },
         {
           "file": "src/routes/plugin@auth.ts",
-          "hash": "17766206615235304325"
+          "hash": "9248437085088122196"
         },
         {
           "file": "src/routes/seedDatabase/index.tsx",
-          "hash": "17670914046919253727"
+          "hash": "4357281980370393391"
         },
         {
           "file": "src/routes/service-worker.ts",
           "hash": "12052162101020602501"
         },
         {
+          "file": "src/util/convertUnits.ts",
+          "hash": "7093790054612348799"
+        },
+        {
+          "file": "src/util/createId.ts",
+          "hash": "8286104927120046460"
+        },
+        {
+          "file": "src/util/formatNumber.ts",
+          "hash": "1378154045702488037"
+        },
+        {
+          "file": "src/util/isTextOfUserName.ts",
+          "hash": "11618160451737438903"
+        },
+        {
           "file": "src/util/parseMarkdown.ts",
           "hash": "11031776175277540389"
         },
         {
+          "file": "src/util/stringMinipuletion.ts",
+          "hash": "15692288546133076459"
+        },
+        {
+          "file": "src/util/twoDecimalPoints.ts",
+          "hash": "9494077528555730439"
+        },
+        {
           "file": "src/util/types.ts",
-          "hash": "16816887336418373934"
+          "hash": "14902694852911940572"
+        },
+        {
+          "file": "src/util/useDebouncer.ts",
+          "hash": "7507658601753835837"
         },
         {
           "file": "tailwind.config.js",
-          "hash": "5502234627996134087"
+          "hash": "10644093558636198855"
         },
         {
           "file": "tsconfig.json",

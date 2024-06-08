@@ -1,6 +1,7 @@
 import { $, Fragment, type QRL, component$, useComputed$, useStore } from '@builder.io/qwik';
 import { routeLoader$, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
+import CloseModal from '~/components/Modals/CloseModal/CloseModal';
 import { PhClose, PhHeart } from '~/components/icons/icons';
 import { type AppRoutes } from '~/routes.gen';
 import { serverRemoveUserStep, serverUpdateUserStep, serverUserAddStep } from '~/routes/api/service_game/serviceUserAddStep';
@@ -72,6 +73,7 @@ export default component$(() => {
           Continue
         </button>
       </div>
+      <CloseModal />
   </div>
   );
 });
