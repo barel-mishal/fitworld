@@ -7,7 +7,9 @@ import {
   Fragment,
   useId,
 } from "@builder.io/qwik";
-import { PhClose, PhFooPeinapple } from "~/components/icons/icons";
+import { PhClose } from "~/components/icons/icons";
+import IamgeWorriedFooPeinapple from "~/media/worriedFooPeinapple.png?jsx";
+
 
 interface CloseModalProps {
     onClickClose$: QRL<() => void>;
@@ -44,9 +46,10 @@ export default component$<CloseModalProps>((props) => {
           class="h-full w-full bg-transparent"
           onClick$={onClickOpen}
         ></button>
-        <div class="w-full bg-gray-950 p-4">
-          <div class="flex h-full w-full flex-col items-center justify-center gap-5">
-            <PhFooPeinapple class="h-24 w-24 fill-gray-700" />
+        <div class="w-full bg-gray-950">
+          <div class="flex p-4 h-full w-full flex-col items-center justify-center gap-5">
+            {/* <PhFooPeinapple class="h-24 w-24 fill-gray-700" /> */}
+            <IamgeWorriedFooPeinapple style={{width: "6rem", height: "6rem"}} class="h-24 w-24 fill-gray-700" />
             <h4 class="grid gap-2 text-center font-roundsans font-bold text-gray-50">
               <span>Hold on! If you leave now,</span>
               <span>you might lose all your progress.</span>
