@@ -48,7 +48,6 @@ export default component$<CloseModalProps>((props) => {
         ></button>
         <div class="w-full bg-gray-950">
           <div class="flex p-4 h-full w-full flex-col items-center justify-center gap-5">
-            {/* <PhFooPeinapple class="h-24 w-24 fill-gray-700" /> */}
             <IamgeWorriedFooPeinapple style={{width: "6rem", height: "6rem"}} class="h-24 w-24 fill-gray-700" />
             <h4 class="grid gap-2 text-center font-roundsans font-bold text-gray-50">
               <span>Hold on! If you leave now,</span>
