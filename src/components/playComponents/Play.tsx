@@ -4,6 +4,9 @@ import { serverUserAddStep } from "~/routes/api/service_game/serviceUserAddStep"
 import { AppLink } from "~/routes.config";
 import { type StepKey } from "~/routes/api/service_game/serviceGPTResult";
 
+
+
+
 const Play = component$(() => {
 
     const handleStepChange = $(async (titleSection: string, unit: number, section: number, step: number) => {
@@ -13,7 +16,7 @@ const Play = component$(() => {
         } catch (error) {
           console.log(error); 
         }
-      })
+    })
 
     return (
         <div class="flex flex-col">
