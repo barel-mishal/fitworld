@@ -2,8 +2,7 @@ import { $, Fragment, type QRL, component$, useComputed$, useStore } from '@buil
 import { routeLoader$, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
-import { AppLinkGlobal } from '~/routes.config';
-import { AppRouteParamsFunction, AppRoutes } from '~/routes.gen';
+import { type AppRoutes } from '~/routes.gen';
 import { serverRemoveUserStep, serverUpdateUserStep, serverUserAddStep } from '~/routes/api/service_game/serviceUserAddStep';
 import { type Step, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/types';
 
@@ -32,100 +31,36 @@ export default component$(() => {
     return <div>Error</div>;
   }
 
-  const game = useStore<CountStore>({
-    step: 0,
-    onStepChange: $(function(this: CountStore) {
-      const current = loadedQuestioner.value.at(this.step);
-      switch (current?.metadata.type) {
-        case "step_text":
-        case "step_multiple_choice":
-          this.step = this.step + 1;
-          break;
-        case "step_finish":
-          break;
-      }
-    }),
-    changeAnswer: $(async  function(this: CountStore, answer: string) {
-      const current = loadedQuestioner.value[this.step];
-      if (current.metadata.type !== "step_multiple_choice") {
-        return;
-      }
-      this.answers[current.metadata.title] = answer;
-
-      current.metadata.answer = current.metadata.options.indexOf(answer);
-
-      await serverUpdateUserStep(current);
-
-    }),
-    // TODO: this code below is running on the client each time the there is change. Fix this.
-    answers: loadedQuestioner.value.reduce((acc, curr) => {
-      if (curr.metadata.type === "step_multiple_choice" && curr.metadata.answer !== undefined) {
-        acc[curr.metadata.title] = curr.metadata.options[curr.metadata.answer];
-      }
-      return acc;
-    }, {} as Record<string, string>),
-  });
-
-  
-  const computedProgress = useComputed$(() => {
-    
-    function countTotalSteps(steps: Step[]): number {
-      return steps.length;
-    }
-  
-    function countRemainingSteps(currentStep: number, steps: Step[]): number {
-      return steps.length - currentStep;
-    }
-    const totalSteps = countTotalSteps(loadedQuestioner.value);
-    const remainingSteps = countRemainingSteps(game.step, loadedQuestioner.value);
-    const completedSteps = totalSteps - remainingSteps;
-  
-    return (completedSteps / totalSteps) * 100;
-  });
-  
-  const computedBtnState = useComputed$(() => {
-    return "enabled";
-  });
-
-  const currentStep = useComputed$(() => {
-    return loadedQuestioner.value[game.step]
-  });
-
-  const nav = useNavigate();
+  const g = useEducationalGameQuestioner(loadedQuestioner.value);
   return (
     <div class={cn("grid grid-rows-[40px,1fr,60px] gap-3 h-screen text-gray-50  bg-gray-950 font-roundsans tracking-wide overflow-y-auto")}>
       <div q:slot='header' class=" grid grid-cols-[auto,1fr,auto] gap-3 content-center items-center p-2 text-gray-400">
-        <button onClick$={async () => {
-          const result = await serverRemoveUserStep(currentStep.value);
-          if (!result.success) return;
-          const pathy: AppRoutes = "/client/play/" as "/client/(main)/play/";
-          nav(pathy, {forceReload: true});
-        }}>
+        <button onClick$={g.handelClose}>
           <PhClose class="w-6 h-6 fill-gray-700" />
         </button>
         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-          <div class="bg-blue-600 h-2.5 rounded-full" style={`width: ${computedProgress.value}%`}></div>
+          <div class="bg-blue-600 h-2.5 rounded-full" style={`width: ${g.computedProgress.value}%`}></div>
         </div>
         <PhHeart class="w-6 h-6 fill-rose-600" />
       </div>
       <div q:slot='main' class="p-2 overflow-y-auto h-full bg-gray-950">
         {
-          currentStep.value.metadata.type === "step_text" ? (
+          g.currentStep.value.metadata.type === "step_text" ? (
             <RenderLearningTypeText
-              text={currentStep.value.metadata.text}
-              title={currentStep.value.metadata.title}
-              id={`${currentStep.value.id}`}
+              text={g.currentStep.value.metadata.text}
+              title={g.currentStep.value.metadata.title}
+              id={`${g.currentStep.value.id}`}
 
             />
-          ) : currentStep.value.metadata.type === "step_multiple_choice" ? (
+          ) : g.currentStep.value.metadata.type === "step_multiple_choice" ? (
             <RenderLearningTypeQuestion
-              title={currentStep.value.metadata.title}
-              question={currentStep.value.metadata.question}
-              options={currentStep.value.metadata.options}
-              correctAnswer={currentStep.value.metadata.correctAnswer}
-              answer={currentStep.value.metadata.answer}
-              id={`${currentStep.value.id}`}
-              store={game}
+              title={g.currentStep.value.metadata.title}
+              question={g.currentStep.value.metadata.question}
+              options={g.currentStep.value.metadata.options}
+              correctAnswer={g.currentStep.value.metadata.correctAnswer}
+              answer={g.currentStep.value.metadata.answer}
+              id={`${g.currentStep.value.id}`}
+              store={g.game}
             />
           ) : (
             <div>Finish</div>
@@ -135,7 +70,7 @@ export default component$(() => {
 
       </div>
       <div q:slot='footer' class="grid pb-6 p-2">
-        <button class="btn disabled:bg-gray-800 disabled:border-gray-800 " disabled={computedBtnState.value === "disabled"} onClick$={() => game.onStepChange()}>
+        <button class="btn disabled:bg-gray-800 disabled:border-gray-800 " disabled={g.computedBtnState.value === "disabled"} onClick$={() => g.game.onStepChange()}>
           Continue
         </button>
       </div>
@@ -198,3 +133,83 @@ export const RenderLearningTypeQuestion = component$<RenderLearningTypeQuestionP
     </Fragment>
   )
 });
+
+export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
+
+  const game = useStore<CountStore>({
+    step: 0,
+    onStepChange: $(function(this: CountStore) {
+      const current = loadedQuestioner.at(this.step);
+      switch (current?.metadata.type) {
+        case "step_text":
+        case "step_multiple_choice":
+          this.step = this.step + 1;
+          break;
+        case "step_finish":
+          break;
+      }
+    }),
+    changeAnswer: $(async  function(this: CountStore, answer: string) {
+      const current = loadedQuestioner[this.step];
+      if (current.metadata.type !== "step_multiple_choice") {
+        return;
+      }
+      this.answers[current.metadata.title] = answer;
+
+      current.metadata.answer = current.metadata.options.indexOf(answer);
+
+      await serverUpdateUserStep(current);
+
+    }),
+    // TODO: this code below is running on the client each time the there is change. Fix this.
+    answers: loadedQuestioner.reduce((acc, curr) => {
+      if (curr.metadata.type === "step_multiple_choice" && curr.metadata.answer !== undefined) {
+        acc[curr.metadata.title] = curr.metadata.options[curr.metadata.answer];
+      }
+      return acc;
+    }, {} as Record<string, string>),
+  });
+
+  
+  const computedProgress = useComputed$(() => {
+    
+    function countTotalSteps(steps: Step[]): number {
+      return steps.length;
+    }
+  
+    function countRemainingSteps(currentStep: number, steps: Step[]): number {
+      return steps.length - currentStep;
+    }
+    const totalSteps = countTotalSteps(loadedQuestioner);
+    const remainingSteps = countRemainingSteps(game.step, loadedQuestioner);
+    const completedSteps = totalSteps - remainingSteps;
+  
+    return (completedSteps / totalSteps) * 100;
+  });
+  
+  const computedBtnState = useComputed$(() => {
+    return "enabled";
+  });
+
+  const currentStep = useComputed$(() => {
+    return loadedQuestioner[game.step]
+  });
+
+  const nav = useNavigate();
+
+  const handelClose = $(async () => {
+    const result = await serverRemoveUserStep(currentStep.value);
+    if (!result.success) return;
+    const pathy: AppRoutes = "/client/play/" as "/client/(main)/play/";
+    nav(pathy, {forceReload: true});
+  });
+
+
+  return {
+    game,
+    computedProgress,
+    computedBtnState,
+    currentStep,
+    handelClose
+  }
+}
