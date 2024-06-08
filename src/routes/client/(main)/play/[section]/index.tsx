@@ -7,9 +7,9 @@ import { AppLink } from '~/routes.config';
 
 export const useLoadSteps = routeLoader$(async function (data) {
   try {
-    const section = data.params.section;
+    const section = data.params.section as `section ${number} unit ${number}`
     const steps = await serverGPTSTexts();
-    const sectionSteps = steps[section];
+    const sectionSteps = steps[section] 
     return {
       success: true,
       value: sectionSteps
