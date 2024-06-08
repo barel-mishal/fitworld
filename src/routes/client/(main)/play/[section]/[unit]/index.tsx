@@ -34,7 +34,7 @@ export default component$(() => {
   const game = useStore<CountStore>({
     step: 0,
     onStepChange: $(function(this: CountStore) {
-      const current = loadedQuestioner.value?.at(this.step);
+      const current = loadedQuestioner.value.at(this.step);
       switch (current?.metadata.type) {
         case "step_text":
         case "step_multiple_choice":

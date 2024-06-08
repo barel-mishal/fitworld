@@ -2,6 +2,7 @@ import { type Session } from '@auth/core/types';
 import { component$ } from '@builder.io/qwik';
 import { server$, type RequestHandler } from '@builder.io/qwik-city';
 import { Surreal } from 'surrealdb.js';
+import { ExtendSession } from '../plugin@auth';
 
 export const onRequest: RequestHandler = (event) => {
   
@@ -45,3 +46,33 @@ export const serverInitDatabase = server$(async () => {
   await db.use({ namespace: "namespace", database: "database" });
   return db;
 });
+
+export const serverDatabaseUserSession = server$(async function() {
+  try {
+    const session: ExtendSession | null = this.sharedMap.get('session');
+    const token = session?.database.token
+    if (!token) throw new Error('No token');
+    const db = await serverInitDatabase();
+    await db.authenticate(token);
+    return {
+      success: true,
+      value: db,
+      error: null
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      return {
+        success: false,
+        error: error.message,
+        value: null
+      }
+    } else {
+      return {
+        success: false,
+        error: "Unknown error sdus",
+        value: null
+      }
+    }
+    
+  }
+}); 
