@@ -28,9 +28,6 @@ const Play = component$(() => {
                     element={{class: "p-4 bg-green-600 rounded-xl col-span-12 border-b-4 border-green-900 sticky top-0"}} 
                 />
                 <div class="col-start-3 col-span-4 row-span-1  ">
-                    {/* <button onClick$={async () => await handleStepChange("The Importance Of Nutrition", 1, 1, 1)} class="w-full h-16 p-4 border-b-4 border-green-900 bg-green-600 rounded-full text-green-50 grid place-content-center active:border-b transition-all ease-in-out">
-                        <PhStar class="w-8 h-8 fill-current"/>
-                    </button> */}
                     <AppLink 
                         route="/client/(main)/play/[section]/[unit]/" 
                         param:unit={"1"} param:section="1" 
@@ -45,11 +42,25 @@ const Play = component$(() => {
                             class="w-8 h-8 fill-current"
                         />
                     </button>
+                    <AppLink 
+                        route="/client/(main)/play/[section]/[unit]/" 
+                        param:unit={"2"} param:section="1" 
+                        class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center active:border-b transition-all ease-in-out"
+                    >
+                        <PhStar class="w-8 h-8 fill-current"/>
+                    </AppLink>
                 </div>
                 <div class="col-span-4 row-span-1 col-start-5 ">
                     <button onClick$={async () => await handleStepChange("The Importance Of Nutrition", 1, 1, 3)} class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center">
                         <PhStar class="w-8 h-8 fill-current"/>
                     </button>
+                    <AppLink
+                        route="/client/(main)/play/[section]/[unit]/" 
+                        param:unit={"3"} param:section="1" 
+                        class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center active:border-b transition-all ease-in-out"
+                    >
+                        <PhStar class="w-8 h-8 fill-current"/>
+                    </AppLink>
                 </div>
                 <div class="col-start-1 row-start-3 rounded-xl col-span-3 row-span-2 content-center">
                     <button class="">
@@ -57,14 +68,22 @@ const Play = component$(() => {
                     </button>
                 </div>
                 <div class="col-start-3 col-span-4 row-span-1  ">
-                    <button onClick$={async () => await handleStepChange("The Importance Of Nutrition", 1, 1, 4)} class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center">
+                    <AppLink
+                        route="/client/(main)/play/[section]/[unit]/" 
+                        param:unit={"4"} param:section="1" 
+                        class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center active:border-b transition-all ease-in-out"
+                    >
                         <PhStar class="w-8 h-8 fill-current"/>
-                    </button>
+                    </AppLink>
                 </div>
                 <div class="col-start-3 col-span-4 row-span-1  ">
-                    <button onClick$={async () => await handleStepChange("The Importance Of Nutrition", 1, 1, 5)} class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center">
+                    <AppLink
+                        route="/client/(main)/play/[section]/[unit]/" 
+                        param:unit={"5"} param:section="1" 
+                        class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center active:border-b transition-all ease-in-out"
+                    >
                         <PhStar class="w-8 h-8 fill-current"/>
-                    </button>
+                    </AppLink>
                 </div>
                 <div class="col-start-8 row-start-5 rounded-xl col-span-3 row-span-2 content-center">
                     <button class="">
@@ -72,9 +91,13 @@ const Play = component$(() => {
                     </button>
                 </div>
                 <div class="col-span-4 row-span-1 col-start-5 ">
-                    <button onClick$={async () => await handleStepChange("The Importance Of Nutrition", 1, 1, 6)} class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center">
+                    <AppLink
+                        route="/client/(main)/play/[section]/[unit]/" 
+                        param:unit={"6"} param:section="1" 
+                        class="w-full h-16 p-4 border-b-4 border-gray-800 bg-gray-600 rounded-full text-gray-50 grid place-content-center active:border-b transition-all ease-in-out"
+                    >
                         <PhStar class="w-8 h-8 fill-current"/>
-                    </button>
+                    </AppLink>
                 </div>
             </section>
             <section class="grid grid-cols-12 gap-3 pb-14">
