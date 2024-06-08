@@ -61,8 +61,8 @@ export default component$(() => {
         q:slot="header"
         class="grid grid-cols-[auto,1fr,auto] content-center items-center gap-3 p-2 text-gray-400"
       >
-        <CloseModal />
-        {/* <button onClick$={g.handelClose}>
+        <CloseModal onClickClose$={g.handelClose} />
+        {/* <button onClick$={}>
 
           <PhClose class="h-6 w-6 fill-gray-700" />
         </button> */}

@@ -1,13 +1,19 @@
 import {
   $,
-  Fragment,
+  type QRL,
   component$,
   useOnDocument,
   useSignal,
+  Fragment,
+  useId,
 } from "@builder.io/qwik";
 import { PhClose, PhFooPeinapple } from "~/components/icons/icons";
 
-export default component$(() => {
+interface CloseModalProps {
+    onClickClose$: QRL<() => void>;
+}
+
+export default component$<CloseModalProps>((props) => {
   const refRoot = useSignal<HTMLDivElement>();
   const show = useSignal<boolean>(false);
 
@@ -20,10 +26,12 @@ export default component$(() => {
     }
   });
 
+  const id = useId();
+
   useOnDocument("click", onClickOutside);
 
   return (
-    <Fragment>
+    <Fragment key={`modal-${id}`}>
       <button onClick$={onClickOpen}>
         <PhClose class="h-6 w-6 fill-gray-700" />
       </button>
@@ -43,11 +51,11 @@ export default component$(() => {
               <span>Hold on! If you leave now,</span>
               <span>you might lose all your progress.</span>
             </h4>
-            <button class="btn h-12 w-full border border-b-4 border-sky-700 bg-sky-300 font-bold text-gray-950">
+            <button onClick$={onClickOpen} class="btn h-12 w-full border border-b-4 border-sky-700 bg-sky-300 font-bold text-gray-950">
               Keep Learning
             </button>
 
-            <button onClick$={onClickOpen} class="w-full text-rose-600">
+            <button class="w-full text-rose-600" onClick$={props.onClickClose$}>
               End Session
             </button>
           </div>
