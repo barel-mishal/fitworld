@@ -66,8 +66,6 @@ export default component$(() => {
             <div>Finish</div>
           )
         }
-
-
       </div>
       <div q:slot='footer' class="grid pb-6 p-2">
         <button class="btn disabled:bg-gray-800 disabled:border-gray-800 " disabled={g.computedBtnState.value === "disabled"} onClick$={() => g.game.onStepChange()}>
