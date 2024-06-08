@@ -2,7 +2,7 @@ import { type Session } from '@auth/core/types';
 import { component$ } from '@builder.io/qwik';
 import { server$, type RequestHandler } from '@builder.io/qwik-city';
 import { Surreal } from 'surrealdb.js';
-import { ExtendSession } from '../plugin@auth';
+import { type ExtendSession } from '../plugin@auth';
 
 export const onRequest: RequestHandler = (event) => {
   

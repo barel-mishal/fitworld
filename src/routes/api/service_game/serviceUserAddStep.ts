@@ -81,13 +81,13 @@ export const serverUpdateUserStep = server$(async function(data: Step) {
     }
   });
 
-export const serverRemoveUserStep = server$(async function(data: Step) {
+export const serverRemoveUserStep = server$(async function(data: {unit: number, section: number}) {
   try {
     const openDBConnection = await serverDatabaseUserSession();
     if (!openDBConnection.success || !openDBConnection.value) throw new Error('Unauthorized');
     const result = await openDBConnection.value.query<[null, Step[]]>(`
     DELETE step WHERE unit = $unit AND section = $section;
-    `, { id: data.id });
+    `, { unit: data.unit, section: data.section });
     await openDBConnection.value.close();
     return {
       success: true,

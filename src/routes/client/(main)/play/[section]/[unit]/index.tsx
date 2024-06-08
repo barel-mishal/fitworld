@@ -1,9 +1,10 @@
 import { $, Fragment, type QRL, component$, useComputed$, useStore } from '@builder.io/qwik';
-import { routeLoader$ } from '@builder.io/qwik-city';
+import { routeLoader$, useNavigate } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { PhClose, PhHeart } from '~/components/icons/icons';
 import { AppLinkGlobal } from '~/routes.config';
-import { serverUpdateUserStep, serverUserAddStep } from '~/routes/api/service_game/serviceUserAddStep';
+import { AppRouteParamsFunction, AppRoutes } from '~/routes.gen';
+import { serverRemoveUserStep, serverUpdateUserStep, serverUserAddStep } from '~/routes/api/service_game/serviceUserAddStep';
 import { type Step, type StepMultipleChoiceType, type StepTextType } from '~/routes/api/service_game/types';
 
 export const useLoaderQuestioner = routeLoader$(async function (event) {
@@ -89,12 +90,19 @@ export default component$(() => {
   const currentStep = useComputed$(() => {
     return loadedQuestioner.value[game.step]
   });
+
+  const nav = useNavigate();
   return (
     <div class={cn("grid grid-rows-[40px,1fr,60px] gap-3 h-screen text-gray-50  bg-gray-950 font-roundsans tracking-wide overflow-y-auto")}>
       <div q:slot='header' class=" grid grid-cols-[auto,1fr,auto] gap-3 content-center items-center p-2 text-gray-400">
-        <AppLinkGlobal route='/client/(main)/play/'>
+        <button onClick$={async () => {
+          const result = await serverRemoveUserStep(currentStep.value);
+          if (!result.success) return;
+          const pathy: AppRoutes = "/client/play/" as "/client/(main)/play/";
+          nav(pathy, {forceReload: true});
+        }}>
           <PhClose class="w-6 h-6 fill-gray-700" />
-        </AppLinkGlobal>
+        </button>
         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
           <div class="bg-blue-600 h-2.5 rounded-full" style={`width: ${computedProgress.value}%`}></div>
         </div>
