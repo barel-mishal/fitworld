@@ -189,7 +189,13 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
     step: 0,
     onStepChange: $(function (this: CountStore) {
       const current = loadedQuestioner.at(this.step);
-      if (this.step === loadedQuestioner.length - 1) return;
+      if (this.step === loadedQuestioner.length - 1) {
+        if (this.commitedAnswer) {
+          return 
+        }
+        this.commitAnswer();
+        return
+      }
       switch (current?.metadata.type) {
         case "step_text":
           this.step = this.step + 1;
