@@ -179,15 +179,7 @@ export const serverGPTSTexts = server$(async function () {
           correctAnswer: 2,
           answer: undefined,
         },
-      },
-      {
-        unit: 1,
-        index: 16,
-        section: 1,
-        metadata: {
-          type: "step_finish",
-        },
-      },
+      }
     ],
     "section 1 unit 2": [
       {
@@ -299,15 +291,7 @@ export const serverGPTSTexts = server$(async function () {
           ],
           correctAnswer: 2,
         },
-      },
-      {
-        unit: 2,
-        index: 9,
-        section: 1,
-        metadata: {
-          type: "step_finish",
-        },
-      },
+      }
     ],
     "section 1 unit 3": [
       {
@@ -424,15 +408,7 @@ export const serverGPTSTexts = server$(async function () {
           ],
           correctAnswer: 1,
         },
-      },
-      {
-        unit: 3,
-        index: 7,
-        section: 1,
-        metadata: {
-          type: "step_finish",
-        },
-      },
+      }
     ],
   } as const;
   return gptResult;

@@ -9,7 +9,7 @@ import {
 import { routeLoader$, useNavigate } from "@builder.io/qwik-city";
 import { cn } from "@qwik-ui/utils";
 import CloseModal from "~/components/Modals/CloseModal/CloseModal";
-import { PhHeart } from "~/components/icons/icons";
+import { PhArrowBendUpLeft, PhHeart } from "~/components/icons/icons";
 import { type AppRoutes } from "~/routes.gen";
 import {
   serverRemoveUserStep,
@@ -36,8 +36,11 @@ type CountStore = {
   onStepChange: QRL<() => void>;
   changeAnswer: QRL<(answer: string) => void>;
   answers: {
-    [key: string]: string;
+    [key: string]: string | undefined;
   };
+  allowNext: QRL<() => boolean>;
+  commitedAnswer: boolean
+  commitAnswer: QRL<() => void>;
 };
 
 export default component$(() => {
@@ -62,10 +65,6 @@ export default component$(() => {
         class="grid grid-cols-[auto,1fr,auto] content-center items-center gap-3 p-2 text-gray-400"
       >
         <CloseModal onClickClose$={g.handelClose} />
-        {/* <button onClick$={}>
-
-          <PhClose class="h-6 w-6 fill-gray-700" />
-        </button> */}
         <div class="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
           <div
             class="h-2.5 rounded-full bg-blue-600"
@@ -81,7 +80,7 @@ export default component$(() => {
             title={g.currentStep.value.metadata.title}
             id={`${g.currentStep.value.id}`}
           />
-        ) : g.currentStep.value.metadata.type === "step_multiple_choice" ? (
+        ) :  ( // g.currentStep.value.metadata.type === "step_multiple_choice" &&
           <RenderLearningTypeQuestion
             title={g.currentStep.value.metadata.title}
             question={g.currentStep.value.metadata.question}
@@ -91,17 +90,24 @@ export default component$(() => {
             id={`${g.currentStep.value.id}`}
             store={g.game}
           />
-        ) : (
-          <div>Finish</div>
         )}
       </div>
-      <div q:slot="footer" class="grid p-2 pb-6">
+      <div q:slot="footer" class={cn("grid p-2 pb-6 gap-2", g.currentStep.value.metadata.type === "step_text" && "grid-cols-[auto,1fr]")}>
+        {g.currentStep.value.metadata.type === "step_text" && <button
+          data-right-answer={`${g.game.commitedAnswer ? g.isRightAnswer.value : ""}`}
+          class="btn disabled:border-gray-800 disabled:bg-gray-800 data-[right-answer='true']:bg-emerald-700 data-[right-answer='false']:bg-rose-700 data-[right-answer='true']:border-emerald-900 data-[right-answer='false']:border-rose-900"
+          disabled={g.computedBtnState.value === "disabled" || g.game.step === 0}
+          onClick$={() => g.game.step !== 0 && g.game.step--}
+        >
+          <PhArrowBendUpLeft class="h-6 w-6 fill-current" />
+        </button>}
         <button
-          class="btn disabled:border-gray-800 disabled:bg-gray-800"
+          data-right-answer={`${g.game.commitedAnswer ? g.isRightAnswer.value : ""}`}
+          class="btn disabled:border-gray-800 disabled:bg-gray-800 data-[right-answer='true']:bg-emerald-700 data-[right-answer='false']:bg-rose-700 data-[right-answer='true']:border-emerald-900 data-[right-answer='false']:border-rose-900"
           disabled={g.computedBtnState.value === "disabled"}
           onClick$={() => g.game.onStepChange()}
         >
-          Continue
+          {g.currentStep.value.metadata.type === "step_text" ? "Continue" : g.game.commitedAnswer ? "Continue" : "Check"}
         </button>
       </div>
     </div>
@@ -166,16 +172,36 @@ export const RenderLearningTypeQuestion =
   });
 
 export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
+  const a = loadedQuestioner.reduce(
+    (acc, curr) => {
+      if (
+        curr.metadata.type === "step_multiple_choice" &&
+        curr.metadata.answer !== undefined
+      ) {
+        acc[curr.metadata.title] =
+          curr.metadata.options[curr.metadata.answer];
+      }
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
   const game = useStore<CountStore>({
     step: 0,
     onStepChange: $(function (this: CountStore) {
       const current = loadedQuestioner.at(this.step);
+      if (this.step === loadedQuestioner.length - 1) return;
       switch (current?.metadata.type) {
         case "step_text":
-        case "step_multiple_choice":
           this.step = this.step + 1;
           break;
-        case "step_finish":
+        case "step_multiple_choice":
+          if (this.commitedAnswer) {
+            this.step = this.step + 1; 
+          }
+          this.commitAnswer();
+          break;
+        default:
+
           break;
       }
     }),
@@ -189,31 +215,32 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
       current.metadata.answer = current.metadata.options.indexOf(answer);
 
       await serverUpdateUserStep(current);
+      await this.allowNext();
+    }),
+    allowNext: $(function (this: CountStore) {
+      const answers = this.answers
+      const current = loadedQuestioner[this.step];
+      if (current.metadata.type === "step_multiple_choice") {
+        return answers[current.metadata.title] !== undefined;
+      }
+      return true;
+    }),
+    commitedAnswer: false,
+    commitAnswer: $(async function (this: CountStore) {
+      this.commitedAnswer = !this.commitedAnswer;
     }),
     // TODO: this code below is running on the client each time the there is change. Fix this.
-    answers: loadedQuestioner.reduce(
-      (acc, curr) => {
-        if (
-          curr.metadata.type === "step_multiple_choice" &&
-          curr.metadata.answer !== undefined
-        ) {
-          acc[curr.metadata.title] =
-            curr.metadata.options[curr.metadata.answer];
-        }
-        return acc;
-      },
-      {} as Record<string, string>,
-    ),
+    answers: a,
   });
 
   const computedProgress = useComputed$(() => {
     function countTotalSteps(steps: Step[]): number {
-      return steps.length;
+      return steps.length - 1;
     }
 
     function countRemainingSteps(currentStep: number, steps: Step[]): number {
-      return steps.length - currentStep;
-    }
+      return countTotalSteps(steps)  - currentStep;
+    } 
     const totalSteps = countTotalSteps(loadedQuestioner);
     const remainingSteps = countRemainingSteps(game.step, loadedQuestioner);
     const completedSteps = totalSteps - remainingSteps;
@@ -221,8 +248,8 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
     return (completedSteps / totalSteps) * 100;
   });
 
-  const computedBtnState = useComputed$(() => {
-    return "enabled";
+  const computedBtnState = useComputed$(async () => {
+    return await game.allowNext() ? "enabled" : "disabled";
   });
 
   const currentStep = useComputed$(() => {
@@ -238,11 +265,21 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
     nav(pathy, { forceReload: true });
   });
 
+  const isRightAnswer = useComputed$(() => {
+    const current = loadedQuestioner[game.step];
+    if (current.metadata.type !== "step_multiple_choice") return undefined;
+    const answers = Object.values(game.answers);
+    return answers.includes(current.metadata.options[current.metadata.correctAnswer]);
+  });
+
+
+
   return {
     game,
     computedProgress,
     computedBtnState,
     currentStep,
     handelClose,
+    isRightAnswer,
   };
 };

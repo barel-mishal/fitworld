@@ -30,10 +30,7 @@ const MetadataSchema = z.union([
     options: z.array(z.string()),
     correctAnswer: z.number(),
     answer: z.optional(z.number()),
-  }),
-  z.object({
-    type: z.literal("step_finish"),
-  }),
+  })
 ]);
 
 // Define the steps schema
