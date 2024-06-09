@@ -185,13 +185,15 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
     },
     {} as Record<string, string>,
   );
+  const nav = useNavigate();
+  const finishPath: AppRoutes = "/client/play/finish/" as "/client/(main)/play/finish/";
   const game = useStore<CountStore>({
     step: 0,
     onStepChange: $(function (this: CountStore) {
       const current = loadedQuestioner.at(this.step);
       if (this.step === loadedQuestioner.length - 1) {
         if (this.commitedAnswer) {
-          return 
+          return nav(finishPath, { forceReload: true });
         }
         this.commitAnswer();
         return
@@ -261,8 +263,6 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
   const currentStep = useComputed$(() => {
     return loadedQuestioner[game.step];
   });
-
-  const nav = useNavigate();
 
   const handelClose = $(async () => {
     const result = await serverRemoveUserStep(currentStep.value);
