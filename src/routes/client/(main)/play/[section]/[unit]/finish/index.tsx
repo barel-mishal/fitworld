@@ -14,8 +14,8 @@ export const useLoaderQuestioner = routeLoader$(async function (event) {
 export default component$(() => {
   const steps = useLoaderQuestioner();
   console.log(steps.value)
-  return <div class="grid grid-rows-[auto,auto,auto,150px] gap-8 bg-gray-950 h-full place-content-center place-items-center p-5">
-    <section><div class="h-44 w-44 bg-green-400" ></div></section>
+  return <div class="flex flex-col gap-8 bg-gray-950 h-full place-items-center p-5">
+    <section class="flex-grow flex items-end"><div class="h-44 w-44 bg-green-400 " ></div></section>
     <section>
       <h1 class="text-2xl font-bold text-yellow-600 text-center">
         Parfect lesson!
@@ -29,8 +29,8 @@ export default component$(() => {
       <div class="h-20 w-full bg-green-400" ></div>
       <div class="h-20 w-full bg-green-400" ></div>
     </section>
-    <section class="text-gray-50 w-full px-5 self-end">
-      <button class="btn bg-sky-500 border-sky-700 w-full text-sky-950 font-extrabold ׳">Claim XP</button>
+    <section class="text-gray-50 flex-grow flex items-end w-full">
+      <button class="btn bg-sky-500 border-sky-700 text-sky-950 font-extrabold flex-grow w-full ">Claim XP</button>
     </section>
   </div>;
 });
