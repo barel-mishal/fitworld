@@ -186,7 +186,7 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
     {} as Record<string, string>,
   );
   const nav = useNavigate();
-  const finishPath: AppRoutes = "/client/play/finish/" as "/client/(main)/play/finish/";
+  const finishPath: AppRoutes = "/client/play/[section]/[unit]/finish/" as "/client/(main)/play/[section]/[unit]/finish/";
   const game = useStore<CountStore>({
     step: 0,
     onStepChange: $(function (this: CountStore) {
