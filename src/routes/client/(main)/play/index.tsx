@@ -23,7 +23,6 @@ export default component$(() => {
   }
   const auth = useAuthSession().value as ExtendSession | undefined;
 
-
   const firstSection = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.section ?? 0;
   const firstUnit = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.unit ?? 0;
 

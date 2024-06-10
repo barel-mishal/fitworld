@@ -20,7 +20,8 @@ const IdealWeightSchema = z.object({
 const LastStepSchema = z.object({
   id: z.string(),
   section: z.number(),
-  unit: z.number()
+  unit: z.number(),
+  level: z.number(),
 });
 
 // Main schema for the objects in the array
@@ -44,7 +45,9 @@ type UserOverviewType = z.infer<typeof UserOverviewArraySchema>;
  const serverGetUserOverview = server$(async function() {
     const db = await serverDatabaseUserSession();
     if (!db.success) return {success: false, error: db.error, value: null}
-    const userOverview = await db.value?.query<[UserOverviewType]>("SELECT * FROM user_overview;");
+    const userOverview = await db.value?.query<[UserOverviewType]>(`
+    SELECT * FROM user_overview;
+    `);
     await db.value?.close();
     return {success: true, value: userOverview, error: null};
   });
