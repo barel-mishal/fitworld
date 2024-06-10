@@ -49,6 +49,10 @@ type UserOverviewType = z.infer<typeof UserOverviewArraySchema>;
     SELECT * FROM user_overview;
     `);
     await db.value?.close();
-    return {success: true, value: userOverview, error: null};
+    return {
+        success: true, 
+        value: userOverview, 
+        error: null
+    };
   });
 export default serverGetUserOverview;

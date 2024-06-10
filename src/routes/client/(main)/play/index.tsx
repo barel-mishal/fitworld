@@ -25,6 +25,7 @@ export default component$(() => {
 
   const firstSection = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.section ?? 0;
   const firstUnit = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.unit ?? 0;
+  const firstLevel = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.level ?? 0;
 
   return (
     <HeaderMainBottomNav
@@ -40,7 +41,7 @@ export default component$(() => {
         />
       </div>
       <div q:slot="main">
-        <Play currentSection={firstSection} currentUnit={firstUnit} />
+        <Play currentSection={firstSection} currentUnit={firstUnit} currentLevel={firstLevel} />
       </div>
       <div q:slot="footer" class="">
         <BottomNavBar
