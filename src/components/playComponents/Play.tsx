@@ -45,22 +45,22 @@ const Play = component$<PlayProps>((props) => {
               "p-4 bg-green-600 rounded-xl col-span-12 border-b-4 border-green-900 sticky top-0",
           }}
         />
-        <LevelLink unit={1} section={1} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-3 row-span-1" />
-        <LevelLink unit={2} section={1} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-5 row-span-1" />
-        <LevelLink unit={3} section={1} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-5 row-span-1" />
+        <LevelLink unit={1} section={1} level={1} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-3 row-span-1" />
+        <LevelLink unit={1} section={1} level={2} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-5 row-span-1" />
+        <LevelLink unit={1} section={1} level={3} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-5 row-span-1" />
         <div class="col-span-3 col-start-1 row-span-2 row-start-3 content-center rounded-xl">
           <button class="">
             <PhFooPeinapple class="h-20 w-20" />
           </button>
         </div>
-        <LevelLink unit={4} section={1} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-3 row-span-1" />
-        <LevelLink unit={5} section={1} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-3 row-span-1" />
+        <LevelLink unit={1} section={1} level={4} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-3 row-span-1" />
+        <LevelLink unit={1} section={1} level={5} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-3 row-span-1" />
         <div class="col-span-3 col-start-8 row-span-2 row-start-5 content-center rounded-xl">
           <button class="">
             <PhFooPeinapple class="h-20 w-20" />
           </button>
         </div>
-        <LevelLink unit={6} section={1} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-5 row-span-1" />
+        <LevelLink unit={1} section={1} level={5} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-5 row-span-1" />
       </section>
       <section class="grid grid-cols-12 gap-3 pb-14">
         <TitleGame
@@ -370,6 +370,7 @@ interface LevelLinkProps extends PlayProps {
   unit: number;
   section: number;
   parentClass: string;
+  level: number;
 }
 
 
@@ -381,7 +382,7 @@ export const LevelLink = component$<LevelLinkProps>((props) => {
         route="/client/(main)/play/[section]/[unit]/"
         param:unit={`${props.unit}`}
         param:section={`${props.section}`}
-        class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= props.unit && props.currentSection >= props.section ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
+        class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= props.level-1 && props.currentUnit >= props.unit-1 && props.currentSection >= props.section ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
       >
         <PhStar class="h-8 w-8 fill-current" />
       </AppLink>
