@@ -50,14 +50,6 @@ const Play = component$(() => {
           </AppLink>
         </div>
         <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () =>
-              await handleStepChange("The Importance Of Nutrition", 1, 1, 2)
-            }
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
           <AppLink
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"2"}
@@ -68,14 +60,6 @@ const Play = component$(() => {
           </AppLink>
         </div>
         <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () =>
-              await handleStepChange("The Importance Of Nutrition", 1, 1, 3)
-            }
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
           <AppLink
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"3"}
