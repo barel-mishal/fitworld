@@ -43,8 +43,8 @@ const StepSchema = z.object({
   index: z.number().int(),
   section: z.number().int(),
   metadata: MetadataSchema,
-  created_at: sDate,
-  updated_at: sDate,
+  created_at: sDate.optional(),
+  updated_at: sDate.optional(),
 });
 
 export { StepSchema };
