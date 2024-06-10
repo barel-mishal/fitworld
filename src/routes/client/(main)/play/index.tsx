@@ -8,8 +8,20 @@ import { loadScript } from "@paypal/paypal-js";
 import Play from "~/components/playComponents/Play";
 import { type ExtendSession, useAuthSession } from "~/routes/plugin@auth";
 import { formatNumber } from "~/util/twoDecimalPoints";
+import { routeLoader$} from "@builder.io/qwik-city";
+import serverGetUserOverview from "~/routes/api/service_user_overview/service_user_overview";
+
+export const useLoadUserOverview = routeLoader$(async function() {
+  const userOverview = await serverGetUserOverview();
+  return userOverview;
+});
 
 export default component$(() => {
+  const userOverview = useLoadUserOverview().value;
+  if (!userOverview.success) {
+    return <div>Error: {userOverview.error}</div>;
+  }
+  console.log("userOverview", userOverview.value);
   const auth = useAuthSession().value as ExtendSession | undefined;
   return (
     <HeaderMainBottomNav
@@ -21,7 +33,7 @@ export default component$(() => {
           streak={0}
           water={0}
           heart={0}
-          dna={formatNumber(auth?.database.profile.energy.TEE ?? 0)}
+          dna={formatNumber(auth?.database.profile.overview.TEE ?? 0)}
         />
       </div>
       <div q:slot="main">

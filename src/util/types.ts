@@ -31,7 +31,7 @@ export const profileSchema = z.object({
 
 export const addonsProfileEnergySchema = z
   .object({
-    energy: z.object({
+    overview: z.object({
       TEE: z.string().or(z.number()),
       TEE_RDA: z.object({ heigh: NumberOrString, low: NumberOrString }),
       bmi: NumberOrString,

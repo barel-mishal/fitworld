@@ -79,7 +79,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
           // Get user profile
           // TODO: change schema so the weight and height are the most updated.
           const data = await db.query<[[SchemaProfileType]]>(`
-         SELECT *, fn::energy(id) as energy FROM profile WHERE userId = $auth.id;
+          SELECT *, fn::energy(id) as overview FROM profile WHERE userId = $auth.id;
         `);
 
           const profile = addonsProfileEnergySchema.partial().parse(data[0][0]);
