@@ -1,12 +1,12 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$, useLocation } from "@builder.io/qwik-city";
-import { serverGPTSTexts } from "~/routes/api/service_game/serviceGPTResult";
+import { type StepKey, serverGPTSTexts } from "~/routes/api/service_game/serviceGPTResult";
 import { PhClose, PhFooPeinapple } from "~/components/icons/icons";
 import { AppLink } from "~/routes.config";
 
 export const useLoadSteps = routeLoader$(async function (data) {
   try {
-    const section = data.params.section as `section ${number} unit ${number}`;
+    const section = data.params.section as StepKey;
     const steps = await serverGPTSTexts();
     const sectionSteps = steps[section];
     return {
@@ -26,7 +26,7 @@ export default component$(() => {
   const loc = useLocation();
   const section = loc.params.section;
   const splited = section.split(" ");
-  const H1Text = `Section ${splited.at(1)} Unit ${splited.at(3)}`;
+  const H1Text = `section ${splited.at(1)} unit ${splited.at(3)} level ${splited.at(5)}`;
   return (
     <div class="h-full overflow-y-scroll bg-gray-950">
       <div class="flex flex-col gap-4 p-3">

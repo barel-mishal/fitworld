@@ -8,10 +8,10 @@ import { loadScript } from "@paypal/paypal-js";
 import Play from "~/components/playComponents/Play";
 import { type ExtendSession, useAuthSession } from "~/routes/plugin@auth";
 import { formatNumber } from "~/util/twoDecimalPoints";
-import { routeLoader$} from "@builder.io/qwik-city";
+import { routeLoader$ } from "@builder.io/qwik-city";
 import serverGetUserOverview from "~/routes/api/service_user_overview/service_user_overview";
 
-export const useLoadUserOverview = routeLoader$(async function() {
+export const useLoadUserOverview = routeLoader$(async function () {
   const userOverview = await serverGetUserOverview();
   return userOverview;
 });
@@ -23,9 +23,12 @@ export default component$(() => {
   }
   const auth = useAuthSession().value as ExtendSession | undefined;
 
-  const firstSection = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.section ?? 0;
-  const firstUnit = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.unit ?? 0;
-  const firstLevel = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.level ?? 0;
+  const firstSection =
+    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.section ?? 0;
+  const firstUnit =
+    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.unit ?? 0;
+  const firstLevel =
+    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.level ?? 0;
 
   return (
     <HeaderMainBottomNav
@@ -41,7 +44,11 @@ export default component$(() => {
         />
       </div>
       <div q:slot="main">
-        <Play currentSection={firstSection} currentUnit={firstUnit} currentLevel={firstLevel} />
+        <Play
+          currentSection={firstSection}
+          currentUnit={firstUnit}
+          currentLevel={firstLevel}
+        />
       </div>
       <div q:slot="footer" class="">
         <BottomNavBar

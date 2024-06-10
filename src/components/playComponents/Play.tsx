@@ -38,7 +38,7 @@ const Play = component$<PlayProps>((props) => {
     <div class="flex flex-col">
       <section class="grid grid-cols-12 gap-5 pb-14">
         <TitleGame
-          params={`section 1 unit 1`}
+          params={`section 1 unit 1 level 1`}
           title="SECTION 1 UNIT 1"
           subTitle="The Importance Of Nutrition"
           element={{
@@ -46,26 +46,74 @@ const Play = component$<PlayProps>((props) => {
               "p-4 bg-green-600 rounded-xl col-span-12 border-b-4 border-green-900 sticky top-0",
           }}
         />
-        <LevelLink currentLevel={props.currentLevel} unit={1} section={1} level={1} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-3 row-span-1" />
-        <LevelLink currentLevel={props.currentLevel} unit={1} section={1} level={2} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-5 row-span-1" />
-        <LevelLink currentLevel={props.currentLevel} unit={1} section={1} level={3} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-5 row-span-1" />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={1}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+        />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={2}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+        />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={3}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+        />
         <div class="col-span-3 col-start-1 row-span-2 row-start-3 content-center rounded-xl">
           <button class="">
             <PhFooPeinapple class="h-20 w-20" />
           </button>
         </div>
-        <LevelLink currentLevel={props.currentLevel} unit={1} section={1} level={4} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-3 row-span-1" />
-        <LevelLink currentLevel={props.currentLevel} unit={1} section={1} level={5} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-3 row-span-1" />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={4}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+        />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={5}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+        />
         <div class="col-span-3 col-start-8 row-span-2 row-start-5 content-center rounded-xl">
           <button class="">
             <PhFooPeinapple class="h-20 w-20" />
           </button>
         </div>
-        <LevelLink currentLevel={props.currentLevel} unit={1} section={1} level={5} currentUnit={props.currentUnit} currentSection={props.currentSection} parentClass="col-span-4 col-start-5 row-span-1" />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={5}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+        />
       </section>
       <section class="grid grid-cols-12 gap-3 pb-14">
         <TitleGame
-          params={`section 1 unit 2`}
+          params={`section 1 unit 1 level 2`}
           title="SECTION 1 UNIT 2"
           subTitle="Macronutrients and Health"
           element={{
@@ -75,9 +123,9 @@ const Play = component$<PlayProps>((props) => {
         />
         <div class="col-span-4 col-start-3 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Macronutrients and Health", 1, 2, 1)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Macronutrients and Health", 1, 2, 1)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-purple-900 bg-purple-600 p-4 text-purple-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -86,16 +134,21 @@ const Play = component$<PlayProps>((props) => {
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"2"}
             param:section="1"
-            class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= 5 && props.currentSection >= 1 ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
+            class={cn(
+              "grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b",
+              props.currentUnit >= 5 && props.currentSection >= 1
+                ? "border-green-900 bg-green-600"
+                : "border-gray-800 bg-gray-600",
+            )}
           >
             <PhStar class="h-8 w-8 fill-current" />
           </AppLink>
         </div>
         <div class="col-span-4 col-start-5 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Macronutrients and Health", 1, 2, 2)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Macronutrients and Health", 1, 2, 2)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -103,9 +156,9 @@ const Play = component$<PlayProps>((props) => {
         </div>
         <div class="col-span-4 col-start-5 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Macronutrients and Health", 1, 2, 3)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Macronutrients and Health", 1, 2, 3)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -118,9 +171,9 @@ const Play = component$<PlayProps>((props) => {
         </div>
         <div class="col-span-4 col-start-3 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Macronutrients and Health", 1, 2, 4)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Macronutrients and Health", 1, 2, 4)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -128,9 +181,9 @@ const Play = component$<PlayProps>((props) => {
         </div>
         <div class="col-span-4 col-start-3 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Macronutrients and Health", 1, 2, 5)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Macronutrients and Health", 1, 2, 5)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -143,9 +196,9 @@ const Play = component$<PlayProps>((props) => {
         </div>
         <div class="col-span-4 col-start-5 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Macronutrients and Health", 1, 2, 6)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Macronutrients and Health", 1, 2, 6)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -154,7 +207,7 @@ const Play = component$<PlayProps>((props) => {
       </section>
       <section class="grid grid-cols-12 gap-3 pb-14">
         <TitleGame
-          params={`section 1 unit 3`}
+          params={`section 1 unit 1 level 3`}
           title="SECTION 1 UNIT 3"
           subTitle="Build your training program"
           element={{
@@ -164,9 +217,9 @@ const Play = component$<PlayProps>((props) => {
         />
         <div class="col-span-4 col-start-3 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Build your training program", 1, 3, 1)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Build your training program", 1, 3, 1)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-indigo-900 bg-indigo-600 p-4 text-indigo-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -174,9 +227,9 @@ const Play = component$<PlayProps>((props) => {
         </div>
         <div class="col-span-4 col-start-5 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Build your training program", 1, 3, 2)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Build your training program", 1, 3, 2)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -184,9 +237,9 @@ const Play = component$<PlayProps>((props) => {
         </div>
         <div class="col-span-4 col-start-5 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Build your training program", 1, 3, 3)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Build your training program", 1, 3, 3)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -199,9 +252,9 @@ const Play = component$<PlayProps>((props) => {
         </div>
         <div class="col-span-4 col-start-3 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Build your training program", 1, 3, 4)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Build your training program", 1, 3, 4)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -209,9 +262,9 @@ const Play = component$<PlayProps>((props) => {
         </div>
         <div class="col-span-4 col-start-3 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Build your training program", 1, 3, 5)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Build your training program", 1, 3, 5)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -224,9 +277,9 @@ const Play = component$<PlayProps>((props) => {
         </div>
         <div class="col-span-4 col-start-5 row-span-1">
           <button
-            onClick$={async () =>
-              await handleStepChange("Build your training program", 1, 3, 6)
-            }
+            onClick$={async () => {
+              // await handleStepChange("Build your training program", 1, 3, 6)
+            }}
             class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
           >
             <PhStar class="h-8 w-8 fill-current" />
@@ -235,7 +288,7 @@ const Play = component$<PlayProps>((props) => {
       </section>
       <section class="grid grid-cols-12 gap-3 pb-14">
         <TitleGame
-          params={`section 1 unit 4`}
+          params={`section 1 unit 1 level 4`}
           title="SECTION 1 UNIT 4"
           subTitle="The Importance Of Nutrition"
           element={{
@@ -378,15 +431,14 @@ export const LevelLink = component$<LevelLinkProps>((props) => {
   return (
     <div class={props.parentClass}>
       <AppLink
-        route="/client/(main)/play/[section]/[unit]/"
+        route="/client/(main)/play/[section]/[unit]/[level]/"
         param:unit={`${props.unit}`}
+        param:level={`${props.level}`}
         param:section={`${props.section}`}
         class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= props.level-1 && props.currentUnit >= props.unit-1 && props.currentSection >= props.section ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
       >
         <PhStar class="h-8 w-8 fill-current" />
       </AppLink>
     </div>
-  )
+  );
 });
-
-

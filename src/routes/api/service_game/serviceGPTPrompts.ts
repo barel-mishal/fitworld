@@ -5,6 +5,7 @@ export interface StepText {
   unit: number;
   section: number;
   index: number;
+  level: number;
   step: number;
   titleSection: string;
 }

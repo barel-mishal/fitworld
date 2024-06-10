@@ -14,6 +14,7 @@ export type AppRoutes =
   | "/client/(main)/play/"
   | "/client/(main)/play/[section]/"
   | "/client/(main)/play/[section]/[unit]/"
+  | "/client/(main)/play/[section]/[unit]/[level]/"
   | "/client/(main)/play/[section]/[unit]/finish/"
   | "/client/(main)/track/"
   | "/client/(main)/track/finish/"
@@ -52,6 +53,11 @@ export interface AppRouteMap {
   "/client/(main)/play/": {};
   "/client/(main)/play/[section]/": { section: string };
   "/client/(main)/play/[section]/[unit]/": { section: string; unit: string };
+  "/client/(main)/play/[section]/[unit]/[level]/": {
+    section: string;
+    unit: string;
+    level: string;
+  };
   "/client/(main)/play/[section]/[unit]/finish/": {
     section: string;
     unit: string;
@@ -99,6 +105,10 @@ export interface AppRouteParamsFunction {
   (
     route: "/client/(main)/play/[section]/[unit]/",
     params: { section: string; unit: string },
+  ): string;
+  (
+    route: "/client/(main)/play/[section]/[unit]/[level]/",
+    params: { section: string; unit: string; level: string },
   ): string;
   (
     route: "/client/(main)/play/[section]/[unit]/finish/",
@@ -157,6 +167,12 @@ export type AppLinkProps =
       route: "/client/(main)/play/[section]/[unit]/";
       "param:section": string;
       "param:unit": string;
+    }
+  | {
+      route: "/client/(main)/play/[section]/[unit]/[level]/";
+      "param:section": string;
+      "param:unit": string;
+      "param:level": string;
     }
   | {
       route: "/client/(main)/play/[section]/[unit]/finish/";

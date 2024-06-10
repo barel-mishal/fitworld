@@ -18,7 +18,7 @@ export const serverUserAddStep = server$(async function (
     const steps = await serverGPTCreateSteps(data as StepText);
     const result = await openDBConnection.value.query<[null, Step[], Step[]]>(
       `
-      LET $step = SELECT * FROM step WHERE unit = $unit AND section = $section ORDER BY section, unit, index;
+      LET $step = SELECT * FROM step WHERE unit = $unit AND section = $section ORDER BY section, unit, index, level;
       IF (array::len($step) > 0) THEN 
         $step
       ELSE
@@ -26,7 +26,7 @@ export const serverUserAddStep = server$(async function (
       END;
 
       `,
-      { unit: data.unit, section: data.section, steps },
+      { unit: data.unit, section: data.section, steps, level: data.level },
     );
 
     await openDBConnection.value.close();
@@ -48,11 +48,11 @@ export const serverGPTCreateSteps = server$(async function (data: StepText) {
   if (!token) throw new Error("No token");
   const gptResult = await serverGPTSTexts();
   return gptResult[
-    data.unit === 1
-      ? "section 1 unit 1"
-      : data.unit === 2
-        ? "section 1 unit 2"
-        : "section 1 unit 3"
+    data.level === 1
+      ? "section 1 unit 1 level 1"
+      : data.level === 2
+        ? "section 1 unit 1 level 2"
+        : "section 1 unit 1 level 3"
   ];
 });
 

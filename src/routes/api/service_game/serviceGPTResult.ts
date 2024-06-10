@@ -1,15 +1,16 @@
 import { server$ } from "@builder.io/qwik-city";
 import { type Step } from "./types";
 
-export type StepKey = `section ${number} unit ${number}`;
+export type StepKey = `section ${number} unit ${number} level ${number}`;
 
 export const serverGPTSTexts = server$(async function () {
   const gptResult: Record<StepKey, Step[]> = {
-    "section 1 unit 1": [
+    "section 1 unit 1 level 1": [
       {
         unit: 1,
         index: 1,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Understanding Basic Nutritional Needs",
@@ -20,6 +21,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 2,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Overview of Macronutrients (Carbohydrates, Proteins, Fats)",
@@ -30,6 +32,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 3,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Carbohydrates",
@@ -40,6 +43,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 4,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Proteins",
@@ -50,6 +54,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 5,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Fats",
@@ -60,6 +65,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 6,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Importance of Micronutrients (Vitamins and Minerals)",
@@ -70,6 +76,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 7,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Vitamins",
@@ -80,6 +87,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 8,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Minerals",
@@ -90,6 +98,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 9,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Daily Nutritional Requirements",
@@ -100,6 +109,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 10,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Dietary Reference Intakes (DRIs)",
@@ -110,6 +120,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 11,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_text",
           title: "Balanced Diet",
@@ -120,6 +131,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 12,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_multiple_choice",
           title: "Question 1",
@@ -134,6 +146,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 13,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_multiple_choice",
           title: "Question 2",
@@ -147,6 +160,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 14,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_multiple_choice",
           title: "Question 3",
@@ -165,6 +179,7 @@ export const serverGPTSTexts = server$(async function () {
         unit: 1,
         index: 15,
         section: 1,
+        level: 1,
         metadata: {
           type: "step_multiple_choice",
           title: "Question 4",
@@ -179,13 +194,14 @@ export const serverGPTSTexts = server$(async function () {
           correctAnswer: 2,
           answer: undefined,
         },
-      }
+      },
     ],
-    "section 1 unit 2": [
+    "section 1 unit 1 level 2": [
       {
-        unit: 2,
+        unit: 1,
         index: 1,
         section: 1,
+        level: 2,
         metadata: {
           type: "step_text",
           title: "The Role of Balanced Diets in Health",
@@ -193,9 +209,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 2,
+        unit: 1,
         index: 2,
         section: 1,
+        level: 2,
         metadata: {
           type: "step_text",
           title: "Benefits of a Balanced Diet",
@@ -203,9 +220,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 2,
+        unit: 1,
         index: 3,
         section: 1,
+        level: 2,
         metadata: {
           type: "step_text",
           title: "Impact of Diet on Energy Levels and Mental Clarity",
@@ -213,9 +231,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 2,
+        unit: 1,
         index: 4,
         section: 1,
+        level: 2,
         metadata: {
           type: "step_text",
           title: "Relationship Between Diet and Chronic Diseases",
@@ -223,9 +242,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 2,
+        unit: 1,
         index: 5,
         section: 1,
+        level: 2,
         metadata: {
           type: "step_multiple_choice",
           title: "Quiz Question 1",
@@ -240,9 +260,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 2,
+        unit: 1,
         index: 6,
         section: 1,
+        level: 2,
         metadata: {
           type: "step_multiple_choice",
           title: "Quiz Question 2",
@@ -257,9 +278,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 2,
+        unit: 1,
         index: 7,
         section: 1,
+        level: 2,
         metadata: {
           type: "step_multiple_choice",
           title: "Quiz Question 3",
@@ -275,9 +297,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 2,
+        unit: 1,
         index: 8,
         section: 1,
+        level: 2,
         metadata: {
           type: "step_multiple_choice",
           title: "Quiz Question 4",
@@ -291,13 +314,14 @@ export const serverGPTSTexts = server$(async function () {
           ],
           correctAnswer: 2,
         },
-      }
+      },
     ],
-    "section 1 unit 3": [
+    "section 1 unit 1 level 3": [
       {
-        unit: 3,
+        unit: 1,
         index: 0,
         section: 1,
+        level: 3,
         metadata: {
           type: "step_text",
           title: "Common Nutritional Deficiencies and Their Symptoms",
@@ -313,9 +337,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 3,
+        unit: 1,
         index: 1,
         section: 1,
+        level: 3,
         metadata: {
           type: "step_text",
           title: "Strategies to Prevent and Address Deficiencies",
@@ -331,9 +356,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 3,
+        unit: 1,
         index: 2,
         section: 1,
+        level: 3,
         metadata: {
           type: "step_text",
           title: "Incorporating Nutrient-Rich Foods into Your Diet",
@@ -349,9 +375,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 3,
+        unit: 1,
         index: 3,
         section: 1,
+        level: 3,
         metadata: {
           type: "step_multiple_choice",
           title: "Question 1",
@@ -362,9 +389,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 3,
+        unit: 1,
         index: 4,
         section: 1,
+        level: 3,
         metadata: {
           type: "step_multiple_choice",
           title: "Question 2",
@@ -374,9 +402,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 3,
+        unit: 1,
         index: 5,
         section: 1,
+        level: 3,
         metadata: {
           type: "step_multiple_choice",
           title: "Question 3",
@@ -392,9 +421,10 @@ export const serverGPTSTexts = server$(async function () {
         },
       },
       {
-        unit: 3,
+        unit: 1,
         index: 6,
         section: 1,
+        level: 3,
         metadata: {
           type: "step_multiple_choice",
           title: "Question 4",
@@ -408,7 +438,7 @@ export const serverGPTSTexts = server$(async function () {
           ],
           correctAnswer: 1,
         },
-      }
+      },
     ],
   } as const;
   return gptResult;

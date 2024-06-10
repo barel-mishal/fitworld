@@ -31,6 +31,7 @@ export const useLoaderQuestioner = routeLoader$(async function (event) {
   const steps = await serverUserAddStep({
     unit: parseInt(params.unit),
     section: parseInt(params.section),
+    level: parseInt(params.level),
   });
   return steps;
 });
