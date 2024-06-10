@@ -3,8 +3,14 @@ import { PhFooPeinapple, PhStar } from "../icons/icons";
 import { serverUserAddStep } from "~/routes/api/service_game/serviceUserAddStep";
 import { AppLink } from "~/routes.config";
 import { type StepKey } from "~/routes/api/service_game/serviceGPTResult";
+import { cn } from "@qwik-ui/utils";
 
-const Play = component$(() => {
+interface PlayProps {
+  currentUnit: number;
+  currentSection: number;
+}
+
+const Play = component$<PlayProps>((props) => {
   const handleStepChange = $(
     async (
       titleSection: string,
@@ -44,7 +50,7 @@ const Play = component$(() => {
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"1"}
             param:section="1"
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-green-900 bg-green-600 p-4 text-green-50 transition-all ease-in-out active:border-b"
+            class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= 0 && props.currentSection >= 0 ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
           >
             <PhStar class="h-8 w-8 fill-current" />
           </AppLink>
@@ -54,7 +60,7 @@ const Play = component$(() => {
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"2"}
             param:section="1"
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50 transition-all ease-in-out active:border-b"
+            class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= 1 && props.currentSection >= 1 ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
           >
             <PhStar class="h-8 w-8 fill-current" />
           </AppLink>
@@ -64,7 +70,7 @@ const Play = component$(() => {
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"3"}
             param:section="1"
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50 transition-all ease-in-out active:border-b"
+            class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= 2 && props.currentSection >= 1 ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
           >
             <PhStar class="h-8 w-8 fill-current" />
           </AppLink>
@@ -79,7 +85,7 @@ const Play = component$(() => {
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"4"}
             param:section="1"
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50 transition-all ease-in-out active:border-b"
+            class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= 3 && props.currentSection >= 1 ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
           >
             <PhStar class="h-8 w-8 fill-current" />
           </AppLink>
@@ -89,7 +95,7 @@ const Play = component$(() => {
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"5"}
             param:section="1"
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50 transition-all ease-in-out active:border-b"
+            class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= 4 && props.currentSection >= 1 ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
           >
             <PhStar class="h-8 w-8 fill-current" />
           </AppLink>
@@ -104,7 +110,7 @@ const Play = component$(() => {
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"6"}
             param:section="1"
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50 transition-all ease-in-out active:border-b"
+            class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= 5 && props.currentSection >= 1 ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
           >
             <PhStar class="h-8 w-8 fill-current" />
           </AppLink>
@@ -129,6 +135,14 @@ const Play = component$(() => {
           >
             <PhStar class="h-8 w-8 fill-current" />
           </button>
+          <AppLink
+            route="/client/(main)/play/[section]/[unit]/"
+            param:unit={"2"}
+            param:section="1"
+            class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= 5 && props.currentSection >= 1 ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
+          >
+            <PhStar class="h-8 w-8 fill-current" />
+          </AppLink>
         </div>
         <div class="col-span-4 col-start-5 row-span-1">
           <button

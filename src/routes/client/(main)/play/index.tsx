@@ -21,8 +21,12 @@ export default component$(() => {
   if (!userOverview.success) {
     return <div>Error: {userOverview.error}</div>;
   }
-  console.log("userOverview", userOverview.value);
   const auth = useAuthSession().value as ExtendSession | undefined;
+
+
+  const firstSection = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.section ?? 0;
+  const firstUnit = userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.unit ?? 0;
+
   return (
     <HeaderMainBottomNav
       classMain="tw "
@@ -37,7 +41,7 @@ export default component$(() => {
         />
       </div>
       <div q:slot="main">
-        <Play />
+        <Play currentSection={firstSection} currentUnit={firstUnit} />
       </div>
       <div q:slot="footer" class="">
         <BottomNavBar
