@@ -3,6 +3,7 @@ import { routeLoader$ } from "@builder.io/qwik-city";
 import { serverUserAddStep } from "~/routes/api/service_game/serviceUserAddStep";
 import ImageFooParty from "~/media/partyFooPeinapple.png?jsx";
 import { StepSchema } from "~/routes/api/service_game/types";
+import { AppLink } from "~/routes.config";
 
 export const useLoaderQuestioner = routeLoader$(async function (event) {
   const params = event.params as { section: string; unit: string };
@@ -68,7 +69,7 @@ export default component$(() => {
       </div>
     </section>
     <section class="text-gray-50 flex-grow flex items-end w-full">
-      <button class="btn rounded-xl h-12 bg-sky-500 border-sky-700 text-sky-950 font-extrabold flex-grow w-full ">Claim XP</button>
+      <AppLink route={"/client/play/" as "/client/(main)/play/"} class="btn items-center flex justify-center rounded-xl h-12 bg-sky-500 border-sky-700 text-sky-950 font-extrabold flex-grow w-full ">Claim XP</AppLink>
     </section>
   </div>;
 });
