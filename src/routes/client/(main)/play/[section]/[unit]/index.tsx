@@ -6,7 +6,7 @@ import {
   useComputed$,
   useStore,
 } from "@builder.io/qwik";
-import { routeLoader$, useNavigate } from "@builder.io/qwik-city";
+import { routeLoader$, useLocation, useNavigate } from "@builder.io/qwik-city";
 import { cn } from "@qwik-ui/utils";
 import CloseModal from "~/components/Modals/CloseModal/CloseModal";
 import { PhArrowBendUpLeft, PhHeart } from "~/components/icons/icons";
@@ -45,6 +45,7 @@ type CountStore = {
 
 export default component$(() => {
   const loadedQuestioner = useLoaderQuestioner().value;
+  const loc = useLocation();
   if (
     !loadedQuestioner ||
     !loadedQuestioner.success ||
@@ -53,7 +54,7 @@ export default component$(() => {
     return <div>Error</div>;
   }
 
-  const g = useEducationalGameQuestioner(loadedQuestioner.value);
+  const g = useEducationalGameQuestioner(loadedQuestioner.value, Number(loc.params.section), Number(loc.params.unit));
   return (
     <div
       class={cn(
@@ -171,7 +172,7 @@ export const RenderLearningTypeQuestion =
     );
   });
 
-export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
+export const useEducationalGameQuestioner = (loadedQuestioner: Step[], section: number, unit: number) => {
   const a = loadedQuestioner.reduce(
     (acc, curr) => {
       if (
@@ -186,7 +187,7 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
     {} as Record<string, string>,
   );
   const nav = useNavigate();
-  const finishPath: AppRoutes = "/client/play/[section]/[unit]/finish/" as "/client/(main)/play/[section]/[unit]/finish/";
+  const finishPath: AppRoutes = `/client/play/${section}/${unit}/finish/` as "/client/(main)/play/[section]/[unit]/finish/";
   const game = useStore<CountStore>({
     step: 0,
     onStepChange: $(function (this: CountStore) {
@@ -277,8 +278,6 @@ export const useEducationalGameQuestioner = (loadedQuestioner: Step[]) => {
     const answers = Object.values(game.answers);
     return answers.includes(current.metadata.options[current.metadata.correctAnswer]);
   });
-
-
 
   return {
     game,

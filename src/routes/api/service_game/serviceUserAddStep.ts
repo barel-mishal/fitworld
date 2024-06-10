@@ -16,14 +16,15 @@ export const serverUserAddStep = server$(async function (
     if (!openDBConnection.success || !openDBConnection.value)
       throw new Error("Unauthorized");
     const steps = await serverGPTCreateSteps(data as StepText);
-    const result = await openDBConnection.value.query<[null, Step[]]>(
+    const result = await openDBConnection.value.query<[null, Step[], Step[]]>(
       `
       LET $step = SELECT * FROM step WHERE unit = $unit AND section = $section ORDER BY section, unit, index;
       IF (array::len($step) > 0) THEN 
         $step
       ELSE
-        INSERT INTO step $steps
+        (INSERT INTO step $steps)
       END;
+
       `,
       { unit: data.unit, section: data.section, steps },
     );

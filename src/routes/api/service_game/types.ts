@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const sDate = z.string().pipe(z.coerce.date()).or(z.date());
+
 export const StepTextSchema = z.object({
   type: z.literal("step_text"),
   title: z.string(),
@@ -41,6 +43,8 @@ const StepSchema = z.object({
   index: z.number().int(),
   section: z.number().int(),
   metadata: MetadataSchema,
+  created_at: sDate,
+  updated_at: sDate,
 });
 
 export { StepSchema };
