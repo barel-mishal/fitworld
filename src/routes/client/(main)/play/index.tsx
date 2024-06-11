@@ -29,7 +29,7 @@ export default component$(() => {
     userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.unit ?? 0;
   const firstLevel =
     userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.level ?? 0;
-    
+
   return (
     <HeaderMainBottomNav
       classMain="tw "
@@ -92,3 +92,5 @@ export const Paypal = component$(() => {
     </>
   );
 });
+
+
