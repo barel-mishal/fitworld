@@ -104,7 +104,7 @@ const Play = component$<PlayProps>((props) => {
         <LevelLink
           unit={1}
           section={1}
-          level={5}
+          level={6}
           currentLevel={props.currentLevel}
           currentUnit={props.currentUnit}
           currentSection={props.currentSection}
