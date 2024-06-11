@@ -73,7 +73,7 @@
     "lru-cache": "^10.2.2",
     "marked": "^12.0.2",
     "openai": "^4.50.0",
-    "surrealdb.js": "^0.11.0",
+    "surrealdb.js": "^0.11.1",
     "uploadthing": "^6.12.0"
   }
 }
