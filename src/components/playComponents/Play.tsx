@@ -122,14 +122,6 @@ const Play = component$<PlayProps>((props) => {
           }}
         />
         <div class="col-span-4 col-start-3 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Macronutrients and Health", 1, 2, 1)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-purple-900 bg-purple-600 p-4 text-purple-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
           <AppLink
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"2"}
