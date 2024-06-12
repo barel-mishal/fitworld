@@ -42,7 +42,7 @@ export const addonsProfileEnergySchema = z
       }),
       normaliz_weight: NumberOrString,
       userId: z.string().regex(/^user:[a-z0-9]+$/),
-    }),
+    }).nullable(),
   })
   .merge(profileSchema);
 

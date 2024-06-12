@@ -40,7 +40,7 @@ export default component$(() => {
           streak={0}
           water={0}
           heart={0}
-          dna={formatNumber(auth?.database.profile.overview.TEE ?? 0)}
+          dna={formatNumber(auth?.database.profile.overview?.TEE ?? 0)}
         />
       </div>
       <div q:slot="main">
