@@ -427,7 +427,14 @@ export const LevelLink = component$<LevelLinkProps>((props) => {
         param:unit={`${props.unit}`}
         param:level={`${props.level}`}
         param:section={`${props.section}`}
-        class={cn("grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b", props.currentUnit >= props.level-1 && props.currentUnit >= props.unit-1 && props.currentSection >= props.section ? "border-green-900 bg-green-600" : "border-gray-800 bg-gray-600")}
+        class={cn(
+          "grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b",
+          props.currentUnit >= props.level - 1 &&
+            props.currentUnit >= props.unit - 1 &&
+            props.currentSection >= props.section
+            ? "border-green-900 bg-green-600"
+            : "border-gray-800 bg-gray-600",
+        )}
       >
         <PhStar class="h-8 w-8 fill-current" />
       </AppLink>

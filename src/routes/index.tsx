@@ -19,7 +19,9 @@ export default component$(() => {
     <>
       <div>Home</div>
       <Link href="/auth/signin">Sign In</Link>
-      <button class="btn" onClick$={async () => {}}>signup</button>
+      <button class="btn" onClick$={async () => {}}>
+        signup
+      </button>
     </>
   );
 });
@@ -33,5 +35,3 @@ export const head: DocumentHead = {
     },
   ],
 };
-
-

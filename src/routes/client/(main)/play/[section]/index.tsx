@@ -1,6 +1,9 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$, useLocation } from "@builder.io/qwik-city";
-import { type StepKey, serverGPTSTexts } from "~/routes/api/service_game/serviceGPTResult";
+import {
+  type StepKey,
+  serverGPTSTexts,
+} from "~/routes/api/service_game/serviceGPTResult";
 import { PhClose, PhFooPeinapple } from "~/components/icons/icons";
 import { AppLink } from "~/routes.config";
 

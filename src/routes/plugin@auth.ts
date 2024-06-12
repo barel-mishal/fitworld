@@ -9,7 +9,6 @@ import {
 import { type Session } from "@auth/core/types";
 import { server$ } from "@builder.io/qwik-city";
 
-
 export const serverConnectRootDB = server$(() => {
   const db = new Surreal();
 
@@ -22,7 +21,7 @@ export const serverConnectRootDB = server$(() => {
         });
       } catch (error) {
         if (error instanceof Error)
-        return { error: error.message, path: error.stack };
+          return { error: error.message, path: error.stack };
         else return { error: "Unknown error", path: "" };
       }
     },
@@ -37,7 +36,6 @@ export const serverConnectRootDB = server$(() => {
 
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   serverAuth$(({ env }) => {
-
     return {
       secret: env.get("AUTH_SECRET"),
       trustHost: true,
@@ -54,21 +52,20 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
             let token = "";
             try {
               const db = await serverConnectRootDB();
-              
+
               await db.run();
-              
+
               // Check if user exists in database
               token = await db.action(async (db) => {
                 await db.signin({
-                  username: 'root',
-                  password: 'root',
-                })
+                  username: "root",
+                  password: "root",
+                });
 
                 const check = await db.query<[[SchemaProfileType] | []]>(
                   "SELECT * FROM user WHERE providerId = $id",
                   { id: connection.account?.providerAccountId },
                 );
-                console.log({check, providerId: connection.account?.providerAccountId});
                 if (check[0].length === 0) {
                   const token = await db.signup({
                     scope: "account",
@@ -84,21 +81,22 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
                   return token;
                 } else {
                   const token = await db.signin({
-                      scope: "account",
-                      database: "database",
-                      namespace: "namespace",
-                      pass: connection.account?.providerAccountId,
+                    scope: "account",
+                    database: "database",
+                    namespace: "namespace",
+                    pass: connection.account?.providerAccountId,
                   });
-                  console.log({token, signin: connection.account?.providerAccountId});
                   return token;
                 }
               });
 
               await db.dispose();
-
             } catch (error) {
-              console.error("\n\n ------ Database signup error ------ \n\n", error);
-              return null
+              console.error(
+                "\n\n ------ Database signup error ------ \n\n",
+                error,
+              );
+              return null;
             }
             // Set token providerId to account providerAccountId
             connection.token.providerId = token;
@@ -107,39 +105,32 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
         },
         session: async (connection) => {
           // Signin to database with providerId
-            const db = await serverConnectRootDB();
-            await db.run();
+          const db = await serverConnectRootDB();
+          await db.run();
 
+          const data = await db.action<{
+            data: [[SchemaProfileType]];
+            token: string;
+          }>(async (db) => {
+            const token = connection.token.providerId as string;
 
-            const data = await db.action<{data: [[SchemaProfileType]], token: string}>(async (db) => {
+            await db.authenticate(token);
 
-              const token = connection.token.providerId as string;
+            await db.create("profile", {});
 
-              await db.authenticate(token);
+            const data = await db.query<[[SchemaProfileType]]>(`
+                  SELECT *, fn::energy(id) as overview FROM profile WHERE userId = $auth.id;
+                  SELECT * FROM user WHERE id = $auth.id;
+                `);
 
-              await db.create("profile", {
-
-              })
-              
-
-              console.log({token});
-
-              // Get user profile
-              // TODO: change schema so the weight and height are the most updated.
-              const data = await db.query<[[SchemaProfileType]]>(`
-                SELECT *, fn::energy(id) as overview FROM profile WHERE userId = $auth.id;
-                SELECT * FROM user WHERE id = $auth.id;
-              `);
-
-              console.log(data[0]);
-
-            return {data, token};
-
+            return { data, token };
           });
 
           await db.dispose();
 
-          const profile = addonsProfileEnergySchema.partial().parse(data.data[0][0]);
+          const profile = addonsProfileEnergySchema
+            .partial()
+            .parse(data.data[0][0]);
 
           // Return session with database token for to authenticate with database and profile
           return {

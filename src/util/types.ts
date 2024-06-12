@@ -31,18 +31,20 @@ export const profileSchema = z.object({
 
 export const addonsProfileEnergySchema = z
   .object({
-    overview: z.object({
-      TEE: z.string().or(z.number()),
-      TEE_RDA: z.object({ heigh: NumberOrString, low: NumberOrString }),
-      bmi: NumberOrString,
-      constant: NumberOrString,
-      ideal_weight: z.object({
-        message: z.string(),
-        value: NumberOrString,
-      }),
-      normaliz_weight: NumberOrString,
-      userId: z.string().regex(/^user:[a-z0-9]+$/),
-    }).nullable(),
+    overview: z
+      .object({
+        TEE: z.string().or(z.number()),
+        TEE_RDA: z.object({ heigh: NumberOrString, low: NumberOrString }),
+        bmi: NumberOrString,
+        constant: NumberOrString,
+        ideal_weight: z.object({
+          message: z.string(),
+          value: NumberOrString,
+        }),
+        normaliz_weight: NumberOrString,
+        userId: z.string().regex(/^user:[a-z0-9]+$/),
+      })
+      .nullable(),
   })
   .merge(profileSchema);
 
