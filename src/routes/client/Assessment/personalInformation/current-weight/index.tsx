@@ -9,7 +9,6 @@ import { Label } from "~/components/ui/label/label";
 import { contextAssessmentStore } from "../../../layout";
 import { convertWeightUnits } from "~/util/convertUnits";
 import { formatedNumber } from "~/util/formatNumber";
-import { Popover } from "@qwik-ui/headless";
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
@@ -97,14 +96,14 @@ export const MyPopover = component$(() => {
 
   return (
     <>
-      <Popover.Trigger
+      <div
         ref={triggerRef}
         class={cn("btn")}
-        popovertarget="current-weight"
+        data-popovertarget="current-weight"
       >
         <span>{sc.data.personalInformation.weight.type.toUpperCase()}</span>
-      </Popover.Trigger>
-      <Popover.Panel
+      </div>
+      <div
         class="-translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50"
         ref={popoverRef}
         id="current-weight"
@@ -146,7 +145,7 @@ export const MyPopover = component$(() => {
             <span>LB</span>
           </button>
         </div>
-      </Popover.Panel>
+      </div>
       <p class="h-5 text-sm text-gray-200/70">{getWeightUnitSystem()}</p>
     </>
   );

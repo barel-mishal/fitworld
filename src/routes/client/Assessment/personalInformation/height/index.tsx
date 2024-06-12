@@ -9,7 +9,6 @@ import { Label } from "~/components/ui/label/label";
 import { contextAssessmentStore } from "../../../layout";
 import { convertHeightUnits } from "~/util/convertUnits";
 import { formatedNumber } from "~/util/formatNumber";
-import { Popover } from "@qwik-ui/headless";
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
@@ -101,14 +100,14 @@ export const MyPopover = component$<HeightGetter>(() => {
 
   return (
     <>
-      <Popover.Trigger
+      <div
         ref={triggerRef}
         class={"btn"}
-        popovertarget="unit-height-id"
+        data-popovertarget="unit-height-id"
       >
         <span>{sc.data.personalInformation.height.type.toUpperCase()}</span>
-      </Popover.Trigger>
-      <Popover.Panel
+      </div>
+      <div
         class="w-32 -translate-x-[24px] rounded-base border border-gray-800 bg-gray-950 p-2 text-gray-50 shadow-sm"
         ref={popoverRef}
         id="unit-height-id"
@@ -180,7 +179,7 @@ export const MyPopover = component$<HeightGetter>(() => {
             <span>FT</span>
           </button>
         </div>
-      </Popover.Panel>
+      </div>
       <p class="h-5 text-sm text-gray-200/70">{getHeightUnit()}</p>
     </>
   );

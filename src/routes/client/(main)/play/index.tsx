@@ -8,27 +8,48 @@ import { loadScript } from "@paypal/paypal-js";
 import Play from "~/components/playComponents/Play";
 import { type ExtendSession, useAuthSession } from "~/routes/plugin@auth";
 import { formatNumber } from "~/util/twoDecimalPoints";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { type RequestHandler, routeLoader$ } from "@builder.io/qwik-city";
 import serverGetUserOverview from "~/routes/api/service_user_overview/service_user_overview";
+import { type RoutesLiteral } from "~/util/types";
 
 export const useLoadUserOverview = routeLoader$(async function () {
   const userOverview = await serverGetUserOverview();
   return userOverview;
 });
 
+export const onRequest: RequestHandler = (event) => {
+  const session: ExtendSession | null = event.sharedMap.get("session");
+  const isSignedIn = session && new Date(session.expires) > new Date();
+  if (!isSignedIn) {
+    const path: RoutesLiteral = "/"
+    throw event.redirect(302, path);
+  }
+  const overview = session.database.profile.overview;
+  if (!overview || "missing" in overview) {
+    const path: RoutesLiteral = "/client/Assessment/"
+    throw event.redirect(302, path);
+  }
+};
+
 export default component$(() => {
   const userOverview = useLoadUserOverview().value;
+
   if (!userOverview.success) {
     return <div>Error: {userOverview.error}</div>;
   }
   const auth = useAuthSession().value as ExtendSession | undefined;
 
   const firstSection =
-    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.section ?? 0;
+    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.section ?? 1;
   const firstUnit =
-    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.unit ?? 0;
+    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.unit ?? 1;
   const firstLevel =
-    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.level ?? 0;
+    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.level ?? 1;
+
+  const overview = auth?.database.profile.overview;
+  if (!overview || "missing" in overview) {
+    return <div>Error: {overview?.missing}</div>;
+  }
 
   return (
     <HeaderMainBottomNav
@@ -40,7 +61,7 @@ export default component$(() => {
           streak={0}
           water={0}
           heart={0}
-          dna={formatNumber(auth?.database.profile.overview?.TEE ?? 0)}
+          dna={formatNumber(overview.TEE)}
         />
       </div>
       <div q:slot="main">

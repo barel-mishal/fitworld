@@ -78,6 +78,19 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
                     updatedAt: new Date(),
                   });
 
+                  console.log("token", token);
+                  await db.authenticate(token);
+                  const profile = await db.query('CREATE ONLY profile CONTENT $data', {
+                    data: {
+                      email: connection.account?.email ?? "",
+                      nickname: connection.account?.name ?? "",
+                    }
+                  });
+
+                  console.log("profile", profile);
+
+                  
+
                   return token;
                 } else {
                   const token = await db.signin({
@@ -85,6 +98,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
                     database: "database",
                     namespace: "namespace",
                     pass: connection.account?.providerAccountId,
+                    providerId: connection.account?.providerAccountId,
                   });
                   return token;
                 }
@@ -116,12 +130,10 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
 
             await db.authenticate(token);
 
-            await db.create("profile", {});
 
             const data = await db.query<[[SchemaProfileType]]>(`
-                  SELECT *, fn::energy(id) as overview FROM profile WHERE userId = $auth.id;
-                  SELECT * FROM user WHERE id = $auth.id;
-                `);
+              SELECT *, fn::energy(id) as overview FROM profile WHERE userId = $auth.id;
+            `);
 
             return { data, token };
           });

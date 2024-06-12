@@ -5,11 +5,14 @@ import { AppLink } from "~/routes.config";
 import { type StepKey } from "~/routes/api/service_game/serviceGPTResult";
 import { cn } from "@qwik-ui/utils";
 
+
 interface PlayProps {
   currentUnit: number;
   currentSection: number;
   currentLevel: number;
 }
+
+
 
 const Play = component$<PlayProps>((props) => {
   const handleStepChange = $(
@@ -33,7 +36,6 @@ const Play = component$<PlayProps>((props) => {
       }
     },
   );
-
   return (
     <div class="flex flex-col">
       <section class="grid grid-cols-12 gap-5 pb-14">
@@ -126,6 +128,22 @@ const Play = component$<PlayProps>((props) => {
             route="/client/(main)/play/[section]/[unit]/"
             param:unit={"2"}
             param:section="1"
+            class={cn(
+              "grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b",
+              props.currentUnit >= 5 && props.currentSection >= 1
+                ? "border-green-900 bg-green-600"
+                : "border-gray-800 bg-gray-600",
+            )}
+          >
+            <PhStar class="h-8 w-8 fill-current" />
+          </AppLink>
+        </div>
+        <div class="col-span-4 col-start-3 row-span-1">
+          <AppLink
+            route="/client/(main)/play/[section]/[unit]/[level]/"
+            param:unit={"2"}
+            param:section="1"
+            param:level="2"
             class={cn(
               "grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b",
               props.currentUnit >= 5 && props.currentSection >= 1
@@ -385,7 +403,7 @@ export const animetion = component$(() => {
   return (
     <div class="card-wrapper grid h-96 w-96 place-content-center">
       <div class="card-content">
-        <div>sdlfkj</div>
+        <div></div>
       </div>
     </div>
   );
@@ -429,9 +447,9 @@ export const LevelLink = component$<LevelLinkProps>((props) => {
         param:section={`${props.section}`}
         class={cn(
           "grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b",
-          props.currentUnit >= props.level - 1 &&
-            props.currentUnit >= props.unit - 1 &&
-            props.currentSection >= props.section
+          (props.currentLevel >= props.level &&
+            props.currentUnit >= props.unit &&
+            props.currentSection >= props.section)
             ? "border-green-900 bg-green-600"
             : "border-gray-800 bg-gray-600",
         )}
