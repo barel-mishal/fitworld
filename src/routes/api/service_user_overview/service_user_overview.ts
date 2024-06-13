@@ -57,7 +57,6 @@ const serverGetUserOverview = server$(async function () {
     id: session.database.profile.userId
   });
   await db.value?.close();
-  console.log(userOverview?.[0].at(0));
   return {
     success: true,
     value: userOverview?.[0].at(0),

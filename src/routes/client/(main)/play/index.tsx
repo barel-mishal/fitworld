@@ -46,12 +46,11 @@ export default component$(() => {
   const steps = userOverview.value?.overview.lastSteps;
 
   const firstSection =
-    steps?.at(0)?.section ?? 1;
+    steps?.at(0)?.section ?? 0;
   const firstUnit =
-    steps?.at(0)?.unit ?? 1;
+    steps?.at(0)?.unit ?? 0;
   const firstLevel =
-    steps?.at(0)?.level ?? 1;
-
+    steps?.at(0)?.level ?? 0;
   return (
     <HeaderMainBottomNav
       classMain="tw "

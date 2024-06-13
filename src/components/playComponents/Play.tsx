@@ -444,9 +444,9 @@ export const LevelLink = component$<LevelLinkProps>((props) => {
         param:section={`${props.section}`}
         class={cn(
           "grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b",
-          props.currentLevel >= props.level &&
-            props.currentUnit >= props.unit &&
-            props.currentSection >= props.section
+          props.currentLevel+1 >= props.level &&
+            props.currentUnit+1 >= props.unit &&
+            props.currentSection+1 >= props.section
             ? "border-green-900 bg-green-600"
             : "border-gray-800 bg-gray-600",
         )}
