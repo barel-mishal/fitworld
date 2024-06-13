@@ -10,6 +10,8 @@ import { contextAssessmentStore } from "../../../layout";
 import { convertWeightUnits } from "~/util/convertUnits";
 import { formatedNumber } from "~/util/formatNumber";
 
+import { Popover } from '~/components/ui/popover/popover';
+
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
   const refWeight = useSignal<HTMLButtonElement>();
@@ -74,7 +76,7 @@ export default component$(() => {
         <Label for="email-2" class="text-gray-100">
           Unit
         </Label>
-        <MyPopover />
+        <WeightPopover />
       </div>
     </div>
   );
@@ -99,16 +101,15 @@ export const MyPopover = component$(() => {
       <div
         ref={triggerRef}
         class={cn("btn")}
-        data-popovertarget="current-weight"
       >
         <span>{sc.data.personalInformation.weight.type.toUpperCase()}</span>
       </div>
       <div
-        class="-translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50"
+        class="-translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50 "
         ref={popoverRef}
         id="current-weight"
       >
-        <div class="grid w-auto gap-4">
+        <div class="grid w-auto gap-4" >
           <button
             data-active={`${sc.data.personalInformation.weight.type === "kg"}`}
             class="btn btn-data-active"
@@ -148,5 +149,69 @@ export const MyPopover = component$(() => {
       </div>
       <p class="h-5 text-sm text-gray-200/70">{getWeightUnitSystem()}</p>
     </>
+  );
+});
+
+
+
+
+export const WeightPopover = component$(() => {
+  const sc = useContext(contextAssessmentStore);
+  const getWeightUnitSystem = () => {
+    switch (sc.data.personalInformation.weight.unit) {
+      case "kg":
+      case "g":
+        return "Metric";
+      default:
+        return "Imperial";
+    }
+  };
+
+  return (
+    <Popover.Root flip={false} gutter={8}>
+      <Popover.Trigger class={cn("btn")}>
+        {sc.data.personalInformation.weight.type.toUpperCase()}
+      </Popover.Trigger>
+      <Popover.Panel class="-translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50">
+        <div class="grid w-auto gap-4">
+            <button
+              data-active={`${sc.data.personalInformation.weight.type === "kg"}`}
+              class="btn btn-data-active"
+              onClick$={async () => {
+                const weight = sc.data.personalInformation.weight.value;
+                const fromUnit = sc.data.personalInformation.weight.type;
+                await sc.cahngeWeightUnit(weight, fromUnit, "kg");
+              }}
+            >
+              <span>KG</span>
+            </button>
+
+            <button
+              data-active={`${sc.data.personalInformation.weight.type === "g"}`}
+              class="btn btn-data-active"
+              onClick$={async () => {
+                const weight = sc.data.personalInformation.weight.value;
+                const fromUnit = sc.data.personalInformation.weight.type;
+                await sc.cahngeWeightUnit(weight, fromUnit, "g");
+              }}
+            >
+              <span>G</span>
+            </button>
+
+            <button
+              data-active={`${sc.data.personalInformation.weight.type === "lb"}`}
+              class="btn btn-data-active"
+              onClick$={async () => {
+                const weight = sc.data.personalInformation.weight.value;
+                const fromUnit = sc.data.personalInformation.weight.type;
+                await sc.cahngeWeightUnit(weight, fromUnit, "lb");
+              }}
+            >
+              <span>LB</span>
+            </button>
+            <p class="h-5 text-sm text-gray-200/70">{getWeightUnitSystem()}</p>
+        </div>
+      </Popover.Panel>
+    </Popover.Root>
   );
 });

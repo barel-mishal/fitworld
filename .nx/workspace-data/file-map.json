@@ -1,0 +1,626 @@
+{
+  "version": "6.0",
+  "nxVersion": "19.2.3",
+  "deps": {
+    "@builder.io/qwik-labs": "github:BuilderIo/qwik-labs-build#main",
+    "@eslint/config-array": "^0.15.1",
+    "@eslint/object-schema": "^2.1.3",
+    "@paypal/paypal-js": "^8.1.0",
+    "@qwikest/icons": "^0.0.13",
+    "@shopify/draggable": "^1.1.3",
+    "@tailwindcss/typography": "^0.5.13",
+    "apexcharts": "^3.49.1",
+    "class-variance-authority": "^0.7.0",
+    "fund": "^1.0.0",
+    "install": "^0.13.0",
+    "isomorphic-dompurify": "^2.12.0",
+    "lru-cache": "^10.2.2",
+    "marked": "^12.0.2",
+    "npm": "^10.8.1",
+    "openai": "^4.50.0",
+    "surrealdb.js": "^0.11.1",
+    "uploadthing": "^6.12.0",
+    "@auth/core": "^0.13.0",
+    "@builder.io/qwik": "^1.5.6",
+    "@builder.io/qwik-auth": "^0.1.3",
+    "@builder.io/qwik-city": "^1.5.6",
+    "@qwik-ui/headless": "^0.4.4",
+    "@qwik-ui/styled": "^0.1.0",
+    "@qwik-ui/utils": "^0.2.1",
+    "@types/compression": "^1.7.2",
+    "@types/eslint": "^8.56.10",
+    "@types/express": "^4.17.19",
+    "@types/node": "^20.14.2",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "autoprefixer": "^10.4.14",
+    "compression": "^1.7.4",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.4.0",
+    "eslint-plugin-qwik": "^1.5.6",
+    "express": "4.19.2",
+    "nx": "^19.2.3",
+    "postcss": "^8.4.31",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.2",
+    "qwik-ui": "^0.1.0",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.5",
+    "undici": "^6.18.2",
+    "vite": "^5.2.13",
+    "vite-tsconfig-paths": "^4.2.1"
+  },
+  "pathMappings": {
+    "~/*": [
+      "./src/*"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "my-qwik-empty-starter": [
+        {
+          "file": ".create-qwik-i33fnqjb4c/package.json",
+          "hash": "17691620053110632655"
+        },
+        {
+          "file": ".eslintignore",
+          "hash": "8788580605553967678"
+        },
+        {
+          "file": ".eslintrc.cjs",
+          "hash": "16659622349671536439"
+        },
+        {
+          "file": ".gitignore",
+          "hash": "2051699296591713973"
+        },
+        {
+          "file": ".prettierignore",
+          "hash": "18026352017748956344"
+        },
+        {
+          "file": ".prettierrc.js",
+          "hash": "6870004385894641999"
+        },
+        {
+          "file": ".vscode/launch.json",
+          "hash": "2125652616757145198"
+        },
+        {
+          "file": ".vscode/qwik-city.code-snippets",
+          "hash": "7944545274723969739"
+        },
+        {
+          "file": ".vscode/qwik.code-snippets",
+          "hash": "12570788749085479650"
+        },
+        {
+          "file": "README.md",
+          "hash": "820981941220229964"
+        },
+        {
+          "file": "adapters/express/vite.config.ts",
+          "hash": "13607159864454915369"
+        },
+        {
+          "file": "adapters/express/vite.config.ts.timestamp-1718136368014-e6df69c722be8.mjs",
+          "hash": "9608385927821570545"
+        },
+        {
+          "file": "history.txt",
+          "hash": "13040136357098549856"
+        },
+        {
+          "file": "package-lock.json",
+          "hash": "12187170438397223750"
+        },
+        {
+          "file": "package.json",
+          "hash": "16683422188365334784",
+          "deps": [
+            "npm:@auth/core",
+            "npm:@builder.io/qwik",
+            "npm:@builder.io/qwik-auth",
+            "npm:@builder.io/qwik-city",
+            "npm:@qwik-ui/headless",
+            "npm:@qwik-ui/styled",
+            "npm:@qwik-ui/utils",
+            "npm:@types/compression",
+            "npm:@types/eslint",
+            "npm:@types/express",
+            "npm:@types/node",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:autoprefixer",
+            "npm:compression",
+            "npm:dotenv",
+            "npm:eslint",
+            "npm:eslint-plugin-qwik",
+            "npm:express",
+            "npm:nx",
+            "npm:postcss",
+            "npm:prettier",
+            "npm:prettier-plugin-tailwindcss",
+            "npm:qwik-ui",
+            "npm:tailwindcss",
+            "npm:typescript",
+            "npm:undici",
+            "npm:vite",
+            "npm:vite-tsconfig-paths",
+            "npm:@eslint/config-array",
+            "npm:@eslint/object-schema",
+            "npm:@paypal/paypal-js",
+            "npm:@qwikest/icons",
+            "npm:@shopify/draggable",
+            "npm:@tailwindcss/typography",
+            "npm:apexcharts",
+            "npm:class-variance-authority",
+            "npm:fund",
+            "npm:install",
+            "npm:isomorphic-dompurify",
+            "npm:lru-cache",
+            "npm:marked",
+            "npm:npm",
+            "npm:openai",
+            "npm:surrealdb.js",
+            "npm:uploadthing"
+          ]
+        },
+        {
+          "file": "postcss.config.cjs",
+          "hash": "8055263870272897227"
+        },
+        {
+          "file": "public/favicon.svg",
+          "hash": "5046894356132339361"
+        },
+        {
+          "file": "public/favicon2.svg",
+          "hash": "446107399934622830"
+        },
+        {
+          "file": "public/json_foodit_ingredients.json",
+          "hash": "12342869556905178322"
+        },
+        {
+          "file": "public/manifest.json",
+          "hash": "9861025138619883145"
+        },
+        {
+          "file": "public/robots.txt",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "qwik-ui.config.json",
+          "hash": "17189465645030050949"
+        },
+        {
+          "file": "schema.srqlnb",
+          "hash": "10416806155929584384"
+        },
+        {
+          "file": "src/components/ActivityLevel/ActivityLevel.tsx",
+          "hash": "14754560297023573716"
+        },
+        {
+          "file": "src/components/BentoGrid/BentoGrid.tsx",
+          "hash": "17646668238867110753"
+        },
+        {
+          "file": "src/components/DragAndDropExample/DragAndDropExample.tsx",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/components/HookComponent/NavLink.tsx",
+          "hash": "17074411886076287437"
+        },
+        {
+          "file": "src/components/Modals/CloseModal/CloseModal.tsx",
+          "hash": "4666892373800742296"
+        },
+        {
+          "file": "src/components/Sortable/Sortable.tsx",
+          "hash": "17721235658171101265"
+        },
+        {
+          "file": "src/components/TrackFood/trackFood.tsx",
+          "hash": "11156093025470601597"
+        },
+        {
+          "file": "src/components/chart/chart.tsx",
+          "hash": "371624795825289819"
+        },
+        {
+          "file": "src/components/chart/utils.ts",
+          "hash": "8940103435392749700"
+        },
+        {
+          "file": "src/components/draggable/draggable.tsx",
+          "hash": "17843212503498768869"
+        },
+        {
+          "file": "src/components/gamelayouts/modals/ModalLogout.tsx",
+          "hash": "9597555291683322977"
+        },
+        {
+          "file": "src/components/gamelayouts/smallScreens/headerMainBottomNav.tsx",
+          "hash": "8780742572392965002"
+        },
+        {
+          "file": "src/components/icons/icons.tsx",
+          "hash": "11031720358850105360"
+        },
+        {
+          "file": "src/components/layout_blocks/NavBar/Navs.tsx",
+          "hash": "1638284422900662471"
+        },
+        {
+          "file": "src/components/layout_blocks/dashboard_layout_components/dashboard.tsx",
+          "hash": "12287044854996791419"
+        },
+        {
+          "file": "src/components/layout_blocks/notes_layout_components/NoteComp.tsx",
+          "hash": "415621819238712888"
+        },
+        {
+          "file": "src/components/layout_blocks/notes_layout_components/NotesContext.tsx",
+          "hash": "8335188243903956823"
+        },
+        {
+          "file": "src/components/layout_blocks/notes_layout_components/PublishModal.tsx",
+          "hash": "9891929394575364671"
+        },
+        {
+          "file": "src/components/layout_blocks/notes_layout_components/SideBarNotes.tsx",
+          "hash": "2886496518816983625"
+        },
+        {
+          "file": "src/components/layout_blocks/notes_layout_components/notes.tsx",
+          "hash": "4211629329895277485"
+        },
+        {
+          "file": "src/components/playComponents/Play.tsx",
+          "hash": "9235114867652228487"
+        },
+        {
+          "file": "src/components/playComponents/data.tsx",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "src/components/router-head/router-head.tsx",
+          "hash": "11243044365060691416"
+        },
+        {
+          "file": "src/components/ui/button/button.tsx",
+          "hash": "12086229233632952826"
+        },
+        {
+          "file": "src/components/ui/combobox/combobox.tsx",
+          "hash": "7254442329822671616"
+        },
+        {
+          "file": "src/components/ui/input/input.tsx",
+          "hash": "12019728794061049812"
+        },
+        {
+          "file": "src/components/ui/label/label.tsx",
+          "hash": "12436589004438559187"
+        },
+        {
+          "file": "src/components/ui/modal/modal.tsx",
+          "hash": "11369094645781793252"
+        },
+        {
+          "file": "src/components/ui/textarea/textarea.tsx",
+          "hash": "3343907078163229192"
+        },
+        {
+          "file": "src/entry.dev.tsx",
+          "hash": "15859778472158270085"
+        },
+        {
+          "file": "src/entry.express.tsx",
+          "hash": "17376403192672411014"
+        },
+        {
+          "file": "src/entry.preview.tsx",
+          "hash": "10792495723050488506"
+        },
+        {
+          "file": "src/entry.ssr.tsx",
+          "hash": "2149522451304293417"
+        },
+        {
+          "file": "src/global.css",
+          "hash": "11011569373973084632"
+        },
+        {
+          "file": "src/media/partyFooPeinapple.png",
+          "hash": "7162662974853504665"
+        },
+        {
+          "file": "src/media/worriedFooPeinapple.png",
+          "hash": "4466059405306802991"
+        },
+        {
+          "file": "src/root.tsx",
+          "hash": "9687959275163285543"
+        },
+        {
+          "file": "src/routes.config.tsx",
+          "hash": "658540272259497804"
+        },
+        {
+          "file": "src/routes.gen.d.ts",
+          "hash": "5604090213881089558"
+        },
+        {
+          "file": "src/routes/api/service.ts",
+          "hash": "5589451748590482122"
+        },
+        {
+          "file": "src/routes/api/service_food_group/add_eat.ts",
+          "hash": "2842998017643115066"
+        },
+        {
+          "file": "src/routes/api/service_food_group/get_food_groups.ts",
+          "hash": "1528562595843208538"
+        },
+        {
+          "file": "src/routes/api/service_game/serviceGPTPrompts.ts",
+          "hash": "1566679785962433972"
+        },
+        {
+          "file": "src/routes/api/service_game/serviceGPTResult.ts",
+          "hash": "16975837427870824042"
+        },
+        {
+          "file": "src/routes/api/service_game/serviceUserAddStep.ts",
+          "hash": "18437505143200403929"
+        },
+        {
+          "file": "src/routes/api/service_game/types.ts",
+          "hash": "7874500939953283407"
+        },
+        {
+          "file": "src/routes/api/service_user_info/server-user-personal-info.tsx",
+          "hash": "12520790237443074657"
+        },
+        {
+          "file": "src/routes/api/service_user_overview/service_user_overview.ts",
+          "hash": "9321297748843570467"
+        },
+        {
+          "file": "src/routes/auth/new-user/index.tsx",
+          "hash": "17053295495825089853"
+        },
+        {
+          "file": "src/routes/auth/signin/index.tsx",
+          "hash": "677510067490823056"
+        },
+        {
+          "file": "src/routes/auth/signout/index.tsx",
+          "hash": "5854007483868296880"
+        },
+        {
+          "file": "src/routes/auth/verify-request/index.tsx",
+          "hash": "17053295495825089853"
+        },
+        {
+          "file": "src/routes/bento/index.tsx",
+          "hash": "18320464651022469621"
+        },
+        {
+          "file": "src/routes/client/(main)/leaderBoard/index.tsx",
+          "hash": "1131321127979606538"
+        },
+        {
+          "file": "src/routes/client/(main)/play/[section]/[unit]/[level]/index.tsx",
+          "hash": "8377927004181735645"
+        },
+        {
+          "file": "src/routes/client/(main)/play/[section]/[unit]/finish/index.tsx",
+          "hash": "12397245016759496744"
+        },
+        {
+          "file": "src/routes/client/(main)/play/[section]/[unit]/index.tsx",
+          "hash": "1742809910978790335"
+        },
+        {
+          "file": "src/routes/client/(main)/play/[section]/index.tsx",
+          "hash": "7491133070344885544"
+        },
+        {
+          "file": "src/routes/client/(main)/play/index.tsx",
+          "hash": "290013541121780354"
+        },
+        {
+          "file": "src/routes/client/(main)/track/finish/index.tsx",
+          "hash": "4768419931886674903"
+        },
+        {
+          "file": "src/routes/client/(main)/track/index.tsx",
+          "hash": "16809086125335934324"
+        },
+        {
+          "file": "src/routes/client/(main)/track/layout.tsx",
+          "hash": "9075213539844560840"
+        },
+        {
+          "file": "src/routes/client/(main)/user/index.tsx",
+          "hash": "3266735138906998488"
+        },
+        {
+          "file": "src/routes/client/(main)/user/util.ts",
+          "hash": "9502979333897802832"
+        },
+        {
+          "file": "src/routes/client/Assessment/activity-level/index.tsx",
+          "hash": "5569402688123596561"
+        },
+        {
+          "file": "src/routes/client/Assessment/index.tsx",
+          "hash": "9791157912083355896"
+        },
+        {
+          "file": "src/routes/client/Assessment/layout.tsx",
+          "hash": "12220550435732908040"
+        },
+        {
+          "file": "src/routes/client/Assessment/lifestyleFactors/index.tsx",
+          "hash": "17053295495825089853"
+        },
+        {
+          "file": "src/routes/client/Assessment/personalInformation/DateofBirth/index.tsx",
+          "hash": "10741916184865288987"
+        },
+        {
+          "file": "src/routes/client/Assessment/personalInformation/current-weight/index.tsx",
+          "hash": "11856865031477421312"
+        },
+        {
+          "file": "src/routes/client/Assessment/personalInformation/gender/index.tsx",
+          "hash": "7139261901101523134"
+        },
+        {
+          "file": "src/routes/client/Assessment/personalInformation/goals/index.tsx",
+          "hash": "887728793935473977"
+        },
+        {
+          "file": "src/routes/client/Assessment/personalInformation/height/index.tsx",
+          "hash": "984358228613588312"
+        },
+        {
+          "file": "src/routes/client/Assessment/personalInformation/index.tsx",
+          "hash": "5339104607921359612"
+        },
+        {
+          "file": "src/routes/client/Assessment/personalInformation/name/index.tsx",
+          "hash": "6051099644976531193"
+        },
+        {
+          "file": "src/routes/client/index.tsx",
+          "hash": "7225696942536910399"
+        },
+        {
+          "file": "src/routes/client/layout.tsx",
+          "hash": "14598287764647337597"
+        },
+        {
+          "file": "src/routes/construction/index.tsx",
+          "hash": "2157228025691463921"
+        },
+        {
+          "file": "src/routes/content/index.tsx",
+          "hash": "14216248743179152467"
+        },
+        {
+          "file": "src/routes/dashboard/feed/index.tsx",
+          "hash": "17053295495825089853"
+        },
+        {
+          "file": "src/routes/dashboard/index.tsx",
+          "hash": "14291024348426533264"
+        },
+        {
+          "file": "src/routes/dashboard/layout.tsx",
+          "hash": "18232052516189095198"
+        },
+        {
+          "file": "src/routes/dashboard/notes/[id]/index.tsx",
+          "hash": "10593807255676085688"
+        },
+        {
+          "file": "src/routes/dashboard/notes/index.tsx",
+          "hash": "5346174893809824289"
+        },
+        {
+          "file": "src/routes/dashboard/notes/new/index.tsx",
+          "hash": "11085123109944127292"
+        },
+        {
+          "file": "src/routes/dashboard/profile/index.tsx",
+          "hash": "17198411064113186053"
+        },
+        {
+          "file": "src/routes/dashboard/profile/settings/index.tsx",
+          "hash": "8487104086099447701"
+        },
+        {
+          "file": "src/routes/dashboard/settings/index.tsx",
+          "hash": "17053295495825089853"
+        },
+        {
+          "file": "src/routes/index.tsx",
+          "hash": "286662917892555910"
+        },
+        {
+          "file": "src/routes/layout.tsx",
+          "hash": "7730729133811991946"
+        },
+        {
+          "file": "src/routes/plugin@auth.ts",
+          "hash": "13316762274869635179"
+        },
+        {
+          "file": "src/routes/seedDatabase/index.tsx",
+          "hash": "7580509562564606520"
+        },
+        {
+          "file": "src/routes/service-worker.ts",
+          "hash": "12052162101020602501"
+        },
+        {
+          "file": "src/util/convertUnits.ts",
+          "hash": "8523045849098693353"
+        },
+        {
+          "file": "src/util/createId.ts",
+          "hash": "16937203249264844962"
+        },
+        {
+          "file": "src/util/formatNumber.ts",
+          "hash": "14694425301041672968"
+        },
+        {
+          "file": "src/util/isTextOfUserName.ts",
+          "hash": "16063947777872787491"
+        },
+        {
+          "file": "src/util/parseMarkdown.ts",
+          "hash": "5092943720068219949"
+        },
+        {
+          "file": "src/util/stringMinipuletion.ts",
+          "hash": "4751534000141959210"
+        },
+        {
+          "file": "src/util/twoDecimalPoints.ts",
+          "hash": "14727613120110593554"
+        },
+        {
+          "file": "src/util/types.ts",
+          "hash": "2977875254580071936"
+        },
+        {
+          "file": "src/util/useDebouncer.ts",
+          "hash": "16212773897318056764"
+        },
+        {
+          "file": "tailwind.config.js",
+          "hash": "6134286373208576333"
+        },
+        {
+          "file": "tsconfig.json",
+          "hash": "13910477524058988059"
+        },
+        {
+          "file": "vite.config.ts",
+          "hash": "12350117368483685161"
+        }
+      ]
+    },
+    "nonProjectFiles": []
+  }
+}
