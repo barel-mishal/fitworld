@@ -108,7 +108,7 @@ export const SchemaAssessment = z
     lifeStyle: z.object({
       occupation: z.string().default(""),
       activityLevel: z.string().default(""),
-      goals: z.array(z.string()).default(["", "", ""]),
+      goals: z.array(z.string()).min(3).default(["", "", ""]),
     }),
   })
   .default({

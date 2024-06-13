@@ -2,41 +2,14 @@ import {
   component$,
   useContext,
   useSignal,
-  useComputed$,
 } from "@builder.io/qwik";
 import { cn } from "@qwik-ui/utils";
 import { Label } from "~/components/ui/label/label";
 import { contextAssessmentStore } from "../../../layout";
-import { convertHeightUnits } from "~/util/convertUnits";
-import { formatedNumber } from "~/util/formatNumber";
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
-  const refHeight = useSignal<HTMLButtonElement>();
   const isAvtive = useSignal<boolean>(false);
-
-  const computeHeight = useComputed$(
-    async () =>
-      `${formatedNumber(convertHeightUnits(170, "cm", sc.data.personalInformation.height.type))}`,
-  );
-  const inputHeightValue = useComputed$(() => {
-    const isActiveAndEmpty =
-      isAvtive.value && !sc.data.personalInformation.height.value;
-    if (isActiveAndEmpty) {
-      return "";
-    }
-    const isActiveAndNotEmpty =
-      isAvtive.value && sc.data.personalInformation.height.value;
-    if (isActiveAndNotEmpty) {
-      return sc.data.personalInformation.height.value;
-    }
-    const isNotActiveAndNotEmpty =
-      !isAvtive.value && sc.data.personalInformation.height.value;
-    if (isNotActiveAndNotEmpty) {
-      return `${formatedNumber(sc.data.personalInformation.height.value)}`;
-    }
-    return "";
-  });
 
   return (
     <div class="info-title grid w-full gap-4 tracking-wide">
@@ -47,13 +20,11 @@ export default component$(() => {
           Goal 1
         </Label>
         <input
-          ref={refHeight}
-          type="number"
-          id="goal-1"
-          placeholder={computeHeight.value.toString()}
+          type="text"
+          placeholder={"Enter your goal here..."}
           onInput$={async (e, el) => {
-            const height = parseFloat(el.value);
-            sc.data.personalInformation.height.value = height;
+            const goal = el.value;
+            sc.data.lifeStyle.goals[0] = goal;
           }}
           class={cn("inp")}
           onFocus$={() => {
@@ -62,7 +33,7 @@ export default component$(() => {
           onBlur$={() => {
             isAvtive.value = false;
           }}
-          value={inputHeightValue.value}
+          value={sc.data.lifeStyle.goals[0]}
         />
 
         <p class="h-5 text-sm text-gray-200/70"></p>
@@ -72,13 +43,11 @@ export default component$(() => {
           Goal 2
         </Label>
         <input
-          ref={refHeight}
-          type="number"
-          id="goal-1"
-          placeholder={computeHeight.value.toString()}
+          type="text"
+          placeholder={"Enter your goal here..."}
           onInput$={async (e, el) => {
-            const height = parseFloat(el.value);
-            sc.data.personalInformation.height.value = height;
+            const goal = el.value;
+            sc.data.lifeStyle.goals[1] = goal;
           }}
           class={cn("inp")}
           onFocus$={() => {
@@ -87,7 +56,7 @@ export default component$(() => {
           onBlur$={() => {
             isAvtive.value = false;
           }}
-          value={inputHeightValue.value}
+          value={sc.data.lifeStyle.goals[1]}
         />
 
         <p class="h-5 text-sm text-gray-200/70"></p>
@@ -97,13 +66,11 @@ export default component$(() => {
           Goal 3
         </Label>
         <input
-          ref={refHeight}
-          type="number"
-          id="goal-1"
-          placeholder={computeHeight.value.toString()}
+          type="text"
+          placeholder={"Enter your goal here..."}
           onInput$={async (e, el) => {
-            const height = parseFloat(el.value);
-            sc.data.personalInformation.height.value = height;
+            const goal = el.value;
+            sc.data.lifeStyle.goals[2] = goal;
           }}
           class={cn("inp")}
           onFocus$={() => {
@@ -112,7 +79,7 @@ export default component$(() => {
           onBlur$={() => {
             isAvtive.value = false;
           }}
-          value={inputHeightValue.value}
+          value={sc.data.lifeStyle.goals[2]}
         />
 
         <p class="h-5 text-sm text-gray-200/70"></p>

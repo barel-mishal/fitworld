@@ -30,6 +30,7 @@ export default component$(() => {
     "/client/Assessment/personalInformation/name/",
     "/client/Assessment/personalInformation/DateofBirth/",
     "/client/Assessment/personalInformation/gender/",
+    "/client/Assessment/personalInformation/goals/",
     "/client/Assessment/personalInformation/height/",
     "/client/Assessment/personalInformation/current-weight/",
     "/client/Assessment/activity-level/",

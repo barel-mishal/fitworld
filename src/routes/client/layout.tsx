@@ -125,6 +125,7 @@ export interface AssessmentStoreType {
 
 export const useAssessmentStore = (data: TypeSchemaAssessment) => {
   // TODO: finish form https://claude.ai/chat/bcc02085-d35f-4ffd-ad5a-09c7737c3208
+  console.log(data);
   const assessmentStore = useStore<AssessmentStoreType>({
     settings: {
       buttonStyle: "outline",
