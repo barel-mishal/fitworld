@@ -122,7 +122,11 @@ export default component$(() => {
         return;
       },
       "/client/Assessment/personalInformation/goals/": function (): unknown {
-        throw new Error("Function not implemented.");
+        sc.actions.mergeProfile.submit({
+          field: "goals",
+          value: sc.data.lifeStyle.goals,
+        });
+        return;
       },
     };
     const result = await actions[route]();

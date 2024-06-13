@@ -125,7 +125,6 @@ export interface AssessmentStoreType {
 
 export const useAssessmentStore = (data: TypeSchemaAssessment) => {
   // TODO: finish form https://claude.ai/chat/bcc02085-d35f-4ffd-ad5a-09c7737c3208
-  console.log(data);
   const assessmentStore = useStore<AssessmentStoreType>({
     settings: {
       buttonStyle: "outline",
@@ -141,6 +140,7 @@ export const useAssessmentStore = (data: TypeSchemaAssessment) => {
     }),
     actions: {
       mergeProfile: {
+        // TODO: occupation is missing from the data and db
         submit: $(async function (
           this: { isRunning: boolean },
           data: { field: string; value: string | string[] | Date },
@@ -231,18 +231,18 @@ export const useLoaderAssessmentData = routeLoader$(async function ({
   `);
   if (height[2].status === "ERR") throw new Error("Error fetching height");
   if (height[5].status === "ERR") throw new Error("No height record found");
-  const heightData = {
+  const heightData: TypeSchemaAssessment = {
     personalInformation: {
       gender: session.database.profile.gender || "",
       name: session.database.profile.name || "",
-      dateOfBirth: session.database.profile.dateOfBirth || undefined,
-      height: height[2].result[0],
-      weight: height[5].result[0],
+      dateOfBirth: session.database.profile.dateOfBirth || undefined as any,
+      height: height[2].result[0] as HeightGetter,
+      weight: height[5].result[0] as WeightGetter,
     },
     lifeStyle: {
       occupation: "",
       activityLevel: session.database.profile.activity_level || "",
-      goals: session.database.profile.goals || ["", "", ""],
+      goals: session.database.profile.goals as string[],
     },
   };
   const parsed = SchemaAssessment.parse(heightData) as {
