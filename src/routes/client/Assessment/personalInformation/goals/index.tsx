@@ -5,7 +5,6 @@ import {
   useContext,
   useSignal,
   useStylesScoped$,
-  useVisibleTask$,
 } from "@builder.io/qwik";
 import { Label } from "~/components/ui/label/label";
 import { contextAssessmentStore } from "../../../layout";
@@ -29,14 +28,6 @@ export default component$(() => {
     { isActive: false, currentWordIndex: 0, wordArray: [] },
     { isActive: false, currentWordIndex: 0, wordArray: [] },
   ]);
-
-  // Global timer for rotating current goal
-  useVisibleTask$(() => {
-    const timer = setInterval(() => {
-      index.value++;
-    }, 5000);
-    return () => clearInterval(timer);
-  });
 
   // Function to start word display
   const startWordDisplay = $((goal: string, stateIndex: number) => {
@@ -64,6 +55,7 @@ export default component$(() => {
 
   // Generalized event handler
   const handleFocus = $((goal: string, stateIndex: number) => {
+    index.value = Math.floor(Math.random() * goals.value.length);
     startWordDisplay(goal, stateIndex);
   });
 
