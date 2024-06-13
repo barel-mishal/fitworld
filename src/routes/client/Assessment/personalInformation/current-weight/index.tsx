@@ -158,7 +158,7 @@ export const MyPopover = component$(() => {
 export const WeightPopover = component$(() => {
   const sc = useContext(contextAssessmentStore);
   const getWeightUnitSystem = () => {
-    switch (sc.data.personalInformation.weight.unit) {
+    switch (sc.data.personalInformation.weight.type) {
       case "kg":
       case "g":
         return "Metric";
