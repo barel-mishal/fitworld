@@ -64,7 +64,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
 
                 const check = await db.query<[[SchemaProfileType] | []]>(
                   "SELECT * FROM user WHERE providerId = $id",
-                  { id: connection.account?.providerAccountId },
+                  { id: connection.account?.providerAccountId }, //110089020459125783463
                 );
                 if (check[0].length === 0) {
                   const token = await db.signup({
@@ -78,9 +78,9 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
                     updatedAt: new Date(),
                   });
 
-                  console.log("token", token);
                   await db.authenticate(token);
-                  const profile = await db.query(
+                  // const profile = 
+                  await db.query(
                     "CREATE ONLY profile CONTENT $data",
                     {
                       data: {
@@ -90,7 +90,8 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
                     },
                   );
 
-                  console.log("profile", profile);
+
+
 
                   return token;
                 } else {

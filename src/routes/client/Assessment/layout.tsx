@@ -96,6 +96,7 @@ export default component$(() => {
       },
       "/client/Assessment/personalInformation/current-weight/":
         async function () {
+          console.log("sc.data.personalInformation.weight.value", sc.data.personalInformation.weight.value);
           await sc.actions.mergeWeight.submit({
             value: sc.data.personalInformation.weight.value,
             _type: sc.data.personalInformation.weight.type,
