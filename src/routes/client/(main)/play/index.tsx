@@ -21,12 +21,12 @@ export const onRequest: RequestHandler = (event) => {
   const session: ExtendSession | null = event.sharedMap.get("session");
   const isSignedIn = session && new Date(session.expires) > new Date();
   if (!isSignedIn) {
-    const path: RoutesLiteral = "/"
+    const path: RoutesLiteral = "/";
     throw event.redirect(302, path);
   }
   const overview = session.database.profile.overview;
   if (!overview || "missing" in overview) {
-    const path: RoutesLiteral = "/client/Assessment/"
+    const path: RoutesLiteral = "/client/Assessment/";
     throw event.redirect(302, path);
   }
 };

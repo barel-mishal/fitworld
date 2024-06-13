@@ -18,12 +18,16 @@ export const useGoals = routeLoader$(() => {
 export default component$(() => {
   const goals = useGoals();
   const index = useSignal<number>(0);
-  const currentGoal = useComputed$(() => goals.value[index.value % goals.value.length]);
+  const currentGoal = useComputed$(
+    () => goals.value[index.value % goals.value.length],
+  );
 
   const sc = useContext(contextAssessmentStore);
 
   // Consolidate state for goals
-  const goalStates = useSignal<{ isActive: boolean; currentWordIndex: number; wordArray: string[] }[]>([
+  const goalStates = useSignal<
+    { isActive: boolean; currentWordIndex: number; wordArray: string[] }[]
+  >([
     { isActive: false, currentWordIndex: 0, wordArray: [] },
     { isActive: false, currentWordIndex: 0, wordArray: [] },
     { isActive: false, currentWordIndex: 0, wordArray: [] },
@@ -32,7 +36,7 @@ export default component$(() => {
   // Function to start word display
   const startWordDisplay = $((goal: string, stateIndex: number) => {
     const goalState = goalStates.value[stateIndex];
-    goalState.wordArray = goal.split(' ');
+    goalState.wordArray = goal.split(" ");
     goalState.currentWordIndex = 0;
     goalState.isActive = true;
 
@@ -81,7 +85,10 @@ export default component$(() => {
       <h3 class="text-lg text-gray-100">Personal Goals</h3>
       {goalStates.value.map((goalState, i) => (
         <div key={i} class="grid max-w-sm items-center gap-1.5">
-          <Label for={`goal-${i + 1}`} class="text-gray-100 [text-wrap:balance]">
+          <Label
+            for={`goal-${i + 1}`}
+            class="text-gray-100 [text-wrap:balance]"
+          >
             Goal {i + 1}
           </Label>
           <input
@@ -94,11 +101,14 @@ export default component$(() => {
           />
           <Label
             for={`goal-${i + 1}`}
-            class={`text-gray-100 [text-wrap:balance] text-xs ${goalState.isActive ? 'opacity-100' : 'opacity-0'}`}
+            class={`text-xs text-gray-100 [text-wrap:balance] ${goalState.isActive ? "opacity-100" : "opacity-0"}`}
           >
             {goalState.wordArray.map((word, wordIndex) => (
-              <span key={wordIndex} class={`word ${wordIndex <= goalState.currentWordIndex ? 'visible' : ''}`}>
-                {word} {wordIndex < goalState.wordArray.length - 1 ? ' ' : ''}
+              <span
+                key={wordIndex}
+                class={`word ${wordIndex <= goalState.currentWordIndex ? "visible" : ""}`}
+              >
+                {word} {wordIndex < goalState.wordArray.length - 1 ? " " : ""}
               </span>
             ))}
           </Label>

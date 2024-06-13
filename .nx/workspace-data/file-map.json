@@ -51,9 +51,7 @@
     "vite-tsconfig-paths": "^4.2.1"
   },
   "pathMappings": {
-    "~/*": [
-      "./src/*"
-    ]
+    "~/*": ["./src/*"]
   },
   "nxJsonPlugins": [],
   "fileMap": {

@@ -5,14 +5,11 @@ import { AppLink } from "~/routes.config";
 import { type StepKey } from "~/routes/api/service_game/serviceGPTResult";
 import { cn } from "@qwik-ui/utils";
 
-
 interface PlayProps {
   currentUnit: number;
   currentSection: number;
   currentLevel: number;
 }
-
-
 
 const Play = component$<PlayProps>((props) => {
   const handleStepChange = $(
@@ -447,9 +444,9 @@ export const LevelLink = component$<LevelLinkProps>((props) => {
         param:section={`${props.section}`}
         class={cn(
           "grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b",
-          (props.currentLevel >= props.level &&
+          props.currentLevel >= props.level &&
             props.currentUnit >= props.unit &&
-            props.currentSection >= props.section)
+            props.currentSection >= props.section
             ? "border-green-900 bg-green-600"
             : "border-gray-800 bg-gray-600",
         )}

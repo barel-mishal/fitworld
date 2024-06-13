@@ -78,8 +78,6 @@ export default component$(() => {
   );
 });
 
-
-
 export const HeightPopover = component$(() => {
   const sc = useContext(contextAssessmentStore);
 
@@ -98,74 +96,74 @@ export const HeightPopover = component$(() => {
       <Popover.Trigger class={cn("btn w-20")}>
         {sc.data.personalInformation.height.type.toUpperCase()}
       </Popover.Trigger>
-      <Popover.Panel class="-translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50 w-32">
+      <Popover.Panel class="w-32 -translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50">
         <div class="grid w-auto gap-4">
           <button
-              data-active={`${sc.data.personalInformation.height.type === "cm"}`}
-              class="btn btn-data-active"
-              onClick$={() => {
-                sc.data.personalInformation.height = {
-                  ...sc.data.personalInformation.height,
-                  type: "cm",
-                  value: parseFloat(
-                    formatedNumber(
-                      convertHeightUnits(
-                        sc.data.personalInformation.height.value,
-                        sc.data.personalInformation.height.type,
-                        "cm",
-                      ),
+            data-active={`${sc.data.personalInformation.height.type === "cm"}`}
+            class="btn btn-data-active"
+            onClick$={() => {
+              sc.data.personalInformation.height = {
+                ...sc.data.personalInformation.height,
+                type: "cm",
+                value: parseFloat(
+                  formatedNumber(
+                    convertHeightUnits(
+                      sc.data.personalInformation.height.value,
+                      sc.data.personalInformation.height.type,
+                      "cm",
                     ),
                   ),
-                };
-              }}
-            >
-              <span>CM</span>
-            </button>
+                ),
+              };
+            }}
+          >
+            <span>CM</span>
+          </button>
 
-            <button
-              data-active={`${sc.data.personalInformation.height.type === "m"}`}
-              class="btn btn-data-active"
-              onClick$={() => {
-                sc.data.personalInformation.height = {
-                  ...sc.data.personalInformation.height,
-                  type: "m",
-                  value: parseFloat(
-                    formatedNumber(
-                      convertHeightUnits(
-                        sc.data.personalInformation.height.value,
-                        sc.data.personalInformation.height.type,
-                        "m",
-                      ),
+          <button
+            data-active={`${sc.data.personalInformation.height.type === "m"}`}
+            class="btn btn-data-active"
+            onClick$={() => {
+              sc.data.personalInformation.height = {
+                ...sc.data.personalInformation.height,
+                type: "m",
+                value: parseFloat(
+                  formatedNumber(
+                    convertHeightUnits(
+                      sc.data.personalInformation.height.value,
+                      sc.data.personalInformation.height.type,
+                      "m",
                     ),
                   ),
-                };
-              }}
-            >
-              <span>M</span>
-            </button>
+                ),
+              };
+            }}
+          >
+            <span>M</span>
+          </button>
 
-            <button
-              data-active={`${sc.data.personalInformation.height.type === "FT"}`}
-              class="btn btn-data-active"
-              onClick$={() => {
-                sc.data.personalInformation.height = {
-                  ...sc.data.personalInformation.height,
-                  type: "FT",
-                  value: parseFloat(
-                    formatedNumber(
-                      convertHeightUnits(
-                        sc.data.personalInformation.height.value,
-                        sc.data.personalInformation.height.type,
-                        "FT",
-                      ),
+          <button
+            data-active={`${sc.data.personalInformation.height.type === "FT"}`}
+            class="btn btn-data-active"
+            onClick$={() => {
+              sc.data.personalInformation.height = {
+                ...sc.data.personalInformation.height,
+                type: "FT",
+                value: parseFloat(
+                  formatedNumber(
+                    convertHeightUnits(
+                      sc.data.personalInformation.height.value,
+                      sc.data.personalInformation.height.type,
+                      "FT",
                     ),
                   ),
-                };
-              }}
-            >
-              <span>FT</span>
-            </button>
-            <p class="h-5 text-sm text-gray-200/70">{getHeightUnit()}</p>
+                ),
+              };
+            }}
+          >
+            <span>FT</span>
+          </button>
+          <p class="h-5 text-sm text-gray-200/70">{getHeightUnit()}</p>
         </div>
       </Popover.Panel>
     </Popover.Root>

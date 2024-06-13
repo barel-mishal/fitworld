@@ -80,16 +80,17 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
 
                   console.log("token", token);
                   await db.authenticate(token);
-                  const profile = await db.query('CREATE ONLY profile CONTENT $data', {
-                    data: {
-                      email: connection.account?.email ?? "",
-                      nickname: connection.account?.name ?? "",
-                    }
-                  });
+                  const profile = await db.query(
+                    "CREATE ONLY profile CONTENT $data",
+                    {
+                      data: {
+                        email: connection.account?.email ?? "",
+                        nickname: connection.account?.name ?? "",
+                      },
+                    },
+                  );
 
                   console.log("profile", profile);
-
-                  
 
                   return token;
                 } else {
@@ -129,7 +130,6 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
             const token = connection.token.providerId as string;
 
             await db.authenticate(token);
-
 
             const data = await db.query<[[SchemaProfileType]]>(`
               SELECT *, fn::energy(id) as overview FROM profile WHERE userId = $auth.id;

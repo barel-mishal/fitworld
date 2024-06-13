@@ -10,7 +10,7 @@ import { contextAssessmentStore } from "../../../layout";
 import { convertWeightUnits } from "~/util/convertUnits";
 import { formatedNumber } from "~/util/formatNumber";
 
-import { Popover } from '~/components/ui/popover/popover';
+import { Popover } from "~/components/ui/popover/popover";
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
@@ -82,9 +82,6 @@ export default component$(() => {
   );
 });
 
-
-
-
 export const WeightPopover = component$(() => {
   const sc = useContext(contextAssessmentStore);
   const getWeightUnitSystem = () => {
@@ -102,44 +99,44 @@ export const WeightPopover = component$(() => {
       <Popover.Trigger class={cn("btn w-20")}>
         {sc.data.personalInformation.weight.type.toUpperCase()}
       </Popover.Trigger>
-      <Popover.Panel class="-translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50 w-32">
+      <Popover.Panel class="w-32 -translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50">
         <div class="grid w-auto gap-4">
-            <button
-              data-active={`${sc.data.personalInformation.weight.type === "kg"}`}
-              class="btn btn-data-active"
-              onClick$={async () => {
-                const weight = sc.data.personalInformation.weight.value;
-                const fromUnit = sc.data.personalInformation.weight.type;
-                await sc.cahngeWeightUnit(weight, fromUnit, "kg");
-              }}
-            >
-              <span>KG</span>
-            </button>
+          <button
+            data-active={`${sc.data.personalInformation.weight.type === "kg"}`}
+            class="btn btn-data-active"
+            onClick$={async () => {
+              const weight = sc.data.personalInformation.weight.value;
+              const fromUnit = sc.data.personalInformation.weight.type;
+              await sc.cahngeWeightUnit(weight, fromUnit, "kg");
+            }}
+          >
+            <span>KG</span>
+          </button>
 
-            <button
-              data-active={`${sc.data.personalInformation.weight.type === "g"}`}
-              class="btn btn-data-active"
-              onClick$={async () => {
-                const weight = sc.data.personalInformation.weight.value;
-                const fromUnit = sc.data.personalInformation.weight.type;
-                await sc.cahngeWeightUnit(weight, fromUnit, "g");
-              }}
-            >
-              <span>G</span>
-            </button>
+          <button
+            data-active={`${sc.data.personalInformation.weight.type === "g"}`}
+            class="btn btn-data-active"
+            onClick$={async () => {
+              const weight = sc.data.personalInformation.weight.value;
+              const fromUnit = sc.data.personalInformation.weight.type;
+              await sc.cahngeWeightUnit(weight, fromUnit, "g");
+            }}
+          >
+            <span>G</span>
+          </button>
 
-            <button
-              data-active={`${sc.data.personalInformation.weight.type === "lb"}`}
-              class="btn btn-data-active"
-              onClick$={async () => {
-                const weight = sc.data.personalInformation.weight.value;
-                const fromUnit = sc.data.personalInformation.weight.type;
-                await sc.cahngeWeightUnit(weight, fromUnit, "lb");
-              }}
-            >
-              <span>LB</span>
-            </button>
-            <p class="h-5 text-sm text-gray-200/70">{getWeightUnitSystem()}</p>
+          <button
+            data-active={`${sc.data.personalInformation.weight.type === "lb"}`}
+            class="btn btn-data-active"
+            onClick$={async () => {
+              const weight = sc.data.personalInformation.weight.value;
+              const fromUnit = sc.data.personalInformation.weight.type;
+              await sc.cahngeWeightUnit(weight, fromUnit, "lb");
+            }}
+          >
+            <span>LB</span>
+          </button>
+          <p class="h-5 text-sm text-gray-200/70">{getWeightUnitSystem()}</p>
         </div>
       </Popover.Panel>
     </Popover.Root>
