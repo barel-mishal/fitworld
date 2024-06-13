@@ -9,6 +9,7 @@ import { Label } from "~/components/ui/label/label";
 import { contextAssessmentStore } from "../../../layout";
 import { convertHeightUnits } from "~/util/convertUnits";
 import { formatedNumber } from "~/util/formatNumber";
+import { Popover } from "~/components/ui/popover/popover";
 
 export default component$(() => {
   const sc = useContext(contextAssessmentStore);
@@ -67,27 +68,21 @@ export default component$(() => {
           The name shown by others in the application{" "}
         </p>
       </div>
-      <div class="grid max-w-sm items-center gap-1.5">
+      <div class="grid h-16 w-20 max-w-sm grid-rows-[auto,46px,auto] items-center gap-1.5">
         <Label for="email-2" class="text-gray-100">
           Unit
         </Label>
-        <MyPopover height={sc.data.personalInformation.height} />
+        <HeightPopover />
       </div>
     </div>
   );
 });
 
-interface HeightGetter {
-  height?: {
-    type: string;
-    value: number;
-  };
-}
 
-export const MyPopover = component$<HeightGetter>(() => {
+
+export const HeightPopover = component$(() => {
   const sc = useContext(contextAssessmentStore);
-  const triggerRef = useSignal<HTMLButtonElement>();
-  const popoverRef = useSignal<HTMLElement>();
+
   const getHeightUnit = () => {
     switch (sc.data.personalInformation.height.type) {
       case "cm":
@@ -99,88 +94,80 @@ export const MyPopover = component$<HeightGetter>(() => {
   };
 
   return (
-    <>
-      <div
-        ref={triggerRef}
-        class={"btn"}
-        data-popovertarget="unit-height-id"
-      >
-        <span>{sc.data.personalInformation.height.type.toUpperCase()}</span>
-      </div>
-      <div
-        class="w-32 -translate-x-[24px] rounded-base border border-gray-800 bg-gray-950 p-2 text-gray-50 shadow-sm"
-        ref={popoverRef}
-        id="unit-height-id"
-      >
+    <Popover.Root flip={true} gutter={8}>
+      <Popover.Trigger class={cn("btn w-20")}>
+        {sc.data.personalInformation.height.type.toUpperCase()}
+      </Popover.Trigger>
+      <Popover.Panel class="-translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50 w-32">
         <div class="grid w-auto gap-4">
           <button
-            data-active={`${sc.data.personalInformation.height.type === "cm"}`}
-            class="btn btn-data-active"
-            onClick$={() => {
-              sc.data.personalInformation.height = {
-                ...sc.data.personalInformation.height,
-                type: "cm",
-                value: parseFloat(
-                  formatedNumber(
-                    convertHeightUnits(
-                      sc.data.personalInformation.height.value,
-                      sc.data.personalInformation.height.type,
-                      "cm",
+              data-active={`${sc.data.personalInformation.height.type === "cm"}`}
+              class="btn btn-data-active"
+              onClick$={() => {
+                sc.data.personalInformation.height = {
+                  ...sc.data.personalInformation.height,
+                  type: "cm",
+                  value: parseFloat(
+                    formatedNumber(
+                      convertHeightUnits(
+                        sc.data.personalInformation.height.value,
+                        sc.data.personalInformation.height.type,
+                        "cm",
+                      ),
                     ),
                   ),
-                ),
-              };
-            }}
-          >
-            <span>CM</span>
-          </button>
+                };
+              }}
+            >
+              <span>CM</span>
+            </button>
 
-          <button
-            data-active={`${sc.data.personalInformation.height.type === "m"}`}
-            class="btn btn-data-active"
-            onClick$={() => {
-              sc.data.personalInformation.height = {
-                ...sc.data.personalInformation.height,
-                type: "m",
-                value: parseFloat(
-                  formatedNumber(
-                    convertHeightUnits(
-                      sc.data.personalInformation.height.value,
-                      sc.data.personalInformation.height.type,
-                      "m",
+            <button
+              data-active={`${sc.data.personalInformation.height.type === "m"}`}
+              class="btn btn-data-active"
+              onClick$={() => {
+                sc.data.personalInformation.height = {
+                  ...sc.data.personalInformation.height,
+                  type: "m",
+                  value: parseFloat(
+                    formatedNumber(
+                      convertHeightUnits(
+                        sc.data.personalInformation.height.value,
+                        sc.data.personalInformation.height.type,
+                        "m",
+                      ),
                     ),
                   ),
-                ),
-              };
-            }}
-          >
-            <span>M</span>
-          </button>
+                };
+              }}
+            >
+              <span>M</span>
+            </button>
 
-          <button
-            data-active={`${sc.data.personalInformation.height.type === "FT"}`}
-            class="btn btn-data-active"
-            onClick$={() => {
-              sc.data.personalInformation.height = {
-                ...sc.data.personalInformation.height,
-                type: "FT",
-                value: parseFloat(
-                  formatedNumber(
-                    convertHeightUnits(
-                      sc.data.personalInformation.height.value,
-                      sc.data.personalInformation.height.type,
-                      "FT",
+            <button
+              data-active={`${sc.data.personalInformation.height.type === "FT"}`}
+              class="btn btn-data-active"
+              onClick$={() => {
+                sc.data.personalInformation.height = {
+                  ...sc.data.personalInformation.height,
+                  type: "FT",
+                  value: parseFloat(
+                    formatedNumber(
+                      convertHeightUnits(
+                        sc.data.personalInformation.height.value,
+                        sc.data.personalInformation.height.type,
+                        "FT",
+                      ),
                     ),
                   ),
-                ),
-              };
-            }}
-          >
-            <span>FT</span>
-          </button>
+                };
+              }}
+            >
+              <span>FT</span>
+            </button>
+            <p class="h-5 text-sm text-gray-200/70">{getHeightUnit()}</p>
         </div>
-      </div>
-      <p class="h-5 text-sm text-gray-200/70">{getHeightUnit()}</p>
-    </>
+      </Popover.Panel>
+    </Popover.Root>
   );
 });
