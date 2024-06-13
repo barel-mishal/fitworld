@@ -34,7 +34,7 @@ const UserOverviewSchema = z.object({
   constant: z.number(),
   id: z.string(),
   ideal_weight: IdealWeightSchema,
-  lastSteps: z.array(LastStepSchema),
+  lastSteps: z.object({steps: z.array(LastStepSchema)}),
   normaliz_weight: z.number().nonnegative(), // assuming non-negative decimal
   userId: z.string(),
 })});
