@@ -168,11 +168,11 @@ export const WeightPopover = component$(() => {
   };
 
   return (
-    <Popover.Root flip={false} gutter={8}>
-      <Popover.Trigger class={cn("btn")}>
+    <Popover.Root flip={true} gutter={8}>
+      <Popover.Trigger class={cn("btn w-20")}>
         {sc.data.personalInformation.weight.type.toUpperCase()}
       </Popover.Trigger>
-      <Popover.Panel class="-translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50">
+      <Popover.Panel class="-translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50 w-32">
         <div class="grid w-auto gap-4">
             <button
               data-active={`${sc.data.personalInformation.weight.type === "kg"}`}
