@@ -5,7 +5,6 @@ export const serverData = {
     {
       id: "1",
       text: `Note 1 # Heading one
-
       ___
       
       # heading two
