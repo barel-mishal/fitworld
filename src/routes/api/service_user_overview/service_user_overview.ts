@@ -1,5 +1,6 @@
 import { server$ } from "@builder.io/qwik-city";
 import { z } from "zod";
+import { type ExtendSession } from "~/routes/plugin@auth";
 import { serverDatabaseUserSession } from "~/routes/seedDatabase";
 
 // Schema for the TEE_RDA object
@@ -24,6 +25,9 @@ const LastStepSchema = z.object({
 
 // Main schema for the objects in the array
 const UserOverviewSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  overview: z.object({
   TEE: z.number().nonnegative(), // assuming non-negative decimal
   TEE_RDA: TEERDASchema,
   bmi: z.number().nonnegative(), // assuming non-negative decimal
@@ -33,7 +37,9 @@ const UserOverviewSchema = z.object({
   lastSteps: z.array(LastStepSchema),
   normaliz_weight: z.number().nonnegative(), // assuming non-negative decimal
   userId: z.string(),
-});
+})});
+
+
 
 // Schema for the array of objects
 const UserOverviewArraySchema = z.array(UserOverviewSchema);
@@ -42,14 +48,19 @@ type UserOverviewType = z.infer<typeof UserOverviewArraySchema>;
 
 const serverGetUserOverview = server$(async function () {
   const db = await serverDatabaseUserSession();
+  const session = await this.sharedMap.get("session") as ExtendSession | undefined;
+  if (!session) return { success: false, error: "Session is undefined", value: null };
   if (!db.success) return { success: false, error: db.error, value: null };
   const userOverview = await db.value?.query<[UserOverviewType]>(`
-    SELECT * FROM user_overview;
-    `);
+    SELECT * FROM user_overview WHERE userId = $id;
+  `, {
+    id: session.database.profile.userId
+  });
   await db.value?.close();
+  console.log(userOverview?.[0].at(0));
   return {
     success: true,
-    value: userOverview,
+    value: userOverview?.[0].at(0),
     error: null,
   };
 });

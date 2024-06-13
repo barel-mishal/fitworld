@@ -38,18 +38,19 @@ export default component$(() => {
     return <div>Error: {userOverview.error}</div>;
   }
   const auth = useAuthSession().value as ExtendSession | undefined;
-
-  const firstSection =
-    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.section ?? 1;
-  const firstUnit =
-    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.unit ?? 1;
-  const firstLevel =
-    userOverview.value?.at(0)?.at(0)?.lastSteps.at(0)?.level ?? 1;
-
   const overview = auth?.database.profile.overview;
   if (!overview || "missing" in overview) {
     return <div>Error: {overview?.missing}</div>;
   }
+
+  const steps = userOverview.value?.overview.lastSteps;
+
+  const firstSection =
+    steps?.at(0)?.section ?? 1;
+  const firstUnit =
+    steps?.at(0)?.unit ?? 1;
+  const firstLevel =
+    steps?.at(0)?.level ?? 1;
 
   return (
     <HeaderMainBottomNav
