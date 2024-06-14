@@ -6,21 +6,30 @@ import { WeightUnit } from '~/routes/client/layout';
 import { serverDatabaseUserSession } from '~/routes/seedDatabase';
 import { convertWeightUnits } from '~/util/convertUnits';
 import { formatedNumber } from '~/util/formatNumber';
-import { SchemaPositiveBiggerThanZero, sDate } from '~/util/types';
+import { SchemaPositiveBiggerThanZero, getCurrentDateForInput, sDate } from '~/util/types';
 
 
 export const useLoaderUserWeights = routeLoader$(async function () {
   const userDB = await serverDatabaseUserSession();
-  if (!userDB || !userDB.success) return { error: "No user", weights: [], success: false }
-  const weights = await userDB.value?.select<WeightRecord>("weight");
-  return {
-    weights: schemaWeightRecord.array().parse(weights),
+  if (!userDB || !userDB.success) return { error: "No user", data: null, success: false }
+  else {
+    const weights = await userDB.value?.select<WeightRecord>("weight");
+    return {
+      success: true,
+      data: {
+        weights: schemaWeightRecord.array().parse(weights),
+        currentDate: getCurrentDateForInput(),
+      },
+      error: "",
+    }
   }
 });
 
-export const useWeights = (data: WeightRecord[]) => {
+type ReturnTypeUseLoaderUserWeights = NonNullable<ReturnType<typeof useLoaderUserWeights>["value"]["data"]>;
+
+export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
   const value = useSignal<string>();
-  const date = useSignal<string>();
+  const date = useSignal<string>(data.currentDate);
   const type = useSignal<WeightUnit>("kg");
   const formatedDate = useComputed$(() => {
     if (!date.value) return "";
@@ -32,12 +41,18 @@ export const useWeights = (data: WeightRecord[]) => {
       const dateValue = sDate.parse(date.value);
       return new Intl.DateTimeFormat('en-US', option).format(dateValue);
   });
+  const send = $(async () => {
+    if (!value.value) return;
+    console.log("send", value.value, type.value, date.value);
+    return await serverInsertWeight([{ weight: parseFloat(value.value), type: type.value, date: sDate.parse(date.value) }]);
+  });
   return {
     value,
     date,
     type,
     data,
     formatedDate,
+    send,
   }
 };
 export type WeightsContext = ReturnType<typeof useWeights>;
@@ -46,7 +61,9 @@ export const contextWeightsStore = createContextId<WeightsContext>("contextWeigh
 
 export default component$(() => {
   const weights = useLoaderUserWeights().value;
-  const ws = useWeights(weights.weights);
+  const data = weights.data;
+  if (!data) return <div>Error: {weights.error}</div>;
+  const ws = useWeights(data);
   useContextProvider(contextWeightsStore, ws);
 
   
@@ -62,7 +79,7 @@ export default component$(() => {
             <input name="weights-insert" id="weights-insert-input" type='date' class="inp w-full" bind:value={ws.date}></input>
           </div>
           <div class=" ">
-            <input name="weights-insert" id="weights-insert-input" class="inp w-[70px]" bind:value={ws.value}></input>
+            <input name="weights-insert" placeholder='xxx' inputMode='decimal' type='text' id="weights-insert-input" class="inp w-[70px]" bind:value={ws.value}></input>
           </div>
          <WeightsUnitPopover />
         </div>
@@ -72,7 +89,7 @@ export default component$(() => {
         <h1 class="text-gray-400 text-2xl ">My weights</h1>
         <div class="flex flex-col gap-4 before:bg-sky-400 ">
           {
-            weights.weights?.map((weight) => {
+            weights.data.weights?.map((weight) => {
               return (
                 <div key={weight.updateAt.toString()} class="grid grid-cols-2 gap-3">
                   <p>{weight.updateAt.toString()}</p>
@@ -82,7 +99,7 @@ export default component$(() => {
             })
             }
         </div>
-        <button>
+        <button class="btn" onClick$={ws.send}>
           Submit Weights
         </button>
         {/* float button to unfocus */}
@@ -91,7 +108,7 @@ export default component$(() => {
   );
 });
 
-export const serverInsertWeight = server$(async function (data: { weight: number, type: string }[]) {
+export const serverInsertWeight = server$(async function (data: { weight: number, type: string, date: Date }[]) {
   const userDB = await serverDatabaseUserSession();
   if (!userDB || !userDB.success) return { error: "No user", success: false }
   const weights = await userDB.value?.insert("weight", data);
