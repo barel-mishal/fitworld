@@ -54,7 +54,7 @@ export default component$(() => {
   return (
     <HeaderMainBottomNav
       classMain="tw "
-      class="grid-rows-[40px,1fr,58px] px-2 pt-2"
+      class=""
     >
       <div q:slot="header">
         <TopNavBar
