@@ -19,6 +19,8 @@ export type AppRoutes =
   | "/client/(main)/track/"
   | "/client/(main)/track/finish/"
   | "/client/(main)/user/"
+  | "/client/(main)/user/heights/"
+  | "/client/(main)/user/weights/"
   | "/client/Assessment/"
   | "/client/Assessment/activity-level/"
   | "/client/Assessment/lifestyleFactors/"
@@ -65,6 +67,8 @@ export interface AppRouteMap {
   "/client/(main)/track/": {};
   "/client/(main)/track/finish/": {};
   "/client/(main)/user/": {};
+  "/client/(main)/user/heights/": {};
+  "/client/(main)/user/weights/": {};
   "/client/Assessment/": {};
   "/client/Assessment/activity-level/": {};
   "/client/Assessment/lifestyleFactors/": {};
@@ -117,6 +121,8 @@ export interface AppRouteParamsFunction {
   (route: "/client/(main)/track/", params?: {}): string;
   (route: "/client/(main)/track/finish/", params?: {}): string;
   (route: "/client/(main)/user/", params?: {}): string;
+  (route: "/client/(main)/user/heights/", params?: {}): string;
+  (route: "/client/(main)/user/weights/", params?: {}): string;
   (route: "/client/Assessment/", params?: {}): string;
   (route: "/client/Assessment/activity-level/", params?: {}): string;
   (route: "/client/Assessment/lifestyleFactors/", params?: {}): string;
@@ -182,6 +188,8 @@ export type AppLinkProps =
   | { route: "/client/(main)/track/" }
   | { route: "/client/(main)/track/finish/" }
   | { route: "/client/(main)/user/" }
+  | { route: "/client/(main)/user/heights/" }
+  | { route: "/client/(main)/user/weights/" }
   | { route: "/client/Assessment/" }
   | { route: "/client/Assessment/activity-level/" }
   | { route: "/client/Assessment/lifestyleFactors/" }

@@ -36,6 +36,7 @@ import {
   serverMergeProfile,
   serverMergeWeight,
 } from "~/routes/api/service_user_info/server-user-personal-info";
+import { AppLink } from "~/routes.config";
 
 export default component$(() => {
   const auth = useAuthSession().value as ReturnTypeSession | null;
@@ -124,22 +125,22 @@ export const OverView = component$(() => {
               <p class="small-title text-gray-50">22</p>
               <p class="text-xs text-gray-300/70">Level</p>
             </div>
-            <button class="grid gap-2 rounded-md border-4 border-purple-800 p-3 text-left">
+            <AppLink route="/client/(main)/user/weights/" class="grid gap-2 rounded-md border-4 border-purple-800 p-3 text-left">
               <p class="small-title text-purple-50">
                 {profile.store.profile.latest_weight_kg}
                 <span>kg</span>{" "}
               </p>
               <p class="text-xs text-purple-300/70">Weight</p>
               <PhPlus class="col-start-2 row-span-2 row-start-1 h-5 w-5 place-self-end fill-purple-300/70" />
-            </button>
-            <button class="grid gap-2 rounded-md border-4 border-purple-800 p-3 text-left">
+            </AppLink >
+            <AppLink route="/client/(main)/user/heights/" class="grid gap-2 rounded-md border-4 border-purple-800 p-3 text-left">
               <p class="small-title text-purple-50">
                 {profile.store.profile.latest_height_cm}
                 <span>cm</span>{" "}
               </p>
               <p class="text-xs text-purple-300/70">Height</p>
               <PhPlus class="col-start-2 row-span-2 row-start-1 h-5 w-5 place-self-end fill-purple-300/70" />
-            </button>
+            </AppLink >
           </div>
         </div>
       </div>
