@@ -56,37 +56,46 @@ export default component$(() => {
   const profile = useUpdateProfile(auth.database.profile);
   useContextProvider(contextUpdateProfile, profile);
   return (
-    <div class="grid h-screen grid-rows-[1fr,55px] overflow-y-scroll bg-gray-950">
+    <div
+    class={cn(
+      "grid h-screen grid-rows-[1fr,60px] bg-gray-950 p-1 text-gray-50",
+    )}
+  >
+    <div class={cn("overflow-y-auto bg-gray-950")}>
       <div
-        class={cn(
-          "grid place-content-start gap-3 overflow-y-auto bg-gray-950 pb-12 font-roundsans text-gray-50",
-        )}
-      >
-        <UserPhoto />
-        <UserTitle
-          email={profile.store.profile.email ?? ""}
-          joind={computeDateFormat.value}
-        />
-        <UserProgress />
-        <UserShares />
-        <OverView />
-        <UserWeeklyProgress />
-        <button
-          onMouseDown$={() => signOut.submit({ callbackUrl: "/signedout" })}
-          class="m-2 rounded-lg border-2 border-red-700 p-3 text-red-700"
+          class={cn(
+            "grid place-content-start gap-3 overflow-y-auto bg-gray-950 pb-12 font-roundsans text-gray-50",
+          )}
         >
-          Sign Out
-        </button>
-      </div>
+          <UserPhoto />
+          <UserTitle
+            email={profile.store.profile.email ?? ""}
+            joind={computeDateFormat.value}
+          />
+          <UserProgress />
+          <UserShares />
+          <OverView />
+          <UserWeeklyProgress />
+          <button
+            onMouseDown$={() => signOut.submit({ callbackUrl: "/signedout" })}
+            class="m-2 rounded-lg border-2 border-red-700 p-3 text-red-700"
+          >
+            Sign Out
+          </button>
+        </div>
+    </div>
+    <div class="content-center bg-gray-950">
       <div>
-        <BottomNavBar
-          user={{
-            class:
-              "--tw bg-sky-300/20 p-1 m-2 rounded-md outline-2 outline outline-indigo-200 ",
-          }}
-        />
+          <BottomNavBar
+            user={{
+              class:
+                "--tw bg-sky-300/20 p-1 rounded-md outline-2 outline outline-indigo-200",
+            }}
+          />
       </div>
     </div>
+  </div>
+
   );
 });
 
