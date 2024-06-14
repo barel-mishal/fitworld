@@ -1,9 +1,12 @@
-import { $, component$, createContextId, useComputed$, useContext, useSignal, useStore } from '@builder.io/qwik';
+import { $, component$, createContextId, useComputed$, useContext, useContextProvider, useSignal, useStore } from '@builder.io/qwik';
 import { routeLoader$, server$, z } from '@builder.io/qwik-city';
 import { cn } from '@qwik-ui/utils';
 import { Popover } from '~/components/ui/popover/popover';
+import { WeightUnit } from '~/routes/client/layout';
 import { serverDatabaseUserSession } from '~/routes/seedDatabase';
-import { sDate } from '~/util/types';
+import { convertWeightUnits } from '~/util/convertUnits';
+import { formatedNumber } from '~/util/formatNumber';
+import { SchemaPositiveBiggerThanZero, sDate } from '~/util/types';
 
 
 export const useLoaderUserWeights = routeLoader$(async function () {
@@ -18,12 +21,23 @@ export const useLoaderUserWeights = routeLoader$(async function () {
 export const useWeights = (data: WeightRecord[]) => {
   const value = useSignal<string>();
   const date = useSignal<string>();
-  const type = useSignal<string>();
+  const type = useSignal<WeightUnit>("kg");
+  const formatedDate = useComputed$(() => {
+    if (!date.value) return "";
+      const option: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      };
+      const dateValue = sDate.parse(date.value);
+      return new Intl.DateTimeFormat('en-US', option).format(dateValue);
+  });
   return {
     value,
     date,
     type,
     data,
+    formatedDate,
   }
 };
 export type WeightsContext = ReturnType<typeof useWeights>;
@@ -33,6 +47,9 @@ export const contextWeightsStore = createContextId<WeightsContext>("contextWeigh
 export default component$(() => {
   const weights = useLoaderUserWeights().value;
   const ws = useWeights(weights.weights);
+  useContextProvider(contextWeightsStore, ws);
+
+  
   
   return (
     <div class="min-h-screen bg-gray-950 p-4 grid gap-8 content-start">
@@ -42,14 +59,12 @@ export default component$(() => {
         {/* textarea look like input */}
         <div class="grid grid-cols-[1fr,auto,auto] gap-4">
           <div class=" ">
-            <input name="weights-insert" id="weights-insert-input" type='date' class="inp w-full   " bind:value={ws.date}></input>
+            <input name="weights-insert" id="weights-insert-input" type='date' class="inp w-full" bind:value={ws.date}></input>
           </div>
           <div class=" ">
-            <input name="weights-insert" id="weights-insert-input" class="inp w-[70px]    " bind:value={ws.value}></input>
+            <input name="weights-insert" id="weights-insert-input" class="inp w-[70px]" bind:value={ws.value}></input>
           </div>
-          <div class=" ">
-            <input name="weights-insert" id="weights-insert-input" class="inp w-[80px]" bind:value={ws.type}></input>
-          </div>
+         <WeightsUnitPopover />
         </div>
       </section>
       <section class="font-roundsans text-gray-50 flex gap-7 flex-col ">
@@ -99,39 +114,29 @@ export type WeightRecord = z.infer<typeof schemaWeightRecord>;
 
 
 
-export const HeightPopover = component$(() => {
+export const WeightsUnitPopover = component$(() => {
   const sc = useContext(contextWeightsStore);
 
   const getHeightUnit = () => {
     switch (sc.type.value) {
-      case "cm":
-      case "m":
+      case "kg":
+      case "g":
         return "Metric";
       default:
         return "Imperial";
     }
   };
 
-  const handleChnage = $((type: string) => {
+  const handleChnage = $((type: WeightUnit) => {
     sc.type.value = type;
-    // const result = {
-    //   ...sc.value,
-    //   type: "kg",
-    //   value: parseFloat(
-    //     formatedNumber(
-    //       convertWeightUnits(
-    //         sc.value.value,
-    //         sc.type.value,
-    //         "kg",
-    //       ),
-    //     ),
-    //   ),
-    // };
-  })
+    if (!sc.value.value) return;
+    const currentWeight = parseFloat(SchemaPositiveBiggerThanZero.parse(sc.value.value));
+    sc.value.value = formatedNumber(convertWeightUnits(currentWeight, sc.type.value, type));
+  });
 
   return (
     <Popover.Root flip={true} gutter={8}>
-      <Popover.Trigger class={cn("btn w-20")}>
+      <Popover.Trigger class={cn("btn w-20 text-gray-50")}>
         {sc.type.value?.toUpperCase()}
       </Popover.Trigger>
       <Popover.Panel class="w-32 -translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50">
@@ -139,21 +144,21 @@ export const HeightPopover = component$(() => {
           <button
             data-active={`${sc.type.value === "kg"}`}
             class="btn btn-data-active"
-            onClick$={async (e,el) => await handleChnage(el.value)}>
+            onClick$={async (e,el) => await handleChnage("kg" as WeightUnit)}>
             <span>KG</span>
           </button>
 
           <button
             data-active={`${sc.value.value === "g"}`}
             class="btn btn-data-active"
-            onClick$={async (e,el) => await handleChnage(el.value)}>
+            onClick$={async (e,el) => await handleChnage("g" as WeightUnit)}>
             <span>G</span>
           </button>
 
           <button
             data-active={`${sc.value.value === "FT"}`}
             class="btn btn-data-active"
-            onClick$={async (e,el) => await handleChnage(el.value)}>
+            onClick$={async (e,el) => await handleChnage("lb" as WeightUnit)}>
             <span>FT</span>
           </button>
           <p class="h-5 text-sm text-gray-200/70">{getHeightUnit()}</p>

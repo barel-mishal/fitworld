@@ -34,6 +34,8 @@ export const onRequest: RequestHandler = (event) => {
   }
 };
 
+export type WeightUnit = "kg" | "g" | "lb";
+
 export interface HeightGetter {
   type: "cm" | "m" | "FT";
   value: number;
@@ -41,7 +43,7 @@ export interface HeightGetter {
   [key: string]: string | number;
 }
 export interface WeightGetter {
-  type: "kg" | "g" | "lb";
+  type: WeightUnit;
   value: number;
   id: string;
   [key: string]: string | number;
