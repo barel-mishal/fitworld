@@ -1,6 +1,5 @@
 import { z } from "zod";
-
-export const sDate = z.string().pipe(z.coerce.date()).or(z.date());
+import { sDate } from "~/util/types";
 
 export const StepTextSchema = z.object({
   type: z.literal("step_text"),

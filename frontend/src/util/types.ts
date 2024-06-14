@@ -136,3 +136,6 @@ export const SchemaPositiveBiggerThanZero = z
   .string()
   .pipe(z.coerce.number().min(0).default(0))
   .transform((value) => value.toString());
+
+export const sDate = z.string().pipe(z.coerce.date()).or(z.date());
+
