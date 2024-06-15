@@ -52,7 +52,6 @@ export const WeightsUnitPopover = component$<WeightsUnitPopoverProps>((props) =>
               onClick$={async (e,el) => await handleChnage("g" as WeightUnit)}>
               <span>G</span>
             </button>
-  
             <button
               data-active={`${sc.store.type === "lb"}`}
               class="btn btn-data-active"

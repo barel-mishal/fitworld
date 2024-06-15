@@ -2,8 +2,9 @@ import { $, QRL, Signal, Slot, component$, createContextId, useComputed$, useCon
 import { WeightUnit } from "~/routes/client/layout";
 import { ReturnTypeUseLoaderUserWeights, serverInsertWeight } from ".";
 import { z } from "@builder.io/qwik-city";
-import { getCurrentDateForInput, sDate } from "~/util/types";
+import { sDate } from "~/util/types";
 import { schemaWeightRecord } from "./types";
+import { getCurrentDateForInput } from "~/util/formatDate";
 
 
   
@@ -15,7 +16,8 @@ type WeightStoreHook = {
     date: Date;
     setWeight: QRL<(weight: string) => void>;
     hydrateRecord: QRL<() => Partial<WeightRecord>>
-    setUpdateAt: QRL<(date: string) => void>
+    setUpdateAt: QRL<(date: string) => void>;
+    messageErrorSubmit?: string;
 }
 
 export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
@@ -44,12 +46,18 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
     const send = $(async function(this: WeightStoreHook) {
         const record = await store.hydrateRecord();
         const parsed = schemaWeightRecord.partial().array().safeParse([record]);
-        console.log(parsed);
         if (!parsed.success ) {
             refWeightInput.value?.focus();
-            return console.error(parsed.error)
+            store.messageErrorSubmit = "Invalid weight";
+            return { success: false, error: "Invalid weight", message: "Weight field is empty or nor a number" };
         };
-        // await serverInsertWeight(parsed.data);
+        const result = await serverInsertWeight(parsed.data);
+        if (!result.success) {
+            store.messageErrorSubmit = "Failed to insert weight";
+            return { success: false, error: "Failed to insert weight", message: "Server error. Try again or check connection." };
+        }
+        store.messageErrorSubmit = "";
+        return { success: true, error: "" };
     })
           
     const weightValue = useComputed$(() => {

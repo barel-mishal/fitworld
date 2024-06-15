@@ -138,13 +138,3 @@ export const SchemaPositiveBiggerThanZero = z
   .transform((value) => value.toString());
 
 export const sDate = z.string().pipe(z.coerce.date()).or(z.date());
-
-
-
-export function getCurrentDateForInput(date: Date): string {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
-}

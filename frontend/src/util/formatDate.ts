@@ -1,3 +1,4 @@
+
 export function formatDate(date: Date): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
@@ -15,3 +16,16 @@ export const convertToDateTimeLocalString = (date: Date) => {
 
   return `${year}-${month}-${day}T${hours}:${minutes}:00`;
 };
+
+export function getCurrentDateForInput(date: Date): string {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+export function formatedDateToUser(date: string): string {
+  const [year, month, day] = date.split('-');
+  return `${day}/${month}/${year}`;
+}

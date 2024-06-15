@@ -27,7 +27,7 @@ import {
   type ExtendSession,
 } from "~/routes/plugin@auth";
 import { serverInitDatabase } from "~/routes/seedDatabase";
-import { formatDate } from "./util";
+import { formatDate } from "../../../../util/formatDate";
 import {
   type MergeHeightArgsType,
   type MergeProfileArgsTypes,

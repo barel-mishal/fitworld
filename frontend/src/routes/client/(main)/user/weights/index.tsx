@@ -1,10 +1,10 @@
 import { component$, useContext } from '@builder.io/qwik';
 import { routeLoader$, server$, z } from '@builder.io/qwik-city';
 import { serverDatabaseUserSession } from '~/routes/seedDatabase';
-import { getCurrentDateForInput } from '~/util/types';
 import { WeightRecord, WeightsWarper, contextWeightsStore } from './Context';
 import { WeightsUnitPopover } from './PopOverWeight';
 import { schemaWeightRecord } from './types';
+import { formatedDateToUser, getCurrentDateForInput } from '~/util/formatDate';
 
 export const useLoaderUserWeights = routeLoader$(async function () {
   const userDB = await serverDatabaseUserSession();
@@ -38,11 +38,10 @@ export  const Weights = component$(() => {
   const sc = useContext(contextWeightsStore);
   
   return (
-      <div class="min-h-screen bg-gray-950 p-4 grid gap-8 content-start">
-        <h1 class="text-gray-400 text-2xl ">New weight</h1>
-
+      <div class="min-h-screen bg-gray-950 p-4 grid gap-8 content-start font-roundsans text-gray-50 grid-rows-[auto,1fr,auto] h-screen">
         <section class="">
           {/* textarea look like input */}
+          <h1 class="text-gray-400 text-2xl leading-10 ">New weight</h1>
           <div class="grid grid-cols-[1fr,auto,auto] gap-4">
             <div class=" ">
               <label for="weights-insert-input" class="text-gray-400">Date</label>
@@ -74,25 +73,27 @@ export  const Weights = component$(() => {
             </div>
           </div>
         </section>
-        <section class="font-roundsans text-gray-50 flex gap-7 flex-col ">
-          {/* weights */}
-          <h1 class="text-gray-400 text-2xl ">My weights</h1>
+        <section class="font-roundsans  flex gap-2 flex-col overflow-y-auto ">
+          <h1 class="text-gray-300 text-2xl font-bold ">My weights</h1>
           <div class="flex flex-col gap-4 before:bg-sky-400 ">
             {
               sc.weights.map((weight) => {
+                const newDate = formatedDateToUser(getCurrentDateForInput(weight.updateAt))
                 return (
-                  <div key={weight.updateAt.toString()} class="grid grid-cols-2 gap-3">
-                    <p>{weight.updateAt.toString()}</p>
+                  <div key={weight.updateAt.toString()} class="grid grid-cols-[1fr,auto] gap-3">
+                    <p class="text-gray-400 ">{newDate}</p>
                     <p>{weight.value} {weight.type}</p>
                   </div>
                 );
               })
             }
           </div>
+        </section>
+        <section class="grid grid-rows-[24px,1fr] ">
+          <label for="input-weight-error" id='input-weight-error' class="text-rose-300 text-xs">{sc.store?.messageErrorSubmit}</label>
           <button class="btn" onClick$={async () => await sc.send()} >
-            Submit Weights
+            Submit Weight
           </button>
-          {/* float button to unfocus */}
         </section>
       </div>
   );
