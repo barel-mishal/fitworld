@@ -41,26 +41,48 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
       setUpdateAt: $(function(this: WeightStoreHook, value) {
           const date = sDate.safeParse(value);
           if (!date.success) return;
+          console.log(date.data);
           this.date = date.data;
           })
           });
-    const send = $(async function(this: WeightStoreHook) {
-        const record = await store.hydrateRecord();
-        const parsed = schemaWeightRecord.partial().array().safeParse([record]);
-        if (!parsed.success ) {
-            refWeightInput.value?.focus();
-            store.messageErrorSubmit = "Invalid weight";
-            return { success: false, error: "Invalid weight", message: "Weight field is empty or nor a number" };
-        };
-        const result = await serverInsertWeight(parsed.data);
-        if (!result.success || !result.value) {
-            store.messageErrorSubmit = "Failed to insert weight";
-            return { success: false, error: "Failed to insert weight", message: "Server error. Try again or check connection." };
+        const send = $(async function(this: WeightStoreHook) {
+        try {
+            // Hydrate the weight record from the store
+            const record = await store.hydrateRecord();
+            
+            // Validate the record against the schema
+            const parsed = schemaWeightRecord.partial().safeParse(record);
+            if (!parsed.success) {
+                refWeightInput.value?.focus();
+                store.messageErrorSubmit = "Invalid weight";
+                return;
+            }
+    
+            // Insert the weight record to the server
+            const result = await serverInsertWeight(parsed.data);
+            if (!result.success || !result.value) {
+                store.messageErrorSubmit = result.error;
+                return;
+            }
+    
+            store.messageErrorSubmit = "";
+    
+            // Validate the server response
+            const parsedResult = schemaWeightRecord.partial().array().safeParse(result.value);
+            if (!parsedResult.success) { 
+                store.messageErrorSubmit = parsedResult.error.message;
+                return;
+            }
+    
+            // Update the weights in the store
+            weights.value = parsedResult.data.concat(data.weights) as WeightRecord[];
+    
+        } catch (error) {
+            // Catch and handle any unexpected errors
+            store.messageErrorSubmit = "An unexpected error occurred. Please try again.";
+            console.error("Error in send function:", error);
         }
-        store.messageErrorSubmit = "";
-        weights.value = schemaWeightRecord.partial().array().parse(result.value).concat(data.weights) as WeightRecord[];
-        return { success: true, error: "" };
-    });  
+    });
     const weightValue = useComputed$(() => {
         return store.weight ? store.weight.toString() : "";
     });

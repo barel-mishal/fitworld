@@ -99,20 +99,31 @@ export  const Weights = component$(() => {
   );
 })
 
-export const serverInsertWeight = server$(async function (data: Partial<WeightRecord>[]) {
+export const serverInsertWeight = server$(async function (data: Partial<WeightRecord>) {
   const userDB = await serverDatabaseUserSession();
   if (!userDB || !userDB.success) return { error: "No user", success: false }
-  const weights = await userDB.value?.insert("weight", data);
-  if (!weights) return { 
-    success: false, 
-    error: "Failed to insert weight",
-    value: [],
-  };
-  return {
-    success: true,
-    error: "",
-    value: weights,
-  };
+  try {
+    const weights = await userDB.value?.create<Partial<WeightRecord>>("weight", data);
+    
+    if (!weights) return { 
+      success: false, 
+      error: "Failed to insert weight",
+      value: [],
+    };
+    return {
+      success: true,
+      error: "",
+      value: weights,
+    };
+  } catch (error) {
+    console.error(error);
+    return { 
+      success: false, 
+      error: "Already exists weight for this date",
+      value: [],
+    };
+    
+  }
 });
 
 
