@@ -1,4 +1,4 @@
-import { $, QRL, Signal, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
+import { $, QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
 import { WeightUnit } from "~/routes/client/layout";
 import { ReturnTypeUseLoaderUserWeights, serverInsertWeight } from ".";
 import { z } from "@builder.io/qwik-city";
@@ -22,6 +22,7 @@ type WeightStoreHook = {
 
 export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
     const refWeightInput = useSignal<HTMLInputElement>();
+    const weights = useSignal(data.weights);
     const store = useStore<WeightStoreHook>({
       weight: 0,
       type: "kg" as WeightUnit,
@@ -52,11 +53,12 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
             return { success: false, error: "Invalid weight", message: "Weight field is empty or nor a number" };
         };
         const result = await serverInsertWeight(parsed.data);
-        if (!result.success) {
+        if (!result.success || !result.value) {
             store.messageErrorSubmit = "Failed to insert weight";
             return { success: false, error: "Failed to insert weight", message: "Server error. Try again or check connection." };
         }
         store.messageErrorSubmit = "";
+        weights.value = schemaWeightRecord.partial().array().parse(result.value).concat(data.weights) as WeightRecord[];
         return { success: true, error: "" };
     })
           
@@ -69,12 +71,12 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
     });
 
     return {
-      ...data,
       store,
+      weights,
       weightValue,
       updateAtValue,
       send,
-        refWeightInput
+      refWeightInput
     };
 };
 

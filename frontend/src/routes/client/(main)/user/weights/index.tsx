@@ -77,7 +77,7 @@ export  const Weights = component$(() => {
           <h1 class="text-gray-300 text-2xl font-bold ">My past weights</h1>
           <div class="flex flex-col gap-4 before:bg-sky-400 ">
             {
-              sc.weights.map((weight) => {
+              sc.weights.value.map((weight) => {
                 const newDate = formatedDateToUser(getCurrentDateForInput(weight.updateAt))
                 return (
                   <div key={weight.updateAt.toString()} class="grid grid-cols-[1fr,auto] gap-3">
@@ -103,9 +103,15 @@ export const serverInsertWeight = server$(async function (data: Partial<WeightRe
   const userDB = await serverDatabaseUserSession();
   if (!userDB || !userDB.success) return { error: "No user", success: false }
   const weights = await userDB.value?.insert("weight", data);
-  console.log("weights", weights);
+  if (!weights) return { 
+    success: false, 
+    error: "Failed to insert weight",
+    value: [],
+  };
   return {
     success: true,
+    error: "",
+    value: weights,
   };
 });
 
