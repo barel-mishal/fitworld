@@ -74,7 +74,7 @@ export  const Weights = component$(() => {
           </div>
         </section>
         <section class="font-roundsans  flex gap-2 flex-col overflow-y-auto ">
-          <h1 class="text-gray-300 text-2xl font-bold ">My weights</h1>
+          <h1 class="text-gray-300 text-2xl font-bold ">My past weights</h1>
           <div class="flex flex-col gap-4 before:bg-sky-400 ">
             {
               sc.weights.map((weight) => {
