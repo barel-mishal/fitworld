@@ -38,7 +38,7 @@ export  const Weights = component$(() => {
   const sc = useContext(contextWeightsStore);
   
   return (
-      <div class="min-h-screen bg-gray-950 p-4 grid gap-8 content-start font-roundsans text-gray-50 grid-rows-[auto,1fr,auto] h-screen">
+      <div class="min-h-screen bg-gray-950 p-4 grid gap-3 content-start font-roundsans text-gray-50 grid-rows-[auto,1fr,auto] h-screen">
         <section class="">
           {/* textarea look like input */}
           <h1 class="text-gray-400 text-2xl leading-10 ">New weight</h1>

@@ -60,12 +60,10 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
         store.messageErrorSubmit = "";
         weights.value = schemaWeightRecord.partial().array().parse(result.value).concat(data.weights) as WeightRecord[];
         return { success: true, error: "" };
-    })
-          
+    });  
     const weightValue = useComputed$(() => {
         return store.weight ? store.weight.toString() : "";
     });
-
     const updateAtValue = useComputed$(() => {
         return getCurrentDateForInput(store.date);
     });
