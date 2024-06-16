@@ -35,3 +35,8 @@ pnpm-lock.yaml
 package-lock.json
 yarn.lock
 server
+**/*.log
+**/.DS_Store
+*.
+dist
+node_modules

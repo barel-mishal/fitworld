@@ -10,7 +10,7 @@
     "sharp"
   ],
   "trustedDependencies-annotation": "Needed for bun to allow running install scripts",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "build": "qwik build",
     "build.client": "vite build",
