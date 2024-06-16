@@ -1,7 +1,7 @@
-import { $, QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
+import { $, type QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
 import { HeightUnit } from "~/routes/client/layout";
-import { ReturnTypeUseLoaderUserHeights, serverInsertHeight as serverInsertHeight } from ".";
-import { z } from "@builder.io/qwik-city";
+import { type ReturnTypeUseLoaderUserHeights, serverInsertHeight as serverInsertHeight } from ".";
+import type { z } from "@builder.io/qwik-city";
 import { sDate } from "~/util/types";
 import { schemaHeightRecord as schemaHeightRecord } from "./types";
 import { getCurrentDateForInput } from "~/util/formatDate";

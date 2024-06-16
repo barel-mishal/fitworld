@@ -1,7 +1,7 @@
 import { $, QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
 import { WeightUnit } from "~/routes/client/layout";
-import { ReturnTypeUseLoaderUserWeights, serverInsertWeight } from ".";
-import { z } from "@builder.io/qwik-city";
+import { type ReturnTypeUseLoaderUserWeights, serverInsertWeight } from ".";
+import { type z } from "@builder.io/qwik-city";
 import { sDate } from "~/util/types";
 import { schemaWeightRecord } from "./types";
 import { getCurrentDateForInput } from "~/util/formatDate";

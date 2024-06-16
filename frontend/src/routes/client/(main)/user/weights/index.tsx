@@ -1,5 +1,5 @@
 import { component$, useContext } from '@builder.io/qwik';
-import { routeLoader$, server$, z } from '@builder.io/qwik-city';
+import { routeLoader$, server$ } from '@builder.io/qwik-city';
 import { serverDatabaseUserSession } from '~/routes/seedDatabase';
 import { WeightRecord, WeightsWarper, contextWeightsStore } from './Context';
 import { WeightsUnitPopover } from './PopOverWeight';

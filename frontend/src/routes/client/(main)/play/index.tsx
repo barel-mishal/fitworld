@@ -11,7 +11,7 @@ import { formatNumber } from "~/util/twoDecimalPoints";
 import { type RequestHandler, routeLoader$ } from "@builder.io/qwik-city";
 import serverGetUserOverview from "~/routes/api/service_user_overview/service_user_overview";
 import { type RoutesLiteral } from "~/util/types";
-import { serverDatabaseUserSession, serverInitDatabase } from "~/routes/seedDatabase";
+import { serverDatabaseUserSession } from "~/routes/seedDatabase";
 
 export const useLoadUserOverview = routeLoader$(async function () {
   const userOverview = await serverGetUserOverview();

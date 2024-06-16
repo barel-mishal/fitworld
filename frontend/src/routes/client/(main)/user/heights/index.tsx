@@ -1,7 +1,7 @@
 import { component$, useContext } from '@builder.io/qwik';
-import { routeLoader$, server$, z } from '@builder.io/qwik-city';
+import { routeLoader$, server$ } from '@builder.io/qwik-city';
 import { serverDatabaseUserSession } from '~/routes/seedDatabase';
-import { HeightRecord, HeightsWarper, contextHeightsStore } from './Context';
+import { type HeightRecord, HeightsWarper, contextHeightsStore } from './Context';
 import { HeightsUnitPopover } from './PopOverHeight';
 import { schemaHeightRecord as schemaHeightRecord } from './types';
 import { formatedDateToUser, getCurrentDateForInput } from '~/util/formatDate';

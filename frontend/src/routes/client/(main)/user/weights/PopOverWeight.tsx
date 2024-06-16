@@ -1,6 +1,6 @@
 import { component$, useContext, $ } from "@builder.io/qwik";
 import { cn } from "@qwik-ui/utils";
-import { WeightUnit } from "~/routes/client/layout";
+import { type WeightUnit } from "~/routes/client/layout";
 import { convertWeightUnits } from "~/util/convertUnits";
 import { formatedNumber } from "~/util/formatNumber";
 import { contextWeightsStore } from "./Context";
@@ -42,20 +42,20 @@ export const WeightsUnitPopover = component$<WeightsUnitPopoverProps>((props) =>
             <button
               data-active={`${sc.store.type === "kg"}`}
               class="btn btn-data-active"
-              onClick$={async (e,el) => await handleChnage("kg" as WeightUnit)}>
+              onClick$={async () => await handleChnage("kg" as WeightUnit)}>
               <span>KG</span>
             </button>
   
             <button
               data-active={`${sc.store.type === "g"}`}
               class="btn btn-data-active"
-              onClick$={async (e,el) => await handleChnage("g" as WeightUnit)}>
+              onClick$={async () => await handleChnage("g" as WeightUnit)}>
               <span>G</span>
             </button>
             <button
               data-active={`${sc.store.type === "lb"}`}
               class="btn btn-data-active"
-              onClick$={async (e,el) => await handleChnage("lb" as WeightUnit)}>
+              onClick$={async () => await handleChnage("lb" as WeightUnit)}>
               <span>lb</span>
             </button>
             <p class="h-5 text-sm text-gray-200/70">{getWeightUnit()}</p>
