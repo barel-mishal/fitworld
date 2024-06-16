@@ -13,7 +13,7 @@ interface WeightsUnitPopoverProps {
 export const WeightsUnitPopover = component$<WeightsUnitPopoverProps>((props) => {
     const sc = useContext(contextWeightsStore);
   
-    const getHeightUnit = () => {
+    const getWeightUnit = () => {
       switch (sc.store.type) {
         case "kg":
         case "g":
@@ -58,7 +58,7 @@ export const WeightsUnitPopover = component$<WeightsUnitPopoverProps>((props) =>
               onClick$={async (e,el) => await handleChnage("lb" as WeightUnit)}>
               <span>lb</span>
             </button>
-            <p class="h-5 text-sm text-gray-200/70">{getHeightUnit()}</p>
+            <p class="h-5 text-sm text-gray-200/70">{getWeightUnit()}</p>
           </div>
         </Popover.Panel>
       </Popover.Root>

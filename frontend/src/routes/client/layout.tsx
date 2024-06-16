@@ -35,9 +35,10 @@ export const onRequest: RequestHandler = (event) => {
 };
 
 export type WeightUnit = "kg" | "g" | "lb";
+export type HeightUnit = "cm" | "m" | "FT";
 
 export interface HeightGetter {
-  type: "cm" | "m" | "FT";
+  type: HeightUnit;
   value: number;
   id: string;
   [key: string]: string | number;
@@ -231,8 +232,8 @@ export const useLoaderAssessmentData = routeLoader$(async function ({
     ( $weight )
   END;
   `);
-  if (height[2].status === "ERR") throw new Error("Error fetching height");
-  if (height[5].status === "ERR") throw new Error("No height record found");
+  if (height[2].status === "ERR") throw new Error(`No height record found ${JSON.stringify(height[2])}`);
+  if (height[5].status === "ERR") throw new Error(`No weight record found ${JSON.stringify(height[5])}`);
   const heightData: TypeSchemaAssessment = {
     personalInformation: {
       gender: session.database.profile.gender || "",

@@ -40,10 +40,9 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
       }),
       setUpdateAt: $(function(this: WeightStoreHook, value) {
           const date = sDate.safeParse(value);
-          if (!date.success) return;
-          console.log(date.data);
-          this.date = date.data;
-          })
+                if (!date.success) return;
+                this.date = date.data;
+            })
           });
         const send = $(async function(this: WeightStoreHook) {
         try {

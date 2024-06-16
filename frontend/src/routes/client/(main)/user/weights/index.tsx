@@ -121,8 +121,7 @@ export const serverInsertWeight = server$(async function (data: Partial<WeightRe
       success: false, 
       error: "Already exists weight for this date",
       value: [],
-    };
-    
+    }; 
   }
 });
 

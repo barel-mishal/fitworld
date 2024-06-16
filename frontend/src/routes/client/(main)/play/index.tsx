@@ -11,17 +11,24 @@ import { formatNumber } from "~/util/twoDecimalPoints";
 import { type RequestHandler, routeLoader$ } from "@builder.io/qwik-city";
 import serverGetUserOverview from "~/routes/api/service_user_overview/service_user_overview";
 import { type RoutesLiteral } from "~/util/types";
+import { serverDatabaseUserSession, serverInitDatabase } from "~/routes/seedDatabase";
 
 export const useLoadUserOverview = routeLoader$(async function () {
   const userOverview = await serverGetUserOverview();
   return userOverview;
 });
 
-export const onRequest: RequestHandler = (event) => {
+export const onRequest: RequestHandler = async (event) => {
   const session: ExtendSession | null = event.sharedMap.get("session");
   const isSignedIn = session && new Date(session.expires) > new Date();
   if (!isSignedIn) {
     const path: RoutesLiteral = "/";
+    throw event.redirect(302, path);
+  }
+  const dbUser = await serverDatabaseUserSession();
+  if (!dbUser || !dbUser.success) {
+    // TODO: Redirect to error page
+    const path: RoutesLiteral = "/client/Assessment/";
     throw event.redirect(302, path);
   }
   const overview = session.database.profile.overview;
@@ -33,14 +40,13 @@ export const onRequest: RequestHandler = (event) => {
 
 export default component$(() => {
   const userOverview = useLoadUserOverview().value;
-
   if (!userOverview.success) {
     return <div>Error: {userOverview.error}</div>;
   }
   const auth = useAuthSession().value as ExtendSession | undefined;
   const overview = auth?.database.profile.overview;
   if (!overview || "missing" in overview) {
-    return <div>Error: {overview?.missing}</div>;
+    return <div>Error: {JSON.stringify(overview?.missing)}</div>;
   }
 
   const steps = userOverview.value?.overview.lastSteps;

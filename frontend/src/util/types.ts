@@ -46,7 +46,12 @@ export const addonsProfileEnergySchema = z
       })
       .or(
         z.object({
-          missing: z.string(),
+          missing: z.object({
+            birth: z.any(),
+            latest_height_cm: z.any(),
+            latest_weight_kg: z.any(),
+            activity_level: z.any(),
+        }, ),
           success: z.boolean(),
         }),
       )
