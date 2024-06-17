@@ -101,7 +101,7 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
         await send();
         const route: RoutesLiteral = "/client/(main)/user/heights/";
         
-        nav(route);
+        nav(route, { forceReload: true, replaceState: true });
     });
 
 

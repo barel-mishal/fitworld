@@ -98,8 +98,8 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
     const nav = useNavigate();
     const handleSubmitOnFinish = $(async function(this: WeightStoreHook) {
         await send();
-        const route: RoutesLiteral = "/client/(main)/user/heights/";
-        nav(route);
+        const route: RoutesLiteral = "/client/(main)/user/heights/finish/";
+        nav(route, { forceReload: true, replaceState: true });
     });
 
     return {
