@@ -99,7 +99,7 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
     const nav = useNavigate();
     const handleSubmitOnFinish = $(async function() {
         await send();
-        const route: RoutesLiteral = "/client/user/heights/" as RoutesLiteral;
+        const route: RoutesLiteral = "/client/user/heights/finish" as RoutesLiteral;
         return route;
     });
 

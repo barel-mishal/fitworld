@@ -99,7 +99,7 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
         store.btnSubmit = "loading";
         await send();
         store.btnSubmit = "idle";
-        const route: RoutesLiteral = "/client/user/heights/finish/" as RoutesLiteral;
+        const route: RoutesLiteral = "/client/user/weights/finish/" as RoutesLiteral;
         return route;
     });
 
