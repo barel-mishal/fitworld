@@ -1,7 +1,7 @@
 import { $, QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
 import { WeightUnit } from "~/routes/client/layout";
 import { type ReturnTypeUseLoaderUserWeights, serverInsertWeight } from ".";
-import { type z } from "@builder.io/qwik-city";
+import { useNavigate, type z } from "@builder.io/qwik-city";
 import { sDate } from "~/util/types";
 import { schemaWeightRecord } from "./types";
 import { getCurrentDateForInput } from "~/util/formatDate";
@@ -95,6 +95,11 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
     const updateAtValue = useComputed$(() => {
         return getCurrentDateForInput(store.date);
     });
+    const nav = useNavigate();
+    const handleSubmitOnFinish = $(async function(this: WeightStoreHook) {
+        await send();
+        nav("/client/(main)/user/weights/");
+    });
 
     return {
       store,
@@ -102,7 +107,8 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
       weightValue,
       updateAtValue,
       send,
-      refWeightInput
+      refWeightInput,
+        handleSubmitOnFinish
     };
 };
 

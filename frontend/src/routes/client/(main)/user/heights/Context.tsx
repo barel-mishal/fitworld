@@ -1,7 +1,7 @@
 import { $, type QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
 import { HeightUnit } from "~/routes/client/layout";
 import { type ReturnTypeUseLoaderUserHeights, serverInsertHeight as serverInsertHeight } from ".";
-import type { z } from "@builder.io/qwik-city";
+import { useNavigate, type z } from "@builder.io/qwik-city";
 import { sDate } from "~/util/types";
 import { schemaHeightRecord as schemaHeightRecord } from "./types";
 import { getCurrentDateForInput } from "~/util/formatDate";
@@ -96,6 +96,12 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
     const updateAtValue = useComputed$(() => {
         return getCurrentDateForInput(store.date);
     });
+    const nav = useNavigate();
+    const handleSubmitOnFinish = $(async function() {
+        await send();
+        nav("/client/(main)/user/weights/");
+    });
+
 
     return {
       store,
@@ -103,7 +109,8 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
       heightValue,
       updateAtValue,
       send,
-      refHeightInput
+      refHeightInput,
+        handleSubmitOnFinish
     };
 };
 
