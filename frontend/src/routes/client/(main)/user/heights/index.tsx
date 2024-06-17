@@ -5,6 +5,7 @@ import { type HeightRecord, HeightsWarper, contextHeightsStore } from './Context
 import { HeightsUnitPopover } from './PopOverHeight';
 import { schemaHeightRecord as schemaHeightRecord } from './types';
 import { formatedDateToUser, getCurrentDateForInput } from '~/util/formatDate';
+import { PhArrowBendUpLeft } from '~/components/icons/icons';
 
 export const useLoaderUserHeights = routeLoader$(async function () {
   const userDB = await serverDatabaseUserSession();
@@ -38,7 +39,11 @@ export  const Heights = component$(() => {
   const sc = useContext(contextHeightsStore);
   
   return (
-      <div class="min-h-screen bg-gray-950 p-4 grid gap-3 content-start font-roundsans text-gray-50 grid-rows-[auto,1fr,auto] h-screen">
+      <div class="min-h-screen bg-gray-950 p-4 grid gap-3 content-start font-roundsans text-gray-50 grid-rows-[auto,auto,1fr,auto] h-screen">
+        <section>
+          <PhArrowBendUpLeft class="w-8 h-8 fill-current"/>
+          <h3>Profile</h3>
+        </section>
         <section class="">
           {/* textarea look like input */}
           <h1 class="text-gray-400 text-2xl leading-10 ">New height</h1>

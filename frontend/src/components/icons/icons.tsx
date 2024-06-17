@@ -212,7 +212,7 @@ export function PhArrowBendUpLeft(props: PropsOf<"svg">) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class={cn("h-5 w-5", props.class)}
+      class={cn("h-5 w-5 fill-current", props.class)}
       {...props}
       width="32"
       height="32"

@@ -6,6 +6,8 @@ import { WeightsUnitPopover } from './PopOverWeight';
 import { schemaWeightRecord } from './types';
 import { formatedDateToUser, getCurrentDateForInput } from '~/util/formatDate';
 import { cn } from '@qwik-ui/utils';
+import { PhArrowBendUpLeft } from '~/components/icons/icons';
+import { AppLinkGlobal } from '~/routes.config';
 
 export const useLoaderUserWeights = routeLoader$(async function () {
   const userDB = await serverDatabaseUserSession();
@@ -39,10 +41,16 @@ export  const Weights = component$(() => {
   const sc = useContext(contextWeightsStore);
   
   return (
-      <div class="min-h-screen bg-gray-950 p-4 grid gap-3 content-start font-roundsans text-gray-50 grid-rows-[auto,1fr,auto] h-screen">
+      <div class="min-h-screen bg-gray-950 p-4 grid gap-3 content-start font-roundsans text-gray-50 grid-rows-[auto,auto,1fr,auto] h-screen">
+        <section class="">
+          <AppLinkGlobal route='/client/(main)/play/' class="flex gap-3 items-center text-gray-400">
+            <PhArrowBendUpLeft class="w-8 h-8 fill-current"/>
+            <h3 class="text-xl ">Profile</h3>
+          </AppLinkGlobal>
+        </section>
         <section class="">
           {/* textarea look like input */}
-          <h1 class="text-gray-400 text-2xl leading-10 ">New weight</h1>
+          <h1 class="text-gray-200 text-2xl leading-10 ">New weight</h1>
           <div class="grid grid-cols-[1fr,auto,auto] gap-4">
             <div class=" ">
               <label for="weights-insert-input" class="text-gray-400">Date</label>
