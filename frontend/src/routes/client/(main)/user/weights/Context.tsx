@@ -18,12 +18,14 @@ type WeightStoreHook = {
     hydrateRecord: QRL<() => Partial<WeightRecord>>
     setUpdateAt: QRL<(date: string) => void>;
     messageErrorSubmit?: string;
+    btnSubmit: "loading" | "idle";
 }
 
 export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
     const refWeightInput = useSignal<HTMLInputElement>();
     const weights = useSignal(data.weights);
     const store = useStore<WeightStoreHook>({
+      btnSubmit: "idle",
       weight: 0,
       type: "kg" as WeightUnit,
       date: sDate.parse(data.currentDate),
@@ -46,6 +48,9 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
           });
         const send = $(async function(this: WeightStoreHook) {
         try {
+        
+
+            this.btnSubmit = "loading";
             // Hydrate the weight record from the store
             const record = await store.hydrateRecord();
             
@@ -75,12 +80,14 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
     
             // Update the weights in the store
             weights.value = parsedResult.data.concat(data.weights) as WeightRecord[];
-    
+
+            
         } catch (error) {
             // Catch and handle any unexpected errors
             store.messageErrorSubmit = "An unexpected error occurred. Please try again.";
             console.error("Error in send function:", error);
         }
+            this.btnSubmit = "idle";
     });
     const weightValue = useComputed$(() => {
         return store.weight ? store.weight.toString() : "";

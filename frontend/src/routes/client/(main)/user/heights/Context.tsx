@@ -70,7 +70,6 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
     
             // Validate the server response
             const parsedResult = schemaHeightRecord.partial().array().safeParse(result.value);
-            console.log(parsedResult);
             if (!parsedResult.success) { 
                 store.messageErrorSubmit = parsedResult.error.message;
                 return;
