@@ -46,11 +46,11 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
                 this.date = date.data;
             })
           });
-        const send = $(async function(this: WeightStoreHook) {
+        const send = $(async function() {
         try {
         
 
-            this.btnSubmit = "loading";
+            
             // Hydrate the weight record from the store
             const record = await store.hydrateRecord();
             
@@ -87,7 +87,7 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
             store.messageErrorSubmit = "An unexpected error occurred. Please try again.";
             console.error("Error in send function:", error);
         }
-            this.btnSubmit = "idle";
+            
     });
     const weightValue = useComputed$(() => {
         return store.weight ? store.weight.toString() : "";
@@ -97,8 +97,10 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
     });
     const nav = useNavigate();
     const handleSubmitOnFinish = $(async function(this: WeightStoreHook) {
+        store.btnSubmit = "loading";
         await send();
-        const route: RoutesLiteral = "/client/(main)/user/heights/finish/";
+        store.btnSubmit = "idle";
+        const route: RoutesLiteral = "/client/user/heights/finish/" as RoutesLiteral;
         nav(route, { forceReload: true, replaceState: true });
     });
 
@@ -109,7 +111,7 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
       updateAtValue,
       send,
       refWeightInput,
-        handleSubmitOnFinish
+        handleSubmitOnFinish,
     };
 };
 

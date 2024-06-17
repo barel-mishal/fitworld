@@ -46,9 +46,9 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
                 this.date = date.data;
             })
           });
-        const send = $(async function(this: HeightStoreHook) {
+        const send = $(async function() {
         try {
-            this.btnSubmit = "loading";
+            store.btnSubmit = "loading";
 
             // Hydrate the height record from the store
             const record = await store.hydrateRecord();
@@ -88,7 +88,7 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
             console.error("Error in send function:", error);
         }
 
-        this.btnSubmit = "idle";
+        store.btnSubmit = "idle";
     });
     const heightValue = useComputed$(() => {
         return store.height ? store.height.toString() : "";
@@ -99,7 +99,7 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
     const nav = useNavigate();
     const handleSubmitOnFinish = $(async function() {
         await send();
-        const route: RoutesLiteral = "/client/(main)/user/heights/";
+        const route: RoutesLiteral = "/client/user/heights/" as RoutesLiteral;
         
         nav(route, { forceReload: true, replaceState: true });
     });
