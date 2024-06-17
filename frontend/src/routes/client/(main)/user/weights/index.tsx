@@ -43,7 +43,7 @@ export  const Weights = component$(() => {
   return (
       <div class="min-h-screen bg-gray-950 p-4 grid gap-3 content-start font-roundsans text-gray-50 grid-rows-[auto,auto,1fr,auto] h-screen">
         <section class="">
-          <AppLinkGlobal route='/client/(main)/play/' class="flex gap-3 items-center text-gray-400">
+          <AppLinkGlobal route='/client/(main)/user/' class="flex gap-3 items-center text-gray-400">
             <PhArrowBendUpLeft class="w-8 h-8 fill-current"/>
             <h3 class="text-xl ">Profile</h3>
           </AppLinkGlobal>
