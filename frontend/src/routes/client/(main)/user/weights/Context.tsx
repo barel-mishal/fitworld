@@ -101,7 +101,7 @@ export const useWeights = (data: ReturnTypeUseLoaderUserWeights) => {
         await send();
         store.btnSubmit = "idle";
         const route: RoutesLiteral = "/client/user/heights/finish/" as RoutesLiteral;
-        nav(route, { forceReload: true, replaceState: true });
+        await nav(route, { forceReload: true, replaceState: true });
     });
 
     return {
