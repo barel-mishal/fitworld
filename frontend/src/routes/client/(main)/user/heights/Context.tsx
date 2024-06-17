@@ -18,6 +18,7 @@ type HeightStoreHook = {
     hydrateRecord: QRL<() => Partial<HeightRecord>>
     setUpdateAt: QRL<(date: string) => void>;
     messageErrorSubmit?: string;
+    btnSubmit: "loading" | "idle";
 }
 
 export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
@@ -38,6 +39,7 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
             updateAt: sDate.parse(this.date)
         };
       }),
+      btnSubmit: "idle",
       setUpdateAt: $(function(this: HeightStoreHook, value) {
           const date = sDate.safeParse(value);
                 if (!date.success) return;
@@ -46,6 +48,8 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
           });
         const send = $(async function(this: HeightStoreHook) {
         try {
+            this.btnSubmit = "loading";
+
             // Hydrate the height record from the store
             const record = await store.hydrateRecord();
             console.log(record);
@@ -83,6 +87,8 @@ export const useHeights = (data: ReturnTypeUseLoaderUserHeights) => {
             store.messageErrorSubmit = "An unexpected error occurred. Please try again.";
             console.error("Error in send function:", error);
         }
+
+        this.btnSubmit = "idle";
     });
     const heightValue = useComputed$(() => {
         return store.height ? store.height.toString() : "";
