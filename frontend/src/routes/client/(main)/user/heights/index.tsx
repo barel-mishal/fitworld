@@ -87,9 +87,9 @@ export  const Heights = component$(() => {
           <div class="flex flex-col gap-4 before:bg-sky-400 ">
             {
               sc.heights.value.map((height) => {
-                const newDate = formatedDateToUser(getCurrentDateForInput(height.updateAt))
+                const newDate = formatedDateToUser(getCurrentDateForInput(height.updateAt as Date))
                 return (
-                  <div key={height.updateAt.toString()} class="grid grid-cols-[1fr,auto] gap-3">
+                  <div key={height.updateAt?.toString()} class="grid grid-cols-[1fr,auto] gap-3">
                     <p class="text-gray-400 ">{newDate}</p>
                     <p>{height.value} {height.type}</p>
                   </div>
