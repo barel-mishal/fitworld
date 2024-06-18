@@ -4,6 +4,7 @@ import { AppLink } from '~/routes.config';
 
 
 export default component$(() => {
+
   return (
        <div class="flex h-full flex-col place-items-center gap-8 bg-gray-950 p-5">
       <section class="flex flex-grow items-end">
@@ -11,31 +12,19 @@ export default component$(() => {
       </section>
       <section>
         <h1 class="text-center text-2xl font-bold text-yellow-600">
-          Perfect lesson!
+          New Record 🎉
         </h1>
-        <p class="text-center text-lg text-gray-300">Cheers!</p>
+        <p class="text-center text-lg text-gray-300">Cheers! You Got 10 XP points</p>
+        <p class="text-center text-lg text-gray-300">For adding a weekly Record</p>
       </section>
-      <section class="grid w-screen grid-cols-3 justify-items-center gap-3 px-5">
-        <div class="flex h-20 w-full flex-col rounded-xl bg-yellow-300 p-[2px]">
+      <section class="grid w-screen place-content-center justify-items-center gap-3 px-5">
+        <div class="flex h-32 flex-col rounded-xl w-32 bg-yellow-300 p-[2px]">
           <p class="rounded-t-xl bg-yellow-300 text-center">Total XP</p>
-          <h1 class="flex-grow place-content-center rounded-xl bg-gray-950 text-center text-gray-50">
-            25
+          <h1 class="flex-grow place-content-center rounded-xl bg-gray-950 text-center text-gray-50 text-3xl">
+            10
           </h1>
         </div>
-        <div class="flex h-20 w-full flex-col rounded-xl bg-sky-300 p-[2px]">
-          <p class="rounded-t-xl bg-sky-300 text-center">Quick</p>
-          <h1 class="flex-grow place-content-center rounded-xl bg-gray-950 text-center text-gray-50">
-            10:00
-            {/* {time} */}
-          </h1>
-        </div>
-        <div class="flex h-20 w-full flex-col rounded-xl bg-emerald-300 p-[2px]">
-          <p class="rounded-t-xl bg-emerald-300 text-center">Amazing</p>
-          <h1 class="flex-grow place-content-center rounded-xl bg-gray-950 text-center text-gray-50">
-            30%
-            {/* {presentageCorrect} */}
-          </h1>
-        </div>
+
       </section>
       <section class="flex w-full flex-grow items-end text-gray-50">
         <AppLink
