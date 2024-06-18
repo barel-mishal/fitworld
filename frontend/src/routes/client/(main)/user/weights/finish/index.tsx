@@ -31,7 +31,7 @@ export default component$(() => {
       </section>
       <section class="flex w-full flex-grow items-end text-gray-50">
         <AppLink
-          route={"/client/play/" as "/client/(main)/play/"}
+          route={"/client/user/" as "/client/(main)/user/"}
           class="btn flex h-12 w-full flex-grow items-center justify-center rounded-xl border-sky-700 bg-sky-500 font-extrabold text-sky-950"
         >
           Claim XP
