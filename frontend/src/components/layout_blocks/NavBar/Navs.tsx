@@ -1,5 +1,5 @@
 import { type PropsOf, component$, useStyles$ } from "@builder.io/qwik";
-import { Modal, Popover } from "@qwik-ui/headless";
+import { Modal } from "@qwik-ui/headless";
 import { type VariantProps, cva } from "class-variance-authority";
 import {
   PhDNA,

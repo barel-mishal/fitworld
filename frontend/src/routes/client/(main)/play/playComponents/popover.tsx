@@ -1,4 +1,4 @@
-import { JSX, Slot, component$, useContext } from "@builder.io/qwik";
+import { type JSX, Slot, component$ } from "@builder.io/qwik";
 import { Popover } from "~/components/ui/popover/popover";
 
 interface PopoverPlayUnitPopoverProps {

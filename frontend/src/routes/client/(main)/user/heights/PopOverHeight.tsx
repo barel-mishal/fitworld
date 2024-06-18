@@ -5,6 +5,7 @@ import { convertHeightUnits } from "~/util/convertUnits";
 import { formatedNumber } from "~/util/formatNumber";
 import { contextHeightsStore } from "./Context";
 import { Popover } from "~/components/ui/popover/popover";
+import { schemaStringNumber } from "./types";
 
 interface HeightsUnitPopoverProps {
   inputId: string;
@@ -26,8 +27,9 @@ export const HeightsUnitPopover = component$<HeightsUnitPopoverProps>((props) =>
     const handleChnage = $((type: HeightUnit) => {
       sc.store.type = type;
       if (!sc.store.height) return;
-      const currentHeight = sc.store.height;
-      const converedHeight = convertHeightUnits(currentHeight, sc.store.type, type);
+      const currentHeight = schemaStringNumber.safeParse(sc.store.height);
+      if (!currentHeight.success) return currentHeight.error;
+      const converedHeight = convertHeightUnits(currentHeight.data, sc.store.type, type);
       const formatedHeight = formatedNumber(converedHeight);
       sc.store.setHeight(formatedHeight);
     });
