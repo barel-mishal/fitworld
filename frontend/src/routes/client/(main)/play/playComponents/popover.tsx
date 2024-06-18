@@ -1,18 +1,18 @@
-import { Slot, component$, useContext } from "@builder.io/qwik";
-import { cn } from "@qwik-ui/utils";
+import { JSX, Slot, component$, useContext } from "@builder.io/qwik";
 import { Popover } from "~/components/ui/popover/popover";
 
 interface PopoverPlayUnitPopoverProps {
   inputId: string;
+  title: JSX.Element;
 }
 export const PopoverPlayUnitPopover = component$<PopoverPlayUnitPopoverProps>((props) => {
   
     return (
-      <Popover.Root flip={true} gutter={8}>
-        <Popover.Trigger class={cn("btn w-20 text-gray-50")} id={props.inputId}>
-          My Popover
+      <Popover.Root flip={false}  gutter={8}>
+        <Popover.Trigger id={props.inputId}>
+          {props.title}
         </Popover.Trigger>
-        <Popover.Panel class="w-32 -translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50">
+        <Popover.Panel class="">
             <Slot />
         </Popover.Panel>
       </Popover.Root>

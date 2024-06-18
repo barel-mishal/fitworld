@@ -1,4 +1,5 @@
-import { type PropsOf, component$ } from "@builder.io/qwik";
+import { type PropsOf, component$, useStyles$ } from "@builder.io/qwik";
+import { Modal, Popover } from "@qwik-ui/headless";
 import { type VariantProps, cva } from "class-variance-authority";
 import {
   PhDNA,
@@ -11,6 +12,7 @@ import {
   PhUser,
 } from "~/components/icons/icons";
 import { AppLink } from "~/routes.config";
+import styles from '~/components/layout_blocks/NavBar/styles.css?inline';
 
 interface TopNavBarProps {
   streak: number;
@@ -26,23 +28,73 @@ interface TopNavBarProps {
 }
 
 export const TopNavBar = component$<TopNavBarProps>((props) => {
+  useStyles$(styles);
+
   return (
     <ul class="grid grid-cols-4">
-      <li class="grid grid-cols-2 items-center">
-        <PhLightning class="h-8 w-8 fill-yellow-500" />
-        <p class="text-xs">{props.streak}</p>
+      <li class="">
+        <Modal.Root closeOnBackdropClick={true}>
+          <Modal.Trigger class="modal-trigger grid grid-cols-2 items-center">
+            <PhLightning class="h-8 w-8 fill-yellow-500" />
+            <p class="text-xs">{props.streak}</p>
+          </Modal.Trigger>
+          <Modal.Panel class={`
+             modal-panel bottom-sheet w-full h-full p-2 bg-gray-800 
+          `}>
+            <div class="grid ">
+              <Modal.Title>Hello 1</Modal.Title>
+            </div>
+            <Modal.Close class=" "></Modal.Close>
+          </Modal.Panel>
+        </Modal.Root>
       </li>
-      <li class="grid grid-cols-2 items-center">
-        <PhDrop class="h-8 w-8 fill-sky-500" />
-        <p class="text-xs">{props.water}</p>
+      <li class="">
+      <Modal.Root closeOnBackdropClick={true}>
+          <Modal.Trigger class="modal-trigger grid grid-cols-2 items-center">
+            <PhDrop class="h-8 w-8 fill-blue-500" />
+            <p class="text-xs">{props.water}</p>
+          </Modal.Trigger>
+          <Modal.Panel class={`
+             modal-panel bottom-sheet w-full h-full p-2 bg-gray-800 
+          `}>
+            <div class="grid ">
+              <Modal.Title>Hello 1</Modal.Title>
+            </div>
+            <Modal.Close class=" "></Modal.Close>
+          </Modal.Panel>
+        </Modal.Root>
       </li>
-      <li class="grid grid-cols-2 items-center">
-        <PhHeart class="h-8 w-8 fill-rose-500" />
-        <p class="text-xs">{props.heart}</p>
+      <li class="">
+      <Modal.Root closeOnBackdropClick={true}>
+          <Modal.Trigger class="modal-trigger grid grid-cols-2 items-center">
+            <PhHeart class="h-8 w-8 fill-rose-500" />
+            <p class="text-xs">{props.heart}</p>
+          </Modal.Trigger>
+          <Modal.Panel class={`
+             modal-panel bottom-sheet w-full h-full p-2 bg-gray-800 
+          `}>
+            <div class="grid ">
+              <Modal.Title>Hello 1</Modal.Title>
+            </div>
+            <Modal.Close class=" "></Modal.Close>
+          </Modal.Panel>
+        </Modal.Root>
       </li>
-      <li class="grid grid-cols-2 items-center">
-        <PhDNA class="h-8 w-8 fill-green-500" />
-        <p class="text-xs">{props.dna}</p>
+      <li class="">
+        <Modal.Root closeOnBackdropClick={true}>
+          <Modal.Trigger class="modal-trigger grid grid-cols-2 items-center">
+            <PhDNA class="h-8 w-8 fill-green-500" />
+            <p class="text-xs">{props.dna}</p>
+          </Modal.Trigger>
+          <Modal.Panel class={`
+             modal-panel bottom-sheet w-full h-full p-2 bg-gray-800 
+          `}>
+            <div class="grid ">
+              <Modal.Title>Hello 1</Modal.Title>
+            </div>
+            <Modal.Close class=" "></Modal.Close>
+          </Modal.Panel>
+        </Modal.Root>
       </li>
     </ul>
   );
