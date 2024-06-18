@@ -4,6 +4,9 @@ import { AppLink } from '~/routes.config';
 
 
 export default component$(() => {
+  // TODO: add real score system
+  // TODO: save the score after Claim XP
+  // TODO: add the score to the user profile
 
   return (
        <div class="flex h-full flex-col place-items-center gap-8 bg-gray-950 p-5">
