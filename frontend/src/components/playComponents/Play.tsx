@@ -35,14 +35,14 @@ const Play = component$<PlayProps>((props) => {
   );
   return (
     <div class="flex flex-col">
-      <section class="grid grid-cols-12 gap-5 pb-14">
+      <section class="grid grid-cols-9 gap-5 pb-14">
         <TitleGame
           params={`section 1 unit 1 level 1`}
           title="SECTION 1 UNIT 1"
           subTitle="The Importance Of Nutrition"
           element={{
             class:
-              "p-4 bg-green-600 rounded-xl col-span-12 border-b-4 border-green-900 sticky top-0",
+              "p-4 bg-green-600 rounded-xl col-span-9 border-b-4 border-green-900 sticky top-0",
           }}
         />
         <LevelLink
@@ -110,14 +110,14 @@ const Play = component$<PlayProps>((props) => {
           parentClass="col-span-4 col-start-5 row-span-1"
         />
       </section>
-      <section class="grid grid-cols-12 gap-3 pb-14">
+      <section class="grid grid-cols-9 gap-3 pb-14">
         <TitleGame
           params={`section 1 unit 1 level 2`}
           title="SECTION 1 UNIT 2"
           subTitle="Macronutrients and Health"
           element={{
             class:
-              "p-4 bg-purple-600  rounded-xl col-span-12 border-b-4 border-purple-900 sticky top-0",
+              "p-4 bg-purple-600  rounded-xl col-span-9 border-b-4 border-purple-900 sticky top-0",
           }}
         />
         <div class="col-span-4 col-start-3 row-span-1">
@@ -212,14 +212,14 @@ const Play = component$<PlayProps>((props) => {
           </button>
         </div>
       </section>
-      <section class="grid grid-cols-12 gap-3 pb-14">
+      <section class="grid grid-cols-9 gap-3 pb-14">
         <TitleGame
           params={`section 1 unit 1 level 3`}
           title="SECTION 1 UNIT 3"
           subTitle="Build your training program"
           element={{
             class:
-              "p-4 bg-indigo-600  rounded-xl col-span-12 border-b-4 border-indigo-900 sticky top-0",
+              "p-4 bg-indigo-600  rounded-xl col-span-9 border-b-4 border-indigo-900 sticky top-0",
           }}
         />
         <div class="col-span-4 col-start-3 row-span-1">
@@ -293,14 +293,14 @@ const Play = component$<PlayProps>((props) => {
           </button>
         </div>
       </section>
-      <section class="grid grid-cols-12 gap-3 pb-14">
+      <section class="grid grid-cols-9 gap-3 pb-14">
         <TitleGame
           params={`section 1 unit 1 level 4`}
           title="SECTION 1 UNIT 4"
           subTitle="The Importance Of Nutrition"
           element={{
             class:
-              "p-4 bg-rose-600  rounded-xl col-span-12 border-b-4 border-rose-900 sticky top-0",
+              "p-4 bg-rose-600  rounded-xl col-span-9 border-b-4 border-rose-900 sticky top-0",
           }}
         />
         <div class="col-span-4 col-start-3 row-span-1">
@@ -376,7 +376,7 @@ const Play = component$<PlayProps>((props) => {
       </section>
 
       <section class="rounded-t bg-gray-800">
-        <div class="sticky top-0 col-span-12 rounded-xl p-4 text-secondary/50">
+        <div class="sticky top-0 col-span-9 rounded-xl p-4 text-secondary/50">
           <span class="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"

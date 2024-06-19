@@ -35,7 +35,7 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
       <li class="">
         <Modal.Root closeOnBackdropClick={true}>
           <Modal.Trigger class="modal-trigger grid grid-cols-2 items-center">
-            <PhLightning class="h-8 w-8 fill-yellow-500" />
+            <PhLightning class="h-8 fill-yellow-500" />
             <p class="text-xs">{props.streak}</p>
           </Modal.Trigger>
           <Modal.Panel class={`
@@ -51,7 +51,7 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
       <li class="">
       <Modal.Root closeOnBackdropClick={true}>
           <Modal.Trigger class="modal-trigger grid grid-cols-2 items-center">
-            <PhDrop class="h-8 w-8 fill-blue-500" />
+            <PhDrop class="h-8 fill-blue-500" />
             <p class="text-xs">{props.water}</p>
           </Modal.Trigger>
           <Modal.Panel class={`
@@ -67,7 +67,7 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
       <li class="">
       <Modal.Root closeOnBackdropClick={true}>
           <Modal.Trigger class="modal-trigger grid grid-cols-2 items-center">
-            <PhHeart class="h-8 w-8 fill-rose-500" />
+            <PhHeart class="h-8 fill-rose-500" />
             <p class="text-xs">{props.heart}</p>
           </Modal.Trigger>
           <Modal.Panel class={`
@@ -83,7 +83,7 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
       <li class="">
         <Modal.Root closeOnBackdropClick={true}>
           <Modal.Trigger class="modal-trigger grid grid-cols-2 items-center">
-            <PhDNA class="h-8 w-8 fill-green-500" />
+            <PhDNA class="h-8 fill-green-500" />
             <p class="text-xs">{props.dna}</p>
           </Modal.Trigger>
           <Modal.Panel class={`

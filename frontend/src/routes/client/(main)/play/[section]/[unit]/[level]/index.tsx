@@ -68,11 +68,12 @@ export default component$(() => {
     <div
       class={cn(
         "grid h-screen grid-rows-[40px,1fr,60px] gap-3 overflow-y-auto bg-gray-950 font-roundsans tracking-wide text-gray-50",
+        ""
       )}
     >
       <div
         q:slot="header"
-        class="grid grid-cols-[auto,1fr,auto] content-center items-center gap-3 p-2 text-gray-400"
+        class="grid grid-cols-[auto,1fr,auto] content-center items-center gap-3 p-2 bg-gray-950 text-gray-400"
       >
         <CloseModal onClickClose$={g.handelClose} />
         <div class="h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
