@@ -41,7 +41,10 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
           </Modal.Trigger>
           <Modal.Panel
             class={cn(
-              `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down backdrop:opacity-90`,
+              `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 fade-in fade-out text-gray-200
+              shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down 
+              backdrop:opacity-90 
+              `,
             )}
           >
             <div class="grid">
@@ -59,7 +62,10 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
         </Modal.Trigger>
         <Modal.Panel
           class={cn(
-            `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down backdrop:opacity-90`,
+            `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 fade-in fade-out text-gray-200
+            shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down 
+            backdrop:opacity-90 
+            `,
           )}
         >
           <div class="grid">
@@ -77,7 +83,10 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
         </Modal.Trigger>
         <Modal.Panel
           class={cn(
-            `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down backdrop:opacity-90`,
+            `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 fade-in fade-out fade-in fade-out text-gray-200
+            shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down 
+            backdrop:opacity-90 
+            `,
           )}
         >
           <div class="grid">
@@ -95,7 +104,10 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
         </Modal.Trigger>
         <Modal.Panel
           class={cn(
-            `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down backdrop:opacity-90`,
+            `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 fade-in fade-out fade-in fade-out text-gray-200
+            shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down 
+            backdrop:opacity-90 
+            `,
           )}
         >
           <div class="grid">
