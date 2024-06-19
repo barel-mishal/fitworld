@@ -38,7 +38,7 @@ export default component$<CloseModalProps>((props) => {
       </button>
       <div
         ref={refRoot}
-        class="absolute flex h-full w-full flex-col items-end backdrop-blur-md transition-all duration-200 data-[show='false']:-bottom-full data-[show='true']:-bottom-0 data-[show='true']:bg-gray-400/30"
+        class="absolute -left-[0.25px] w-full flex h-full flex-col items-end backdrop-blur-md transition-all duration-200 data-[show='false']:-bottom-full data-[show='true']:-bottom-0 data-[show='true']:bg-gray-400/30"
         data-show={String(show.value)}
       >
         <button
