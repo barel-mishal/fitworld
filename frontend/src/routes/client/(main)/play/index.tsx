@@ -1,4 +1,4 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
+import { component$, useId, useVisibleTask$ } from "@builder.io/qwik";
 import HeaderMainBottomNav from "~/components/gamelayouts/smallScreens/headerMainBottomNav";
 import {
   TopNavBar,
@@ -71,6 +71,7 @@ export default component$(() => {
         />
       </div>
       <div q:slot="main">
+        <Paypal />
         <Play
           currentSection={firstSection}
           currentUnit={firstUnit}
@@ -90,6 +91,7 @@ export default component$(() => {
 });
 
 export const Paypal = component$(() => {
+  const idPaypal = useId();
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
     loadScript({ clientId: "test", currency: "USD" })
@@ -99,7 +101,7 @@ export const Paypal = component$(() => {
         }
         paypal
           .Buttons({})
-          .render("#your-container-element")
+          .render(`#${idPaypal}`)
           .then(() => {
             console.log("PayPal Buttons rendered");
           })
@@ -113,9 +115,10 @@ export const Paypal = component$(() => {
         console.error("failed to load the PayPal JS SDK script", error);
       });
   });
+  
   return (
     <>
-      <div id="your-container-element"></div>
+      <div id={`${idPaypal}`}></div>
     </>
   );
 });
