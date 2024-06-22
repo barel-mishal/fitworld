@@ -4,6 +4,7 @@
 
 export type AppRoutes =
   | "/"
+  | "/api/paypal/orders/"
   | "/auth/new-user/"
   | "/auth/signin/"
   | "/auth/signout/"
@@ -47,6 +48,7 @@ export type AppRoutes =
 
 export interface AppRouteMap {
   "/": {};
+  "/api/paypal/orders/": {};
   "/auth/new-user/": {};
   "/auth/signin/": {};
   "/auth/signout/": {};
@@ -98,6 +100,7 @@ export interface AppRouteMap {
 
 export interface AppRouteParamsFunction {
   (route: "/", params?: {}): string;
+  (route: "/api/paypal/orders/", params?: {}): string;
   (route: "/auth/new-user/", params?: {}): string;
   (route: "/auth/signin/", params?: {}): string;
   (route: "/auth/signout/", params?: {}): string;
@@ -166,6 +169,7 @@ export interface AppRouteParamsFunction {
 
 export type AppLinkProps =
   | { route: "/" }
+  | { route: "/api/paypal/orders/" }
   | { route: "/auth/new-user/" }
   | { route: "/auth/signin/" }
   | { route: "/auth/signout/" }
