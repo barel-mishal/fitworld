@@ -1,5 +1,5 @@
 import { $, type QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
-import { HeightUnit } from "~/routes/client/layout";
+import { type HeightUnit } from "~/routes/client/layout";
 import { type ReturnTypeUseLoaderUserHeights, serverInsertHeight as serverInsertHeight } from ".";
 import { type z } from "@builder.io/qwik-city";
 import { RoutesLiteral, sDate } from "~/util/types";

@@ -1,4 +1,4 @@
-import { $, QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
+import { $, type QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useSignal, useStore } from "@builder.io/qwik";
 import { WeightUnit } from "~/routes/client/layout";
 import { type ReturnTypeUseLoaderUserWeights, serverInsertWeight } from ".";
 import { RoutesLiteral, sDate } from "~/util/types";

@@ -1,7 +1,7 @@
 import { server$ } from "@builder.io/qwik-city";
 
 export const servicePaypal = server$(function () {
-    const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8888 } = this.env as any;
+    const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } = this.env as any;
     const base = "https://api-m.sandbox.paypal.com";
     const generateAccessToken = async () => {
     try {
@@ -48,7 +48,7 @@ export const servicePaypal = server$(function () {
      * Capture payment for the created order to complete the transaction.
      * @see https://developer.paypal.com/docs/api/orders/v2/#orders_capture
      */
-    const captureOrder = async (orderID: number | string) => {
+    async (orderID: number | string) => {
         const accessToken = await generateAccessToken();
         const url = `${base}/v2/checkout/orders/${orderID}/capture`;
 

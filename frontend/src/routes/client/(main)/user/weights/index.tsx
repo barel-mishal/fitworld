@@ -1,7 +1,7 @@
 import { component$, useContext } from '@builder.io/qwik';
 import { routeLoader$, server$, useNavigate } from '@builder.io/qwik-city';
 import { serverDatabaseUserSession } from '~/routes/seedDatabase';
-import { WeightRecord, WeightsWarper, contextWeightsStore } from './Context';
+import { type WeightRecord, WeightsWarper, contextWeightsStore } from './Context';
 import { WeightsUnitPopover } from './PopOverWeight';
 import { schemaWeightRecord } from './types';
 import { formatedDateToUser, getCurrentDateForInput } from '~/util/formatDate';

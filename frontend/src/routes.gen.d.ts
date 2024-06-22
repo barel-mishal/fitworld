@@ -11,6 +11,7 @@ export type AppRoutes =
   | "/auth/verify-request/"
   | "/bento/"
   | "/client/"
+  | "/client/(main)/go-pro/"
   | "/client/(main)/leaderBoard/"
   | "/client/(main)/play/"
   | "/client/(main)/play/[section]/"
@@ -55,6 +56,7 @@ export interface AppRouteMap {
   "/auth/verify-request/": {};
   "/bento/": {};
   "/client/": {};
+  "/client/(main)/go-pro/": {};
   "/client/(main)/leaderBoard/": {};
   "/client/(main)/play/": {};
   "/client/(main)/play/[section]/": { section: string };
@@ -107,6 +109,7 @@ export interface AppRouteParamsFunction {
   (route: "/auth/verify-request/", params?: {}): string;
   (route: "/bento/", params?: {}): string;
   (route: "/client/", params?: {}): string;
+  (route: "/client/(main)/go-pro/", params?: {}): string;
   (route: "/client/(main)/leaderBoard/", params?: {}): string;
   (route: "/client/(main)/play/", params?: {}): string;
   (
@@ -176,6 +179,7 @@ export type AppLinkProps =
   | { route: "/auth/verify-request/" }
   | { route: "/bento/" }
   | { route: "/client/" }
+  | { route: "/client/(main)/go-pro/" }
   | { route: "/client/(main)/leaderBoard/" }
   | { route: "/client/(main)/play/" }
   | { route: "/client/(main)/play/[section]/"; "param:section": string }
