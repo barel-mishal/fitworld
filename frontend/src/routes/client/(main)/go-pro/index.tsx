@@ -16,7 +16,11 @@ export const Paypal = component$(() => {
   const idPaypal = useId();
   // Load PayPal script when the component is visible
   useVisibleTask$(() => {
-    loadScript({ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID, currency: "USD", debug: true })
+    loadScript({ 
+      clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID, 
+      currency: "USD", 
+      debug: true 
+    })
       .then((paypal) => {
         if (!paypal || !paypal.Buttons) {
           return;
