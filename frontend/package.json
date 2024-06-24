@@ -75,7 +75,7 @@
     "install": "^0.13.0",
     "isomorphic-dompurify": "^2.12.0",
     "lru-cache": "^10.2.2",
-    "marked": "^13.0.0",
+    "marked": "^13.0.1",
     "npm": "^10.8.1",
     "openai": "^4.52.0",
     "surrealdb.js": "^0.11.1",
