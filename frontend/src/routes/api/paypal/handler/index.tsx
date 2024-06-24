@@ -1,8 +1,8 @@
 
-import { RequestHandler,  } from '@builder.io/qwik-city';
+import { type RequestHandler,  } from '@builder.io/qwik-city';
 import crypto from 'crypto';
 
-import { RequestEvent } from '@builder.io/qwik-city';
+import { type RequestEvent } from '@builder.io/qwik-city';
 
 export const onPost: RequestHandler = async ({ request }: RequestEvent) => {
   try {

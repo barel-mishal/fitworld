@@ -35,7 +35,7 @@ export const WeightsUnitPopover = component$<WeightsUnitPopoverProps>((props) =>
     return (
       <Popover.Root flip={true} gutter={8}>
         <Popover.Trigger class={cn("btn w-20 text-gray-50")} id={props.inputId}>
-          {sc.store.type?.toUpperCase()}
+          {sc.store.type.toUpperCase()}
         </Popover.Trigger>
         <Popover.Panel class="w-32 -translate-x-[23px] border border-gray-800 bg-gray-950 text-gray-50">
           <div class="grid w-auto gap-4">

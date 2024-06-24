@@ -15,6 +15,7 @@ export default component$(() => {
 export const Paypal = component$(() => {
   const idPaypal = useId();
   // Load PayPal script when the component is visible
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
     loadScript({ 
       clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID, 

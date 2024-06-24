@@ -25,7 +25,7 @@ export const onRequest: RequestHandler = async (event) => {
     throw event.redirect(302, path);
   }
   const dbUser = await serverDatabaseUserSession();
-  if (!dbUser || !dbUser.success) {
+  if (!dbUser.success) {
     // TODO: Redirect to error page
     const path: RoutesLiteral = "/client/Assessment/";
     throw event.redirect(302, path);
