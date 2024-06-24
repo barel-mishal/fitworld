@@ -14,9 +14,6 @@ export const onRequest: RequestHandler = (event) => {
   }
 };
 
-import { component$ } from '@builder.io/qwik';
-import { Link } from '@builder.io/qwik-city';
-
 export default component$(() => {
   return (
     <div class="flex flex-col min-h-screen">
@@ -42,14 +39,17 @@ export const NavHomePageUnauthenticated = component$(() => {
 export const MainHomePageUnauthenticated = component$(() => {
   return (
     <main class="flex-grow p-4 text-gray-950 dark:text-gray-50 bg-gray-50 dark:bg-gray-950">
-      <div class="max-w-4xl mx-auto">
-        <h1 class="text-3xl font-bold mb-4">Welcome to FoodIt.Health</h1>
-        <div class="flex items-center">
-          <img src="placeholder.jpg" alt="App Photo" class="w-1/3 h-auto rounded-lg shadow-lg mr-4" />
-          <div>
-            <h2 class="text-2xl font-semibold">Track your food intake effortlessly</h2>
-            <p class="mt-2">Sign in to start tracking your food intake.</p>
-          </div>
+      <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+            Welcome to FoodIt.Health
+          </h1>
+          <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 lg:mx-auto">
+            Sign in to start tracking your food intake.
+          </p>
+        </div>
+        <div class="mt-12 flex justify-center">
+          <img src="placeholder.jpg" alt="App Photo" class="rounded-lg shadow-lg w-full max-w-md" />
         </div>
       </div>
     </main>
