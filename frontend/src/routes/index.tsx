@@ -62,8 +62,23 @@ export const MainHomePageUnauthenticated = component$(() => {
 export const FooterHomePageUnauthenticated = component$(() => {
   return (
     <footer class="text-gray-950 dark:text-gray-50 p-4">
+      <div>
+        <h2>Tech Stack</h2>
+        <ul class="list-disc list-inside">
+          <li>React</li>
+          <li>Node.JS</li>
+          <li>BootStrap</li>
+          <li>SurrealDB A multi-model database</li>
+          <li>Tailwind CSS</li>
+          <li>shadcn UI</li>
+          <li>Qwik</li>
+          <li>QwikCity</li>
+        </ul>
+      </div>
       <div class="text-center">
-        <p>Footer</p>
+        <p>
+          &copy; 2021 FoodIt.Health. All rights reserved.
+        </p>
       </div>
     </footer>
   );
