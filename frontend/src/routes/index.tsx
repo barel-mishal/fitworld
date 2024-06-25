@@ -17,7 +17,7 @@ export const onRequest: RequestHandler = (event) => {
 
 export default component$(() => {
   return (
-    <div class=" bg-gray-50 dark:bg-gray-950 overflow-y-scroll flex flex-col min-h-screen">
+    <div class=" bg-gray-50 dark:bg-gray-950 overflow-y-scroll flex flex-col min-h-screen font-roundsans ">
       <NavHomePageUnauthenticated />
       <MainHomePageUnauthenticated />
       <FooterHomePageUnauthenticated />
@@ -27,11 +27,11 @@ export default component$(() => {
 
 export const NavHomePageUnauthenticated = component$(() => {
   return (
-    <header class="text-gray-950 dark:text-gray-50">
-      <nav class="flex gap-2 items-center p-3">
-        <h1>FoodIt.Health</h1>
-        <Link href="/">Home</Link>
-        <Link href="/auth/signin">Sign In</Link>
+    <header class="text-gray-950 dark:text-gray-50 px-2">
+      <nav class="flex gap-2 items-center *:p-3 text-xl ">
+        <h1 class="font-bold flex-grow">FoodIt.Health</h1>
+        <Link href="/" class="font-bold italic underline text-yellow-300">Home</Link>
+        <Link href="/auth/signin" class="font-bold italic underline text-yellow-300">Sign In</Link>
       </nav>
     </header>
   );
@@ -42,10 +42,12 @@ export const MainHomePageUnauthenticated = component$(() => {
     <main class="flex-grow p-4 text-gray-950 dark:text-gray-50 ">
       <div class="max-w-7xl lg:grid-cols-2 items-center grid mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div class="grid place-content-center">
-          <h1 class="text-center text-4xl font-extrabold text-gray-900 dark:text-white lg:text-left sm:text-5xl lg:text-6xl">
-            Welcome to FoodIt.Health
+          <h1 class="text-center [text-wrap:balance] text-4xl font-extrabold text-gray-900 dark:text-white lg:text-left sm:text-5xl lg:text-6xl">
+            Welcome to <span class="text-yellow-300">
+              FoodIt.Health
+            </span>
           </h1>
-          <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 lg:text-left text-center ">
+          <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 lg:text-left text-center [text-wrap:balance] ">
             The game that helps you eat better and live healthier.
           </p>
         </div>

@@ -78,7 +78,7 @@ export default component$(() => {
           <OverView />
           <UserWeeklyProgress />
           <button
-            onMouseDown$={() => signOut.submit({ callbackUrl: "/signedout" })}
+            onMouseDown$={() => signOut.submit({ callbackUrl: "/" })}
             class="m-2 rounded-lg border-2 border-red-700 p-3 text-red-700"
           >
             Sign Out
