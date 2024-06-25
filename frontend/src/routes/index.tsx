@@ -17,19 +17,19 @@ export const onRequest: RequestHandler = (event) => {
 
 export default component$(() => {
   return (
-    <div class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div class=" bg-gray-50 dark:bg-gray-950 overflow-y-scroll flex flex-col min-h-screen">
       <NavHomePageUnauthenticated />
       <MainHomePageUnauthenticated />
-      <FooterHomePageUnauthenticated/>
+      <FooterHomePageUnauthenticated />
     </div>
   );
 });
 
 export const NavHomePageUnauthenticated = component$(() => {
   return (
-    <header class=" text-gray-950 dark:text-gray-50">
+    <header class="text-gray-950 dark:text-gray-50">
       <nav class="flex gap-2 items-center p-3">
-        <h1 class="">FoodIt.Health</h1>
+        <h1>FoodIt.Health</h1>
         <Link href="/">Home</Link>
         <Link href="/auth/signin">Sign In</Link>
       </nav>
@@ -40,17 +40,17 @@ export const NavHomePageUnauthenticated = component$(() => {
 export const MainHomePageUnauthenticated = component$(() => {
   return (
     <main class="flex-grow p-4 text-gray-950 dark:text-gray-50 ">
-      <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+      <div class="max-w-7xl lg:grid-cols-2 items-center grid mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div class="grid place-content-center">
+          <h1 class="text-center text-4xl font-extrabold text-gray-900 dark:text-white lg:text-left sm:text-5xl lg:text-6xl">
             Welcome to FoodIt.Health
           </h1>
-          <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 lg:mx-auto">
-            Sign in to start tracking your food intake.
+          <p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-300 lg:text-left text-center ">
+            The game that helps you eat better and live healthier.
           </p>
         </div>
         <div class="mt-12 flex justify-center">
-          <CoolFoo alt="App Photo" class="rounded-lg shadow-lg max-w-md w-96 h-96"  />
+          <CoolFoo alt="App Photo" class="" style={{width: 400, height: 400}} />
         </div>
       </div>
     </main>
@@ -59,7 +59,7 @@ export const MainHomePageUnauthenticated = component$(() => {
 
 export const FooterHomePageUnauthenticated = component$(() => {
   return (
-    <footer class=" text-gray-950 dark:text-gray-50 p-4">
+    <footer class="text-gray-950 dark:text-gray-50 p-4">
       <div class="text-center">
         <p>Footer</p>
       </div>
