@@ -21,6 +21,9 @@ const { dependencies = {}, devDependencies = {} } = pkg as any as {
  */
 export default defineConfig(({ command, mode }): UserConfig => {
   return {
+    build: {
+      commonjsOptions: { transformMixedEsModules: true } // Change
+    },
     plugins: [qwikCity(), qwikVite(), tsconfigPaths(), qwikTypes()],
     // This tells Vite which dependencies to pre-build in dev mode.
     optimizeDeps: {
