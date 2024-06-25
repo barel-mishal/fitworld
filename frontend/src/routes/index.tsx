@@ -5,6 +5,7 @@ import {
   type DocumentHead,
   type RequestHandler,
 } from "@builder.io/qwik-city";
+import CoolFoo from "~/media/CoolFooPeinApple.png?jsx"
 
 export const onRequest: RequestHandler = (event) => {
   const session: Session | null = event.sharedMap.get("session");
@@ -16,7 +17,7 @@ export const onRequest: RequestHandler = (event) => {
 
 export default component$(() => {
   return (
-    <div class="flex flex-col min-h-screen">
+    <div class="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-950">
       <NavHomePageUnauthenticated />
       <MainHomePageUnauthenticated />
       <FooterHomePageUnauthenticated/>
@@ -26,7 +27,7 @@ export default component$(() => {
 
 export const NavHomePageUnauthenticated = component$(() => {
   return (
-    <header class="bg-gray-50 dark:bg-gray-950 text-gray-950 dark:text-gray-50">
+    <header class=" text-gray-950 dark:text-gray-50">
       <nav class="flex gap-2 items-center p-3">
         <h1 class="">FoodIt.Health</h1>
         <Link href="/">Home</Link>
@@ -38,7 +39,7 @@ export const NavHomePageUnauthenticated = component$(() => {
 
 export const MainHomePageUnauthenticated = component$(() => {
   return (
-    <main class="flex-grow p-4 text-gray-950 dark:text-gray-50 bg-gray-50 dark:bg-gray-950">
+    <main class="flex-grow p-4 text-gray-950 dark:text-gray-50 ">
       <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
@@ -49,7 +50,7 @@ export const MainHomePageUnauthenticated = component$(() => {
           </p>
         </div>
         <div class="mt-12 flex justify-center">
-          <img src="placeholder.jpg" alt="App Photo" class="rounded-lg shadow-lg w-full max-w-md" />
+          <CoolFoo alt="App Photo" class="rounded-lg shadow-lg max-w-md w-96 h-96"  />
         </div>
       </div>
     </main>
@@ -58,7 +59,7 @@ export const MainHomePageUnauthenticated = component$(() => {
 
 export const FooterHomePageUnauthenticated = component$(() => {
   return (
-    <footer class="bg-gray-50 dark:bg-gray-950 text-gray-950 dark:text-gray-50 p-4">
+    <footer class=" text-gray-950 dark:text-gray-50 p-4">
       <div class="text-center">
         <p>Footer</p>
       </div>
