@@ -53,6 +53,9 @@ const Play = component$<PlayProps>((props) => {
           currentUnit={props.currentUnit}
           currentSection={props.currentSection}
           parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+          
         />
         <LevelLink
           unit={1}
@@ -62,6 +65,8 @@ const Play = component$<PlayProps>((props) => {
           currentUnit={props.currentUnit}
           currentSection={props.currentSection}
           parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
         />
         <LevelLink
           unit={1}
@@ -71,6 +76,8 @@ const Play = component$<PlayProps>((props) => {
           currentUnit={props.currentUnit}
           currentSection={props.currentSection}
           parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
         />
         <div class="col-span-3 col-start-1 row-span-2 row-start-3 content-center rounded-xl">
           <button class="">
@@ -85,6 +92,8 @@ const Play = component$<PlayProps>((props) => {
           currentUnit={props.currentUnit}
           currentSection={props.currentSection}
           parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
         />
         <LevelLink
           unit={1}
@@ -94,6 +103,8 @@ const Play = component$<PlayProps>((props) => {
           currentUnit={props.currentUnit}
           currentSection={props.currentSection}
           parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
         />
         <div class="col-span-3 col-start-8 row-span-2 row-start-5 content-center rounded-xl">
           <button class="">
@@ -108,271 +119,273 @@ const Play = component$<PlayProps>((props) => {
           currentUnit={props.currentUnit}
           currentSection={props.currentSection}
           parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
         />
       </section>
-      <section class="grid grid-cols-9 gap-3 pb-14">
+      <section class="grid grid-cols-9 gap-5 pb-14">
         <TitleGame
-          params={`section 1 unit 1 level 2`}
+          params={`section 1 unit 2 level 1`}
           title="SECTION 1 UNIT 2"
-          subTitle="Macronutrients and Health"
-          element={{
-            class:
-              "p-4 bg-purple-600  rounded-xl col-span-9 border-b-4 border-purple-900 sticky top-0",
-          }}
-        />
-        <div class="col-span-4 col-start-3 row-span-1">
-          <AppLink
-            route="/client/(main)/play/[section]/[unit]/"
-            param:unit={"2"}
-            param:section="1"
-            class={cn(
-              "grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b",
-              props.currentUnit >= 5 && props.currentSection >= 1
-                ? "border-green-900 bg-green-600"
-                : "border-gray-800 bg-gray-600",
-            )}
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </AppLink>
-        </div>
-        <div class="col-span-4 col-start-3 row-span-1">
-          <AppLink
-            route="/client/(main)/play/[section]/[unit]/[level]/"
-            param:unit={"2"}
-            param:section="1"
-            param:level="2"
-            class={cn(
-              "grid h-16 w-full place-content-center rounded-full border-b-4 p-4 text-gray-50 transition-all ease-in-out active:border-b",
-              props.currentUnit >= 5 && props.currentSection >= 1
-                ? "border-green-900 bg-green-600"
-                : "border-gray-800 bg-gray-600",
-            )}
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </AppLink>
-        </div>
-        <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Macronutrients and Health", 1, 2, 2)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Macronutrients and Health", 1, 2, 3)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-3 col-start-1 row-span-2 row-start-3 content-center rounded-xl">
-          <button class="">
-            <PhFooPeinapple class="h-20 w-20" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-3 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Macronutrients and Health", 1, 2, 4)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-3 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Macronutrients and Health", 1, 2, 5)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-3 col-start-8 row-span-2 row-start-5 content-center rounded-xl">
-          <button class="">
-            <PhFooPeinapple class="h-20 w-20" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Macronutrients and Health", 1, 2, 6)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-      </section>
-      <section class="grid grid-cols-9 gap-3 pb-14">
-        <TitleGame
-          params={`section 1 unit 1 level 3`}
-          title="SECTION 1 UNIT 3"
-          subTitle="Build your training program"
-          element={{
-            class:
-              "p-4 bg-indigo-600  rounded-xl col-span-9 border-b-4 border-indigo-900 sticky top-0",
-          }}
-        />
-        <div class="col-span-4 col-start-3 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Build your training program", 1, 3, 1)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-indigo-900 bg-indigo-600 p-4 text-indigo-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Build your training program", 1, 3, 2)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Build your training program", 1, 3, 3)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-3 col-start-1 row-span-2 row-start-3 content-center rounded-xl">
-          <button class="">
-            <PhFooPeinapple class="h-20 w-20" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-3 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Build your training program", 1, 3, 4)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-3 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Build your training program", 1, 3, 5)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-3 col-start-8 row-span-2 row-start-5 content-center rounded-xl">
-          <button class="">
-            <PhFooPeinapple class="h-20 w-20" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () => {
-              // await handleStepChange("Build your training program", 1, 3, 6)
-            }}
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-      </section>
-      <section class="grid grid-cols-9 gap-3 pb-14">
-        <TitleGame
-          params={`section 1 unit 1 level 4`}
-          title="SECTION 1 UNIT 4"
           subTitle="The Importance Of Nutrition"
           element={{
             class:
-              "p-4 bg-rose-600  rounded-xl col-span-9 border-b-4 border-rose-900 sticky top-0",
+              "p-4 bg-purple-600 rounded-xl col-span-9 border-b-4 border-purple-900 sticky top-0",
           }}
         />
-        <div class="col-span-4 col-start-3 row-span-1">
-          <button
-            onClick$={async () =>
-              await handleStepChange("The Importance Of Nutrition", 1, 4, 1)
-            }
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-rose-900 bg-rose-600 p-4 text-rose-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () =>
-              await handleStepChange("The Importance Of Nutrition", 1, 4, 2)
-            }
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () =>
-              await handleStepChange("The Importance Of Nutrition", 1, 4, 3)
-            }
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
+        <LevelLink
+          unit={2}
+          section={1}
+          level={1}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <LevelLink
+          unit={2}
+          section={1}
+          level={2}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <LevelLink
+          unit={2}
+          section={1}
+          level={3}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
         <div class="col-span-3 col-start-1 row-span-2 row-start-3 content-center rounded-xl">
           <button class="">
             <PhFooPeinapple class="h-20 w-20" />
           </button>
         </div>
-        <div class="col-span-4 col-start-3 row-span-1">
-          <button
-            onClick$={async () =>
-              await handleStepChange("The Importance Of Nutrition", 1, 4, 4)
-            }
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
-        <div class="col-span-4 col-start-3 row-span-1">
-          <button
-            onClick$={async () =>
-              await handleStepChange("The Importance Of Nutrition", 1, 4, 5)
-            }
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
-          </button>
-        </div>
+        <LevelLink
+          unit={2}
+          section={1}
+          level={4}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <LevelLink
+          unit={2}
+          section={1}
+          level={5}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+
+        />
         <div class="col-span-3 col-start-8 row-span-2 row-start-5 content-center rounded-xl">
           <button class="">
             <PhFooPeinapple class="h-20 w-20" />
           </button>
         </div>
-        <div class="col-span-4 col-start-5 row-span-1">
-          <button
-            onClick$={async () =>
-              await handleStepChange("The Importance Of Nutrition", 1, 4, 6)
-            }
-            class="grid h-16 w-full place-content-center rounded-full border-b-4 border-gray-800 bg-gray-600 p-4 text-gray-50"
-          >
-            <PhStar class="h-8 w-8 fill-current" />
+        <LevelLink
+          unit={2}
+          section={1}
+          level={6}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+      </section>
+      <section class="grid grid-cols-9 gap-5 pb-14">
+        <TitleGame
+          params={`section 1 unit 1 level 1`}
+          title="SECTION 1 UNIT 1"
+          subTitle="The Importance Of Nutrition"
+          element={{
+            class:
+              "p-4 bg-green-600 rounded-xl col-span-9 border-b-4 border-green-900 sticky top-0",
+          }}
+        />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={1}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+          
+        />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={2}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={3}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <div class="col-span-3 col-start-1 row-span-2 row-start-3 content-center rounded-xl">
+          <button class="">
+            <PhFooPeinapple class="h-20 w-20" />
           </button>
         </div>
+        <LevelLink
+          unit={1}
+          section={1}
+          level={4}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <LevelLink
+          unit={1}
+          section={1}
+          level={5}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <div class="col-span-3 col-start-8 row-span-2 row-start-5 content-center rounded-xl">
+          <button class="">
+            <PhFooPeinapple class="h-20 w-20" />
+          </button>
+        </div>
+        <LevelLink
+          unit={1}
+          section={1}
+          level={6}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+      </section>
+      <section class="grid grid-cols-9 gap-5 pb-14">
+        <TitleGame
+          params={`section 1 unit 2 level 1`}
+          title="SECTION 1 UNIT 2"
+          subTitle="The Importance Of Nutrition"
+          element={{
+            class:
+              "p-4 bg-purple-600 rounded-xl col-span-9 border-b-4 border-purple-900 sticky top-0",
+          }}
+        />
+        <LevelLink
+          unit={2}
+          section={1}
+          level={1}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <LevelLink
+          unit={2}
+          section={1}
+          level={2}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <LevelLink
+          unit={2}
+          section={1}
+          level={3}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <div class="col-span-3 col-start-1 row-span-2 row-start-3 content-center rounded-xl">
+          <button class="">
+            <PhFooPeinapple class="h-20 w-20" />
+          </button>
+        </div>
+        <LevelLink
+          unit={2}
+          section={1}
+          level={4}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
+        <LevelLink
+          unit={2}
+          section={1}
+          level={5}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-3 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+
+        />
+        <div class="col-span-3 col-start-8 row-span-2 row-start-5 content-center rounded-xl">
+          <button class="">
+            <PhFooPeinapple class="h-20 w-20" />
+          </button>
+        </div>
+        <LevelLink
+          unit={2}
+          section={1}
+          level={6}
+          currentLevel={props.currentLevel}
+          currentUnit={props.currentUnit}
+          currentSection={props.currentSection}
+          parentClass="col-span-4 col-start-5 row-span-1"
+          activeColor="border-green-900 bg-green-600"
+          inactiveColor="border-gray-800 bg-gray-600"
+        />
       </section>
 
       <section class="rounded-t bg-gray-800">
@@ -432,6 +445,8 @@ interface LevelLinkProps extends PlayProps {
   section: number;
   parentClass: string;
   level: number;
+  activeColor: string;
+  inactiveColor: string;
 }
 
 export const LevelLink = component$<LevelLinkProps>((props) => {
@@ -447,8 +462,8 @@ export const LevelLink = component$<LevelLinkProps>((props) => {
           props.currentLevel+1 >= props.level &&
             props.currentUnit+1 >= props.unit &&
             props.currentSection+1 >= props.section
-            ? "border-green-900 bg-green-600"
-            : "border-gray-800 bg-gray-600",
+            ? props.activeColor
+            : props.inactiveColor,
         )}
       >
         <PhStar class="h-8 w-8 fill-current" />
