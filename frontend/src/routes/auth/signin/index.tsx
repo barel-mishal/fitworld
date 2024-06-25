@@ -11,7 +11,7 @@ export default component$(() => {
   const route: RoutesLiteral = "/client/play/" as "/client/(main)/play/";
   return (
 
-    <main class="w-full grid place-content-center bg-cover bg-center relative h-screen">
+    <main class="w-full grid place-content-center bg-cover bg-center relative h-screen font-roundsans font-bold">
       <div class="absolute inset-0 bg-gradient-to-b from-gray-800 to-transparent opacity-75"></div>
       <div class="relative  z-10 bg-white dark:bg-gray-900 p-8 rounded-lg shadow-2xl w-full max-w-md md:max-w-lg lg:max-w-xl transform transition-all duration-300 ease-in-out hover:scale-105">
         <h1 class="text-4xl font-extrabold text-center mb-5 dark:text-yellow-200 text-sky-950">

@@ -59,7 +59,7 @@ export default component$(() => {
   return (
     <div
     class={cn(
-      "grid h-screen grid-rows-[1fr,60px] bg-gray-950 p-1 text-gray-50",
+      "grid h-screen grid-rows-[1fr,60px] bg-gray-950 p-1 text-gray-50 ",
     )}
   >
     <div class={cn("overflow-y-auto bg-gray-950")}>

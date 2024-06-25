@@ -61,7 +61,7 @@ export const MainHomePageUnauthenticated = component$(() => {
 
 export const FooterHomePageUnauthenticated = component$(() => {
   return (
-    <footer class="text-gray-950 dark:text-gray-50 p-4">
+    <footer class="text-gray-950 dark:text-gray-50 p-4 grid gap-5">
       <div>
         <h2>Tech Stack</h2>
         <ul class="list-disc list-inside">
