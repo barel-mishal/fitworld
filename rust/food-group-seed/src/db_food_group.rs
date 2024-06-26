@@ -80,16 +80,18 @@ pub struct IngredientMeasurements {
     pub out: Thing,
     weight: f32,
     unit: String,
+    hebrew_unit: String,
 }
 
 impl IngredientMeasurements {
-    pub fn new(r#in: Thing, out: Thing, weight: f32, unit: String) -> Self {
+    pub fn new(r#in: Thing, out: Thing, weight: f32, unit: String, hebrew_unit: String) -> Self {
         Self {
             id: None,
             r#in,
             out,
             weight,
             unit,
+            hebrew_unit,
         }
     }
 }

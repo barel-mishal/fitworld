@@ -20,6 +20,7 @@ export type AppRoutes =
   | "/client/(main)/play/[section]/[unit]/finish/"
   | "/client/(main)/track/"
   | "/client/(main)/track/finish/"
+  | "/client/(main)/track/finish/commit/"
   | "/client/(main)/user/"
   | "/client/(main)/user/heights/"
   | "/client/(main)/user/heights/finish/"
@@ -72,6 +73,7 @@ export interface AppRouteMap {
   };
   "/client/(main)/track/": {};
   "/client/(main)/track/finish/": {};
+  "/client/(main)/track/finish/commit/": {};
   "/client/(main)/user/": {};
   "/client/(main)/user/heights/": {};
   "/client/(main)/user/heights/finish/": {};
@@ -130,6 +132,7 @@ export interface AppRouteParamsFunction {
   ): string;
   (route: "/client/(main)/track/", params?: {}): string;
   (route: "/client/(main)/track/finish/", params?: {}): string;
+  (route: "/client/(main)/track/finish/commit/", params?: {}): string;
   (route: "/client/(main)/user/", params?: {}): string;
   (route: "/client/(main)/user/heights/", params?: {}): string;
   (route: "/client/(main)/user/heights/finish/", params?: {}): string;
@@ -201,6 +204,7 @@ export type AppLinkProps =
     }
   | { route: "/client/(main)/track/" }
   | { route: "/client/(main)/track/finish/" }
+  | { route: "/client/(main)/track/finish/commit/" }
   | { route: "/client/(main)/user/" }
   | { route: "/client/(main)/user/heights/" }
   | { route: "/client/(main)/user/heights/finish/" }

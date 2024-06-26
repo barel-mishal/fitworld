@@ -1,9 +1,12 @@
 import { $, component$ } from "@builder.io/qwik";
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
+import { type RoutesLiteral } from "~/util/types";
 
 export default component$(() => {
   const nav = useNavigate();
   const loc = useLocation();
+
+  const ROUTE_COMMIT: RoutesLiteral = "/client/(main)/track/finish/commit/"
   const onClickEditSelections = $(() => {
     const urlPathname = new URLSearchParams(loc.url.pathname);
     nav(`/construction?prev=${urlPathname.toString()}`, {
@@ -12,7 +15,7 @@ export default component$(() => {
     });
   });
   const onClickCommitEating = $(() => {
-    nav("/client/play/", { replaceState: true, forceReload: true });
+    nav(ROUTE_COMMIT, { replaceState: true, forceReload: true });
   });
   return (
     <div class="grid min-h-96 grid-rows-2 gap-3 p-4">

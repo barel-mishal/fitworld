@@ -1,10 +1,8 @@
 use std::{collections::HashMap, error::Error, str::FromStr};
 
 use serde::{Deserialize, Serialize};
-use surrealdb::{engine::remote::ws::Client, method::Query, sql::Thing, Surreal};
+use surrealdb::{engine::remote::ws::Client, sql::Thing, Surreal};
 use crate::db_food_group::{FoodGroup, Ingredient as DbIngredient, Measurements as DbMeasurements, IngredientMeasurements as DbIngredientMeasurements};
-
-
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct FoodGroupData {
@@ -16,17 +14,17 @@ impl FoodGroupData {
     pub fn db_hydrate_food_group(&self) -> Vec<FoodGroup> {
         let data = &self.groups;
         data.iter().map(|x| {
-            let name: String = insert_spaces_before_uppercase_letters(x.key.clone());
+            let name: String = split_camel_case_with_spaces(x.key.clone());
             let id = format!("Food_Group:{}", x.key.clone());
             FoodGroup::new(
                 id,
                 name,
-                x.name.clone(),
-                x.info.clone(),
-                x.calories,
-                x.carbs,
-                x.protein,
-                x.fats,
+                x.value.name.clone(),
+                x.value.info.clone(),
+                x.value.calories,
+                x.value.carbs,
+                x.value.protein,
+                x.value.fats,
             )
         }).collect()
     }
@@ -94,11 +92,13 @@ impl FoodGroupData {
                                 let out = Self::create_thing_from_english_name_for_measurment(x.english_name.clone()).expect(format!("Failed to create Thing from {}", x.english_name).as_str());
                                 let weight = x.weight;
                                 let unit = x.english_unit_weight.clone();
+                                let hebrew_unit = x.unit_weight.clone();
                                 let food_measurement = DbIngredientMeasurements::new(
                                     id.clone().unwrap(), 
                                     out, 
                                     weight, 
                                     unit, 
+                                    hebrew_unit
                                 );
                                 let query = format!("RELATE {}->ingredient_measurements->{} CONTENT {}", food_measurement.r#in, food_measurement.out, serde_json::to_string(&food_measurement).unwrap());
                                 println!("query: {}", query);
@@ -111,9 +111,9 @@ impl FoodGroupData {
                 }
             }
         }
-        
         Ok(())
     }
+    
     pub fn db_hydrate_food_measurement<F>(&self, get_ingredient_record: F, get_measurment_record: F) -> Vec<(Thing, DbIngredientMeasurements)> 
     where F: Fn(&str) -> Thing
     {
@@ -124,6 +124,7 @@ impl FoodGroupData {
             let measurement: Vec<_> = x.measurements.iter().map(|x| {
                 let weight = x.weight;
                 let unit_name: String = x.unit_weight.clone();
+                let hebrew_unit: String = x.english_unit_weight.clone();
                 (
                     ingredient_record.clone(), 
                     DbIngredientMeasurements::new(
@@ -131,6 +132,7 @@ impl FoodGroupData {
                         measurement_record.clone(),
                         weight,
                         unit_name,
+                        hebrew_unit
                     )
                 )
             }).collect();
@@ -155,10 +157,9 @@ struct Data {
     ingredients: Vec<Ingredient>,
 }
 
+
 #[derive(Serialize, Deserialize, Debug)]
-struct Group {
-    #[serde(default)]
-    name: String,
+struct GroupValue {
     #[serde(default)]
     calories: f32,
     #[serde(default)]
@@ -168,15 +169,22 @@ struct Group {
     #[serde(default)]
     protein: f32,
     #[serde(default)]
-    units: Vec<UnitGroup>,
+    comment: HashMap<String, serde_json::Value>,
+    #[serde(default, rename = "foodGroupNumber")]
+    food_group_number: Vec<i32>,
     #[serde(default)]
     info: Vec<String>,
     #[serde(default)]
-    comment: HashMap<String, serde_json::Value>,
-    #[serde(rename = "foodGroupNumber", default)]
-    food_group_number: Vec<i32>,
+    name: String,
     #[serde(default)]
+    units: Vec<UnitGroup>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Group {
+    amount: f32,
     key: String,
+    value: GroupValue,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
@@ -231,11 +239,7 @@ pub struct Measurement {
     weight: f32,
 }
 
-
-
-
-
-fn insert_spaces_before_uppercase_letters(key: String) -> String {
+fn split_camel_case_with_spaces(key: String) -> String {
     key.chars()
         .fold((String::new(), false), |(mut result, mut prev_is_lowercase), c| {
             if c.is_uppercase() && prev_is_lowercase {
@@ -249,13 +253,4 @@ fn insert_spaces_before_uppercase_letters(key: String) -> String {
 
 pub fn create_measurement_id(name: &str) -> String {
     format!("Measurements:⟨{}⟩", name)
-}
-pub fn create_ingredient_id(name: &str) -> String {
-    format!("Ingredient:{}", name)
-}
-pub fn create_ingredient_measurement_id(name: &str) -> String {
-    format!("Ingredient_Measurements:⟨{}⟩", name)
-}
-pub fn create_food_group_id(name: &str) -> String {
-    format!("Food_Group:{}", name)
 }
