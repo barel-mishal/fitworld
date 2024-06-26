@@ -6,7 +6,7 @@ export default component$(() => {
   const nav = useNavigate();
   const loc = useLocation();
 
-  const ROUTE_COMMIT: RoutesLiteral = "/client/(main)/track/finish/commit/"
+  const ROUTE_COMMIT: RoutesLiteral = "/client/track/finish/commit/" as "/client/(main)/track/finish/commit/";
   const onClickEditSelections = $(() => {
     const urlPathname = new URLSearchParams(loc.url.pathname);
     nav(`/construction?prev=${urlPathname.toString()}`, {
