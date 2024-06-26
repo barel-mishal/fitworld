@@ -1,6 +1,5 @@
-import { type PropsOf, component$, $ } from "@builder.io/qwik";
+import { type PropsOf, component$ } from "@builder.io/qwik";
 import { PhFooPeinapple, PhStar } from "../icons/icons";
-import { serverUserAddStep } from "~/routes/api/service_game/serviceUserAddStep";
 import { AppLink } from "~/routes.config";
 import { type StepKey } from "~/routes/api/service_game/serviceGPTResult";
 import { cn } from "@qwik-ui/utils";
@@ -12,27 +11,7 @@ interface PlayProps {
 }
 
 const Play = component$<PlayProps>((props) => {
-  const handleStepChange = $(
-    async (
-      titleSection: string,
-      unit: number,
-      section: number,
-      step: number,
-    ) => {
-      try {
-        const result = await serverUserAddStep({
-          index: 0,
-          unit,
-          section,
-          step,
-          titleSection,
-        });
-        console.log({ result });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  );
+
   return (
     <div class="flex flex-col">
       <section class="grid grid-cols-9 gap-5 pb-14">
