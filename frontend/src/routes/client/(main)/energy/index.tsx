@@ -62,29 +62,6 @@ export default component$(() => {
               </p>
             </div>
           </div>
-          <div class="grid grid-cols-[auto,1fr] relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
-            <PhDNA class="fill-green-500 self-start h-8 w-8" />
-            <div class="flex flex-col gap-1   ">
-              <p class="text ">
-                2
-              </p>
-              <p class="text-xs [text-wrap:balance]">
-                Partial Complietions
-              </p>
-            </div>
-              <p class="absolute -top-2 -right-2 bg-yellow-600 px-2 py-1 text-xs rounded-full ">Good</p>
-          </div>
-          <div class="grid grid-cols-[auto,1fr] relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
-            <PhDNA class="fill-green-500 self-start h-8 w-8" />
-            <div class="flex flex-col gap-1   ">
-              <p class="text ">
-                2
-              </p>
-              <p class="text-xs [text-wrap:balance]">
-                Days Complietion
-              </p>
-            </div>
-          </div>
           <div class="grid h-96 grid-cols-[auto,1fr] col-span-2 relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
             <PhDNA class="fill-green-500 self-start h-8 w-8" />
             <div class="flex flex-col gap-1   ">
