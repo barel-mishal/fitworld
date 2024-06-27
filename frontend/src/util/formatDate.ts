@@ -29,3 +29,8 @@ export function formatedDateToUser(date: string): string {
   const [year, month, day] = date.split('-');
   return `${day}/${month}/${year}`;
 }
+
+export function formatedMonthNameAndYear(date: Date): string {
+  
+  return `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
+}
