@@ -34,25 +34,10 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
   return (
     <ul class="grid grid-cols-4">
       <li class="">
-      <Modal.Root closeOnBackdropClick={true}>
-          <Modal.Trigger class="modal-trigger grid grid-cols-2 items-center slide-down">
+          <AppLink route="/client/(main)/energy/" class="modal-trigger grid grid-cols-2 items-center slide-down">
               <PhLightning class="h-8 fill-yellow-500" />
               <p class="text-xs">{props.streak}</p>
-          </Modal.Trigger>
-          <Modal.Panel
-            class={cn(
-              `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 fade-in fade-out text-gray-200
-              shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down 
-              backdrop:opacity-90 
-              `,
-            )}
-          >
-            <div class="grid">
-            <Modal.Title>Hello 1</Modal.Title>
-            <Modal.Close class="">Close</Modal.Close>
-          </div>
-        </Modal.Panel>
-      </Modal.Root>
+          </AppLink>
       </li>
       <li class="">
       <Modal.Root closeOnBackdropClick={true}>
@@ -97,25 +82,10 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
       </Modal.Root>
       </li>
       <li class="">
-      <Modal.Root closeOnBackdropClick={true}>
-        <Modal.Trigger class="grid grid-cols-2 items-center slide-down">
+        <AppLink route="/client/(main)/go-pro/"  class="grid grid-cols-2 items-center slide-down">
           <PhDNA class="h-8 fill-green-500" />
           <p class="text-xs">{props.dna}</p>
-        </Modal.Trigger>
-        <Modal.Panel
-          class={cn(
-            `fixed inset-x-0 top-0 h-1/2 w-full bg-gray-950 fade-in fade-out fade-in fade-out text-gray-200
-            shadow-lg p-4 m-0 backdrop:bg-slate-400/70 backdrop-blur-sm slide-down 
-            backdrop:opacity-90 
-            `,
-          )}
-        >
-          <div class="grid">
-            <Modal.Title>Hello 1</Modal.Title>
-            <Modal.Close class="">Close</Modal.Close>
-          </div>
-        </Modal.Panel>
-      </Modal.Root>
+        </AppLink >
       </li>
     </ul>
   );
