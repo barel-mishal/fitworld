@@ -1,5 +1,6 @@
 import { component$, useContext } from "@builder.io/qwik";
 import { contextCalender } from "../WarperContext";
+import { cn } from "@qwik-ui/utils";
 
 
 
@@ -40,7 +41,7 @@ export default component$<CalnderProps>(() => {
     }, [] as Date[][]).map((week, i) => (
       <tr key={i}>
         {week.map((day, j) => (
-          <td key={j} class="text-xs text-center p-2">{day.getDate()}</td>
+          <td key={j} class={cn("text-xs text-center p-2", cx.store.now.getMonth() !== day.getMonth() && "text-gray-600")}>{day.getDate()}</td>
         ))}
       </tr>
     ))}

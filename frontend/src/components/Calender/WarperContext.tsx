@@ -10,7 +10,8 @@ interface UseCalenderProps {
     viewRange?: {
         min: Date;
         max: Date;
-    }
+    };
+    now?: Date;
 }
 
 export const useCalendar = (props: UseCalenderProps) => {
@@ -20,7 +21,7 @@ export const useCalendar = (props: UseCalenderProps) => {
             max: new Date(),
         },
         view: "days" as DatesView, 
-        now: new Date(),
+        now: props.now || new Date(),
         selected: props.selected,
     });
 
