@@ -1,7 +1,8 @@
 import { $, component$,useOnDocument, useSignal, useStore} from '@builder.io/qwik';
-import { PhArrowBendUpLeft, PhClose, PhDNA, PhLightning } from '~/components/icons/icons';
+import { PhClose, PhDNA, PhLightning } from '~/components/icons/icons';
 import { cn } from '@qwik-ui/utils';
 import { formatedMonthNameAndYear } from '~/util/formatDate';
+import { Calender } from '~/components/Calender';
 
 export default component$(() => {
   const num = useStore({
@@ -31,12 +32,14 @@ export default component$(() => {
             <button class="btn bg-green-500 border-green-800 h-12 rounded-lg">Join Challenge</button>
           </div>
         </div>
+        {/* calender */}
+        <Calender.Root>
         <div class="grid grid-cols-[1fr,auto,auto] gap-8 pr-3">
           <h4 class=" self-start text-2xl line-clamp-6">
             {formatedMonthNameAndYear(num.now)}
           </h4>
-          <button><PhArrowBendUpLeft class="fill-current" /></button>
-          <button><PhArrowBendUpLeft class="rotate-180 fill-current" /></button>
+          <Calender.TriggerSkipMonths/>
+
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div class="grid grid-cols-[auto,1fr] relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
@@ -62,22 +65,17 @@ export default component$(() => {
               </p>
             </div>
           </div>
-          <div class="grid h-96 grid-cols-[auto,1fr] col-span-2 relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
-            <PhDNA class="fill-green-500 self-start h-8 w-8" />
-            <div class="flex flex-col gap-1   ">
-              <p class="text ">
-                2
-              </p>
-              <p class="text-xs [text-wrap:balance]">
-                Days Complietion
-              </p>
-            </div>
+          <div class="grid h-96 col-span-2 relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
+            <Calender.TableCalender />
           </div>
         </div>
+        </Calender.Root>
       </section>
     </div>
   );
 });
+
+
 
 
 export const useScrollPass = (pass: number) => {
@@ -106,3 +104,5 @@ export const SectionHeader = component$(() => {
    <h4 class="mx-auto">Energy Streak</h4>
  </section>
 });
+
+
