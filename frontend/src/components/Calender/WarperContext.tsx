@@ -1,5 +1,5 @@
 import { $, Slot, component$, createContextId, useComputed$, useContextProvider, useStore } from "@builder.io/qwik";
-import { type DatesView, getDateRange, getViewRange, getPreviousMonth, getNextMonth } from "~/util/getDates";
+import { type DatesView, getDateRange, getPreviousMonth, getNextMonth, getViewRange } from "~/util/getDates";
 
 
 
@@ -7,34 +7,29 @@ import { type DatesView, getDateRange, getViewRange, getPreviousMonth, getNextMo
 interface UseCalenderProps {
     test: string;
     selected?: Date;
-    viewRange?: {
-        min: Date;
-        max: Date;
-    };
+    currentView?: Date;
     now?: Date;
 }
 
 export const useCalendar = (props: UseCalenderProps) => {
     const store = useStore({
-        viewRange: props.viewRange || {
-            min: new Date(),
-            max: new Date(),
-        },
         view: "days" as DatesView, 
         now: props.now || new Date(),
         selected: props.selected,
+        currentView: props.currentView || new Date(),
     });
 
     const moveBackward = $(() => {
         
-        store.viewRange = getViewRange(getPreviousMonth(store.viewRange.min));
+        store.currentView = getPreviousMonth(store.currentView);
     });
     const moveForward = $(() => {
-        store.viewRange = getViewRange(getNextMonth(store.viewRange.max));
+        store.currentView = getNextMonth(store.currentView);
     });
 
     const genrateCalender = $(() => {
-        return getDateRange(store.viewRange.min, store.viewRange.max, store.view);
+        const range = getViewRange(store.currentView);
+        return getDateRange(range.min, range.max, store.view);
     });
 
     const computedCalender = useComputed$(async () => await genrateCalender());
@@ -59,11 +54,10 @@ export const RootCalender = component$(() => {
 
     // Example usage:
     const currentDate = new Date();
-    const viewRange = getViewRange(currentDate);
 
     const calendar = useCalendar({
     test: "test",
-    viewRange: viewRange
+    currentView: currentDate,
     });
 
     useContextProvider(contextCalender, calendar);
