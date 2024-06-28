@@ -1,42 +1,61 @@
-import { $, Slot, component$, createContextId, useContextProvider, useStore } from "@builder.io/qwik";
+import { $, Slot, component$, createContextId, useComputed$, useContextProvider, useStore } from "@builder.io/qwik";
+import { type DatesView, getDateRange, getViewRange } from "~/util/getDates";
 
 
 
 
 interface UseCalenderProps {
     test: string;
+    selected?: Date;
+    viewRange?: {
+        min: Date;
+        max: Date;
+    }
 }
 
-export const useCalender = (props: UseCalenderProps) => {
+export const useCalendar = (props: UseCalenderProps) => {
     const store = useStore({
-        count: 0,
+        viewRange: props.viewRange || {
+            min: new Date(),
+            max: new Date(),
+        },
+        view: "days" as DatesView, 
+        now: new Date(),
+        selected: props.selected,
     });
 
-    const onClickIncrement = $(() => {
-        store.count++;
-    }),
-    onClickDecrement = $(() => {
-        store.count--;
+    const genrateCalender = $(() => {
+        return getDateRange(store.viewRange.min, store.viewRange.max, store.view);
     });
+
+    const computedCalender = useComputed$(async () => await genrateCalender());
 
   return {
     props,
     store,
-    onClickIncrement,
-    onClickDecrement,
+    genrateCalender,    
+    computedCalender,
   }
 };
 
 
-export type CalenderHook = ReturnType<typeof useCalender>;
+export type CalenderHook = ReturnType<typeof useCalendar>;
 
 export const contextCalender = createContextId<CalenderHook>("Calender");
 
 
 export const RootCalender = component$(() => {
 
-    const calender = useCalender({test: "test"});
+    // Example usage:
+    const currentDate = new Date();
+    const viewRange = getViewRange(currentDate);
 
-    useContextProvider(contextCalender, calender);
+    const calendar = useCalendar({
+    test: "test",
+    viewRange: viewRange
+    });
+
+    useContextProvider(contextCalender, calendar);
     return <Slot />;
 });
+

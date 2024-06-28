@@ -11,7 +11,7 @@ export default component$<CalnderProps>(() => {
 
   const cx = useContext(contextCalender);
 
-  console.log(cx);
+  console.log(cx.computedCalender.value.length);
 
   return (
     <table class="w-full ">
@@ -27,51 +27,23 @@ export default component$<CalnderProps>(() => {
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="text-xs text-center p-2">1</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
+
+    {cx.computedCalender.value.reduce((prev, curr, index) => {
+      if (index % 7 === 0) {
+        // Start a new week
+        return prev.concat([[curr]]);
+      } else {
+        // Add to the current week
+        prev[prev.length - 1] = prev[prev.length - 1].concat(curr);
+        return prev;
+      }
+    }, [] as Date[][]).map((week, i) => (
+      <tr key={i}>
+        {week.map((day, j) => (
+          <td key={j} class="text-xs text-center p-2">{day.getDate()}</td>
+        ))}
       </tr>
-      <tr>
-        <td class="text-xs text-center p-2">1</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-      </tr>
-      <tr>
-        <td class="text-xs text-center p-2">1</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-      </tr>
-      <tr>
-        <td class="text-xs text-center p-2">1</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-      </tr>
-      <tr>
-        <td class="text-xs text-center p-2">1</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-        <td class="text-xs text-center p-2">22</td>
-      </tr>
+    ))}
     </tbody>
   </table>
   )
