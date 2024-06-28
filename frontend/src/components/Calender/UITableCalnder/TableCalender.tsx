@@ -1,6 +1,7 @@
 import { component$, useContext } from "@builder.io/qwik";
 import { contextCalender } from "../WarperContext";
 import { cn } from "@qwik-ui/utils";
+import { reduceToWeeks } from "~/util/getDates";
 
 
 
@@ -29,16 +30,7 @@ export default component$<CalnderProps>(() => {
     </thead>
     <tbody>
 
-    {cx.computedCalender.value.reduce((prev, curr, index) => {
-      if (index % 7 === 0) {
-        // Start a new week
-        return prev.concat([[curr]]);
-      } else {
-        // Add to the current week
-        prev[prev.length - 1] = prev[prev.length - 1].concat(curr);
-        return prev;
-      }
-    }, [] as Date[][]).map((week, i) => (
+    {reduceToWeeks(cx.computedCalender.value).map((week, i) => (
       <tr key={i}>
         {week.map((day, j) => (
           <td key={j} class={cn("text-xs text-center p-2", cx.store.now.getMonth() !== day.getMonth() && "text-gray-600")}>{day.getDate()}</td>

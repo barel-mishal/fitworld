@@ -52,4 +52,17 @@ export function getViewRange(currentDate: Date): ViewRange {
     const min = startOfWeek;
   
     return { min, max };
+};
+
+export function reduceToWeeks(dates: Date[]): Date[][] {
+    return dates.reduce((prev, curr, index) => {
+      if (index % 7 === 0) {
+        // Start a new week
+        return prev.concat([[curr]]);
+      } else {
+        // Add to the current week
+        prev[prev.length - 1] = prev[prev.length - 1].concat(curr);
+        return prev;
+      }
+    }, [] as Date[][]);
   }
