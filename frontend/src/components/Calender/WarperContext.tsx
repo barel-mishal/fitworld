@@ -1,5 +1,5 @@
 import { $, Slot, component$, createContextId, useComputed$, useContextProvider, useStore } from "@builder.io/qwik";
-import { type DatesView, getDateRange, getViewRange } from "~/util/getDates";
+import { type DatesView, getDateRange, getViewRange, getPreviousMonth, getNextMonth } from "~/util/getDates";
 
 
 
@@ -25,6 +25,14 @@ export const useCalendar = (props: UseCalenderProps) => {
         selected: props.selected,
     });
 
+    const moveBackward = $(() => {
+        
+        store.viewRange = getViewRange(getPreviousMonth(store.viewRange.min));
+    });
+    const moveForward = $(() => {
+        store.viewRange = getViewRange(getNextMonth(store.viewRange.max));
+    });
+
     const genrateCalender = $(() => {
         return getDateRange(store.viewRange.min, store.viewRange.max, store.view);
     });
@@ -36,6 +44,8 @@ export const useCalendar = (props: UseCalenderProps) => {
     store,
     genrateCalender,    
     computedCalender,
+    moveBackward,
+    moveForward,
   }
 };
 

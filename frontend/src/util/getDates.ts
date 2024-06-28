@@ -54,6 +54,13 @@ export function getViewRange(currentDate: Date): ViewRange {
     return { min, max };
 };
 
+export function getNextMonth(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 1); 
+  }
+export function getPreviousMonth(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth() - 1, 1); 
+  }
+
 export function reduceToWeeks(dates: Date[]): Date[][] {
     return dates.reduce((prev, curr, index) => {
       if (index % 7 === 0) {

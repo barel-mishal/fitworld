@@ -31,7 +31,7 @@ export default component$<CalnderProps>(() => {
     <tbody>
 
     {reduceToWeeks(cx.computedCalender.value).map((week, i) => (
-      <tr key={i}>
+      <tr key={i} class="">
         {week.map((day, j) => (
           <td key={j} class={cn("text-xs text-center p-2", cx.store.now.getMonth() !== day.getMonth() && "text-gray-600")}>{day.getDate()}</td>
         ))}
