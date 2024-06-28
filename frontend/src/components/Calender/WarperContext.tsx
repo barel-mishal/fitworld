@@ -1,5 +1,5 @@
 import { $, Slot, component$, createContextId, useComputed$, useContextProvider, useStore } from "@builder.io/qwik";
-import { type DatesView, getDateRange, getPreviousMonth, getNextMonth, getViewRange } from "~/util/getDates";
+import { type DatesView, getDateRange, getPreviousMonth, getNextMonth, getViewRange, reduceToWeeks } from "~/util/getDates";
 
 
 
@@ -32,7 +32,9 @@ export const useCalendar = (props: UseCalenderProps) => {
         return getDateRange(range.min, range.max, store.view);
     });
 
-    const computedCalender = useComputed$(async () => await genrateCalender());
+    const computedCalender = useComputed$(
+        async () => reduceToWeeks(await genrateCalender())
+    );
 
   return {
     props,
