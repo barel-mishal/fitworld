@@ -12,13 +12,15 @@ export const useLoaderUserIntake = routeLoader$(async () => {
   if (!intake.success) {
     return { error: "Could not fetch data", success: false, value: null };
   }
-  return intake;
+  return { success: true, value: intake.value, error: null}
   
 })
 
 export default component$(() => {
   const intake = useLoaderUserIntake();
-  console.log(intake.value);
+  if (!intake.value.success) {
+    return <div>Error: {intake.value.error}</div>
+  }
   const num = useStore({
     withinRange: 90,
     now: new Date,
@@ -47,7 +49,7 @@ export default component$(() => {
           </div>
         </div>
         {/* calender */}
-        <Calender.Root selected={[]}>
+        <Calender.Root selected={intake.value.value?.times || []}>
         <div class="grid grid-cols-[1fr,auto,auto] gap-8 pr-3">
           <h4 class=" self-start text-2xl line-clamp-6">
             {formatedMonthNameAndYear(num.now)}

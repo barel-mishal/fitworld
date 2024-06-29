@@ -45,7 +45,7 @@ export function getViewRange(currentDate: Date): ViewRange {
   
     // Calculate the end date for the full five weeks
     const endOfFiveWeeks = new Date(startOfWeek);
-    endOfFiveWeeks.setDate(endOfFiveWeeks.getDate() + (5 * 7) - 1);
+    endOfFiveWeeks.setDate(endOfFiveWeeks.getDate() + (6 * 7) - 1);
   
     // Ensure max date does not exceed the actual end of the month
     const max = endOfFiveWeeks > endOfMonth ? endOfMonth : endOfFiveWeeks;
