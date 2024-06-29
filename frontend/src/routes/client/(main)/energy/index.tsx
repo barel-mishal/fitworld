@@ -81,7 +81,7 @@ export default component$(() => {
               </p>
             </div>
           </div>
-          <div class="grid col-span-2 relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
+          <div class="grid min-h-[268px] col-span-2 relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
             <Calender.TableCalender />
           </div>
         </div>

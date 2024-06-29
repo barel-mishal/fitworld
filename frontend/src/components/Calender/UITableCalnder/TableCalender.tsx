@@ -46,7 +46,7 @@ export default component$<CalnderProps>(() => {
                     isStreakDay && "text-yellow-200"
                   )}>{day.getDate()}</p>
                   {!isStreakDay && isSameDay && <PhBlankCalender class="h-9 w-9 stroke-gray-600 col-start-1 row-start-1 absolute -bottom-[7px]" />}
-                  {!isSameDay && isStreakDay && <PhLightning class="fill-yellow-700/80 row-start-1 col-start-1 " />}
+                  {!isSameDay && isStreakDay && <PhLightning class="fill-yellow-600/70 row-start-1 col-start-1 " />}
                   {(isSameDay && isStreakDay) && <PhBlankCalender 
                   class="h-9 w-9 stroke-yellow-400  col-start-1 row-start-1 absolute -bottom-[7px]" />}
                 </div>
