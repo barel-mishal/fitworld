@@ -48,8 +48,11 @@ export type CalenderHook = ReturnType<typeof useCalendar>;
 export const contextCalender = createContextId<CalenderHook>("Calender");
 
 
-export const RootCalender = component$<{test: string}>((props) => {
-    console.log(props.test);
+
+interface CalenderProps {
+    selected?: Date[];
+}
+export const RootCalender = component$<CalenderProps>((props) => {
 
     // Example usage:
     const currentDate = new Date();
@@ -57,7 +60,7 @@ export const RootCalender = component$<{test: string}>((props) => {
     const calendar = useCalendar({
     test: "test",
     currentView: currentDate,
-    selected: [new Date(currentDate.setDate(currentDate.getDate()))],
+    selected: props.selected,
     });
 
     useContextProvider(contextCalender, calendar);

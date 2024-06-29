@@ -46,7 +46,7 @@ export default component$(() => {
           </div>
         </div>
         {/* calender */}
-        <Calender.Root test='sdlfkj'>
+        <Calender.Root selected={[]}>
         <div class="grid grid-cols-[1fr,auto,auto] gap-8 pr-3">
           <h4 class=" self-start text-2xl line-clamp-6">
             {formatedMonthNameAndYear(num.now)}
