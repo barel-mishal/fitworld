@@ -21,6 +21,7 @@ export default component$(() => {
   if (!intake.value.success) {
     return <div>Error: {intake.value.error}</div>
   }
+  console.log(intake.value.value);
   const num = useStore({
     withinRange: 90,
     now: new Date,
