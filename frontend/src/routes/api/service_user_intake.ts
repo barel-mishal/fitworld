@@ -58,71 +58,7 @@ export const server_user_intake = server$(async function () {
         return { error: "User not found", success: false, value: null }
     }
 
-    const intake = await dbUser.value?.query<[null, null, null, Partial<IntakeData>]>(`
-        LET $eated =  ( SELECT 
-            <decimal> measurement.weight AS measurement_weight,
-            measurement.unit AS measurement_unit,
-            food.hebrew_name AS name,
-            <decimal> food.group.calories AS calories, 
-            <decimal> food.group.protein AS protein, 
-            <decimal> food.group.carbs AS carbs, 
-            <decimal> food.group.fats AS fats, 
-            <decimal> food.addProtein AS addProtein, 
-            <decimal> food.addCarbs AS addCarbs, 
-            <decimal> food.addFat AS addFat,
-            <decimal> food.serving AS serving,
-            food.servingUnit AS servingUnit,
-            <decimal> amount as amount
-        FROM Eat
-        );
-
-        LET $clac = ( SELECT 
-            {
-                name: name,
-                amount: amount,
-                serving: serving,
-                servingUnit: servingUnit,
-                calories: calories,
-                addProtein: addProtein,
-                addCarbs: addCarbs,
-                addFat: addFat,
-                measurement_weight: measurement_weight,
-                measurement_unit: measurement_unit
-            } as meta,
-            (
-                calories + 
-                addProtein * 4 + 
-                addCarbs * 4 + 
-                addFat * 9
-            ) * (
-                measurement_weight / serving
-            ) * amount as intake_calories,
-            (
-                protein + 
-                addProtein) * 
-            (
-                measurement_weight / serving
-            ) * amount as intake_protein,
-            (carbs + addCarbs) * (measurement_weight / serving) * amount as intake_carbs,
-            (fats + addFat) * (measurement_weight / serving) * amount as intake_fats
-            
-        FROM $eated );
-
-
-        LET $total_eated = ( 
-        SELECT 
-            math::sum(intake_calories) as total_calories, 
-            math::sum(intake_fats) as total_fats,
-            math::sum(intake_protein) as total_proteins,
-            math::sum(intake_carbs) as total_carbs
-        FROM $clac GROUP ALL 
-        );
-
-        RETURN {
-            totals: $total_eated,
-            calculate_intake: $clac,
-            eated: $eated
-    };`);
+    const intake = await dbUser.value?.query<[null, null, null, Partial<IntakeData>]>(`RETURN fn::user_intake();`);
 
     return intake?.[3] || { error: "No data found", success: false, value: null }
 });

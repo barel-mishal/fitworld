@@ -48,7 +48,8 @@ export type CalenderHook = ReturnType<typeof useCalendar>;
 export const contextCalender = createContextId<CalenderHook>("Calender");
 
 
-export const RootCalender = component$(() => {
+export const RootCalender = component$<{test: string}>((props) => {
+    console.log(props.test);
 
     // Example usage:
     const currentDate = new Date();
