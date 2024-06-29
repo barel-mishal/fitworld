@@ -5,6 +5,7 @@ import { formatedMonthNameAndYear } from '~/util/formatDate';
 import { Calender } from '~/components/Calender';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { server_user_intake } from '~/routes/api/service_user_intake';
+import { AppLink } from '~/routes.config';
 
 export const useLoaderUserIntake = routeLoader$(async () => {
   const intake = await server_user_intake();
@@ -113,7 +114,9 @@ export const SectionHeader = component$(() => {
    `bg-gray-800 min-h-10 flex z-50 items-center transition-all ease-in-out duration-300 p-2 border-b border-gray-800 fade-in sticky top-0`,
    `data-[scroll-position='true']:bg-gray-950 `
    )}>
-   <PhClose class="h-7 w-7 fill-current" />
+  <AppLink class="flex gap-2 items-center" route='/client/(main)/play/'>
+      <PhClose class="h-7 w-7 fill-current" />
+   </AppLink>
    <h4 class="mx-auto">Energy Streak</h4>
  </section>
 });
