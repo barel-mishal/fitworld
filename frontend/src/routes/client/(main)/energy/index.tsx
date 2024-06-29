@@ -3,8 +3,21 @@ import { PhClose, PhDNA, PhLightning } from '~/components/icons/icons';
 import { cn } from '@qwik-ui/utils';
 import { formatedMonthNameAndYear } from '~/util/formatDate';
 import { Calender } from '~/components/Calender';
+import { routeLoader$ } from '@builder.io/qwik-city';
+import { server_user_intake } from '~/routes/api/service_user_intake';
+
+export const useLoaderUserIntake = routeLoader$(async () => {
+  const intake = await server_user_intake();
+  if (!intake.success) {
+    return { error: "Could not fetch data", success: false, value: null };
+  }
+  return intake;
+  
+})
 
 export default component$(() => {
+  const intake = useLoaderUserIntake();
+  console.log(intake.value);
   const num = useStore({
     withinRange: 90,
     now: new Date,
@@ -65,7 +78,7 @@ export default component$(() => {
               </p>
             </div>
           </div>
-          <div class="grid h-96 col-span-2 relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
+          <div class="grid col-span-2 relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
             <Calender.TableCalender />
           </div>
         </div>

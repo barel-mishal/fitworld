@@ -57,8 +57,13 @@ export const server_user_intake = server$(async function () {
     if (!dbUser.success) {
         return { error: "User not found", success: false, value: null }
     }
+    try {
+        const intake = await dbUser.value?.query<[Partial<IntakeData>]>(`RETURN fn::user_intake();`);
+        return { error: "No data found", success: false, value: intake }
+    } catch (error) {
+        console.error(error);
+        return { error: "No data found", success: false, value: null }
+    }
 
-    const intake = await dbUser.value?.query<[null, null, null, Partial<IntakeData>]>(`RETURN fn::user_intake();`);
 
-    return intake?.[3] || { error: "No data found", success: false, value: null }
 });
