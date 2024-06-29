@@ -7,6 +7,5 @@ export const TriggerSkipMonths = component$(() => {
     return <>
         <button><PhArrowBendUpLeft onClick$={cx.moveBackward} class="fill-current" /></button>
         <button><PhArrowBendUpLeft onClick$={cx.moveForward} class="rotate-180 fill-current" /></button>
-        
     </>
 });

@@ -1,7 +1,7 @@
 import { component$, useContext } from "@builder.io/qwik";
 import { contextCalender } from "../WarperContext";
 import { cn } from "@qwik-ui/utils";
-import { PhBlankCalender } from "~/components/icons/icons";
+import { PhBlankCalender, PhLightning } from "~/components/icons/icons";
 import { resetTime } from "~/util/getDates";
 
 
@@ -36,11 +36,19 @@ export default component$<CalnderProps>(() => {
         {week.map((day, j) => {
             const isSameDay = resetTime(cx.store.now).getTime() === resetTime(day).getTime();
             const isSameMonth = cx.store.currentView.getMonth() === day.getMonth();
+            const isStreakDay = cx.store.selected && cx.store.selected
+            .map(m => resetTime(m).getTime()).includes(resetTime(day).getTime());
             return (
               <td key={j} class={cn("text-xs text-center p-2", isSameMonth ? "text-gray-200" : "text-gray-500")}>
                 <div class="grid place-items-center relative">
-                  <p class="col-start-1 row-start-1 ">{day.getDate()}</p>
-                  {isSameDay && <PhBlankCalender class="h-9 w-9 fill-current col-start-1 row-start-1 absolute -bottom-[7px]" />}
+                  <p class={cn(
+                    "col-start-1 row-start-1 z-10 ", 
+                    isStreakDay && "text-yellow-200"
+                  )}>{day.getDate()}</p>
+                  {!isStreakDay && isSameDay && <PhBlankCalender class="h-9 w-9 fill-current col-start-1 row-start-1 absolute -bottom-[7px]" />}
+                  {!isSameDay && isStreakDay && <PhLightning class="fill-yellow-700/80 row-start-1 col-start-1 " />}
+                  {(isSameDay && isStreakDay) && <PhBlankCalender 
+                  class="h-9 w-9 stroke-yellow-400  col-start-1 row-start-1 absolute -bottom-[7px]" />}
                 </div>
               </td>
           );

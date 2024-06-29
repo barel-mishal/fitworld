@@ -1,12 +1,9 @@
 import { $, Slot, component$, createContextId, useComputed$, useContextProvider, useStore } from "@builder.io/qwik";
 import { type DatesView, getDateRange, getPreviousMonth, getNextMonth, getViewRange, reduceToWeeks } from "~/util/getDates";
 
-
-
-
 interface UseCalenderProps {
     test: string;
-    selected?: Date;
+    selected?: Date[];
     currentView?: Date;
     now?: Date;
 }
@@ -20,9 +17,9 @@ export const useCalendar = (props: UseCalenderProps) => {
     });
 
     const moveBackward = $(() => {
-        
         store.currentView = getPreviousMonth(store.currentView);
     });
+
     const moveForward = $(() => {
         store.currentView = getNextMonth(store.currentView);
     });
@@ -36,16 +33,15 @@ export const useCalendar = (props: UseCalenderProps) => {
         async () => reduceToWeeks(await genrateCalender())
     );
 
-  return {
-    props,
-    store,
-    genrateCalender,    
-    computedCalender,
-    moveBackward,
-    moveForward,
-  }
+    return {
+        props,
+        store,
+        genrateCalender,    
+        computedCalender,
+        moveBackward,
+        moveForward,
+    }
 };
-
 
 export type CalenderHook = ReturnType<typeof useCalendar>;
 
@@ -60,6 +56,7 @@ export const RootCalender = component$(() => {
     const calendar = useCalendar({
     test: "test",
     currentView: currentDate,
+    selected: [new Date(currentDate.setDate(currentDate.getDate()))],
     });
 
     useContextProvider(contextCalender, calendar);

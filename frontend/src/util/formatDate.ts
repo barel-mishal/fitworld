@@ -31,6 +31,5 @@ export function formatedDateToUser(date: string): string {
 }
 
 export function formatedMonthNameAndYear(date: Date): string {
-  
   return `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
 }
