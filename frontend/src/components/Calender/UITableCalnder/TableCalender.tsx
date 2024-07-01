@@ -14,8 +14,6 @@ export default component$<CalnderProps>(() => {
 
   const cx = useContext(contextCalender);
 
-  console.log(cx.computedCalender.value.length);
-
   return (
     <table class="w-full ">
     <thead class="h-9">

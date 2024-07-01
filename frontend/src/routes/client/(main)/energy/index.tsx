@@ -57,11 +57,10 @@ export default component$(() => {
             {formatedMonthNameAndYear(num.now)}
           </h4>
           <Calender.TriggerSkipMonths/>
-
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div class="grid grid-cols-[auto,1fr] relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
-            <PhDNA class="fill-green-500 self-start h-8 w-8" />
+            <PhDNA class="fill-yellow-300 self-start h-8 w-8" />
             <div class="flex flex-col gap-1   ">
               <p class="text ">
                 2
@@ -70,17 +69,12 @@ export default component$(() => {
                 Days Complietion
               </p>
             </div>
-              <p class="absolute -top-2 -right-2 bg-yellow-600 px-2 py-1 text-xs rounded-full ">Great</p>
+              <p class="absolute -top-2 -right-2 bg-gray-950 ring-1 ring-yellow-300 px-2 py-1 text-xs rounded-full ">Great</p>
           </div>
           <div class="grid grid-cols-[auto,1fr] relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">
-            <PhDNA class="fill-green-500 self-start h-8 w-8" />
+            <PhDNA class="fill-orange-400 self-start h-8 w-8" />
             <div class="flex flex-col gap-1   ">
-              <p class="text ">
-                2
-              </p>
-              <p class="text-xs [text-wrap:balance]">
-                Days Freeze
-              </p>
+              <Calender.PeriodSelectedDays />
             </div>
           </div>
           <div class="grid min-h-[268px] col-span-2 relative gap-2 border-2 border-gray-800 p-2 rounded-lg place-items-start self-start">

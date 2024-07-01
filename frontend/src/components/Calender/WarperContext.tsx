@@ -29,6 +29,11 @@ export const useCalendar = (props: UseCalenderProps) => {
         return getDateRange(range.min, range.max, store.view);
     });
 
+    const selectedMonth = useComputed$(() => {
+        const m = store.currentView.getMonth();
+        return props.selected?.filter(v => v.getMonth() === m)
+    });
+
     const computedCalender = useComputed$(
         async () => reduceToWeeks(await genrateCalender())
     );
@@ -40,6 +45,7 @@ export const useCalendar = (props: UseCalenderProps) => {
         computedCalender,
         moveBackward,
         moveForward,
+        selectedMonth
     }
 };
 

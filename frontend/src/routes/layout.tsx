@@ -56,6 +56,5 @@ export const ContextUserSesstion = createContextId<UseUserSession>("ContextUserS
 export default component$(() => {
   const sesstionUser = useUserSession();
   useContextProvider(ContextUserSesstion,  sesstionUser)
-
   return <Slot />;
 });
