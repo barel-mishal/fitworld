@@ -7,7 +7,7 @@ export default component$(() => {
     
     return (
         <>
-            {formatedMonthNameAndYear(cal.store.now)}
+            {formatedMonthNameAndYear(cal.store.currentView)}
         </>
     )
     

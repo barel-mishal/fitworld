@@ -1,7 +1,6 @@
-import { component$,useContext, useStore} from '@builder.io/qwik';
+import { $, component$,useContext } from '@builder.io/qwik';
 import { PhClose, PhDNA, PhLightning } from '~/components/icons/icons';
 import { cn } from '@qwik-ui/utils';
-import { formatedMonthNameAndYear } from '~/util/formatDate';
 import { Calender } from '~/components/Calender';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { server_user_intake } from '~/routes/api/service_user_intake';
@@ -23,9 +22,9 @@ export default component$(() => {
   if (!intake.value.success) {
     return <div>Error: {intake.value.error}</div>
   }
-  const num = useStore({
-    withinRange: 90,
-    now: new Date,
+  const select = $((now: Date, currentView: Date, selected: Date[]) => {
+    const m = currentView.getMonth();
+    return selected.filter(v => v.getMonth() === m)
   });
   return (
     <div class="grid grid-rows-[40px,200px,1fr] font-roundsans">
@@ -51,10 +50,10 @@ export default component$(() => {
           </div>
         </div>
         {/* calender */}
-        <Calender.Root selected={intake.value.value?.times || []}>
+        <Calender.Root selected={intake.value.value?.times || []} selectDatesTimesViews={select} >
         <div class="grid grid-cols-[1fr,auto,auto] gap-8 pr-3">
           <h4 class=" self-start text-2xl line-clamp-6">
-            {formatedMonthNameAndYear(num.now)}
+            <Calender.CurrentDate />
           </h4>
           <Calender.TriggerSkipMonths/>
         </div>

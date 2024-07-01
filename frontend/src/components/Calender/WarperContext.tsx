@@ -1,4 +1,4 @@
-import { $, Slot, component$, createContextId, useComputed$, useContextProvider, useStore } from "@builder.io/qwik";
+import { $, type QRL, Slot, component$, createContextId, useComputed$, useContextProvider, useStore } from "@builder.io/qwik";
 import { type DatesView, getDateRange, getPreviousMonth, getNextMonth, getViewRange, reduceToWeeks } from "~/util/getDates";
 
 interface UseCalenderProps {
@@ -6,6 +6,7 @@ interface UseCalenderProps {
     selected?: Date[];
     currentView?: Date;
     now?: Date;
+    selectDatesTimesViews?: QRL<(now: Date, currentView: Date, selected: Date[]) => Date[]>
 }
 
 export const useCalendar = (props: UseCalenderProps) => {
@@ -29,9 +30,9 @@ export const useCalendar = (props: UseCalenderProps) => {
         return getDateRange(range.min, range.max, store.view);
     });
 
-    const selectedMonth = useComputed$(() => {
-        const m = store.currentView.getMonth();
-        return props.selected?.filter(v => v.getMonth() === m)
+    const selectedMonth = useComputed$(async () => {
+        if (props.selectDatesTimesViews && store.selected)
+        return await props.selectDatesTimesViews(store.now, store.currentView, store.selected);
     });
 
     const computedCalender = useComputed$(
@@ -57,6 +58,8 @@ export const contextCalender = createContextId<CalenderHook>("Calender");
 
 interface CalenderProps {
     selected?: Date[];
+    selectDatesTimesViews?: UseCalenderProps["selectDatesTimesViews"]
+
 }
 export const RootCalender = component$<CalenderProps>((props) => {
 
@@ -64,9 +67,10 @@ export const RootCalender = component$<CalenderProps>((props) => {
     const currentDate = new Date();
 
     const calendar = useCalendar({
-    test: "test",
-    currentView: currentDate,
-    selected: props.selected,
+        test: "test",
+        currentView: currentDate,
+        selected: props.selected,
+        selectDatesTimesViews: props.selectDatesTimesViews
     });
 
     useContextProvider(contextCalender, calendar);
