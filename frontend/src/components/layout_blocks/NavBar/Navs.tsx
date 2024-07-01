@@ -1,4 +1,4 @@
-import { type PropsOf, component$, useStyles$ } from "@builder.io/qwik";
+import { type PropsOf, component$, useStyles$, useContext } from "@builder.io/qwik";
 import { Modal } from "@qwik-ui/headless";
 import { type VariantProps, cva } from "class-variance-authority";
 import {
@@ -14,6 +14,8 @@ import {
 import { AppLink } from "~/routes.config";
 import styles from '~/components/layout_blocks/NavBar/styles.css?inline';
 import { cn } from "@qwik-ui/utils";
+import { ContextUserSesstion } from "~/routes/layout";
+import { formatNumber } from "~/util/twoDecimalPoints";
 
 interface TopNavBarProps {
   streak: number;
@@ -29,6 +31,8 @@ interface TopNavBarProps {
 }
 
 export const TopNavBar = component$<TopNavBarProps>((props) => {
+  const us = useContext(ContextUserSesstion)
+
   useStyles$(styles);
 
   return (
@@ -36,7 +40,7 @@ export const TopNavBar = component$<TopNavBarProps>((props) => {
       <li class="">
           <AppLink route="/client/(main)/energy/" class="modal-trigger grid grid-cols-2 items-center slide-down">
               <PhLightning class="h-8 fill-yellow-500" />
-              <p class="text-xs">{props.streak}</p>
+              <p class="text-xs">{formatNumber(us.value.value?.energy ?? 0)}%</p>
           </AppLink>
       </li>
       <li class="">

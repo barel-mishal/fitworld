@@ -222,6 +222,17 @@ export function PhArrowBendUpLeft(props: PropsOf<"svg">) {
     </svg>
   );
 }
+export function PhArrowLeft(props: PropsOf<"svg">) {
+  return (
+    <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    class={cn("h-5 w-5 fill-current", props.class)}
+    {...props}
+    width="32"
+    height="32"
+    viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>
+  );
+}
 export function PhTrash(props: PropsOf<"svg">) {
   return (
     <svg
@@ -342,7 +353,7 @@ export function PhBlankCalender(props: PropsOf<"svg">) {
       viewBox="0 0 256 256"
     >
       <rect width="256" height="256" />
-      <rect x="40" y="40" width="176" height="176" rx="8" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+      <rect x="40" y="40" width="176" height="176"  stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
       <line x1="176" y1="24" x2="176" y2="56" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
       <line x1="80" y1="24" x2="80" y2="56" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
       <line x1="40" y1="88" x2="216" y2="88" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>

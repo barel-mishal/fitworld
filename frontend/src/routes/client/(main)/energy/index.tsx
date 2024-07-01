@@ -1,4 +1,4 @@
-import { $, component$,useOnDocument, useSignal, useStore} from '@builder.io/qwik';
+import { component$,useContext, useStore} from '@builder.io/qwik';
 import { PhClose, PhDNA, PhLightning } from '~/components/icons/icons';
 import { cn } from '@qwik-ui/utils';
 import { formatedMonthNameAndYear } from '~/util/formatDate';
@@ -6,6 +6,8 @@ import { Calender } from '~/components/Calender';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { server_user_intake } from '~/routes/api/service_user_intake';
 import { AppLink } from '~/routes.config';
+import { ContextUserSesstion } from '~/routes/layout';
+import { useScrollPass } from '~/components/Hooks/useScrollPass';
 
 export const useLoaderUserIntake = routeLoader$(async () => {
   const intake = await server_user_intake();
@@ -13,15 +15,14 @@ export const useLoaderUserIntake = routeLoader$(async () => {
     return { error: "Could not fetch data", success: false, value: null };
   }
   return { success: true, value: intake.value, error: null}
-  
 })
 
 export default component$(() => {
   const intake = useLoaderUserIntake();
+  const us = useContext(ContextUserSesstion)
   if (!intake.value.success) {
     return <div>Error: {intake.value.error}</div>
   }
-  console.log(intake.value.value);
   const num = useStore({
     withinRange: 90,
     now: new Date,
@@ -31,7 +32,7 @@ export default component$(() => {
       <SectionHeader />
       <section class="bg-gray-800 grid grid-cols-2 place-items-center">
         <p class="flex flex-col gap-4 pl-2 max-w-40 h-40 justify-end pb-1">
-          <span class="text-6xl font-extrabold">{num.withinRange}%</span>
+          <span class="text-6xl font-extrabold">{Math.floor(us.value.value?.energy ?? 0)}%</span>
           <span class="[text-wrap:balance] text-xs max-w-40">Day Energy Present Streak!</span>
         </p>
         <PhLightning class="h-40 w-40 fill-yellow-500" />
@@ -91,23 +92,6 @@ export default component$(() => {
     </div>
   );
 });
-
-
-
-
-export const useScrollPass = (pass: number) => {
-  const fadeIn = useSignal(false);
-  useOnDocument('scroll', $((event) => {
-    const doc = event.target as Document;
-    const scrollTop = doc.documentElement.scrollTop || doc.body.scrollTop;
-    if (scrollTop > pass) {
-      fadeIn.value = true;
-    } else {
-      fadeIn.value = false;
-    }
-  }));
-  return fadeIn;
-}
 
 export const SectionHeader = component$(() => {
   const scrollPass = useScrollPass(200);
